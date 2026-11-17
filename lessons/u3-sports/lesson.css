@@ -1,0 +1,36 @@
+  /* u3-sports 전용 (sp-) */
+  .sp-tb{width:100%;border-collapse:collapse;margin:8px 0;font-size:.92rem}
+  .sp-tb th{background:#d9f0e2;padding:7px 10px;border:1px solid var(--line);text-align:left}
+  .sp-tb td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+  .sp-tb td:first-child{white-space:nowrap;font-weight:800;background:#eef8f1}
+  .sp-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
+  .sp-steps>div{background:#fff;border-radius:12px;border-top:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;font-size:.92rem;line-height:1.5}
+  .sp-steps b{display:block;color:var(--k);margin-bottom:2px}
+  .sp-steps>div.cur{background:#f2fbf5;outline:2px solid var(--k)}
+  .sp-three{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+  .sp-three>div{background:#fbfaf7;border-radius:12px;border-left:5px solid var(--k);padding:10px 12px;font-size:.93rem;line-height:1.55}
+  .sp-three b{color:var(--k);display:block}
+  .sp-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:600px){.sp-two{grid-template-columns:1fr}}
+  .sp-svg{width:100%;max-width:340px;height:auto;display:block;margin:8px auto}
+  .sp-svg text{fill:var(--ink);text-anchor:middle}
+  .sp-svg .t1{font-family:inherit;font-size:11px;font-weight:700}
+  .sp-svg .t2{font-family:inherit;font-size:12px;font-weight:600;fill:var(--muted)}
+  .sp-task{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:10px 14px;font-size:.93rem;margin:8px 0}
+  .sp-task b:first-child{display:block;color:#a8730c}
+  .sp-cond{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:6px 0}
+  .sp-cond>span{font-weight:800;font-size:.9rem;margin-right:2px}
+  .sp-cond button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-size:.88rem;cursor:pointer;color:var(--ink)}
+  .sp-cond button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .sp-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.86rem;margin:4px 0}
+  .sp-leg i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:5px;vertical-align:-2px}
+  .sp-res{font-size:.93rem;margin:8px 0 4px}
+  .sp-info{border:2px solid var(--line);border-radius:12px;padding:10px 14px;background:#fff;font-size:.93rem;line-height:1.6;margin-top:8px}
+  .sp-ok{display:flex;gap:10px;flex-wrap:wrap}
+  .sp-ok>div{flex:1 1 240px;background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:10px 14px;font-size:.93rem;line-height:1.6}
+  .sp-ok b{color:var(--k);display:block;margin-bottom:2px}
+  .sp-team input{width:100%;box-sizing:border-box}
+  .sp-vres{margin:10px 0 0;font-size:.93rem}
+  .sp-tab{gap:8px;margin:4px 0 10px}
+  .sp-tab button{display:flex;align-items:center;gap:7px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;color:var(--ink)}
+  .sp-tab button.on{border-color:var(--acc);background:var(--acc);color:#fff}

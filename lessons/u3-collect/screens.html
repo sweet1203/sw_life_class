@@ -1,0 +1,318 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#2f9a5a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅲ. 현상을 분석하는 소프트웨어 · 정형 데이터 수집과 처리</span>
+      <h1>기온 데이터로<br>기후 변화를 알아볼까?</h1>
+      <div class="story"><b>정형 데이터로 사회 현상을 분석할 수 있을까? (92쪽)</b><br>정형 데이터는 행과 열의 표 형태로 <b>숫자나 날짜, 문자</b> 데이터로 구성돼요. 기온을 측정한 정형 데이터를 그래프로 그리면 기온 변화의 추이를 알 수 있어요. 이 차시에서는 그 첫 두 단계, <b>수집</b>과 <b>처리</b>를 해 봐요.</div>
+      <p>기상청 자료를 내려받고, 코랩에서 불러와 확인한 뒤, 비어 있는 값을 처리하는 순서를 따라가요.</p>
+      <ol>
+        <li>데이터 수집</li><li>불러오기 · 확인</li><li>결측치 처리</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 할 실습 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>📥</i><div><b>수집</b><small>기상자료개방포털에서 내려받기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🧾</i><div><b>불러오기·확인</b><small>코랩에서 표로 보기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🧹</i><div><b>처리</b><small>결측치 지우기 · 이름 바꾸기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">실습 · 기후 변화 추이를 알려 주는 시각화 분석 자료 만들기 (92쪽)</span>
+      <p>기후 변화의 정도를 알 수 있는 방법은 무엇이 있을까요? <b>정형 데이터 형태로 기온을 측정한 데이터</b>가 있다면 이를 그래프로 표현하여 <b>기온 변화의 추이</b>를 알아볼 수 있어요. 기온 데이터를 분석해 기후 변화의 심각성을 사람들에게 알리는 <b>홍보 자료</b>로 활용해 봐요.</p>
+    </div>
+    <div class="card">
+      <h3>🌡️ 실습 개요 <span class="muted" style="font-weight:400;font-size:.88rem">(92쪽)</span></h3>
+      <div class="tscroll"><table class="tbl">
+        <tr><th>문제 상황</th><td>시각화 자료를 활용하여 기후 변화의 심각성을 많은 사람들에게 쉽게 알려야 한다.</td></tr>
+        <tr><th>활용 데이터</th><td>기온 데이터</td></tr>
+        <tr><th>시각화 방법</th><td>그래프(선, 막대, 산점도, 히스토그램)</td></tr>
+        <tr><th>사용 소프트웨어</th><td>구글 코랩(Google Colab), 파이썬</td></tr>
+      </table></div>
+      <p style="margin:12px 0 4px"><b>실습 순서</b> <span class="muted">(이 차시는 ①②, 그래프는 다음 차시에서)</span></p>
+      <div class="cl-flow">
+        <div style="--k:#2f9a5a"><small>1</small><b>데이터 수집</b></div><div class="ar">→</div>
+        <div style="--k:#2f6fd0"><small>2</small><b>데이터 처리</b></div><div class="ar">→</div>
+        <div style="--k:#d0602f"><small>3</small><b>데이터 시각화</b></div><div class="ar">→</div>
+        <div style="--k:#9b4fc4"><small>4</small><b>분석 결과 해석</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🐍 코드는 두 가지로 만나요</h3>
+      <div class="grid2 even">
+        <div class="cl-kind" style="--k:#1f2f4a"><b>📖 읽는 코드</b><span>교과서의 코랩 코드(<code>pandas</code>를 쓰는 코드)는 어두운 <b>코드 카드</b>로 읽기만 해요. 인쇄된 그대로 옮겼어요.</span></div>
+        <div class="cl-kind" style="--k:#1f9d74"><b>▶ 돌려 보는 코드</b><span>같은 단계를 <b>기본 파이썬</b>(리스트·<code>split</code>·<code>statistics</code>)으로 흉내 낸 코드예요. 고쳐서 <b>실행</b>을 눌러 봐요.</span></div>
+      </div>
+      <p class="note" style="margin-bottom:0">처음 실행하면 파이썬을 불러오느라 몇 초 걸려요. 흉내 코드는 기온 데이터의 <b>앞 10줄(1907~1916년)</b>만 쓰는 작은 표본이라, 교과서의 결과 숫자(예: 결측치 3개, 111 rows)와 달라요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 기온 데이터에서 비어 있는 값을 어떻게 찾고 처리할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>기상자료개방포털에서 기온 데이터를 내려받는 순서를 말할 수 있다.</li>
+          <li><code>read_csv</code>·<code>info</code>·<code>describe</code>·<code>isnull</code>이 하는 일을 설명할 수 있다.</li>
+          <li>결측치를 처리하는 방법을 고르고 이유를 말할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">csv 파일 · 결측치 · 구글 코랩 · 데이터프레임 · NaN · 사분위수 · 칼럼명</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>기온 데이터는 <b>어느 지역</b>(관측 지점)을 골라서 살펴보고 싶나요? 그 까닭은? <small>떠오르는 대로 한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="clPlan" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 데이터 수집부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 데이터 수집 -->
+<section class="page" data-name="데이터 수집" data-acc="#2f9a5a">
+  <div class="head"><div class="num">01</div><div><h2>① 데이터 수집</h2><p>교과서 92쪽 · 기상자료개방포털에서 기온 데이터 내려받기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>기후 변화를 알아보려면 먼저 <b>기온 기록</b>이 필요해요. 우리나라 기온 기록은 기상청의 <b>기상자료개방포털</b>에서 내려받을 수 있어요. <b>찾아가기 → 조건 정하기 → 파일 열어 보기</b> 세 단계로 해요.</span></div>
+
+  <div class="card">
+    <h3>📥 기온 데이터 내려받기 세 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(92쪽)</span></h3>
+    <p style="margin-top:0">기후 변화 상황을 파악하기 위해 기온 데이터를 수집해 분석하려고 해요. 우리나라의 기온 데이터는 기상청의 「기상자료개방포털」에서 내려받을 수 있어요. 관측 지역 중 <b>한 곳</b>을 선택해 그 지역에서 지금까지 관측된 기온을 확인해 봐요.</p>
+    <div class="cl-steps">
+      <div style="--k:#2f9a5a"><span class="n">1</span><div><b>포털에서 데이터 찾기</b><span>기상자료개방포털(data.kma.go.kr)에 접속해 <b>[데이터] → [기상관측-지상] → [종관기상관측]</b> 순으로 선택해요.</span></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>검색 조건 정하고 내려받기</b><span>검색 조건을 설정해서 csv 파일을 내려받은 뒤, 파일명을 <b>temp.csv</b>로 바꿔서 저장해요.
+        <ul class="cl-ul"><li>자료 형태 : <b>년 자료</b></li><li>기간 : <b>1904년 ~ 2022년</b></li><li>지점 : <b>서울특별시</b>(또는 원하는 지역)를 선택, <b>기온</b> 선택</li></ul></span></div></div>
+      <div style="--k:#d0602f"><span class="n">3</span><div><b>받은 파일 열어 확인하기</b><span>받은 파일을 열어 데이터를 확인해요.</span></div></div>
+    </div>
+    <p class="callout" style="margin-bottom:0">💡 <b>TIP · 데이터 수집 방법</b> 로그인 창이 뜰 때 아이디와 비밀번호를 입력하지 않고 로그인 버튼 위에 있는 <b>확인</b> 버튼을 누르면 비회원으로도 파일을 내려받을 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 어느 단계에서 하는 일일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">한 장면씩 읽고 세 단계 가운데 어디에 속하는지 골라 봐요.</p>
+    <div id="clStepSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>📄 받은 파일 열어 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(92쪽 ③)</span></h3>
+    <p style="margin-top:0">기간을 1904년부터로 설정했지만, 데이터는 <b>1907년부터</b> 있어요. 그리고 <b>1907년에 빈칸(결측치)</b>이 있어요. 아래는 내려받은 temp.csv의 앞부분(1907~1916년, 서울 108지점)이에요. 칸을 나누는 쉼표(,)와 빈 칸을 눈여겨봐요.</p>
+    <p style="margin:8px 0 4px"><b>파일 안의 글 (앞 3줄)</b></p>
+<pre class="code">지점,지점명,일시,평균기온(°C),최저기온(°C),최고기온(°C),평균최저기온(°C),평균최고기온(°C)
+108,서울,1907,<b>,</b>-20.1,25.4,<b>,</b>
+108,서울,1908,10.4,-15.8,33.6,5.8,15.7</pre>
+    <p class="note" style="margin:0 0 8px">1907년 줄에는 평균기온 자리에 값이 없어서 쉼표가 연달아 나와요.</p>
+    <p style="margin:8px 0 4px"><b>표로 본 모습</b></p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>지점</th><th>지점명</th><th>일시</th><th>평균기온(°C)</th><th>최저기온(°C)</th><th>최고기온(°C)</th><th>평균최저기온(°C)</th><th>평균최고기온(°C)</th></tr>
+      <tr><td>108</td><td>서울</td><td>1907</td><td></td><td>-20.1</td><td>25.4</td><td></td><td></td></tr>
+      <tr><td>108</td><td>서울</td><td>1908</td><td>10.4</td><td>-15.8</td><td>33.6</td><td>5.8</td><td>15.7</td></tr>
+      <tr><td>108</td><td>서울</td><td>1909</td><td>10.6</td><td>-14.6</td><td>35.6</td><td>5.8</td><td>16</td></tr>
+      <tr><td>108</td><td>서울</td><td>1910</td><td>10.3</td><td>-19.9</td><td>33.3</td><td>5.7</td><td>15.9</td></tr>
+      <tr><td>108</td><td>서울</td><td>1911</td><td>10.6</td><td>-21.5</td><td>34.5</td><td>6</td><td>15.9</td></tr>
+      <tr><td>108</td><td>서울</td><td>1912</td><td>10.1</td><td>-18.6</td><td>34</td><td>5.1</td><td>15.6</td></tr>
+      <tr><td>108</td><td>서울</td><td>1913</td><td>10</td><td>-19.6</td><td>31.7</td><td>4.9</td><td>15.6</td></tr>
+      <tr><td>108</td><td>서울</td><td>1914</td><td>12</td><td>-14</td><td>35.6</td><td>7.7</td><td>17</td></tr>
+      <tr><td>108</td><td>서울</td><td>1915</td><td>10.8</td><td>-21.3</td><td>34.8</td><td>6.6</td><td>15.8</td></tr>
+      <tr><td>108</td><td>서울</td><td>1916</td><td>10.9</td><td>-19</td><td>33.2</td><td>6.4</td><td>16.5</td></tr>
+    </table></div>
+    <p class="note" style="margin-bottom:0">1907년 줄의 평균기온·평균최저기온·평균최고기온 칸이 <b>비어 있어요</b>. 이 빈 값이 바로 결측치예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+    <div class="memo"><label>내가 고른 지역(지점)의 데이터는 <b>몇 년부터</b> 있을 것 같나요? 직접 내려받아 확인해 보고 적어 보세요.</label><textarea data-memo="clPoint" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 코랩 준비·불러오기 -->
+<section class="page" data-name="코랩 · 불러오기" data-acc="#2f9a5a">
+  <div class="head"><div class="num">02</div><div><h2>② 데이터 처리 시작 · 코랩 준비하고 불러오기</h2><p>교과서 93쪽 · 글꼴 설치, 파일 업로드, 데이터프레임으로 불러오기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>내려받은 csv 파일은 글자 묶음일 뿐이에요. 코랩에서 <b>표(데이터프레임)</b>로 바꿔 불러와야 계산도 하고 그래프도 그릴 수 있어요. 순서는 <b>글꼴 설치 → 파일 올리기 → 표로 불러오기</b>예요.</span></div>
+
+  <div class="card">
+    <h3>🗒️ 왜 처리가 필요할까? <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽)</span></h3>
+    <p style="margin-top:0">데이터를 분석하여 정확한 정보를 도출하려면 데이터에 비어 있는 값이나 이상한 값, 중복된 값 등을 정리하는 <b>전처리 과정</b>이 필요해요. 앞서 내려받은 기온 데이터(temp.csv)에 빈 값이 있으므로 이를 처리하는 작업을 진행해 봐요.</p>
+    <div class="cl-note"><b>구글 코랩</b> 구글에서 제공하는 주피터 노트북의 온라인 버전이에요. 별도의 프로그램 설치 없이 웹 브라우저 안에서 파이썬 스크립트를 작성하고 실행할 수 있어요. 오프라인 환경에서는 파이썬 공식 홈페이지(python.org)에서 제공하는 설치형 통합 개발 환경인 <b>파이썬 IDLE</b>을 쓴대요.</div>
+  </div>
+
+  <div class="card">
+    <h3>1️⃣ 한글 글꼴 설치 <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽 ❶, 읽는 코드)</span></h3>
+    <p style="margin-top:0">데이터 처리를 시작하기 전에 코랩에서 <b>한글</b>을 쓸 수 있도록 글꼴을 설치해요. 나눔 글꼴을 설치했고 재부팅을 하지 않아도 바로 쓸 수 있게 했어요. 실행 후 상단의 [런타임] 메뉴에서 <b>[세션 다시 시작]</b>을 눌러요.</p>
+<pre class="code"><i># 한글 글꼴 사용을 위해 필요</i>
+!sudo apt-get install -y fonts-nanum
+!sudo fc-cache -fv
+!rm ~/.cache/matplotlib -rf
+<i># 실행 후 [런타임]-[세션 다시 시작] 하기</i></pre>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 데이터 업로드 <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽 ❷, 읽는 코드)</span></h3>
+<pre class="code">from google.colab import files   <i># 구글 코랩 환경에 파일 업로드를 위한 작업</i>
+uploadeded = files.upload()      <i># 파일 업로드 작업 실행</i></pre>
+    <p style="margin-bottom:0">「파일 선택」 버튼이 나타나면 버튼을 누르고 파일을 업로드해요. <b>주의</b> 업로드한 파일을 열어서 file에 저장할 때는 파일명을 <b>업로드한 파일명과 똑같이</b> 써야 해요. 파일 선택 버튼을 다시 눌러 같은 파일을 업로드하면 파일명이 <code>temp (1).csv</code> 등으로 달라질 수 있으니 조심해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 데이터프레임으로 불러오기 <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽 ❸, 읽는 코드)</span></h3>
+    <p style="margin-top:0">업로드한 데이터를 <b>데이터프레임</b> 형태로 변환해서 변수 <code>data</code>에 저장해요. 코랩에서 그래프를 그리려면 csv 파일을 <b>행과 열이 있는 표 형태</b>의 데이터프레임으로 바꿔야 해요.</p>
+<pre class="code"><b>import</b> pandas <b>as</b> pd                              <i># 데이터프레임을 다루기 위한 라이브러리</i>
+file = open ('temp.csv', encoding = 'cp949')    <i># 업로드한 파일(temp.csv)을 열어서 file에 저장</i>
+data = pd.read_csv(file)                        <i># file의 내용을 데이터프레임 형태로 data에 저장</i>
+data                                            <i># data 내용 출력</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="clReadFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0"><b>해설</b> 출력된 표(114 rows × 8 columns)에는 108 지점(서울)에서 관측한 1907년부터 2022년까지 총 114개 연도의 기온 데이터가 있어요. 1907년에는 최저 기온과 최고 기온만 있고, 평균 기온·평균 최저 기온·평균 최고 기온은 <b>NaN</b>(값 없음)이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 파이썬으로 csv 글을 표처럼 나눠 보기</h3>
+    <p style="margin-top:0">코랩 없이 <b>기본 파이썬</b>으로 같은 일을 흉내 내요. 파일 안의 글(1907~1916년 10줄)을 <code>split</code>으로 줄·칸으로 나눠 리스트로 만들고, 빈 칸은 <code>None</code>(값 없음)으로 바꿔요. <b>작은 표본이라 줄 수가 교과서(114 rows)와 달라요.</b> 줄 수를 세는 부분이나 출력할 줄 번호를 바꿔 다시 실행해 봐요.</p>
+    <div id="clRun1"></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 데이터 확인 -->
+<section class="page" data-name="데이터 확인" data-acc="#2f9a5a">
+  <div class="head"><div class="num">03</div><div><h2>④⑤ 데이터 확인하기</h2><p>교과서 94쪽 · info(), describe(), isnull().sum()</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>불러온 표를 바로 고치지 말고 먼저 <b>어떤 표인지 살펴봐요</b>. <code>info()</code>는 <b>칼럼마다 값이 몇 개 있는지</b>, <code>describe()</code>는 <b>평균·최솟값 같은 통계</b>, <code>isnull().sum()</code>은 <b>빈 값이 몇 개인지</b> 알려 줘요.</span></div>
+
+  <div class="card">
+    <h3>④ 데이터 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(94쪽, 읽는 코드)</span></h3>
+<pre class="code">data.info()        <i># data의 정보 확인</i></pre>
+    <p style="margin:6px 0">이 함수를 사용하면 데이터에 대한 <b>전반적인 정보</b>를 확인할 수 있어요. 결과에서 칼럼마다 값(Non-Null Count)이 몇 개인지 봐요.</p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>칼럼</th><td>지점</td><td>지점명</td><td>일시</td><td>평균기온</td><td>최저기온</td><td>최고기온</td><td>평균최저기온</td><td>평균최고기온</td></tr>
+      <tr><th>값의 개수</th><td>114</td><td>114</td><td>114</td><td><b>111</b></td><td>114</td><td>114</td><td><b>111</b></td><td><b>111</b></td></tr>
+    </table></div>
+    <p class="note" style="margin:6px 0 12px"><b>해설</b> 지점, 지점명, 일시, 최저 기온, 최고 기온은 114개의 값이 있고, 평균 기온, 평균 최저 기온, 평균 최고 기온은 111개의 값이 있어요.</p>
+<pre class="code">data.describe()      <i># data의 다양한 통계치 확인</i></pre>
+    <p style="margin:6px 0">이 함수를 사용하면 데이터에 대한 다양한 통계(개수, 평균값, 표준 편차, 최솟값, 사분위수<sup>*</sup>, 최댓값)를 확인할 수 있어요.</p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>count</th><td>개수</td></tr><tr><th>mean</th><td>평균값</td></tr><tr><th>std</th><td>표준 편차</td></tr><tr><th>min</th><td>최솟값</td></tr><tr><th>25% · 50% · 75%</th><td>사분위수</td></tr><tr><th>max</th><td>최댓값</td></tr>
+    </table></div>
+    <p class="note" style="margin:6px 0 0"><sup>*</sup> <b>사분위수</b> 데이터를 네 등분한 것으로, 측정값을 낮은 순에서 높은 순으로 정렬한 뒤 네 등분했을 때 각 등위에 해당하는 값이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>⑤ 결측치 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(94쪽, 읽는 코드)</span></h3>
+<pre class="code">data.isnull().sum()          <i># data의 칼럼별 빈값의 개수 구함.</i></pre>
+    <p style="margin:6px 0">교과서의 결과에서 <b>평균 기온, 평균 최저 기온, 평균 최고 기온</b>의 결측치가 3개씩 있었어요.</p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>칼럼</th><td>지점</td><td>지점명</td><td>일시</td><td>평균기온</td><td>최저기온</td><td>최고기온</td><td>평균최저기온</td><td>평균최고기온</td></tr>
+      <tr><th>빈 값 개수</th><td>0</td><td>0</td><td>0</td><td><b>3</b></td><td>0</td><td>0</td><td><b>3</b></td><td><b>3</b></td></tr>
+    </table></div>
+    <p class="note" style="margin-bottom:0">「표시된 곳에 결측치가 있다는 거구나!」 — 교과서 말풍선</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 통계와 결측치를 직접 세어 보기</h3>
+    <p style="margin-top:0"><code>statistics</code>로 숫자 칼럼마다 개수·평균·최솟값·최댓값을 구하고, 빈 값이 몇 개인지 세요. <b>10줄뿐인 작은 표본이라</b> 교과서의 결과(111개, 결측치 3개)와 숫자가 달라요. 칼럼 번호나 <code>round</code> 자리수를 바꿔 봐요.</p>
+    <div id="clRun2"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔍 해 보기 · 데이터 처리하기 <span class="muted" style="font-weight:400;font-size:.88rem">(94쪽)</span></h3>
+    <p style="margin-top:0">다음은 수집한 데이터를 처리하는 과정에서 발생한 <b>의문을 검증한 내용</b>이에요. 제시된 내용을 참고하여 실습에 사용된 기온 데이터를 좀 더 살펴봐요.</p>
+    <div class="grid2 even">
+      <div class="cl-note" style="margin:0"><b>의문</b> 1911년에 최저 기온이 −21.5℃인데 정말 이렇게 추웠을까? 기온 값이 이상하게 입력된 것은 아닐까?</div>
+      <div class="cl-note" style="margin:0"><b>검증</b> 검색을 해 보니 정말 1911년에 강한 한파가 찾아왔었다.</div>
+    </div>
+    <p style="margin:12px 0 4px"><b>분석 · 내가 찾은 의문과 검증</b> <span class="muted">(95쪽) 자세히 살펴보고 의문이 생기는 부분을 찾아 검증해 봐요.</span></p>
+    <div class="memo"><label>의문이 생긴 부분 <small>(선택) 표에서 이상해 보이는 값을 적어 보세요.</small></label><textarea data-memo="clDoubt" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>검증한 방법과 결과 <small>(선택) 어떻게 확인했나요?</small></label><textarea data-memo="clCheck" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 결측치 처리·칼럼명 -->
+<section class="page" data-name="결측치 처리" data-acc="#2f9a5a">
+  <div class="head"><div class="num">04</div><div><h2>⑥⑦ 결측치 처리하고 칼럼명 바꾸기</h2><p>교과서 95쪽 · dropna, fillna, columns</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>빈 값이 있으면 그래프가 <b>끊겨 보여요</b>. 그래서 빈 값을 <b>지우거나, 다른 값으로 채워</b> 정리해요. 또 <b>칼럼 이름</b>에 특수 기호가 있으면 쓰기 불편하니 이름도 깔끔하게 바꿔요.</span></div>
+
+  <div class="card">
+    <h3>🧹 결측치를 처리하는 방법 <span class="muted" style="font-weight:400;font-size:.88rem">(95쪽 ❻)</span></h3>
+    <p style="margin-top:0">⑤에서 나타난 결측치를 처리해요. 결측치를 처리하는 방법에는 <b>삭제하기, 주변 값으로 채우기, 0으로 채우기</b> 등 다양한 방법이 있어요. 기온 데이터는 결측치 개수가 적으니 <b>해당 행을 삭제하는 방법</b>을 써요.</p>
+    <div class="cl-ways">
+      <div style="--k:#d64535"><b>삭제하기</b><span>빈 값이 있는 행을 지워요. 이 실습에서 쓰는 방법이에요.</span></div>
+      <div style="--k:#2f6fd0"><b>주변 값으로 채우기</b><span>변수별 평균 같은 값으로 빈 칸을 메워요.</span></div>
+      <div style="--k:#7a6ad0"><b>0으로 채우기</b><span>빈 칸에 0을 넣어요.</span></div>
+    </div>
+<pre class="code">data = data.dropna(axis = 0)  <i># data의 빈값이 있는 행을 삭제해서 data에 저장</i>
+data                          <i># data의 내용 출력</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b></p>
+    <div id="clDropFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">결과는 <b>111 rows × 8 columns</b>로, 1907년을 포함한 결측치 줄 3개가 사라져요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✏️ 칼럼명 바꾸기 <span class="muted" style="font-weight:400;font-size:.88rem">(95쪽 ❼)</span></h3>
+    <p style="margin-top:0">데이터 칼럼명을 사용하기 쉽게 변경해요. 특수 기호를 빼고 칼럼명을 정리해 봐요.</p>
+<pre class="code"><i># data의 컬럼명 변경</i>
+data.columns = ['지점', '지점명', '연도', '평균 기온', '최저 기온', '최고 기온', '평균 최저 기온', '평균 최고 기온']
+data    <i># data의 내용 출력</i></pre>
+    <div id="clColFlip" class="tcards" style="margin-top:10px"></div>
+    <div class="cl-note" style="margin-bottom:0"><b>🔬 박사님 말풍선</b> 칼럼명을 변경하지 않으면 그래프를 그리는 단계에서 특수 기호 등의 입력이 번거롭게 돼요.</div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 결측치 줄 지우고 칼럼명 바꾸기</h3>
+    <p style="margin-top:0">리스트로 같은 일을 흉내 내요. 빈 값이 있는 줄을 지우고(<code>dropna</code> 흉내), 칼럼명을 새 이름으로 바꿔요(<code>columns</code> 흉내). <b>10줄뿐인 작은 표본이라 교과서의 111 rows와 숫자가 달라요.</b> 코드 맨 아래 주석의 물음도 생각해 봐요.</p>
+    <div id="clRun3"></div>
+  </div>
+
+  <div class="card">
+    <h3>💭 내 생각 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+    <div class="memo"><label>결측치를 <b>삭제</b>하는 방법과 <b>평균으로 채우는</b> 방법 중 내가 고른다면 어느 쪽인가요? 그 까닭도 적어 보세요.</label><textarea data-memo="clWay" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">05</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#2f9a5a">기온 데이터는 기상청 <b>기상자료개방포털</b>에서 [데이터] → [기상관측-지상] → [종관기상관측]을 거쳐 검색 조건(년 자료, 기간, 지점, 기온)을 정해 <b>csv 파일</b>로 내려받는다.</div>
+    <div style="--k:#2f6fd0">내려받은 파일은 코랩에서 <b>pandas</b>의 <code>read_csv</code>로 데이터프레임으로 불러오고, <code>info()</code>·<code>describe()</code>·<code>isnull().sum()</code>으로 <b>값의 개수·통계·결측치</b>를 확인한다.</div>
+    <div style="--k:#d0602f">결측치는 <b>삭제·주변 값·0으로 채우기</b> 등으로 처리한다. 기온 데이터는 결측치가 적어 <code>dropna(axis = 0)</code>으로 행을 삭제하고, 그래프를 그리기 쉽도록 <b>칼럼명</b>을 정리한다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">흉내 낸 파이썬 실습을 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">기온 데이터에서 비어 있는 값을 어떻게 찾고 처리할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="5"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>기온 데이터를 <b>어디서 어떤 조건으로</b> 내려받는지 순서대로 설명해 보세요.</li>
+      <li>데이터를 불러온 뒤 <b>info·describe·isnull</b> 중 하나를 골라, 무엇을 알려 주는지 내 말로 쓰세요.</li>
+      <li>결측치를 <b>삭제할지, 채울지</b> 정한다면 어떤 기준으로 정할지 쓰세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

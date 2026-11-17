@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정형 데이터 수집과 처리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202c; --muted:#5b6776; --paper:#f3efe7; --card:#fff; --line:#e3ddd2;
+    --navy:#0f2742; --amber:#f2a516; --red:#d64535; --mint:#1f9d74;
+    --acc:#2f6fd0; --acc-soft:#e6eefb;
+    --shadow:0 18px 50px rgba(15,39,66,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:17px;line-height:1.65;
+    background-image:radial-gradient(rgba(15,39,66,.07) 1px,transparent 1px);background-size:22px 22px;display:flex;flex-direction:column}
+  .top{position:sticky;top:0;z-index:10;background:rgba(15,39,66,.97);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+  .brand{font-family:"Black Han Sans",sans-serif;font-size:1.15rem;letter-spacing:.01em;white-space:nowrap;color:inherit;text-decoration:none}
+  .steps{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .steps::-webkit-scrollbar{display:none}
+  .steps button{flex:0 0 auto;border:0;background:transparent;color:#9fb3cc;font:inherit;font-size:.82rem;padding:5px 9px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .steps button.on{background:var(--amber);color:var(--navy);font-weight:900}
+  .steps button.done::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#5fd3a5;margin-left:5px;vertical-align:middle}
+  .score{font-size:.85rem;background:rgba(255,255,255,.1);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .progress{height:4px;background:rgba(15,39,66,.12)}
+  .progress i{display:block;height:100%;background:var(--amber);width:0;transition:width .4s}
+  main{flex:1;width:100%;max-width:1120px;margin:0 auto;padding:26px 20px 30px}
+  .page{display:none}
+  .page.on{display:block;animation:enter .45s cubic-bezier(.2,.7,.2,1) both}
+  .page.on.back{animation-name:enterBack}
+  @keyframes enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  @keyframes enterBack{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  .head{display:flex;align-items:flex-end;gap:16px;margin-bottom:16px}
+  .num{font-family:"Black Han Sans",sans-serif;font-size:4.2rem;line-height:.85;color:var(--acc);opacity:.9}
+  .head h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:2.1rem;margin:0;line-height:1.1;letter-spacing:-.01em}
+  .head p{margin:4px 0 0;color:var(--muted)}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px;border:1px solid rgba(0,0,0,.04)}
+  .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  .grid2.even{grid-template-columns:1fr 1fr}
+  @media (max-width:860px){.grid2,.grid2.even{grid-template-columns:1fr}.num{font-size:3rem}.head h2{font-size:1.6rem}}
+  h3{margin:0 0 8px;font-size:1.1rem}
+  h4{margin:0 0 4px}
+  p{margin:6px 0}
+  a{color:var(--acc)}
+  .muted{color:var(--muted)}
+  .book{display:inline-block;font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 10px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:.93rem;margin:8px 0}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:center}
+  th{color:var(--muted);font-weight:700;font-size:.85rem}
+  td.l,th.l{text-align:left}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;font:inherit;font-size:.92rem;cursor:pointer;transition:.15s;color:var(--ink)}
+  .chip.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .btn{border:0;border-radius:10px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;transition:transform .1s, box-shadow .2s;box-shadow:0 6px 16px rgba(15,39,66,.18)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--acc);border:2px solid var(--acc);box-shadow:none}
+  .btn.sm{padding:5px 12px;font-size:.88rem}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ctrl{display:grid;grid-template-columns:70px 1fr 48px;align-items:center;gap:4px 10px;margin:4px 0}
+  .ctrl label{font-weight:900;font-size:.95rem}
+  .ctrl output{font-weight:900;text-align:right;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--acc)}
+  input[type=text],input[type=number]{font:inherit;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px;background:#fff;color:var(--ink)}
+  .big{font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums}
+  .ok{color:var(--mint);font-weight:700}.ng{color:var(--red);font-weight:700}
+  .callout{border-radius:12px;padding:12px 16px;background:var(--acc-soft);border-left:5px solid var(--acc);margin:12px 0}
+  svg{display:block;width:100%;height:auto}
+  select{max-width:100%}
+  .mono{overflow-wrap:anywhere;font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#f1f3f6;padding:1px 6px;border-radius:5px}
+  .cx{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 24px;margin-bottom:18px;border-left:6px solid var(--acc)}
+  .cx>h3{margin:0 0 4px;font-size:1.15rem}
+  .cx>.lead2{color:var(--muted);margin:0 0 12px}
+  .qa{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:860px){.qa{grid-template-columns:1fr}}
+  .qa>div{background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .qa b.q{display:block;color:var(--acc);margin-bottom:3px}
+  .vsteps{list-style:none;margin:0;padding:0;counter-reset:v}
+  .vsteps>li{position:relative;padding:9px 0 9px 44px;border-top:1px dashed var(--line)}
+  .vsteps>li:first-child{border-top:0}
+  .vsteps>li::before{counter-increment:v;content:counter(v);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:900;display:grid;place-items:center;font-size:.9rem}
+  .vsteps p{margin:2px 0 0;font-size:.93rem}
+  .case{background:#fff8e6;border:2px solid #f6d58a;border-radius:16px;padding:16px 20px;margin-bottom:18px}
+  .case>h3{margin:0 0 8px;font-size:1.05rem;color:#8a5a00}
+  /* 퀴즈 */
+  .quiz{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:16px;padding:20px 22px;margin-top:6px;box-shadow:var(--shadow)}
+  .quiz .qh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .quiz .qh b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.25rem;color:var(--amber)}
+  .quiz .qh span{font-size:.85rem;color:#a9bbd2}
+  .qi{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .qi .qq{font-weight:700;margin-bottom:8px}
+  .qi .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .qi .opts button{font:inherit;font-size:.93rem;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:10px;padding:6px 14px;cursor:pointer;transition:.15s}
+  .qi .opts button:hover:not(:disabled){border-color:var(--amber)}
+  .qi .opts button.right{background:var(--mint);border-color:var(--mint);font-weight:700}
+  .qi .opts button.wrong{background:var(--red);border-color:var(--red);text-decoration:line-through}
+  .qi .opts button:disabled{cursor:default}
+  .qi .why{margin-top:8px;font-size:.9rem;color:#d7e3f2;display:none}
+  .qi.answered .why{display:block}
+  .qi.answered.correct{box-shadow:inset 4px 0 0 var(--mint)}
+  .qi.answered.incorrect{box-shadow:inset 4px 0 0 var(--red)}
+  .shake{animation:shake .35s}
+  @keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+  .foot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(243,239,231,.94);backdrop-filter:blur(6px);border-top:1px solid var(--line)}
+  .foot .btn{min-width:110px}
+  .foot .pg{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+  /* 표지 */
+  .cover{position:relative;border-radius:22px;overflow:hidden;background:radial-gradient(ellipse at 20% 0%,#24507f 0%,#0f2742 55%,#0a1a2e 100%);color:#fff;min-height:520px;padding:46px 44px;box-shadow:var(--shadow)}
+  .cover canvas{position:absolute;right:0;top:0;height:100%;width:62%;image-rendering:pixelated;opacity:.95}
+  .cover .fade{position:absolute;inset:0;background:linear-gradient(90deg,#0f2742 34%,rgba(15,39,66,.75) 50%,rgba(15,39,66,0) 70%)}
+  .cover .in{position:relative;max-width:560px}
+  .cover .tag{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:.85rem;padding:4px 12px;border-radius:999px}
+  .cover h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:3.1rem;line-height:1.15;margin:16px 0 10px}
+  .cover p{color:#c8d6e8;font-size:1.05rem}
+  .cover ol{margin:18px 0 26px;padding-left:20px;color:#e1e9f4;columns:2;column-gap:28px;font-size:.95rem}
+  @media (max-width:700px){.cover{padding:30px 22px}.cover h1{font-size:2.2rem}.cover ol{columns:1}.cover canvas{width:100%;opacity:.3}.cover .fade{display:none}}
+  .today{margin-top:26px}
+  .kicker{display:inline-block;font-family:"Black Han Sans",sans-serif;font-size:1.15rem;color:var(--navy);margin-bottom:6px;border-bottom:4px solid var(--amber);line-height:1.2}
+  .today-lead{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:22px 26px;margin-bottom:16px}
+  .today-lead p{font-size:1.12rem;margin:6px 0 0}
+  .why3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+  @media (max-width:900px){.why3{grid-template-columns:1fr}}
+  .why{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 22px}
+  .why ul{margin:6px 0 0;padding-left:18px;font-size:.95rem}
+  .why li{margin:6px 0}
+  .why ul.can{list-style:none;padding:0}
+  .why ul.can li{padding-left:28px;position:relative}
+  .why ul.can li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 7' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+  .why ul.uses{list-style:none;padding:0}
+  .why ul.uses li{border-left:3px solid var(--amber);padding-left:10px}
+  .glossary-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .glossary-head .muted{font-size:.88rem}
+  .glossary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+  @media (max-width:1000px){.glossary{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.glossary{grid-template-columns:1fr}}
+  .gcard{all:unset;box-sizing:border-box;cursor:pointer;display:block;background:#fff;border-radius:14px;padding:16px 16px 12px;box-shadow:var(--shadow);border-top:6px solid var(--g);position:relative;transition:transform .18s, box-shadow .18s}
+  .gcard:hover,.gcard:focus-visible{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,39,66,.16)}
+  .gcard:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+  .gcard i{position:absolute;right:14px;top:8px;font-style:normal;font-family:"Black Han Sans",sans-serif;font-size:1.9rem;color:var(--g);opacity:.25}
+  .gcard h4{margin:0 0 6px;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;color:var(--g)}
+  .gcard dl{margin:0;font-size:.88rem;line-height:1.45}
+  .gcard dt{font-weight:900;margin-top:7px}
+  .gcard dd{margin:1px 0 0;color:#3c4654}
+  .prob{display:grid;grid-template-columns:60px 1fr 46px;gap:6px;align-items:center;font-size:.88rem;min-width:200px}
+  .prob i{display:block;height:12px;border-radius:6px;background:var(--acc)}
+  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:860px){.apps{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:2rem;display:block}
+  .apps button b{display:block}
+  .appd{display:none}
+  .appd.on{display:block;animation:enter .35s both}
+  .ex2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  @media (max-width:640px){.ex2{grid-template-columns:1fr}}
+  .ex2>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;font-size:.93rem;border-left:4px solid var(--acc)}
+  .try{margin-top:12px;background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.92rem}
+  .try ol{margin:4px 0 0;padding-left:20px}
+  /* 3단원 공통 */
+  .easy{display:flex;gap:12px;align-items:flex-start;background:#fffbea;border:2px solid #f6d58a;border-radius:14px;padding:12px 16px;margin:-4px 0 16px;font-size:1rem;line-height:1.6}
+  .easy>span{min-width:0;overflow-wrap:anywhere}
+  .easy b.t{flex:0 0 auto;background:#f2a516;color:#0f2742;border-radius:999px;padding:2px 10px;font-size:.82rem;margin-top:2px}
+  .route{position:absolute;right:30px;top:36px;width:min(430px,44%);display:grid;gap:10px}
+  .route .st{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:14px;padding:10px 14px;color:#fff;opacity:0;transform:translateX(20px);animation:rin .6s forwards}
+  .route .st i{font-style:normal;font-size:1.6rem}
+  .route .st b{display:block;font-size:1.02rem}
+  .route .st small{color:#c8d6e8;font-size:.82rem}
+  .route .ar{color:var(--amber);text-align:center;font-weight:900;opacity:0;animation:rin .5s forwards}
+  @keyframes rin{to{opacity:1;transform:none}}
+  @media (max-width:1080px){.route{position:relative;right:auto;top:auto;width:100%;margin-top:22px}}
+  .story{background:rgba(255,255,255,.08);border-left:4px solid var(--amber);border-radius:10px;padding:10px 14px;margin:14px 0;color:#e1e9f4;font-size:.95rem}
+  .story b{color:#fff}
+  /* 카드 묶음 */
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media (max-width:900px){.cards3,.cards4{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.cards3,.cards2,.cards4{grid-template-columns:1fr}}
+  .kc{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:14px 16px;border-top:6px solid var(--k,var(--acc))}
+  .kc h4{color:var(--k,var(--acc));font-size:1.05rem;margin:0 0 4px}
+  .kc p{font-size:.92rem;margin:4px 0 0}
+  .kc .ic{font-size:1.7rem;line-height:1}
+  .kc small{display:block;color:var(--muted);font-size:.8rem;margin-top:6px}
+  .tagt{display:inline-block;font-size:.76rem;font-weight:900;border-radius:999px;padding:1px 9px;background:color-mix(in srgb,var(--k,var(--acc)) 14%,white);color:var(--k,var(--acc));margin:6px 4px 0 0}
+  /* 연표 */
+  .tl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tl button{flex:1;min-width:92px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 6px;font:inherit;font-weight:900;cursor:pointer;color:var(--ink)}
+  .tl button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .tlv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:640px){.tlv{grid-template-columns:1fr}}
+  .tlv>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:5px solid var(--k)}
+  .tlv h4{color:var(--k)}
+  .tlv .it{margin:6px 0 0;font-size:.93rem}
+  .tlv .it b{display:block}
+  /* 분류 게임 */
+  .sit{background:#fbfaf7;border:2px dashed var(--line);border-radius:14px;padding:14px 16px;text-align:center;min-height:170px}
+  .sit .cnt{font-size:.82rem;color:var(--muted)}
+  .sit .sq{font-size:1.08rem;font-weight:900;margin:6px 0 12px;min-height:52px}
+  .sit .ic{font-size:2rem}
+  .sit .row{justify-content:center}
+  .sit .fb{min-height:24px;margin-top:8px;font-size:.93rem}
+  .sit .cat{border:2px solid var(--k);color:var(--k);background:#fff;font-weight:900}
+  .sit .cat:hover{background:color-mix(in srgb,var(--k) 12%,white)}
+  .board{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:8px;margin-top:12px}
+  @media (max-width:760px){.board{grid-template-columns:1fr 1fr}}
+  .board>div{background:#fff;border-radius:12px;border-top:5px solid var(--k);padding:8px 10px;font-size:.84rem;min-height:70px}
+  .board>div b{display:block;color:var(--k);font-size:.92rem}
+  .board>div span{display:block;border-top:1px dashed var(--line);padding:3px 0}
+  .board>div span.x{color:var(--red)}
+  /* 뒤집는 카드 */
+  .tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .tcard{perspective:900px;height:172px;cursor:pointer}
+  .tcard .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .tcard.flip .in{transform:rotateY(180deg)}
+  .tcard .f,.tcard .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:12px 14px;box-shadow:0 6px 16px rgba(15,39,66,.09);overflow:auto}
+  .tcard .f{background:#fff;border-top:6px solid var(--acc);display:flex;flex-direction:column;justify-content:center;text-align:center}
+  .tcard .f i{font-style:normal;font-size:2rem;line-height:1.1}
+  .tcard .f b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;line-height:1.25;margin-top:4px}
+  .tcard .f small{color:var(--muted);font-size:.78rem;margin-top:6px}
+  .tcard .b{background:var(--acc);color:#fff;transform:rotateY(180deg);font-size:.9rem;line-height:1.5}
+  .tcard .b .x{margin-top:6px;background:rgba(255,255,255,.16);border-radius:8px;padding:5px 8px;font-size:.84rem}
+  /* 사례 탭 */
+  .apps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .apps.a6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:860px){.apps,.apps.a6{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:480px){.apps,.apps.a6{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:12px 8px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s;font-size:.92rem}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:1.8rem;display:block}
+  .apps button b{display:block}
+  .cview{margin-top:14px}
+  .pr{display:grid;grid-template-columns:1fr 1.3fr;gap:12px}
+  @media (max-width:760px){.pr{grid-template-columns:1fr}}
+  .pr>div{border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .pr .p{background:#fdecea;border-left:5px solid var(--red)}
+  .pr .s{background:#e7f6ef;border-left:5px solid var(--mint)}
+  .pr h4{font-size:.95rem}
+  .pr .p h4{color:#9b2c20}.pr .s h4{color:#13684d}
+  .dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.9rem;margin-top:10px;background:#fbfaf7;border-radius:10px;padding:10px 12px}
+  .dl b{color:var(--acc)}
+  /* 메모 */
+  .memo{margin-top:10px}
+  .memo label{display:block;font-weight:700;font-size:.93rem;margin:10px 0 4px}
+  .memo label small{font-weight:400;color:var(--muted)}
+  .memo input[type=text]{width:100%}
+  textarea{font:inherit;width:100%;min-height:64px;padding:8px 10px;border:1px solid #c5ccd5;border-radius:8px;resize:vertical;color:var(--ink);background:#fff}
+  .saved{font-size:.8rem;color:var(--mint);min-height:1em}
+  /* 투표 */
+  .vote{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  @media (max-width:560px){.vote{grid-template-columns:1fr}}
+  .vote button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border:3px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center;font-weight:900}
+  .vote button.on{border-color:var(--acc);background:var(--acc-soft)}
+  .vote button small{display:block;font-weight:400;color:var(--muted);font-size:.84rem}
+  .reveal{display:none;margin-top:12px}
+  .reveal.on{display:block;animation:fadein .4s both}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .pct{display:grid;grid-template-columns:120px 1fr 50px;gap:8px;align-items:center;margin:6px 0;font-size:.93rem}
+  .pct i{display:block;height:16px;border-radius:8px;background:var(--acc);width:0;transition:width .8s}
+  /* 질문폼 연결 */
+  .formgo{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);margin-top:18px}
+  .formgo .kicker{color:#fff;border-bottom-color:var(--amber)}
+  .formgo h3{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;margin:4px 0 8px}
+  .formgo ol{margin:6px 0 12px;padding-left:22px;color:#e1e9f4}
+  .formgo ol li{margin:6px 0}
+  .formgo p{color:#c8d6e8;font-size:.92rem}
+  .formgo .go{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:1.1rem;text-decoration:none;border-radius:12px;padding:12px 22px;margin-top:6px}
+  .formgo .go:hover{filter:brightness(1.05)}
+  .msum{background:#fff;border-radius:14px;padding:12px 16px;margin-top:12px;color:var(--ink);font-size:.9rem}
+  .msum h4{color:var(--navy)}
+  .msum dl{margin:6px 0 0}
+  .msum dt{font-weight:700;margin-top:8px;color:var(--muted);font-size:.84rem}
+  .msum dd{margin:2px 0 0;white-space:pre-wrap}
+  .msum dd.e{color:#aab2bd}
+  .key3{display:grid;gap:10px;margin-bottom:18px}
+  .key3 div{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;border-left:6px solid var(--k);font-size:1.02rem}
+  .note{font-size:.84rem;color:var(--muted);margin-top:8px}
+  .flow2{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .flow2>div{flex:1;min-width:140px;background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .flow2>div b{display:block}
+  .flow2>div span{font-size:.88rem}
+  .flow2>.ar{flex:0 0 auto;min-width:0;background:none;border:0;align-self:center;font-weight:900;color:var(--muted);padding:0}
+  @media (max-width:640px){.flow2>.ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .chk{display:flex;flex-wrap:wrap;gap:8px}
+  .chk button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink)}
+  .chk button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .tbl td,.tbl th{padding:8px 10px;vertical-align:top}
+  .tbl td{text-align:left;font-size:.92rem}
+  .mx{min-width:560px}
+  .mx th{background:#fbfaf7}
+  .mx td{border:1px solid var(--line);height:74px;width:30%;font-size:.86rem;cursor:pointer;background:#fff;transition:background .2s}
+  .mx td:hover{background:var(--acc-soft)}
+  .mx td.fill{background:#e7f6ef;cursor:default}
+  .mx td.bad{background:#fdecea}
+  .mx th.r{white-space:nowrap}
+  #mxPool button{border-radius:12px;text-align:left;max-width:100%}
+  /* 4단원 */
+  .sdg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  @media (max-width:760px){.sdg{grid-template-columns:repeat(3,1fr)}}
+  .sdg button{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:8px 6px;color:#fff;background:var(--c);min-height:74px;font-size:.78rem;line-height:1.3;font-weight:700;display:flex;flex-direction:column;gap:2px;transition:transform .15s}
+  .sdg button b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.3rem;line-height:1}
+  .sdg button:hover,.sdg button.on{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .sdg button.on{outline:3px solid var(--navy)}
+  .sdgv{margin-top:12px;background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:6px solid var(--c,#0f2742);min-height:60px}
+  .five{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.five{grid-template-columns:1fr}}
+  .five>div{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:12px 12px;border-top:6px solid var(--k)}
+  .five b.n{font-family:"Black Han Sans",sans-serif;color:var(--k);font-size:1.2rem}
+  .five h4{margin:2px 0 4px;font-size:.98rem}
+  .five p{font-size:.86rem;margin:4px 0}
+  .five .ml{margin-top:8px;background:color-mix(in srgb,var(--k) 10%,white);border-radius:8px;padding:6px 8px;font-size:.82rem}
+  .quad{display:grid;grid-template-columns:28px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:6px;margin-top:8px}
+  .quad .ax{font-size:.78rem;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+  .quad .ax.v{writing-mode:vertical-rl}
+  .quad .cell{background:#fbfaf7;border:2px dashed var(--line);border-radius:12px;min-height:84px;padding:6px 8px;font-size:.84rem;cursor:pointer}
+  .quad .cell.best{border-color:var(--mint);background:#e7f6ef}
+  .quad .cell small{display:block;color:var(--muted);font-size:.74rem}
+  .quad .cell span{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:2px 2px 0 0}
+  .qbuild{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:1.08rem;font-weight:700;background:#fff8e6;border:2px solid #f6d58a;border-radius:12px;padding:12px 14px}
+  .qbuild input{flex:1;min-width:200px;font:inherit;font-weight:400;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px}
+  .plan{width:100%}
+  .plan td:first-child{width:150px;font-weight:700;font-size:.9rem;background:#fbfaf7}
+  .plan input{width:100%;font:inherit;padding:5px 8px;border:1px solid #c5ccd5;border-radius:6px}
+  /* 시뮬레이터 */
+  .sim{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:760px){.sim{grid-template-columns:1fr}}
+  .sim .cls{background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .sim .cls h4{color:var(--k);display:flex;justify-content:space-between}
+  .sim .cls ul{margin:6px 0 0;padding-left:18px;font-size:.88rem}
+  .sim .cls li.new{color:var(--k);font-weight:700}
+  .cand{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .cand button{border:2px dashed var(--k);background:#fff;border-radius:10px;padding:4px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
+  .cand button.on{border-style:solid;background:color-mix(in srgb,var(--k) 15%,white);font-weight:700}
+  .tt td,.tt th{padding:6px 8px;font-size:.88rem}
+  .tt td.r{color:var(--mint);font-weight:900}.tt td.w{color:var(--red);font-weight:900}
+  .score2{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .score2 div{flex:1;min-width:140px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .score2 b{display:block;font-family:"Black Han Sans",sans-serif;font-size:1.8rem;color:var(--acc)}
+  /* 스크래치 블록 */
+  .blocks{font-family:ui-sans-serif,system-ui;font-size:.86rem;display:inline-block}
+  .blk{display:block;border-radius:6px;padding:5px 10px;margin:3px 0;color:#fff;width:max-content;max-width:100%}
+  .blk.ev{background:#ffbf00;color:#333;border-radius:14px 14px 6px 6px}
+  .blk.ctl{background:#ffab19;color:#333}
+  .blk.ml{background:#4c97ff}
+  .blk.lk{background:#9966ff}
+  .blk.in{margin-left:22px}
+  .blk i{font-style:normal;background:rgba(255,255,255,.9);color:#333;border-radius:10px;padding:0 6px;margin:0 2px}
+  .penguin{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  @media (max-width:560px){.penguin{grid-template-columns:1fr}}
+  .penguin div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .dist td,.dist th{padding:6px 8px;font-size:.88rem;text-align:center}
+  .dist tr.near{background:#fff4d6;font-weight:900}
+  .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.roles{grid-template-columns:1fr 1fr}}
+  .roles div{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px;text-align:center;font-size:.84rem}
+  .roles div i{font-style:normal;font-size:1.6rem;display:block}
+  .roles div b{display:block;font-size:.92rem}
+  .roles div em{display:block;font-style:normal;margin-top:6px;background:#e6eefb;border-radius:8px;padding:4px 6px;color:#1b3d66}
+  .types div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .types div b{display:block}
+  .types div small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+
+  /* 카드 격자 칸이 안의 긴 코드·표 때문에 늘어나지 않게 */
+  .cards2>*,.cards3>*,.cards4>*,.grid2>*{min-width:0}
+
+  /* 공용 그림·실습 부품 (charts.js) */
+  .of-box{overflow-x:auto}
+  .of-box svg{display:block;width:100%;max-width:880px;height:auto}
+  .of-box .fe{fill:none;stroke:#8a94a3;stroke-width:2}
+  .of-box .fl{font-size:11px;fill:#5b6776;text-anchor:middle}
+  .of-box .fn{cursor:pointer}
+  .of-box .fb{fill:#fff;stroke-width:2}
+  .of-box .fn.on .fb{fill:#fff4d6;stroke-width:4}
+  .of-box .fn:focus{outline:none}
+  .of-box .fn:focus .fb{stroke-width:4}
+  .of-box .fnum{font-size:14px;font-weight:900;fill:#fff;text-anchor:middle}
+  .of-box .ft{font-size:13px;font-weight:700;fill:#16202c}
+  .of-box .fs{font-size:11px;fill:#5b6776}
+  .of-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:8px;font-size:.85rem}
+  .of-legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;background:var(--k);margin-right:5px;vertical-align:-2px}
+  .of-legend small{color:var(--muted)}
+  .of-tw{overflow-x:auto}
+  .of-set{min-width:760px;margin:0}
+  .of-set th{text-align:left;background:#fbfaf7;white-space:nowrap}
+  .of-set td{border-top:1px solid #eef0f3;font-size:.92rem;text-align:left}
+  .of-set td:first-child{font-weight:900;color:var(--acc);text-align:center;width:44px}
+  .of-set tr[data-s]{cursor:pointer;transition:background .3s}
+  .of-set tr.hl td{background:#fff4d6}
+  .sp-wrap{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;overflow-x:auto}
+  .sp-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  .sp-svg .sp-pt{cursor:grab}
+  .sp-read{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  .sp-read>div{background:#fbfaf7;border-radius:10px;padding:6px 12px;font-size:.9rem}
+  .sp-read b{font-size:1.15rem;color:var(--acc)}
+  .mt-wrap{overflow-x:auto}
+  .mt{margin:0}
+  .mt td{padding:4px 6px}
+  .mt .mt-in{width:5.5em;font:inherit;text-align:center;border:1px solid var(--line);border-radius:6px;padding:3px}
+  .mt tr.on td{background:#fff4d6}
+  /* 파이썬 실행 칸 (pyrun) */
+  .pyrun{margin:12px 0}
+  .pr-code,.pr-stdin{display:block;width:100%;font-family:"Menlo","Consolas","Courier New",monospace;
+    font-size:.92rem;line-height:1.5;color:#e1e9f4;background:#0f2742;border:1px solid #1d3a5c;
+    border-radius:10px;padding:12px 14px;resize:vertical;tab-size:4;-webkit-text-size-adjust:100%}
+  .pr-code{white-space:pre;overflow-x:auto}
+  .pr-code:focus,.pr-stdin:focus{outline:2px solid var(--amber);outline-offset:1px}
+  .pr-code[readonly]{opacity:.96}
+  .pr-in{margin-top:8px}
+  .pr-in label{display:block;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:3px}
+  .pr-in label small{font-weight:400}
+  .pr-stdin{font-size:.88rem;min-height:2.4em}
+  .pr-bar{display:flex;gap:8px;align-items:center;margin:8px 0 0;flex-wrap:wrap}
+  .pr-stat{font-size:.82rem;color:var(--muted)}
+  .pr-out{margin:8px 0 0;font-family:"Menlo","Consolas","Courier New",monospace;font-size:.9rem;
+    line-height:1.5;white-space:pre-wrap;word-break:break-word;color:#0c2a1e;background:#e7f6ee;
+    border-left:4px solid var(--mint);border-radius:0 8px 8px 0;padding:10px 12px;overflow-x:auto}
+  .pr-out.err{color:#4a1512;background:#fdecea;border-left-color:var(--red)}
+
+  /* 넓은 표는 가로로 스크롤되게 감싼다(폰 폭 넘침 방지) */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 0}
+  .tscroll>table{margin-top:0}
+
+  /* 읽기용 코드 카드 (실행하지 않고 보여 주기만) */
+  .code{background:#0f2742;color:#e1e9f4;border-radius:10px;padding:12px 14px;margin:10px 0;
+    font-family:"Menlo","Consolas","Courier New",monospace;font-size:.92rem;line-height:1.55;
+    overflow-x:auto;white-space:pre;-webkit-overflow-scrolling:touch}
+  .code b{color:var(--amber);font-weight:700}
+  .code i{color:#8aa6cc;font-style:normal}
+  /* 진도 보내기 */
+  .tr-gate{position:fixed;inset:0;z-index:200;background:rgba(15,39,66,.72);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
+  .tr-card{background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.3);padding:22px 22px 16px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px}
+  .tr-card h2{margin:0;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;color:var(--navy)}
+  .tr-sub{margin:-4px 0 4px;color:var(--muted);font-size:.92rem}
+  .tr-cls{display:flex;gap:8px}
+  .tr-cls label{flex:1;cursor:pointer}
+  .tr-cls input{position:absolute;opacity:0;pointer-events:none}
+  .tr-cls span{display:block;text-align:center;padding:10px 0;border:2px solid var(--line);border-radius:12px;font-weight:900;font-size:1.05rem}
+  .tr-cls input:checked+span{border-color:var(--navy);background:var(--navy);color:#fff}
+  .tr-cls input:focus-visible+span{outline:3px solid var(--amber)}
+  .tr-f{display:flex;align-items:center;gap:10px}
+  .tr-f span{width:40px;font-weight:700}
+  .tr-f input{flex:1;min-width:0;font:inherit;font-size:1.05rem;padding:9px 12px;border:1px solid #c5ccd5;border-radius:10px}
+  .tr-err{color:var(--red);font-weight:700;font-size:.9rem;min-height:1.2em}
+  .tr-card .btn{padding:12px;font-size:1.05rem;background:var(--navy)}
+  .tr-note{margin:2px 0 0;color:var(--muted);font-size:.8rem;line-height:1.5;text-align:center}
+  .tr-who,.tr-badge{display:flex;align-items:center;gap:6px;font-size:.82rem;background:rgba(255,255,255,.12);border-radius:999px;padding:3px 4px 3px 12px;white-space:nowrap}
+  .tr-badge{padding:3px 12px;background:var(--amber);color:#111;font-weight:700}
+  .tr-who button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(255,255,255,.18);border-radius:999px;padding:2px 9px}
+  .tr-who button:hover{background:rgba(255,255,255,.3)}
+  .tr-cls[hidden]{display:none}
+  .tr-badge button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(0,0,0,.14);border-radius:999px;padding:2px 9px;margin-left:6px}
+  /* page-guard: 글자 선택·복사 막기 (입력 칸은 편집 가능) */
+  body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  input,textarea,select,[contenteditable]{-webkit-user-select:text;user-select:text}
+  .pg-toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#0f2742;color:#fff;padding:9px 16px;border-radius:999px;font-size:.9rem;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:opacity .2s;pointer-events:none}
+  .pg-toast.on{opacity:1}
+  /* u3-collect 전용 (cl-) */
+  .cl-flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+  .cl-flow>div:not(.ar){flex:1;min-width:120px;background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .cl-flow small{display:block;color:var(--muted);font-weight:700}
+  .cl-flow b{font-size:.95rem}
+  .cl-flow .ar{flex:0 0 auto;align-self:center;font-weight:900;color:var(--muted)}
+  @media (max-width:640px){.cl-flow>div:not(.ar){flex-basis:100%}.cl-flow .ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .cl-kind{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px}
+  .cl-kind b{display:block;color:var(--k)}
+  .cl-kind span{display:block;font-size:.92rem;margin-top:3px}
+  .cl-steps{display:grid;gap:12px;margin:8px 0 12px}
+  .cl-steps>div{display:flex;gap:12px;align-items:flex-start;background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px;min-width:0}
+  .cl-steps .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--k);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .cl-steps>div>div{min-width:0;overflow-wrap:anywhere}
+  .cl-steps b{color:var(--k)}
+  .cl-steps span:not(.n){display:block;font-size:.93rem;margin-top:3px}
+  .cl-ul{margin:6px 0 0;padding-left:20px}
+  .cl-ul li{margin:3px 0}
+  .cl-tbl th,.cl-tbl td{font-size:.84rem;white-space:nowrap;text-align:center}
+  .cl-tbl{min-width:420px}
+  .cl-note{background:#fbfaf7;border:1px solid var(--line);border-left:6px solid #2f9a5a;border-radius:10px;padding:10px 14px;font-size:.92rem;margin:8px 0;overflow-wrap:anywhere}
+  .cl-ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
+  @media (max-width:640px){.cl-ways{grid-template-columns:1fr}}
+  .cl-ways>div{background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .cl-ways b{color:var(--k)}
+  .cl-ways span{display:block;font-size:.9rem;margin-top:3px}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}
+</style>
+</head>
+<body>
+<div class="top">
+  <span class="brand">소프트웨어와 생활</span>
+  <nav class="steps" id="steps"></nav>
+  <div class="score" id="score"></div>
+</div>
+<div class="progress"><i id="prog"></i></div>
+
+<main id="main">
+
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#2f9a5a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅲ. 현상을 분석하는 소프트웨어 · 정형 데이터 수집과 처리</span>
+      <h1>기온 데이터로<br>기후 변화를 알아볼까?</h1>
+      <div class="story"><b>정형 데이터로 사회 현상을 분석할 수 있을까? (92쪽)</b><br>정형 데이터는 행과 열의 표 형태로 <b>숫자나 날짜, 문자</b> 데이터로 구성돼요. 기온을 측정한 정형 데이터를 그래프로 그리면 기온 변화의 추이를 알 수 있어요. 이 차시에서는 그 첫 두 단계, <b>수집</b>과 <b>처리</b>를 해 봐요.</div>
+      <p>기상청 자료를 내려받고, 코랩에서 불러와 확인한 뒤, 비어 있는 값을 처리하는 순서를 따라가요.</p>
+      <ol>
+        <li>데이터 수집</li><li>불러오기 · 확인</li><li>결측치 처리</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 할 실습 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>📥</i><div><b>수집</b><small>기상자료개방포털에서 내려받기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🧾</i><div><b>불러오기·확인</b><small>코랩에서 표로 보기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🧹</i><div><b>처리</b><small>결측치 지우기 · 이름 바꾸기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">실습 · 기후 변화 추이를 알려 주는 시각화 분석 자료 만들기 (92쪽)</span>
+      <p>기후 변화의 정도를 알 수 있는 방법은 무엇이 있을까요? <b>정형 데이터 형태로 기온을 측정한 데이터</b>가 있다면 이를 그래프로 표현하여 <b>기온 변화의 추이</b>를 알아볼 수 있어요. 기온 데이터를 분석해 기후 변화의 심각성을 사람들에게 알리는 <b>홍보 자료</b>로 활용해 봐요.</p>
+    </div>
+    <div class="card">
+      <h3>🌡️ 실습 개요 <span class="muted" style="font-weight:400;font-size:.88rem">(92쪽)</span></h3>
+      <div class="tscroll"><table class="tbl">
+        <tr><th>문제 상황</th><td>시각화 자료를 활용하여 기후 변화의 심각성을 많은 사람들에게 쉽게 알려야 한다.</td></tr>
+        <tr><th>활용 데이터</th><td>기온 데이터</td></tr>
+        <tr><th>시각화 방법</th><td>그래프(선, 막대, 산점도, 히스토그램)</td></tr>
+        <tr><th>사용 소프트웨어</th><td>구글 코랩(Google Colab), 파이썬</td></tr>
+      </table></div>
+      <p style="margin:12px 0 4px"><b>실습 순서</b> <span class="muted">(이 차시는 ①②, 그래프는 다음 차시에서)</span></p>
+      <div class="cl-flow">
+        <div style="--k:#2f9a5a"><small>1</small><b>데이터 수집</b></div><div class="ar">→</div>
+        <div style="--k:#2f6fd0"><small>2</small><b>데이터 처리</b></div><div class="ar">→</div>
+        <div style="--k:#d0602f"><small>3</small><b>데이터 시각화</b></div><div class="ar">→</div>
+        <div style="--k:#9b4fc4"><small>4</small><b>분석 결과 해석</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🐍 코드는 두 가지로 만나요</h3>
+      <div class="grid2 even">
+        <div class="cl-kind" style="--k:#1f2f4a"><b>📖 읽는 코드</b><span>교과서의 코랩 코드(<code>pandas</code>를 쓰는 코드)는 어두운 <b>코드 카드</b>로 읽기만 해요. 인쇄된 그대로 옮겼어요.</span></div>
+        <div class="cl-kind" style="--k:#1f9d74"><b>▶ 돌려 보는 코드</b><span>같은 단계를 <b>기본 파이썬</b>(리스트·<code>split</code>·<code>statistics</code>)으로 흉내 낸 코드예요. 고쳐서 <b>실행</b>을 눌러 봐요.</span></div>
+      </div>
+      <p class="note" style="margin-bottom:0">처음 실행하면 파이썬을 불러오느라 몇 초 걸려요. 흉내 코드는 기온 데이터의 <b>앞 10줄(1907~1916년)</b>만 쓰는 작은 표본이라, 교과서의 결과 숫자(예: 결측치 3개, 111 rows)와 달라요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 기온 데이터에서 비어 있는 값을 어떻게 찾고 처리할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>기상자료개방포털에서 기온 데이터를 내려받는 순서를 말할 수 있다.</li>
+          <li><code>read_csv</code>·<code>info</code>·<code>describe</code>·<code>isnull</code>이 하는 일을 설명할 수 있다.</li>
+          <li>결측치를 처리하는 방법을 고르고 이유를 말할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">csv 파일 · 결측치 · 구글 코랩 · 데이터프레임 · NaN · 사분위수 · 칼럼명</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>기온 데이터는 <b>어느 지역</b>(관측 지점)을 골라서 살펴보고 싶나요? 그 까닭은? <small>떠오르는 대로 한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="clPlan" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 데이터 수집부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 데이터 수집 -->
+<section class="page" data-name="데이터 수집" data-acc="#2f9a5a">
+  <div class="head"><div class="num">01</div><div><h2>① 데이터 수집</h2><p>교과서 92쪽 · 기상자료개방포털에서 기온 데이터 내려받기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>기후 변화를 알아보려면 먼저 <b>기온 기록</b>이 필요해요. 우리나라 기온 기록은 기상청의 <b>기상자료개방포털</b>에서 내려받을 수 있어요. <b>찾아가기 → 조건 정하기 → 파일 열어 보기</b> 세 단계로 해요.</span></div>
+
+  <div class="card">
+    <h3>📥 기온 데이터 내려받기 세 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(92쪽)</span></h3>
+    <p style="margin-top:0">기후 변화 상황을 파악하기 위해 기온 데이터를 수집해 분석하려고 해요. 우리나라의 기온 데이터는 기상청의 「기상자료개방포털」에서 내려받을 수 있어요. 관측 지역 중 <b>한 곳</b>을 선택해 그 지역에서 지금까지 관측된 기온을 확인해 봐요.</p>
+    <div class="cl-steps">
+      <div style="--k:#2f9a5a"><span class="n">1</span><div><b>포털에서 데이터 찾기</b><span>기상자료개방포털(data.kma.go.kr)에 접속해 <b>[데이터] → [기상관측-지상] → [종관기상관측]</b> 순으로 선택해요.</span></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>검색 조건 정하고 내려받기</b><span>검색 조건을 설정해서 csv 파일을 내려받은 뒤, 파일명을 <b>temp.csv</b>로 바꿔서 저장해요.
+        <ul class="cl-ul"><li>자료 형태 : <b>년 자료</b></li><li>기간 : <b>1904년 ~ 2022년</b></li><li>지점 : <b>서울특별시</b>(또는 원하는 지역)를 선택, <b>기온</b> 선택</li></ul></span></div></div>
+      <div style="--k:#d0602f"><span class="n">3</span><div><b>받은 파일 열어 확인하기</b><span>받은 파일을 열어 데이터를 확인해요.</span></div></div>
+    </div>
+    <p class="callout" style="margin-bottom:0">💡 <b>TIP · 데이터 수집 방법</b> 로그인 창이 뜰 때 아이디와 비밀번호를 입력하지 않고 로그인 버튼 위에 있는 <b>확인</b> 버튼을 누르면 비회원으로도 파일을 내려받을 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 어느 단계에서 하는 일일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">한 장면씩 읽고 세 단계 가운데 어디에 속하는지 골라 봐요.</p>
+    <div id="clStepSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>📄 받은 파일 열어 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(92쪽 ③)</span></h3>
+    <p style="margin-top:0">기간을 1904년부터로 설정했지만, 데이터는 <b>1907년부터</b> 있어요. 그리고 <b>1907년에 빈칸(결측치)</b>이 있어요. 아래는 내려받은 temp.csv의 앞부분(1907~1916년, 서울 108지점)이에요. 칸을 나누는 쉼표(,)와 빈 칸을 눈여겨봐요.</p>
+    <p style="margin:8px 0 4px"><b>파일 안의 글 (앞 3줄)</b></p>
+<pre class="code">지점,지점명,일시,평균기온(°C),최저기온(°C),최고기온(°C),평균최저기온(°C),평균최고기온(°C)
+108,서울,1907,<b>,</b>-20.1,25.4,<b>,</b>
+108,서울,1908,10.4,-15.8,33.6,5.8,15.7</pre>
+    <p class="note" style="margin:0 0 8px">1907년 줄에는 평균기온 자리에 값이 없어서 쉼표가 연달아 나와요.</p>
+    <p style="margin:8px 0 4px"><b>표로 본 모습</b></p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>지점</th><th>지점명</th><th>일시</th><th>평균기온(°C)</th><th>최저기온(°C)</th><th>최고기온(°C)</th><th>평균최저기온(°C)</th><th>평균최고기온(°C)</th></tr>
+      <tr><td>108</td><td>서울</td><td>1907</td><td></td><td>-20.1</td><td>25.4</td><td></td><td></td></tr>
+      <tr><td>108</td><td>서울</td><td>1908</td><td>10.4</td><td>-15.8</td><td>33.6</td><td>5.8</td><td>15.7</td></tr>
+      <tr><td>108</td><td>서울</td><td>1909</td><td>10.6</td><td>-14.6</td><td>35.6</td><td>5.8</td><td>16</td></tr>
+      <tr><td>108</td><td>서울</td><td>1910</td><td>10.3</td><td>-19.9</td><td>33.3</td><td>5.7</td><td>15.9</td></tr>
+      <tr><td>108</td><td>서울</td><td>1911</td><td>10.6</td><td>-21.5</td><td>34.5</td><td>6</td><td>15.9</td></tr>
+      <tr><td>108</td><td>서울</td><td>1912</td><td>10.1</td><td>-18.6</td><td>34</td><td>5.1</td><td>15.6</td></tr>
+      <tr><td>108</td><td>서울</td><td>1913</td><td>10</td><td>-19.6</td><td>31.7</td><td>4.9</td><td>15.6</td></tr>
+      <tr><td>108</td><td>서울</td><td>1914</td><td>12</td><td>-14</td><td>35.6</td><td>7.7</td><td>17</td></tr>
+      <tr><td>108</td><td>서울</td><td>1915</td><td>10.8</td><td>-21.3</td><td>34.8</td><td>6.6</td><td>15.8</td></tr>
+      <tr><td>108</td><td>서울</td><td>1916</td><td>10.9</td><td>-19</td><td>33.2</td><td>6.4</td><td>16.5</td></tr>
+    </table></div>
+    <p class="note" style="margin-bottom:0">1907년 줄의 평균기온·평균최저기온·평균최고기온 칸이 <b>비어 있어요</b>. 이 빈 값이 바로 결측치예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+    <div class="memo"><label>내가 고른 지역(지점)의 데이터는 <b>몇 년부터</b> 있을 것 같나요? 직접 내려받아 확인해 보고 적어 보세요.</label><textarea data-memo="clPoint" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 코랩 준비·불러오기 -->
+<section class="page" data-name="코랩 · 불러오기" data-acc="#2f9a5a">
+  <div class="head"><div class="num">02</div><div><h2>② 데이터 처리 시작 · 코랩 준비하고 불러오기</h2><p>교과서 93쪽 · 글꼴 설치, 파일 업로드, 데이터프레임으로 불러오기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>내려받은 csv 파일은 글자 묶음일 뿐이에요. 코랩에서 <b>표(데이터프레임)</b>로 바꿔 불러와야 계산도 하고 그래프도 그릴 수 있어요. 순서는 <b>글꼴 설치 → 파일 올리기 → 표로 불러오기</b>예요.</span></div>
+
+  <div class="card">
+    <h3>🗒️ 왜 처리가 필요할까? <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽)</span></h3>
+    <p style="margin-top:0">데이터를 분석하여 정확한 정보를 도출하려면 데이터에 비어 있는 값이나 이상한 값, 중복된 값 등을 정리하는 <b>전처리 과정</b>이 필요해요. 앞서 내려받은 기온 데이터(temp.csv)에 빈 값이 있으므로 이를 처리하는 작업을 진행해 봐요.</p>
+    <div class="cl-note"><b>구글 코랩</b> 구글에서 제공하는 주피터 노트북의 온라인 버전이에요. 별도의 프로그램 설치 없이 웹 브라우저 안에서 파이썬 스크립트를 작성하고 실행할 수 있어요. 오프라인 환경에서는 파이썬 공식 홈페이지(python.org)에서 제공하는 설치형 통합 개발 환경인 <b>파이썬 IDLE</b>을 쓴대요.</div>
+  </div>
+
+  <div class="card">
+    <h3>1️⃣ 한글 글꼴 설치 <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽 ❶, 읽는 코드)</span></h3>
+    <p style="margin-top:0">데이터 처리를 시작하기 전에 코랩에서 <b>한글</b>을 쓸 수 있도록 글꼴을 설치해요. 나눔 글꼴을 설치했고 재부팅을 하지 않아도 바로 쓸 수 있게 했어요. 실행 후 상단의 [런타임] 메뉴에서 <b>[세션 다시 시작]</b>을 눌러요.</p>
+<pre class="code"><i># 한글 글꼴 사용을 위해 필요</i>
+!sudo apt-get install -y fonts-nanum
+!sudo fc-cache -fv
+!rm ~/.cache/matplotlib -rf
+<i># 실행 후 [런타임]-[세션 다시 시작] 하기</i></pre>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 데이터 업로드 <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽 ❷, 읽는 코드)</span></h3>
+<pre class="code">from google.colab import files   <i># 구글 코랩 환경에 파일 업로드를 위한 작업</i>
+uploadeded = files.upload()      <i># 파일 업로드 작업 실행</i></pre>
+    <p style="margin-bottom:0">「파일 선택」 버튼이 나타나면 버튼을 누르고 파일을 업로드해요. <b>주의</b> 업로드한 파일을 열어서 file에 저장할 때는 파일명을 <b>업로드한 파일명과 똑같이</b> 써야 해요. 파일 선택 버튼을 다시 눌러 같은 파일을 업로드하면 파일명이 <code>temp (1).csv</code> 등으로 달라질 수 있으니 조심해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 데이터프레임으로 불러오기 <span class="muted" style="font-weight:400;font-size:.88rem">(93쪽 ❸, 읽는 코드)</span></h3>
+    <p style="margin-top:0">업로드한 데이터를 <b>데이터프레임</b> 형태로 변환해서 변수 <code>data</code>에 저장해요. 코랩에서 그래프를 그리려면 csv 파일을 <b>행과 열이 있는 표 형태</b>의 데이터프레임으로 바꿔야 해요.</p>
+<pre class="code"><b>import</b> pandas <b>as</b> pd                              <i># 데이터프레임을 다루기 위한 라이브러리</i>
+file = open ('temp.csv', encoding = 'cp949')    <i># 업로드한 파일(temp.csv)을 열어서 file에 저장</i>
+data = pd.read_csv(file)                        <i># file의 내용을 데이터프레임 형태로 data에 저장</i>
+data                                            <i># data 내용 출력</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="clReadFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0"><b>해설</b> 출력된 표(114 rows × 8 columns)에는 108 지점(서울)에서 관측한 1907년부터 2022년까지 총 114개 연도의 기온 데이터가 있어요. 1907년에는 최저 기온과 최고 기온만 있고, 평균 기온·평균 최저 기온·평균 최고 기온은 <b>NaN</b>(값 없음)이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 파이썬으로 csv 글을 표처럼 나눠 보기</h3>
+    <p style="margin-top:0">코랩 없이 <b>기본 파이썬</b>으로 같은 일을 흉내 내요. 파일 안의 글(1907~1916년 10줄)을 <code>split</code>으로 줄·칸으로 나눠 리스트로 만들고, 빈 칸은 <code>None</code>(값 없음)으로 바꿔요. <b>작은 표본이라 줄 수가 교과서(114 rows)와 달라요.</b> 줄 수를 세는 부분이나 출력할 줄 번호를 바꿔 다시 실행해 봐요.</p>
+    <div id="clRun1"></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 데이터 확인 -->
+<section class="page" data-name="데이터 확인" data-acc="#2f9a5a">
+  <div class="head"><div class="num">03</div><div><h2>④⑤ 데이터 확인하기</h2><p>교과서 94쪽 · info(), describe(), isnull().sum()</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>불러온 표를 바로 고치지 말고 먼저 <b>어떤 표인지 살펴봐요</b>. <code>info()</code>는 <b>칼럼마다 값이 몇 개 있는지</b>, <code>describe()</code>는 <b>평균·최솟값 같은 통계</b>, <code>isnull().sum()</code>은 <b>빈 값이 몇 개인지</b> 알려 줘요.</span></div>
+
+  <div class="card">
+    <h3>④ 데이터 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(94쪽, 읽는 코드)</span></h3>
+<pre class="code">data.info()        <i># data의 정보 확인</i></pre>
+    <p style="margin:6px 0">이 함수를 사용하면 데이터에 대한 <b>전반적인 정보</b>를 확인할 수 있어요. 결과에서 칼럼마다 값(Non-Null Count)이 몇 개인지 봐요.</p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>칼럼</th><td>지점</td><td>지점명</td><td>일시</td><td>평균기온</td><td>최저기온</td><td>최고기온</td><td>평균최저기온</td><td>평균최고기온</td></tr>
+      <tr><th>값의 개수</th><td>114</td><td>114</td><td>114</td><td><b>111</b></td><td>114</td><td>114</td><td><b>111</b></td><td><b>111</b></td></tr>
+    </table></div>
+    <p class="note" style="margin:6px 0 12px"><b>해설</b> 지점, 지점명, 일시, 최저 기온, 최고 기온은 114개의 값이 있고, 평균 기온, 평균 최저 기온, 평균 최고 기온은 111개의 값이 있어요.</p>
+<pre class="code">data.describe()      <i># data의 다양한 통계치 확인</i></pre>
+    <p style="margin:6px 0">이 함수를 사용하면 데이터에 대한 다양한 통계(개수, 평균값, 표준 편차, 최솟값, 사분위수<sup>*</sup>, 최댓값)를 확인할 수 있어요.</p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>count</th><td>개수</td></tr><tr><th>mean</th><td>평균값</td></tr><tr><th>std</th><td>표준 편차</td></tr><tr><th>min</th><td>최솟값</td></tr><tr><th>25% · 50% · 75%</th><td>사분위수</td></tr><tr><th>max</th><td>최댓값</td></tr>
+    </table></div>
+    <p class="note" style="margin:6px 0 0"><sup>*</sup> <b>사분위수</b> 데이터를 네 등분한 것으로, 측정값을 낮은 순에서 높은 순으로 정렬한 뒤 네 등분했을 때 각 등위에 해당하는 값이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>⑤ 결측치 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(94쪽, 읽는 코드)</span></h3>
+<pre class="code">data.isnull().sum()          <i># data의 칼럼별 빈값의 개수 구함.</i></pre>
+    <p style="margin:6px 0">교과서의 결과에서 <b>평균 기온, 평균 최저 기온, 평균 최고 기온</b>의 결측치가 3개씩 있었어요.</p>
+    <div class="tscroll"><table class="tbl cl-tbl">
+      <tr><th>칼럼</th><td>지점</td><td>지점명</td><td>일시</td><td>평균기온</td><td>최저기온</td><td>최고기온</td><td>평균최저기온</td><td>평균최고기온</td></tr>
+      <tr><th>빈 값 개수</th><td>0</td><td>0</td><td>0</td><td><b>3</b></td><td>0</td><td>0</td><td><b>3</b></td><td><b>3</b></td></tr>
+    </table></div>
+    <p class="note" style="margin-bottom:0">「표시된 곳에 결측치가 있다는 거구나!」 — 교과서 말풍선</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 통계와 결측치를 직접 세어 보기</h3>
+    <p style="margin-top:0"><code>statistics</code>로 숫자 칼럼마다 개수·평균·최솟값·최댓값을 구하고, 빈 값이 몇 개인지 세요. <b>10줄뿐인 작은 표본이라</b> 교과서의 결과(111개, 결측치 3개)와 숫자가 달라요. 칼럼 번호나 <code>round</code> 자리수를 바꿔 봐요.</p>
+    <div id="clRun2"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔍 해 보기 · 데이터 처리하기 <span class="muted" style="font-weight:400;font-size:.88rem">(94쪽)</span></h3>
+    <p style="margin-top:0">다음은 수집한 데이터를 처리하는 과정에서 발생한 <b>의문을 검증한 내용</b>이에요. 제시된 내용을 참고하여 실습에 사용된 기온 데이터를 좀 더 살펴봐요.</p>
+    <div class="grid2 even">
+      <div class="cl-note" style="margin:0"><b>의문</b> 1911년에 최저 기온이 −21.5℃인데 정말 이렇게 추웠을까? 기온 값이 이상하게 입력된 것은 아닐까?</div>
+      <div class="cl-note" style="margin:0"><b>검증</b> 검색을 해 보니 정말 1911년에 강한 한파가 찾아왔었다.</div>
+    </div>
+    <p style="margin:12px 0 4px"><b>분석 · 내가 찾은 의문과 검증</b> <span class="muted">(95쪽) 자세히 살펴보고 의문이 생기는 부분을 찾아 검증해 봐요.</span></p>
+    <div class="memo"><label>의문이 생긴 부분 <small>(선택) 표에서 이상해 보이는 값을 적어 보세요.</small></label><textarea data-memo="clDoubt" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>검증한 방법과 결과 <small>(선택) 어떻게 확인했나요?</small></label><textarea data-memo="clCheck" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 결측치 처리·칼럼명 -->
+<section class="page" data-name="결측치 처리" data-acc="#2f9a5a">
+  <div class="head"><div class="num">04</div><div><h2>⑥⑦ 결측치 처리하고 칼럼명 바꾸기</h2><p>교과서 95쪽 · dropna, fillna, columns</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>빈 값이 있으면 그래프가 <b>끊겨 보여요</b>. 그래서 빈 값을 <b>지우거나, 다른 값으로 채워</b> 정리해요. 또 <b>칼럼 이름</b>에 특수 기호가 있으면 쓰기 불편하니 이름도 깔끔하게 바꿔요.</span></div>
+
+  <div class="card">
+    <h3>🧹 결측치를 처리하는 방법 <span class="muted" style="font-weight:400;font-size:.88rem">(95쪽 ❻)</span></h3>
+    <p style="margin-top:0">⑤에서 나타난 결측치를 처리해요. 결측치를 처리하는 방법에는 <b>삭제하기, 주변 값으로 채우기, 0으로 채우기</b> 등 다양한 방법이 있어요. 기온 데이터는 결측치 개수가 적으니 <b>해당 행을 삭제하는 방법</b>을 써요.</p>
+    <div class="cl-ways">
+      <div style="--k:#d64535"><b>삭제하기</b><span>빈 값이 있는 행을 지워요. 이 실습에서 쓰는 방법이에요.</span></div>
+      <div style="--k:#2f6fd0"><b>주변 값으로 채우기</b><span>변수별 평균 같은 값으로 빈 칸을 메워요.</span></div>
+      <div style="--k:#7a6ad0"><b>0으로 채우기</b><span>빈 칸에 0을 넣어요.</span></div>
+    </div>
+<pre class="code">data = data.dropna(axis = 0)  <i># data의 빈값이 있는 행을 삭제해서 data에 저장</i>
+data                          <i># data의 내용 출력</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b></p>
+    <div id="clDropFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">결과는 <b>111 rows × 8 columns</b>로, 1907년을 포함한 결측치 줄 3개가 사라져요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✏️ 칼럼명 바꾸기 <span class="muted" style="font-weight:400;font-size:.88rem">(95쪽 ❼)</span></h3>
+    <p style="margin-top:0">데이터 칼럼명을 사용하기 쉽게 변경해요. 특수 기호를 빼고 칼럼명을 정리해 봐요.</p>
+<pre class="code"><i># data의 컬럼명 변경</i>
+data.columns = ['지점', '지점명', '연도', '평균 기온', '최저 기온', '최고 기온', '평균 최저 기온', '평균 최고 기온']
+data    <i># data의 내용 출력</i></pre>
+    <div id="clColFlip" class="tcards" style="margin-top:10px"></div>
+    <div class="cl-note" style="margin-bottom:0"><b>🔬 박사님 말풍선</b> 칼럼명을 변경하지 않으면 그래프를 그리는 단계에서 특수 기호 등의 입력이 번거롭게 돼요.</div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 결측치 줄 지우고 칼럼명 바꾸기</h3>
+    <p style="margin-top:0">리스트로 같은 일을 흉내 내요. 빈 값이 있는 줄을 지우고(<code>dropna</code> 흉내), 칼럼명을 새 이름으로 바꿔요(<code>columns</code> 흉내). <b>10줄뿐인 작은 표본이라 교과서의 111 rows와 숫자가 달라요.</b> 코드 맨 아래 주석의 물음도 생각해 봐요.</p>
+    <div id="clRun3"></div>
+  </div>
+
+  <div class="card">
+    <h3>💭 내 생각 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+    <div class="memo"><label>결측치를 <b>삭제</b>하는 방법과 <b>평균으로 채우는</b> 방법 중 내가 고른다면 어느 쪽인가요? 그 까닭도 적어 보세요.</label><textarea data-memo="clWay" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">05</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#2f9a5a">기온 데이터는 기상청 <b>기상자료개방포털</b>에서 [데이터] → [기상관측-지상] → [종관기상관측]을 거쳐 검색 조건(년 자료, 기간, 지점, 기온)을 정해 <b>csv 파일</b>로 내려받는다.</div>
+    <div style="--k:#2f6fd0">내려받은 파일은 코랩에서 <b>pandas</b>의 <code>read_csv</code>로 데이터프레임으로 불러오고, <code>info()</code>·<code>describe()</code>·<code>isnull().sum()</code>으로 <b>값의 개수·통계·결측치</b>를 확인한다.</div>
+    <div style="--k:#d0602f">결측치는 <b>삭제·주변 값·0으로 채우기</b> 등으로 처리한다. 기온 데이터는 결측치가 적어 <code>dropna(axis = 0)</code>으로 행을 삭제하고, 그래프를 그리기 쉽도록 <b>칼럼명</b>을 정리한다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">흉내 낸 파이썬 실습을 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">기온 데이터에서 비어 있는 값을 어떻게 찾고 처리할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="5"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>기온 데이터를 <b>어디서 어떤 조건으로</b> 내려받는지 순서대로 설명해 보세요.</li>
+      <li>데이터를 불러온 뒤 <b>info·describe·isnull</b> 중 하나를 골라, 무엇을 알려 주는지 내 말로 쓰세요.</li>
+      <li>결측치를 <b>삭제할지, 채울지</b> 정한다면 어떤 기준으로 정할지 쓰세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="../forms/sw-u3-collect.html" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>
+
+</main>
+
+<div class="foot">
+  <button class="btn ghost" id="prev">← 이전</button>
+  <span class="pg" id="pg"></span>
+  <button class="btn" id="next">다음 →</button>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const fmt=n=>n.toLocaleString('ko-KR');
+
+
+
+const LESSON='u3-collect', PEP='';
+
+/* 진도 보내기 ①: 누가 쓰는지 확인 (반·학번마다 퀴즈·메모를 따로 저장) */
+const WHO=(function(){
+  if(!PEP) return {off:true,sfx:''};
+  if(/[?&]preview(=|&|$)/.test(location.search)) return {preview:true,sfx:'@preview'};
+  let w=null; try{w=JSON.parse(sessionStorage.getItem('aiw-who')||'null');}catch(e){}
+  if(w&&w.teacher) return {preview:true,teacher:true,sfx:'@preview'};
+  if(!w||!/^\d{5}$/.test(w.no||'')) return {need:true,sfx:'@none'};
+  return {cls:w.cls,no:w.no,name:w.name,sfx:'@'+w.no};
+})();
+const QUIZ={
+ 1:[{q:'기온 데이터를 내려받을 때 검색 조건의 자료 형태는?',o:['월 자료','일 자료','년 자료'],a:2,w:'이 실습에서는 자료 형태를 「년 자료」로 하고, 기간과 지점, 기온을 선택해요.'},
+    {q:'내려받은 파일의 이름을 바꿔 저장하는 이름은?',o:['data.csv','temp.csv','kma.csv'],a:1,w:'검색 조건을 설정해 csv 파일을 내려받은 뒤 파일명을 temp.csv로 바꿔 저장해요.'},
+    {q:'1907년 기온 데이터에서 빈칸으로 남은 값은?',o:['결측치','이상한 값','중복된 값'],a:0,w:'기간을 1904년부터로 설정했지만 데이터는 1907년부터 있고, 1907년에는 빈칸(결측치)이 있어요.'}],
+ 2:[{q:'한글이 들어 있는 csv 파일을 불러올 때 쓴 encoding 방식은?',o:['ascii','latin','cp949'],a:2,w:'한글이 포함된 csv 파일을 불러올 때 오류가 나면 encoding을 cp949로 설정해요.'},
+    {q:'pd.read_csv(file)의 역할로 알맞은 것은?',o:['글꼴을 설치하고 세션을 다시 시작한다','그래프를 그려 화면에 보여 준다','표 형태로 저장한다'],a:2,w:'file의 내용을 행과 열이 있는 데이터프레임 형태로 data에 저장해요.'},
+    {q:'데이터프레임에 NaN이 나타나면 무슨 뜻일까?',o:['글꼴 이름과 크기','값이 없음','파일 이름과 위치'],a:1,w:'NaN은 데이터에 값이 없음(결측치)을 나타내요.'}],
+ 3:[{q:'data.info()로 알 수 있는 것은?',o:['표 그림 그리기','전반적인 정보','글꼴 이름 목록'],a:1,w:'info()는 데이터에 대한 전반적인 정보를 확인하게 해 줘요. 칼럼마다 값이 몇 개인지도 볼 수 있어요.'},
+    {q:'data.isnull().sum()은 무엇을 구할까?',o:['칼럼별 평균값을 구한 결과','칼럼별 최댓값을 구한 결과','칼럼별 빈 값의 개수'],a:2,w:'칼럼별로 비어 있는 값(결측치)이 몇 개인지 세어 줘요.'},
+    {q:'describe()로 볼 수 있는 통계가 아닌 것은?',o:['개수와 평균값','최솟값과 최댓값','글꼴 이름'],a:2,w:'describe()는 개수, 평균값, 표준 편차, 최솟값, 사분위수, 최댓값을 보여 줘요. 글꼴 이름은 통계가 아니에요.'}],
+ 4:[{q:'dropna(axis = 0)의 역할은?',o:['칼럼명을 바꾼다','결측치를 평균으로 채워 준다','빈 값 행을 삭제한다'],a:2,w:'dropna(axis = 0)은 빈 값(결측치)이 있는 행을 삭제하는 함수예요.'},
+    {q:'결측치를 변수별 평균으로 채울 때 쓰는 코드는?',o:['data.columns','fillna(data.mean())','data.dropna(axis = 0)'],a:1,w:'fillna(data.mean())을 쓰면 결측치를 변수별 평균으로 채울 수 있어요.'},
+    {q:'칼럼명을 바꾸는 까닭으로 알맞은 것은?',o:['표 크기를 작게 줄이려고','특수 기호 입력이 번거로워서','결측치 개수를 늘리려고'],a:1,w:'칼럼명을 바꾸지 않으면 그래프를 그리는 단계에서 특수 기호 등의 입력이 번거로워져요.'}],
+ 5:[{q:'이 실습에서 결측치를 처리한 방법은?',o:['삭제하기','0으로 채우기','평균으로 채우기'],a:0,w:'기온 데이터는 결측치 개수가 적어서 해당 행을 삭제하는 방법을 썼어요.'},
+    {q:'csv 파일을 표 형태로 다루려고 불러오는 라이브러리는?',o:['time','pandas','random'],a:1,w:'import pandas as pd로 데이터프레임을 다루는 pandas를 불러와요.'},
+    {q:'1911년 최저 기온 −21.5℃가 이상해 보일 때 교과서가 한 일은?',o:['값을 바로 지웠다','0으로 바꿨다','검색해서 한파를 확인했다'],a:2,w:'의문이 생기면 검색 등으로 검증해 봐요. 교과서에서는 검색해 보니 1911년에 강한 한파가 있었다는 것을 확인했어요.'}]
+};
+
+const QK='ds-u3-collect-quiz'+WHO.sfx;
+const MK='ds-u3-collect-memo'+WHO.sfx;
+let QS={}; try{QS=JSON.parse(localStorage.getItem(QK)||'{}')||{};}catch(e){QS={};}
+function saveQ(){try{localStorage.setItem(QK,JSON.stringify(QS));}catch(e){}}
+const TOTALQ=Object.values(QUIZ).reduce((a,b)=>a+b.length,0);
+function qperm(n,key){ let h=2166136261; for(const c of key){h^=c.charCodeAt(0);h=Math.imul(h,16777619)>>>0;}
+  const p=[...Array(n).keys()]; for(let i=n-1;i>0;i--){h=Math.imul(h^(h>>>15),2246822507)>>>0; h=(h+0x6D2B79F5)>>>0; const j=h%(i+1); [p[i],p[j]]=[p[j],p[i]];} return p; }
+function renderQuiz(box){
+  const k=box.dataset.quiz; box.innerHTML=`<div class="qh"><b>개념 퀴즈</b><span>${QUIZ[k].length}문제 · 고르면 바로 채점</span></div>`;
+  QUIZ[k].forEach((it,i)=>{
+    const id=k+'-'+i, d=document.createElement('div'); d.className='qi';
+    /* 보기 순서는 학생마다 섞되(새로 고쳐도 같은 순서), 저장·채점은 원래 번호로 */
+    const perm=qperm(it.o.length, QK+'|'+id);
+    d.innerHTML=`<div class="qq">${i+1}. ${it.q}</div><div class="opts">${perm.map(j=>`<button data-j="${j}">${it.o[j]}</button>`).join('')}</div><div class="why"></div>`;
+    const btn=j=>d.querySelector(`button[data-j="${j}"]`);
+    const mark=(j,anim)=>{
+      const bs=d.querySelectorAll('button'); bs.forEach(b=>b.disabled=true);
+      btn(it.a).classList.add('right'); if(j!==it.a){btn(j).classList.add('wrong'); if(anim) d.classList.add('shake');}
+      d.classList.add('answered', j===it.a?'correct':'incorrect');
+      d.querySelector('.why').textContent=(j===it.a?'정답. ':'정답은 「'+it.o[it.a]+'」. ')+it.w;
+    };
+    d.querySelectorAll('button').forEach(b=>b.onclick=()=>{const j=+b.dataset.j;QS[id]=j;saveQ();mark(j,true);updScore();});
+    if(QS[id]!=null && QS[id]<it.o.length) mark(QS[id],false);
+    box.appendChild(d);
+  });
+}
+
+/* 페이지 이동 */
+const pages=[...document.querySelectorAll('.page')];
+const stepBtns=pages.map((p,i)=>{const b=document.createElement('button');b.textContent=i?`${i}. ${p.dataset.name}`:'시작';b.onclick=()=>go(i);$('steps').appendChild(b);return b;});
+function updScore(){
+  let ok=0; for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{if(QS[k+'-'+i]===it.a) ok++;});
+  $('score').textContent=`퀴즈 ${ok} / ${TOTALQ}`;
+  pages.forEach((p,i)=>{const q=p.querySelector('[data-quiz]'); if(!q) return; const k=q.dataset.quiz; stepBtns[i].classList.toggle('done',QUIZ[k].every((_,j)=>QS[k+'-'+j]!=null));});
+  let h='<tr><th class="l">개념</th><th>맞힌 문제</th></tr>';
+  for(const k in QUIZ){const n=QUIZ[k].length, c=QUIZ[k].filter((it,i)=>QS[k+'-'+i]===it.a).length, a=QUIZ[k].filter((_,i)=>QS[k+'-'+i]!=null).length;
+    h+=`<tr><td class="l">${k}. ${pages[k].dataset.name}</td><td>${a?`<b class="${c===n?'ok':''}">${c} / ${n}</b>`:'<span class="muted">아직 안 풂</span>'}</td></tr>`;}
+  h+=`<tr><td class="l"><b>합계</b></td><td><b>${ok} / ${TOTALQ}</b></td></tr>`;
+  $('result').innerHTML=h;
+}
+let cur=-1;
+const onShow={};
+function go(i){
+  i=Math.max(0,Math.min(pages.length-1,i)); if(i===cur) return;
+  const back=i<cur; if(cur>=0) pages[cur].classList.remove('on','back');
+  pages[i].classList.add('on'); pages[i].classList.toggle('back',back);
+  document.documentElement.style.setProperty('--acc',pages[i].dataset.acc);
+  document.documentElement.style.setProperty('--acc-soft',pages[i].dataset.acc+'1a');
+  stepBtns.forEach((b,j)=>b.classList.toggle('on',j===i));
+  const sb=$('steps'), btn=stepBtns[i]; sb.scrollLeft=btn.offsetLeft-sb.clientWidth/2+btn.clientWidth/2;
+  $('prog').style.width=(i/(pages.length-1)*100)+'%';
+  $('pg').textContent=`${i} / ${pages.length-1}`;
+  $('prev').style.visibility=i?'visible':'hidden'; $('next').style.visibility=i<pages.length-1?'visible':'hidden';
+  cur=i; try{history.replaceState(null,'','#p'+i);}catch(e){} window.scrollTo(0,0);
+  if(onShow[i]) onShow[i]();
+}
+$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.defaultPrevented)return; if(e.target.matches&&e.target.matches('input,select,textarea'))return; if(e.key==='ArrowRight')go(cur+1); if(e.key==='ArrowLeft')go(cur-1);});
+document.querySelectorAll('.gcard').forEach(g=>g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.click();}}));
+document.querySelectorAll('[data-quiz]').forEach(renderQuiz);
+$('quizReset').onclick=()=>{QS={};saveQ();document.querySelectorAll('[data-quiz]').forEach(renderQuiz);updScore();};
+
+
+/* 공용 부품: 메모·카드·분류 게임·탭·투표·칩 */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+
+/* 메모: data-memo가 있는 입력칸은 이 기기에 저장 */
+let MEMO=store.get(MK,{});
+function bindMemos(){
+  document.querySelectorAll('[data-memo]').forEach(t=>{
+    const k=t.dataset.memo; if(MEMO[k]!=null) t.value=MEMO[k];
+    let tm; t.addEventListener('input',()=>{MEMO[k]=t.value; clearTimeout(tm); tm=setTimeout(()=>{store.set(MK,MEMO); const s=t.parentElement.querySelector('.saved'); if(s){s.textContent='이 기기에 저장됨'; setTimeout(()=>s.textContent='',1400);} t.dispatchEvent(new Event('memo'));},300);});
+  });
+}
+function memoSummary(box,list){
+  const h=list.map(([k,label])=>{const v=(MEMO[k]||'').trim(); return `<dt>${esc(label)}</dt><dd class="${v?'':'e'}">${v?esc(v):'(아직 안 씀)'}</dd>`;}).join('');
+  $(box).innerHTML=`<h4>오늘 화면에 적어 둔 내 메모</h4><dl>${h}</dl>`;
+}
+
+/* 뒤집는 카드 */
+function flipCards(box,items){
+  $(box).innerHTML=items.map(c=>`<div class="tcard" tabindex="0"><div class="in"><div class="f"><i>${c.ic||''}</i><b>${c.f}</b>${c.s?`<small>${c.s}</small>`:''}</div><div class="b">${c.b}${c.x?`<div class="x">${c.x}</div>`:''}</div></div></div>`).join('');
+  $(box).querySelectorAll('.tcard').forEach(t=>{const f=()=>t.classList.toggle('flip'); t.onclick=f; t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f();}};});
+}
+
+/* 분류 게임: 문장을 보고 알맞은 묶음 고르기 */
+function sorter(box,cfg){
+  const B=$(box);
+  function start(){
+    const order=shuffle(cfg.items.map((_,i)=>i)); let pos=0, ok=0; const placed=cfg.cats.map(()=>[]);
+    B.innerHTML=`<div class="sit"><div class="cnt"></div><div class="ic"></div><div class="sq"></div><div class="row btns">${cfg.cats.map((c,j)=>`<button class="btn sm cat" style="--k:${c.k}" data-j="${j}">${c.n}</button>`).join('')}</div><div class="fb"></div><div class="row nx" style="margin-top:8px"></div></div><div class="board" style="--n:${cfg.cats.length}">${cfg.cats.map(c=>`<div style="--k:${c.k}"><b>${c.n}</b></div>`).join('')}</div>`;
+    const sq=B.querySelector('.sq'), ic=B.querySelector('.ic'), cnt=B.querySelector('.cnt'), fb=B.querySelector('.fb'), nx=B.querySelector('.nx'), btns=[...B.querySelectorAll('.cat')], cols=[...B.querySelectorAll('.board>div')];
+    function show(){
+      if(pos>=order.length){cnt.textContent=''; ic.textContent='🎉'; sq.innerHTML=`${order.length}개 중 <b>${ok}개</b>를 바로 맞혔어요.`; fb.innerHTML=cfg.end||''; btns.forEach(b=>b.style.display='none'); nx.innerHTML='<button class="btn ghost sm">처음부터 다시</button>'; nx.firstChild.onclick=start; return;}
+      const it=cfg.items[order[pos]]; cnt.textContent=`${pos+1} / ${order.length}`; ic.textContent=it.ic||''; sq.innerHTML=it.t; fb.textContent=''; nx.innerHTML=''; btns.forEach(b=>{b.disabled=false;b.style.display='';});
+    }
+    btns.forEach(b=>b.onclick=()=>{
+      const it=cfg.items[order[pos]], j=+b.dataset.j, right=j===it.c; if(right) ok++;
+      btns.forEach(x=>x.disabled=true);
+      fb.innerHTML=(right?'<span class="ok">맞아요!</span> ':`<span class="ng">아쉬워요.</span> 정답은 <b>${cfg.cats[it.c].n}</b>. `)+(it.w||'');
+      const s=document.createElement('span'); s.innerHTML=it.short||it.t; if(!right) s.className='x'; cols[it.c].appendChild(s);
+      nx.innerHTML='<button class="btn sm">다음 →</button>'; nx.firstChild.onclick=()=>{pos++;show();}; nx.firstChild.focus();
+    });
+    show();
+  }
+  start();
+}
+
+/* 탭 보기: 버튼을 누르면 내용 바꾸기 */
+function tabs(btnBox,viewBox,items,render){
+  $(btnBox).innerHTML=items.map((it,i)=>`<button data-i="${i}"><span class="e">${it.ic||''}</span><b>${it.n}</b></button>`).join('');
+  const bs=[...$(btnBox).querySelectorAll('button')];
+  const pick=i=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); $(viewBox).innerHTML=render(items[i],i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i)); pick(0);
+}
+
+/* 투표: 고르면 결과 보이기 (이 기기에만 저장) */
+function vote(box,key,opts,onPick){
+  const B=$(box); B.innerHTML=opts.map((o,i)=>`<button data-i="${i}">${o[0]}${o[1]?`<small>${o[1]}</small>`:''}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')];
+  const pick=(i,save)=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); if(save){MEMO[key]=opts[i][0]; store.set(MK,MEMO);} onPick&&onPick(i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i,true));
+  const prev=opts.findIndex(o=>o[0]===MEMO[key]); if(prev>=0) pick(prev,false);
+}
+function chips(box,key,opts,multi){
+  const B=$(box); B.classList.add('chk'); B.innerHTML=opts.map(o=>`<button>${o}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')]; let sel=(MEMO[key]||'').split(' · ').filter(Boolean);
+  const draw=()=>bs.forEach(b=>b.classList.toggle('on',sel.includes(b.textContent)));
+  bs.forEach(b=>b.onclick=()=>{const t=b.textContent; if(multi) sel=sel.includes(t)?sel.filter(x=>x!==t):[...sel,t]; else sel=sel.includes(t)?[]:[t]; MEMO[key]=sel.join(' · '); store.set(MK,MEMO); draw(); B.dispatchEvent(new Event('memo'));});
+  draw();
+}
+
+/* 파이썬 실행 칸: 학생이 코드를 고쳐 바로 돌려 보는 부품 (Pyodide, CDN에서 불러옴).
+   pyrun('박스id', {code:'...', rows:8, stdin:'3\n5', readonly:false})
+   - code   : 처음에 보여 줄 코드 (여러 줄 문자열)
+   - rows   : 편집칸 높이(줄). 없으면 코드 줄 수로 정함
+   - stdin  : input() 이 위에서부터 한 줄씩 받을 값 (코드에 input 이 있으면 입력칸이 자동으로 생김)
+   - readonly: true 면 편집 없이 실행만 (코드는 그대로 보여 줌)
+   파이썬은 처음 실행할 때 한 번만 불러오고, 그다음부터는 바로 돈다. 인터넷이 없으면 안내만 보인다. */
+const PY_VER = '0.26.4';
+const PY_BASE = `https://cdn.jsdelivr.net/pyodide/v${PY_VER}/full/`;
+let _pyLoad = null;                 /* Pyodide 로딩 Promise(한 번만) */
+let _pyLock = Promise.resolve();    /* 모든 실행 칸이 파이썬 하나를 공유하므로 한 번에 하나씩만 실행 */
+const _pyWaiters = [];              /* 로딩 중일 때 상태 글을 바꿔 줄 콜백들 */
+
+function _loadPy() {
+  if (_pyLoad) return _pyLoad;
+  _pyLoad = new Promise((resolve, reject) => {
+    const tell = m => _pyWaiters.forEach(f => { try { f(m); } catch (e) {} });
+    const s = document.createElement('script');
+    s.src = PY_BASE + 'pyodide.js';
+    s.onload = async () => {
+      try {
+        tell('파이썬 준비 중…');
+        const py = await loadPyodide({ indexURL: PY_BASE });
+        resolve(py);
+      } catch (e) { reject(e); }
+    };
+    s.onerror = () => reject(new Error('스크립트를 불러오지 못함'));
+    document.head.appendChild(s);
+  });
+  return _pyLoad;
+}
+
+function pyrun(box, cfg) {
+  cfg = cfg || {};
+  const B = $(box); if (!B) return;
+  const code0 = String(cfg.code || '').replace(/^\n+/, '').replace(/\s+$/, '');
+  const rows = cfg.rows || Math.min(16, Math.max(3, code0.split('\n').length + 1));
+  const needIn = /\binput\s*\(/.test(code0) || cfg.stdin != null;
+  const ro = !!cfg.readonly;
+  B.classList.add('pyrun');
+  B.innerHTML =
+    `<textarea class="pr-code" spellcheck="false" rows="${rows}" ${ro ? 'readonly' : ''} aria-label="파이썬 코드"></textarea>` +
+    (needIn ? `<div class="pr-in"><label>입력값 <small>input() 이 위에서부터 한 줄씩 받아요</small></label>` +
+      `<textarea class="pr-stdin" spellcheck="false" rows="2" aria-label="입력값" placeholder="한 줄에 하나씩"></textarea></div>` : '') +
+    `<div class="pr-bar"><button class="btn sm pr-go">▶ 실행</button>` +
+    (ro ? '' : `<button class="btn ghost sm pr-reset">처음 코드로</button>`) +
+    `<span class="pr-stat"></span></div>` +
+    `<pre class="pr-out" aria-live="polite" hidden></pre>`;
+  const ed = B.querySelector('.pr-code'), out = B.querySelector('.pr-out'),
+    stat = B.querySelector('.pr-stat'), goBtn = B.querySelector('.pr-go'),
+    reset = B.querySelector('.pr-reset'), sin = B.querySelector('.pr-stdin');
+  ed.value = code0;
+  if (cfg.stdin != null && sin) sin.value = String(cfg.stdin);
+  /* 탭키로 네 칸 들여쓰기 */
+  if (!ro) ed.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const a = ed.selectionStart, b = ed.selectionEnd;
+      ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(b);
+      ed.selectionStart = ed.selectionEnd = a + 4;
+    }
+  });
+  if (reset) reset.onclick = () => {
+    ed.value = code0; if (sin) sin.value = cfg.stdin != null ? String(cfg.stdin) : '';
+    out.hidden = true; out.textContent = ''; out.classList.remove('err');
+  };
+
+  async function run() {
+    const setStat = m => stat.textContent = m;
+    setStat('파이썬 불러오는 중…'); _pyWaiters.push(setStat);
+    let py;
+    try { py = await _loadPy(); }
+    catch (e) {
+      setStat(''); out.hidden = false; out.classList.add('err');
+      out.textContent = '⚠ 파이썬을 불러오지 못했어요. 인터넷 연결을 확인하고 「실행」을 다시 눌러 주세요.';
+      goBtn.disabled = false; return;
+    } finally { const i = _pyWaiters.indexOf(setStat); if (i >= 0) _pyWaiters.splice(i, 1); }
+    setStat('실행 중…');
+    const lines = [];
+    py.setStdout({ batched: s => lines.push(s) });
+    py.setStderr({ batched: s => lines.push(s) });
+    const feed = (sin ? sin.value : '').split('\n');
+    try {
+      py.globals.set('_pyrun_feed', feed);
+      py.globals.set('_pyrun_src', ed.value);
+      await py.runPythonAsync(
+        'import builtins as _b\n' +
+        '_f=[str(x) for x in list(_pyrun_feed)]\n' +
+        '_ix=[0]\n' +
+        'def _inp(prompt=""):\n' +
+        '    if prompt: print(prompt, end="")\n' +
+        '    if _ix[0] < len(_f):\n' +
+        '        v=_f[_ix[0]]; _ix[0]+=1; return v\n' +
+        '    raise EOFError("입력값이 더 없어요. 위 입력값 칸에 값을 더 적어 주세요.")\n' +
+        '_b.input=_inp\n');
+      await py.runPythonAsync("exec(compile(_pyrun_src,'<내 코드>','exec'), {'__name__':'__main__'})");
+      out.classList.remove('err');
+    } catch (err) {
+      /* 파이썬 내부(Pyodide) 프레임은 지우고 학생이 쓴 코드 줄만 남긴다 */
+      const raw = String(err && err.message || err).split('\n'), keep = [];
+      for (let i = 0; i < raw.length; i++) {
+        const m = raw[i].match(/^ *File "([^"]*)"/);
+        if (m && (m[1].indexOf('/lib/') === 0 || m[1].indexOf('_pyodide') >= 0 || m[1] === '<exec>')) {
+          while (i + 1 < raw.length && /^\s+/.test(raw[i + 1]) && !/^\s*File "/.test(raw[i + 1])) i++;
+          continue;
+        }
+        keep.push(raw[i]);
+      }
+      lines.push(keep.join('\n').trim() || '오류가 났어요.');
+      out.classList.add('err');
+    } finally {
+      try { py.globals.delete('_pyrun_feed'); py.globals.delete('_pyrun_src'); } catch (e) {}
+    }
+    setStat('');
+    out.hidden = false;
+    out.textContent = lines.join('').replace(/\n+$/, '') || '(출력이 없어요)';
+    goBtn.disabled = false;
+  }
+  /* 다른 칸이 실행 중이면 끝날 때까지 기다렸다가(직렬화) 실행 — 파이썬 하나를 공유하기 때문 */
+  goBtn.onclick = () => {
+    goBtn.disabled = true;
+    stat.textContent = '실행 준비 중…';
+    _pyLock = _pyLock.then(run, run);
+  };
+}
+
+/* ===== 공용 그림·실습 부품 (framework/charts.js) =====
+   차시는 설정값만 넘긴다. 쓰는 법은 docs/widgets.md
+   orangeFlow · scatter · bars · boxes · miniTable · stat(평균·표준편차·상관·회귀·k-평균) · memoOf */
+
+/* 다른 차시에서 적어 둔 메모 읽기 (check.py 가 차시·키가 있는지 확인) */
+function memoOf(lid,key){ try{ return String((store.get('ds-'+lid+'-memo'+WHO.sfx,{})||{})[key]||'').trim(); }catch(e){ return ''; } }
+
+/* 통계 계산 */
+const stat={
+  mean:a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:NaN,
+  sd(a,sample){const m=stat.mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-(sample?1:0)));},
+  q(a,p){const s=a.slice().sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i);return s[lo]+(s[Math.min(lo+1,s.length-1)]-s[lo])*(i-lo);},
+  r(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0,syy=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;syy+=(y-my)**2;});return sxx&&syy?sxy/Math.sqrt(sxx*syy):null;},
+  /* 최소제곱 직선 y = a + b·x, 결정 계수 r2, 평균 제곱 오차 mse */
+  fit(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;});if(!sxx)return null;const b=sxy/sxx,a=my-b*mx;return {a,b,...stat.err(P,a,b)};},
+  err(P,a,b){let se=0,st=0;const my=stat.mean(P.map(p=>p[1]));P.forEach(([x,y])=>{se+=(y-(a+b*x))**2;st+=(y-my)**2;});return {mse:se/P.length,rmse:Math.sqrt(se/P.length),r2:st?1-se/st:NaN};},
+  /* k-평균 한 단계: 점마다 가까운 중심 → 중심을 그 점들의 평균으로 */
+  assign:(P,C)=>P.map(p=>{let bi=0,bd=Infinity;C.forEach((c,i)=>{const d=(p[0]-c[0])**2+(p[1]-c[1])**2;if(d<bd){bd=d;bi=i;}});return bi;}),
+  center:(P,L,C)=>C.map((c,i)=>{const m=P.filter((_,j)=>L[j]===i);return m.length?[stat.mean(m.map(p=>p[0])),stat.mean(m.map(p=>p[1]))]:c.slice();}),
+  /* 군집 안 거리 제곱합(SSE)과 평균 실루엣 점수 */
+  sse:(P,L,C)=>P.reduce((s,p,j)=>s+(p[0]-C[L[j]][0])**2+(p[1]-C[L[j]][1])**2,0),
+  silhouette(P,L){const k=Math.max(...L)+1;if(k<2)return NaN;const d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);let s=0;P.forEach((p,i)=>{const avg=c=>{const m=P.filter((_,j)=>L[j]===c&&j!==i);return m.length?stat.mean(m.map(q=>d(p,q))):NaN;};const a=avg(L[i]);let b=Infinity;for(let c=0;c<k;c++)if(c!==L[i]){const v=avg(c);if(v<b)b=v;}s+=(isNaN(a)||!isFinite(b))?0:(b-a)/Math.max(a,b);});return s/P.length;},
+  fmt:(v,d=2)=>v==null||isNaN(v)?'—':(v<0?'−':'')+Math.abs(v).toFixed(d)
+};
+const PAL=['#2f6fd0','#d64535','#1f9d74','#f2a516','#9b4fc4','#e0702b','#5b6776'];
+
+/* 오렌지3 위젯 연결 흐름도 + 설정 표 + (선택) 진행 칩
+   orangeFlow({svg:'id', table:'id', nodes:[{s:1,t:'File',sub:'파일.csv',c:'Data',x,y}], edges:[[1,2]], w, h, done:{box,key,items}})
+   c: Data · Transform · Visualize · Model · Evaluate · Unsupervised · Associate · Explore
+   설정 표는 화면에 <table class="tbl of-set" id="…"><tr data-s="1">…</tr></table> 로 두면 위젯을 누를 때 그 줄이 강조된다. */
+const OF_COL={Data:'#f2b84b',Transform:'#f0875a',Visualize:'#fdb3a0',Model:'#f6a3c6',Evaluate:'#c5a1e8',Unsupervised:'#7fb2e0',Associate:'#8fd3c1',Explore:'#a7d36f'};
+function orangeFlow(o){
+  const S=$(o.svg), BW=o.bw||180, BH=48, N={}, id=o.svg;
+  o.nodes.forEach(n=>N[n.s]=n);
+  const W=o.w||Math.max(...o.nodes.map(n=>n.x))+BW+10, H=o.h||Math.max(...o.nodes.map(n=>n.y))+BH+10;
+  let g=`<defs><marker id="${id}A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a94a3"/></marker></defs>`;
+  o.edges.forEach(([a,b,lab])=>{const p=N[a],q=N[b],x1=p.x+BW,y1=p.y+BH/2,x2=q.x-2,y2=q.y+BH/2;
+    g+=`<path d="M${x1} ${y1}C${x1+40} ${y1} ${x2-40} ${y2} ${x2} ${y2}" class="fe" marker-end="url(#${id}A)"/>`;
+    if(lab) g+=`<text x="${(x1+x2)/2}" y="${(y1+y2)/2-6}" class="fl">${esc(lab)}</text>`;});
+  o.nodes.forEach(n=>{const k=OF_COL[n.c]||'#ccc';
+    g+=`<g class="fn" data-s="${n.s}" tabindex="0" role="button" aria-label="${n.s}번 ${esc(n.t)}"><rect x="${n.x}" y="${n.y}" width="${BW}" height="${BH}" rx="10" class="fb" style="stroke:${k}"/><rect x="${n.x}" y="${n.y}" width="28" height="${BH}" rx="10" fill="${k}"/><rect x="${n.x+18}" y="${n.y}" width="10" height="${BH}" fill="${k}"/><text x="${n.x+14}" y="${n.y+29}" class="fnum">${n.s}</text><text x="${n.x+36}" y="${n.y+(n.sub?20:29)}" class="ft">${esc(n.t)}</text>${n.sub?`<text x="${n.x+36}" y="${n.y+37}" class="fs">${esc(n.sub)}</text>`:''}</g>`;});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.innerHTML=g;
+  S.parentElement.classList.add('of-box'); S.style.minWidth=Math.min(W,o.minw||640)+'px';
+  const T=o.table?$(o.table):null;
+  const pick=s=>{S.querySelectorAll('.fn').forEach(x=>x.classList.toggle('on',x.dataset.s==s));
+    if(T){T.querySelectorAll('tr[data-s]').forEach(tr=>tr.classList.toggle('hl',tr.dataset.s==s)); const tr=T.querySelector(`tr[data-s="${s}"]`); if(tr) tr.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+  S.querySelectorAll('.fn').forEach(x=>{x.onclick=()=>pick(x.dataset.s); x.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(x.dataset.s);}};});
+  if(T){T.classList.add('of-set'); T.querySelectorAll('tr[data-s]').forEach(tr=>tr.onclick=()=>pick(tr.dataset.s));}
+  if(o.legend!==false){const used=[...new Set(o.nodes.map(n=>n.c))]; const L=document.createElement('div'); L.className='of-legend';
+    L.innerHTML=used.map(c=>`<span style="--k:${OF_COL[c]}">${c}</span>`).join('')+'<small>색은 오렌지3 왼쪽 위젯 카테고리예요.</small>'; S.parentElement.after(L);}
+  if(o.done) chips(o.done.box,o.done.key,o.done.items,true);
+  return {pick};
+}
+
+/* 산점도 탐색기
+   const sp=scatter({svg:'id', x:[0,10,2], y:[0,100,20], xl:'x 이름', yl:'y 이름', edit:true, max:40, onChange(P){…}})
+   onChange 는 set()과 학생이 점을 옮길 때만 불림(line·centers·resid 는 안 부름 → onChange 안에서 sp.line 해도 됨)
+   sp.set([[x,y,색 또는 군집번호],…]) · sp.line(a,b,'색',점선?) · sp.lines([...]) · sp.centers([[x,y],…]) · sp.resid(true) · sp.points() */
+function scatter(o){
+  const S=$(o.svg), W=o.w||460, H=o.h||340, L=52, R=14, T=12, B=46, pw=W-L-R, ph=H-T-B;
+  const [x0,x1,xs]=o.x, [y0,y1,ys]=o.y;
+  const X=v=>L+(v-x0)/(x1-x0)*pw, Y=v=>T+ph-(v-y0)/(y1-y0)*ph, IX=x=>x0+(x-L)/pw*(x1-x0), IY=y=>y0+(T+ph-y)/ph*(y1-y0);
+  const cl=(v,a,b)=>Math.max(a,Math.min(b,v)), dg=o.dec??1, rd=v=>+v.toFixed(dg), lab=v=>String(+v.toFixed(2)).replace('-','−');
+  let P=[], LN=[], C=[], RES=false, drag=-1;
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg');
+  let g=`<rect x="${L}" y="${T}" width="${pw}" height="${ph}" fill="#fbfaf7"/>`;
+  for(let v=x0;v<=x1+1e-9;v+=xs) g+=`<line x1="${X(v)}" y1="${T}" x2="${X(v)}" y2="${T+ph}" stroke="#eceae4"/><text x="${X(v)}" y="${T+ph+16}" text-anchor="middle" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  for(let v=y0;v<=y1+1e-9;v+=ys) g+=`<line x1="${L}" y1="${Y(v)}" x2="${L+pw}" y2="${Y(v)}" stroke="#eceae4"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  g+=`<path d="M${L} ${T}V${T+ph}H${L+pw}" fill="none" stroke="#16202c" stroke-width="2"/><text x="${L+pw/2}" y="${H-6}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c">${o.xl} →</text><text x="14" y="${T+ph/2}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c" transform="rotate(-90 14 ${T+ph/2})">${o.yl} →</text><defs><clipPath id="${o.svg}C"><rect x="${L}" y="${T}" width="${pw}" height="${ph}"/></clipPath></defs><g class="ln" clip-path="url(#${o.svg}C)"></g><g class="pts"></g><g class="cs"></g>`;
+  S.innerHTML=g;
+  const col=p=>typeof p[2]==='number'?PAL[p[2]%PAL.length]:(p[2]||o.color||'#1f9d74');
+  function draw(fin,quiet){
+    let lg='';
+    if(RES&&LN[0]) P.forEach(p=>{const yh=LN[0].a+LN[0].b*p[0]; lg+=`<line x1="${X(p[0])}" y1="${Y(p[1])}" x2="${X(p[0])}" y2="${Y(yh)}" stroke="#d64535" stroke-width="1.5" stroke-dasharray="3 3"/>`;});
+    LN.forEach(l=>lg+=`<line x1="${X(x0)}" y1="${Y(l.a+l.b*x0)}" x2="${X(x1)}" y2="${Y(l.a+l.b*x1)}" stroke="${l.c||'#16202c'}" stroke-width="2.5"${l.dash?' stroke-dasharray="7 5"':''}/>`);
+    S.querySelector('.ln').innerHTML=lg;
+    S.querySelector('.pts').innerHTML=P.map((p,i)=>`<circle data-i="${i}" cx="${X(p[0])}" cy="${Y(p[1])}" r="${o.edit?7:5.5}" fill="${col(p)}" fill-opacity=".82" stroke="#fff" stroke-width="1.5"${o.edit?' class="sp-pt"':''}/>`).join('');
+    S.querySelector('.cs').innerHTML=C.map((c,i)=>`<g transform="translate(${X(c[0])} ${Y(c[1])})"><path d="M-9 -9L9 9M9 -9L-9 9" stroke="#fff" stroke-width="7"/><path d="M-9 -9L9 9M9 -9L-9 9" stroke="${PAL[i%PAL.length]}" stroke-width="4"/></g>`).join('');
+    if(o.onChange&&!quiet) o.onChange(P,fin);
+  }
+  const pt=e=>{const m=S.getScreenCTM(); if(!m) return [0,0]; const q=new DOMPoint(e.clientX,e.clientY).matrixTransform(m.inverse()); return [q.x,q.y];};
+  if(o.edit){
+    S.style.touchAction='none';
+    S.addEventListener('pointerdown',e=>{const c=e.target.closest('circle[data-i]');
+      if(c){drag=+c.dataset.i; S.setPointerCapture(e.pointerId); return;}
+      const [x,y]=pt(e); if(x<L||x>L+pw||y<T||y>T+ph) return;
+      if(P.length>=(o.max||40)) return;
+      P.push([rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1))]); draw(true);});
+    S.addEventListener('pointermove',e=>{if(drag<0)return; const [x,y]=pt(e); P[drag]=[rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1)),P[drag][2]]; draw(false);});
+    const up=()=>{if(drag>=0){drag=-1; draw(true);}}; S.addEventListener('pointerup',up); S.addEventListener('pointercancel',up);
+    S.addEventListener('dblclick',e=>{const c=e.target.closest('circle[data-i]'); if(c){P.splice(+c.dataset.i,1); draw(true);}});
+  }
+  draw(false);
+  return {set(pts){P=pts.map(p=>p.slice()); draw(false); return this;}, points:()=>P.map(p=>p.slice()),
+    line(a,b,c,dash){LN=a==null?[]:[{a,b,c,dash}]; draw(false,1); return this;}, lines(ls){LN=ls; draw(false,1); return this;},
+    centers(cs){C=cs||[]; draw(false,1); return this;}, resid(on){RES=on; draw(false,1); return this;}, X, Y};
+}
+
+/* 막대그래프  bars('svgId',[['이름',값,'색'?],…],{max, unit, dec, w, h, horiz}) */
+function bars(id,data,o={}){
+  const S=$(id), W=o.w||460, n=data.length, horiz=o.horiz, rowH=30, H=o.h||(horiz?n*rowH+20:260);
+  const mx=o.max||Math.max(...data.map(d=>d[1]))*1.1||1, dec=o.dec??0, u=o.unit||'';
+  let g='';
+  if(horiz){const L=o.left||120, pw=W-L-60;
+    data.forEach(([k,v,c],i)=>{const y=10+i*rowH; g+=`<text x="${L-8}" y="${y+18}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><rect x="${L}" y="${y+4}" width="${Math.max(0,v/mx*pw)}" height="${rowH-10}" rx="5" fill="${c||PAL[0]}"/><text x="${L+v/mx*pw+6}" y="${y+18}" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text>`;});
+  }else{const L=36, B=40, T=18, ph=H-B-T, bw=(W-L-10)/n;
+    g+=`<path d="M${L} ${T}V${T+ph}H${W-6}" fill="none" stroke="#16202c" stroke-width="1.5"/>`;
+    data.forEach(([k,v,c],i)=>{const x=L+i*bw+bw*.15, h=Math.max(0,v/mx*ph); g+=`<rect x="${x}" y="${T+ph-h}" width="${bw*.7}" height="${h}" rx="4" fill="${c||PAL[i%PAL.length]}"/><text x="${x+bw*.35}" y="${T+ph-h-5}" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text><text x="${x+bw*.35}" y="${T+ph+16}" text-anchor="middle" font-size="12" fill="#16202c">${esc(k)}</text>`;});
+  }
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 상자 그림  boxes('svgId',[['이름',[값…],'색'?],…],{min,max,step,unit,w}) — 가로 상자, 1.5×IQR 밖 값은 점 */
+function boxes(id,groups,o={}){
+  const S=$(id), W=o.w||460, rowH=44, L=o.left||90, R=16, H=groups.length*rowH+34, pw=W-L-R;
+  const all=groups.flatMap(g=>g[1]), lo=o.min??Math.min(...all), hi=o.max??Math.max(...all), X=v=>L+(v-lo)/(hi-lo)*pw;
+  let g=''; const st=o.step||(hi-lo)/5;
+  for(let v=lo;v<=hi+1e-9;v+=st) g+=`<line x1="${X(v)}" y1="6" x2="${X(v)}" y2="${H-26}" stroke="#eceae4"/><text x="${X(v)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#5b6776">${+v.toFixed(2)}${o.unit||''}</text>`;
+  groups.forEach(([k,a,c],i)=>{const y=8+i*rowH+rowH/2-4, q1=stat.q(a,.25), q2=stat.q(a,.5), q3=stat.q(a,.75), iq=q3-q1, fl=a.filter(v=>v>=q1-1.5*iq), fh=a.filter(v=>v<=q3+1.5*iq), wl=Math.min(...fl), wh=Math.max(...fh), k2=c||PAL[i%PAL.length];
+    g+=`<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><line x1="${X(wl)}" y1="${y}" x2="${X(wh)}" y2="${y}" stroke="${k2}" stroke-width="2"/><rect x="${X(q1)}" y="${y-12}" width="${Math.max(1,X(q3)-X(q1))}" height="24" rx="4" fill="${k2}" fill-opacity=".25" stroke="${k2}" stroke-width="2"/><line x1="${X(q2)}" y1="${y-12}" x2="${X(q2)}" y2="${y+12}" stroke="${k2}" stroke-width="3"/>`+a.filter(v=>v<wl||v>wh).map(v=>`<circle cx="${X(v)}" cy="${y}" r="4" fill="#fff" stroke="#d64535" stroke-width="2"/>`).join('');});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 작은 표  miniTable('boxId',{cols:['이름',…], rows:[[…],…], edit:[열번호…], pick:true, onChange(rows), onPick(i)}) — 칸을 고치거나 줄을 고를 수 있음 */
+function miniTable(box,o){
+  const B=$(box); B.classList.add('mt-wrap'); let rows=o.rows.map(r=>r.slice()), sel=new Set();
+  function draw(){
+    B.innerHTML=`<table class="tbl mt"><tr>${o.pick?'<th></th>':''}${o.cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map((r,i)=>`<tr data-i="${i}" class="${sel.has(i)?'on':''}">${o.pick?`<td><input type="checkbox" aria-label="${i+1}번째 줄 고르기" ${sel.has(i)?'checked':''}></td>`:''}${r.map((v,j)=>(o.edit||[]).includes(j)?`<td><input class="mt-in" data-j="${j}" value="${esc(v)}" inputmode="decimal" aria-label="${esc(o.cols[j])}"></td>`:`<td>${v}</td>`).join('')}</tr>`).join('')}</table>`;
+    B.querySelectorAll('.mt-in').forEach(inp=>inp.oninput=()=>{const i=+inp.closest('tr').dataset.i, j=+inp.dataset.j, v=inp.value.trim(); rows[i][j]=v===''||isNaN(+v)?v:+v; o.onChange&&o.onChange(rows);});
+    B.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{const i=+cb.closest('tr').dataset.i; cb.checked?sel.add(i):sel.delete(i); cb.closest('tr').classList.toggle('on',cb.checked); o.onPick&&o.onPick([...sel].sort((a,b)=>a-b));});
+  }
+  draw();
+  return {rows:()=>rows.map(r=>r.slice()), set(r){rows=r.map(x=>x.slice()); sel.clear(); draw();}, picked:()=>[...sel]};
+}
+/* 01 데이터 수집 · 어느 단계? */
+sorter('clStepSort',{
+  cats:[{n:'1 포털에서 데이터 찾기',k:'#2f9a5a'},{n:'2 조건 정하고 내려받기',k:'#2f6fd0'},{n:'3 받은 파일 확인',k:'#d0602f'}],
+  items:[
+    {t:'기상자료개방포털에 접속한다',short:'포털 접속',c:0,ic:'🌐',w:'먼저 포털에 접속해 데이터를 찾아가는 단계예요.'},
+    {t:'[데이터] → [기상관측-지상] → [종관기상관측] 순으로 선택한다',short:'메뉴 순서대로 선택',c:0,ic:'🧭',w:'원하는 데이터가 있는 메뉴로 찾아가는 일이라 첫 단계예요.'},
+    {t:'자료 형태를 「년 자료」로 고른다',short:'자료 형태 · 년 자료',c:1,ic:'📆',w:'검색 조건을 정하는 일이라 두 번째 단계예요.'},
+    {t:'기간을 1904~2022년으로 정하고 지점·기온을 선택한다',short:'기간·지점·기온 선택',c:1,ic:'🎚️',w:'기간, 지점, 기온을 고르는 것도 검색 조건 설정이에요.'},
+    {t:'내려받은 csv 파일 이름을 temp.csv로 바꿔 저장한다',short:'temp.csv로 저장',c:1,ic:'💾',w:'조건을 정해 내려받은 파일을 temp.csv로 저장하는 것은 두 번째 단계에 들어가요.'},
+    {t:'받은 파일을 열어 1907년 칸이 비어 있는지 살펴본다',short:'파일 열어 빈칸 확인',c:2,ic:'🔎',w:'받은 파일을 열어 데이터를 확인하는 마지막 단계예요. 여기서 결측치를 발견해요.'},
+  ],
+  end:'<b>정리</b> <b>찾아가기 → 조건 정해 내려받기 → 파일 열어 확인하기</b> 순서예요. 기간은 1904년부터였지만 데이터는 1907년부터 있고, 1907년에는 결측치가 있어요.'
+});
+
+/* 02 불러오기 */
+flipCards('clReadFlip',[
+  {ic:'🐼',f:'import pandas as pd',b:'데이터프레임을 다루기 위한 라이브러리 pandas를 불러와 pd라는 이름으로 써요.'},
+  {ic:'📂',f:"file = open ('temp.csv', encoding = 'cp949')",b:'업로드한 파일(temp.csv)을 열어서 file에 저장해요.'},
+  {ic:'🔤',f:"encoding = 'cp949'",b:'한글이 포함된 csv 파일을 불러올 때 오류가 발생하면 encoding 방식을 cp949로 설정해요.'},
+  {ic:'🧾',f:'data = pd.read_csv(file)',b:'file의 내용을 데이터프레임 형태로 data에 저장해요.'},
+  {ic:'🫥',f:'NaN',b:'데이터에 값이 없음(결측치)을 나타내요.'},
+]);
+pyrun('clRun1',{code:`# 교과서는 pandas로, 여기서는 같은 일을 기본 파이썬으로 해 봐요
+text = """지점,지점명,일시,평균기온(°C),최저기온(°C),최고기온(°C),평균최저기온(°C),평균최고기온(°C)
+108,서울,1907,,-20.1,25.4,,
+108,서울,1908,10.4,-15.8,33.6,5.8,15.7
+108,서울,1909,10.6,-14.6,35.6,5.8,16
+108,서울,1910,10.3,-19.9,33.3,5.7,15.9
+108,서울,1911,10.6,-21.5,34.5,6,15.9
+108,서울,1912,10.1,-18.6,34,5.1,15.6
+108,서울,1913,10,-19.6,31.7,4.9,15.6
+108,서울,1914,12,-14,35.6,7.7,17
+108,서울,1915,10.8,-21.3,34.8,6.6,15.8
+108,서울,1916,10.9,-19,33.2,6.4,16.5"""
+lines = text.splitlines()              # 줄 단위로 나누기
+header = lines[0].split(',')           # 첫 줄 = 칼럼명
+data = []
+for line in lines[1:]:
+    row = []
+    for cell in line.split(','):       # 쉼표(,)로 칸 나누기
+        row.append(cell if cell != '' else None)   # 빈 칸은 None(결측치)
+    data.append(row)
+print('칼럼명 :', header)
+print('줄 수 :', len(data), 'rows ×', len(header), 'columns')
+print('첫 줄 :', data[0])
+print('둘째 줄 :', data[1])
+`});
+
+/* 03 데이터 확인 */
+pyrun('clRun2',{code:`# 교과서의 describe(), isnull().sum()을 기본 파이썬으로 흉내 내요
+import statistics
+text = """지점,지점명,일시,평균기온(°C),최저기온(°C),최고기온(°C),평균최저기온(°C),평균최고기온(°C)
+108,서울,1907,,-20.1,25.4,,
+108,서울,1908,10.4,-15.8,33.6,5.8,15.7
+108,서울,1909,10.6,-14.6,35.6,5.8,16
+108,서울,1910,10.3,-19.9,33.3,5.7,15.9
+108,서울,1911,10.6,-21.5,34.5,6,15.9
+108,서울,1912,10.1,-18.6,34,5.1,15.6
+108,서울,1913,10,-19.6,31.7,4.9,15.6
+108,서울,1914,12,-14,35.6,7.7,17
+108,서울,1915,10.8,-21.3,34.8,6.6,15.8
+108,서울,1916,10.9,-19,33.2,6.4,16.5"""
+lines = text.splitlines()
+header = lines[0].split(',')
+rows = [line.split(',') for line in lines[1:]]
+for j in range(3, len(header)):        # 숫자 칼럼만 (평균기온부터)
+    vals = [float(r[j]) for r in rows if r[j] != '']
+    print(header[j])
+    print('  count', len(vals), ' mean', round(statistics.mean(vals), 2), ' min', min(vals), ' max', max(vals))
+    print('  빈 값(결측치) 개수 :', len(rows) - len(vals))
+`});
+
+/* 04 결측치 처리·칼럼명 */
+flipCards('clDropFlip',[
+  {ic:'✂️',f:'dropna(axis = 0)',b:'빈 값(결측치)이 있는 행을 삭제하는 함수예요.',x:'결측치를 꼭 제거해야 하는 것은 아니에요. 다만 이 실습에서는 결측치를 제거하지 않으면 기온 그래프를 그릴 때 결측치가 있는 자리에서 그래프가 끊겨 보여요.'},
+  {ic:'🧩',f:'fillna(data.mean())',b:'위 코드 대신 이 코드를 쓰면 결측치를 변수별 평균으로 채울 수 있어요.'},
+]);
+flipCards('clColFlip',[
+  {ic:'🏷️',f:'data.columns = [ … ]',b:'데이터프레임의 칼럼명(열 이름)을 리스트 형태로 변환해 변경해요.',x:'예) 「평균기온(°C)」 → 「평균 기온」'},
+]);
+pyrun('clRun3',{code:`# 교과서의 dropna(axis = 0), columns를 기본 파이썬으로 흉내 내요
+text = """지점,지점명,일시,평균기온(°C),최저기온(°C),최고기온(°C),평균최저기온(°C),평균최고기온(°C)
+108,서울,1907,,-20.1,25.4,,
+108,서울,1908,10.4,-15.8,33.6,5.8,15.7
+108,서울,1909,10.6,-14.6,35.6,5.8,16
+108,서울,1910,10.3,-19.9,33.3,5.7,15.9
+108,서울,1911,10.6,-21.5,34.5,6,15.9
+108,서울,1912,10.1,-18.6,34,5.1,15.6
+108,서울,1913,10,-19.6,31.7,4.9,15.6
+108,서울,1914,12,-14,35.6,7.7,17
+108,서울,1915,10.8,-21.3,34.8,6.6,15.8
+108,서울,1916,10.9,-19,33.2,6.4,16.5"""
+lines = text.splitlines()
+rows = [line.split(',') for line in lines[1:]]
+print('처리 전 :', len(rows), 'rows')
+
+rows = [r for r in rows if '' not in r]      # 빈 값이 있는 줄(행) 삭제
+print('처리 후 :', len(rows), 'rows')
+
+header = ['지점', '지점명', '연도', '평균 기온', '최저 기온', '최고 기온', '평균 최저 기온', '평균 최고 기온']
+print(header)                                # 칼럼명 바꾸기
+print(rows[0])
+# 해 보기 : 줄을 지우는 대신 빈 값을 평균으로 채우려면(fillna) 어떻게 바꿔야 할까요?
+`});
+
+/* 05 마무리 */
+const MEMOLIST=[['clPlan','나의 계획 · 살펴보고 싶은 지역'],['clPoint','내가 고른 지역의 데이터 시작 연도'],['clDoubt','의문이 생긴 부분'],['clCheck','검증한 방법과 결과'],['clWay','결측치를 처리하는 내 생각'],['keyQ','오늘의 질문에 대한 내 답']];
+onShow[5]=()=>memoSummary('msum',MEMOLIST);
+
+/* 진도 보내기 ②: 화면 이동·퀴즈·메모·창 이탈을 선생님 시트로 */
+(function(){
+  if(WHO.off) return;
+  const box=document.createElement('div');
+  if(WHO.preview){
+    box.className='tr-badge';
+    box.innerHTML=WHO.teacher?'교사 모드 · 전송 안 함 <button type="button">끝내기</button>':'미리보기 · 진도 전송 안 함';
+    (document.querySelector('.top')||document.body).appendChild(box);
+    const b=box.querySelector('button'); if(b) b.onclick=()=>{ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); };
+    return;
+  }
+
+  if(WHO.need){
+    let last={}; try{last=JSON.parse(localStorage.getItem('aiw-last')||'{}')||{};}catch(e){}
+    box.className='tr-gate';
+    box.innerHTML=`<form class="tr-card" autocomplete="off">
+      <h2>수업 시작 전에</h2>
+      <p class="tr-sub">학번과 이름을 써 주세요.</p>
+      <label class="tr-f"><span>학번</span><input name="no" inputmode="numeric" maxlength="5" placeholder="예: 20101" value="${esc(last.no||'')}"></label>
+      <label class="tr-f"><span>이름</span><input name="name" maxlength="10" placeholder="이름" value="${esc(last.name||'')}"></label>
+      <div class="tr-cls" hidden>${[].map(c=>`<label><input type="radio" name="cls" value="${c}"><span>${c}</span></label>`).join('')}</div>
+      <div class="tr-err"></div>
+      <button class="btn" type="submit">시작하기 →</button>
+      <p class="tr-note">어느 화면까지 왔는지, 퀴즈와 메모가 선생님께 전달돼요.<br>다른 친구 이름으로 들어가지 마세요.</p>
+    </form>`;
+    document.body.appendChild(box);
+    const f=box.querySelector('form'), err=box.querySelector('.tr-err'), go2=f.querySelector('button[type=submit]'), clsBox=box.querySelector('.tr-cls');
+    f.no.addEventListener('input',()=>{f.no.value=f.no.value.replace(/\D/g,'').slice(0,5);});
+    const TEACH=t=>{let h=2166136261;for(const c of t){h^=c.codePointAt(0);h=Math.imul(h,16777619)>>>0;}return h.toString(36);}, TEACH_H='853zuh';
+    const enter=w=>{ try{sessionStorage.setItem('aiw-who',JSON.stringify(w)); if(!w.teacher) localStorage.setItem('aiw-last',JSON.stringify({no:w.no,name:w.name}));}catch(e){} location.reload(); };
+    const busy=on=>{ go2.disabled=on; go2.textContent=on?'명단에서 확인하는 중…':'시작하기 →'; };
+    f.onsubmit=async e=>{
+      e.preventDefault(); err.textContent='';
+      const no=f.no.value.trim(), name=f.name.value.replace(/\s+/g,'').trim();
+      if(TEACH(no+'|'+name)===TEACH_H) return enter({teacher:true});
+      if(!/^\d{5}$/.test(no)){err.textContent='학번 다섯 자리를 숫자로 써 주세요.';f.no.focus();return;}
+      if(name.length<2){err.textContent='이름을 써 주세요.';f.name.focus();return;}
+      /* 명단에서 확인이 안 될 때만 반을 직접 고른다 */
+      if(!clsBox.hidden){
+        const cls=(f.querySelector('input[name=cls]:checked')||{}).value;
+        if(!cls){err.textContent='반을 골라 주세요.';return;}
+        return enter({cls,no,name});
+      }
+      busy(true);
+      try{
+        const r=await fetch(PEP,{method:'POST',body:JSON.stringify({op:'who',no,name})});
+        const d=await r.json();
+        if(d.ok) return enter({cls:d.cls,no,name});
+        busy(false);
+        if(d.err==='notfound'){ err.textContent='명단에서 찾지 못했어요. 학번과 이름을 다시 확인해 주세요. 계속 안 되면 선생님께 말해 주세요.'; return; }
+        throw new Error(d.err);
+      }catch(x){
+        busy(false);
+        if(clsBox.hidden){ clsBox.hidden=false; err.textContent='명단을 확인하지 못했어요. 내 반을 골라 주세요.'; }
+      }
+    };
+    setTimeout(()=>{ (f.no.value?(f.name.value?go2:f.name):f.no).focus(); },50);
+    return;
+  }
+
+  /* 이름 표시 + 바꾸기 */
+  box.className='tr-who';
+  box.innerHTML=`<span>${esc(WHO.cls)} ${esc(WHO.no)} <b>${esc(WHO.name)}</b></span><button type="button" title="다른 학생으로 바꾸기">바꾸기</button>`;
+  (document.querySelector('.top')||document.body).appendChild(box);
+  box.querySelector('button').onclick=()=>{ if(confirm('다른 학생으로 바꿀까요? (지금까지 한 것은 이 학번으로 저장돼 있어요)')){ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); } };
+
+  const SK=QK+'-seen', AK=QK+'-away';
+  const seen=new Set(store.get(SK,[]));
+  const A=store.get(AK,{n:0,s:0});
+  let awayAt=null, lastAct=Date.now(), sent=0, lastSent=0, tmr=null, dirty=false;
+
+  function snap(){
+    let ok=0, done=0;
+    for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{const v=QS[k+'-'+i]; if(v!=null){done++; if(v===it.a) ok++;}});
+    const ML=(typeof MEMOLIST!=='undefined')?MEMOLIST:[];
+    return {op:'put',lesson:LESSON,title:document.title,cls:WHO.cls,no:WHO.no,name:WHO.name,
+      scr:cur,names:pages.map((p,i)=>i?p.dataset.name:'시작'),seen:[...seen].sort((a,b)=>a-b),
+      qOk:ok,qDone:done,qTot:TOTALQ,
+      memo:ML.map(([k,l])=>[l,String(MEMO[k]==null?'':MEMO[k]).slice(0,1500)]),
+      away:awayAt?1:0,leaves:A.n,awaySec:Math.round(A.s+(awayAt?(Date.now()-awayAt)/1000:0)),idle:Math.round((Date.now()-lastAct)/1000),n:++sent};
+  }
+  function flush(){
+    if(!dirty) return; dirty=false; lastSent=Date.now();
+    const body=JSON.stringify(snap());
+    try{ if(navigator.sendBeacon && navigator.sendBeacon(PEP,new Blob([body],{type:'text/plain'}))) return; }catch(e){}
+    try{ fetch(PEP,{method:'POST',mode:'no-cors',body,keepalive:true}).catch(()=>{}); }catch(e){}
+  }
+  /* 너무 자주 보내지 않기: 보통 15초, 창 이탈·복귀는 3초 간격 */
+  function send(urgent){
+    dirty=true; clearTimeout(tmr);
+    const gap=urgent?3000:15000, wait=Math.max(0,gap-(Date.now()-lastSent));
+    tmr=setTimeout(flush,wait);
+  }
+
+  const _go=go; go=function(i){ _go(i); if(!seen.has(cur)){seen.add(cur); store.set(SK,[...seen]);} send(true); };
+  const _upd=updScore; updScore=function(){ _upd(); send(); };
+  const _set=store.set; store.set=function(k,v){ _set(k,v); if(k===MK) send(); };
+
+  function leave(){ if(awayAt) return; awayAt=Date.now(); A.n++; _set(AK,A); send(true); }
+  function back(){ if(!awayAt) return; A.s+=(Date.now()-awayAt)/1000; awayAt=null; _set(AK,A); send(true); }
+  document.addEventListener('visibilitychange',()=>{ document.hidden?leave():(document.hasFocus()&&back()); });
+  window.addEventListener('blur',()=>setTimeout(()=>{ if(!document.hasFocus()) leave(); },300));
+  window.addEventListener('focus',back);
+  window.addEventListener('pagehide',()=>{ dirty=true; flush(); });
+  ['pointerdown','keydown','input','wheel','touchstart'].forEach(t=>document.addEventListener(t,()=>{lastAct=Date.now();},{capture:true,passive:true}));
+  /* 화면에 머물러 있으면 2분마다 한 번 신호 */
+  setInterval(()=>{ if(!document.hidden) send(); },120000);
+})();
+
+/* 시작 */
+bindMemos();
+updScore();
+const h0=parseInt((location.hash.match(/^#p(\d+)$/)||[])[1],10);
+go(isNaN(h0)?0:h0);
+</script>
+<script>
+/* page-guard: 복사·잘라내기·드래그·오른쪽 클릭 막기 (복사 버튼은 그대로 동작) */
+(function(){
+  var t=null, tm=null, MSG='수업 자료는 복사할 수 없어요. 내 말로 정리해 보세요.';
+  function say(){ if(!t){t=document.createElement('div');t.className='pg-toast';document.body.appendChild(t);} t.textContent=MSG; t.classList.add('on'); clearTimeout(tm); tm=setTimeout(function(){t.classList.remove('on');},1800); }
+  function inField(e){ return e.target && e.target.closest && e.target.closest('input,textarea,select,[contenteditable]'); }
+  ['copy','cut'].forEach(function(type){ document.addEventListener(type,function(e){ e.preventDefault(); say(); },true); });
+  document.addEventListener('contextmenu',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('selectstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('dragstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('keydown',function(e){ var k=(e.key||'').toLowerCase(); if((e.ctrlKey||e.metaKey)&&(k==='c'||k==='x')){ e.preventDefault(); say(); } if((e.ctrlKey||e.metaKey)&&k==='a'&&!inField(e)) e.preventDefault(); },true);
+})();
+</script>
+</body>
+</html>

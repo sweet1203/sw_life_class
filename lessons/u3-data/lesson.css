@@ -1,0 +1,27 @@
+  /* u3-data 전용 (dt-) */
+  .dt-clocks{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+  .dt-clocks>div{flex:1 1 150px;max-width:200px}
+  .dt-clocks svg{width:100%;height:auto;display:block}
+  .dt-ul{padding-left:22px;margin:8px 0}
+  .dt-ul li{margin:4px 0}
+  .dt-vs th,.dt-vs td{font-size:.92rem}
+  .dt-vs{min-width:420px}
+  .dt-flow svg{width:100%;max-width:520px;height:auto;display:block;margin:6px auto 0}
+  .dt-tab{gap:8px;margin:4px 0 10px}
+  .dt-tab button{display:flex;align-items:center;gap:7px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer;color:var(--ink)}
+  .dt-tab button .e{font-size:1.1rem}
+  .dt-tab button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .dt-site{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:12px 16px}
+  .dt-site>b{color:var(--k);font-size:1.1rem}
+  .dt-site p{margin:6px 0}
+  .dt-site .ex{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:.88rem}
+  .dt-box{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px;min-width:0;overflow-wrap:anywhere}
+  .dt-box>b{display:block;color:var(--k)}
+  .dt-box span{display:block;font-size:.92rem;margin-top:4px}
+  .dt-box em{display:block;font-style:normal;font-weight:700;font-size:.86rem;color:var(--k);margin-top:8px}
+  .dt-gcards .tcard .f i svg{width:44px;height:44px;display:block;margin:0 auto}
+  .dt-gcards .tcard .b{font-size:.84rem;padding:10px 12px}
+  .dt-gcards .tcard .b .x{font-size:.8rem}
+  #dtFixTbl .mt td,#dtFixTbl .mt th{font-size:.88rem;white-space:nowrap}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}

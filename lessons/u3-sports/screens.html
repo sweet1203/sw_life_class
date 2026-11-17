@@ -1,0 +1,366 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#2f9a5a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅲ. 현상을 분석하는 소프트웨어 · 융합 진로</span>
+      <h1>팀을 승리로!<br>스포츠 기록 분석 연구원</h1>
+      <div class="story"><b>빅데이터로 붙자! 스포츠는 과학이다 (108쪽)</b><br>2000년대 초반 미국 프로 야구 최하위 팀이었던 오클랜드 아슬레틱스는 철저한 데이터 분석을 바탕으로 팀을 구성했고, 그 결과 성적이 크게 향상되었어요. 오늘은 <b>스포츠 기록 분석 연구원</b>이 되어, 선수 데이터를 분석해 선발팀을 구성해 봐요.</div>
+      <p>축구 선수 데이터를 모으고(1단계), 처리하고(2단계), 시각화하고(3단계), 결과를 해석해요(4단계).</p>
+      <ol>
+        <li>스포츠 기록 분석 연구원</li><li>실습 · 데이터 수집과 처리</li><li>실습 · 데이터 시각화</li>
+        <li>분석 결과 해석 · 데이터 윤리</li><li>나만의 축구팀 · 진로 탐색</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 수업 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>📥</i><div><b>1단계 · 데이터 수집</b><small>축구 선수 데이터 내려받기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🧹</i><div><b>2단계 · 데이터 처리</b><small>오렌지로 파일 열어 살펴보기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>📊</i><div><b>3단계 · 데이터 시각화</b><small>조건에 맞는 선수 뽑아 그리기</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🧭</i><div><b>4단계 · 결과 해석</b><small>팀 구성에 활용하기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">학습 목표 (108쪽)</span>
+      <p>데이터 유형에 따라 적합한 방법으로 데이터를 <b>수집</b>하고, 목적에 맞게 <b>처리</b>하고 관리할 수 있어요. 데이터를 분석하여 의미를 파악한 후, 결과를 <b>윤리적으로 활용</b>할 수 있어요.</p>
+      <p style="margin-bottom:0" class="muted">학습 요소 · 데이터 분석, 데이터의 윤리적 활용</p>
+    </div>
+    <div class="card">
+      <h3>🔍 문제 발견 <span class="muted" style="font-weight:400;font-size:.88rem">(108쪽)</span></h3>
+      <p style="margin-top:0">위 내용을 보고 스포츠 기록 분석이 어떻게 활용될지 나만의 가설을 세워 보고, 가설을 뒷받침할 근거 자료로 어떤 데이터가 필요할지 적어 봐요.</p>
+      <div class="memo"><label>나만의 가설 <small>교과서 예) 선수들의 성적을 분석한 결과가 연봉 협상의 자료로 활용될 것이다.</small></label><textarea data-memo="spHyp" rows="2"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>가설을 뒷받침할 근거 자료 <small>교과서 예) 선수들의 경기 기록과 연봉 데이터</small></label><textarea data-memo="spEvid" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 선수 데이터를 분석하면 어떻게 선발팀을 구성할 수 있고, 그 데이터는 어떻게 다뤄야 할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>스포츠 기록 분석 연구원이 하는 일을 설명할 수 있다.</li>
+          <li>오렌지로 조건에 맞는 선수를 뽑아 막대그래프로 나타내는 순서를 설명할 수 있다.</li>
+          <li>선수 데이터를 윤리적으로 활용해야 하는 이유를 설명할 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">스포츠 기록 분석 연구원 · players_21.csv · 칼럼(속성) · 오렌지 위젯 · Select Rows · Bar Plot · 데이터 윤리</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>내가 좋아하는 선수나 팀이 있다면 누구인가요? 그 팀을 데이터로 분석한다면 무엇이 궁금한가요? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 스포츠 기록 분석 연구원부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 스포츠 기록 분석 연구원 -->
+<section class="page" data-name="스포츠 기록 분석 연구원" data-acc="#2f9a5a">
+  <div class="head"><div class="num">01</div><div><h2>스포츠 기록 분석 연구원</h2><p>교과서 109쪽 · 데이터 분석으로 스포츠 팀의 성적이 향상될 수 있을까?</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>경기에서 나오는 기록을 <b>숫자로 모아 분석</b>해서, 팀이 이기는 데 도움이 되는 근거를 찾는 사람이 <b>스포츠 기록 분석 연구원</b>이에요.</span></div>
+
+  <div class="card">
+    <h3>📜 스포츠 기록 분석은 어떻게 발전했을까? <span class="muted" style="font-weight:400;font-size:.88rem">(109쪽)</span></h3>
+    <div class="sp-three">
+      <div style="--k:#2f9a5a"><b>1990년대 초반</b>영국 카디프 웨일스대학교(UWIC)의 연구팀들이 스포츠 경기를 객관적으로 분석하는 방법을 체계화하면서 본격적으로 발전했어요.</div>
+      <div style="--k:#c98a0a"><b>2002년 한일 월드컵</b>과학적인 데이터 분석으로 월드컵 4강의 신화를 이루었고, 이를 계기로 국내에서도 데이터 분석의 중요성이 부각되기 시작했어요.</div>
+      <div style="--k:#2f6fd0"><b>지금</b>선수들의 기록 분석은 승패를 예측하거나 선수들의 기량을 파악하여 전략을 세우는 데 사용돼요.</div>
+    </div>
+    <p class="note" style="margin-bottom:0">수많은 데이터의 내용 중 <b>어떤 항목을 분석에 사용하느냐</b>에 따라 정확도와 신뢰도가 달라져요. 이렇게 스포츠 선수와 팀의 성과를 과학적으로 분석하는 사람이 바로 스포츠 기록 분석 연구원이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧑‍🔬 스포츠 기록 분석 연구원이 하는 일 <span class="muted" style="font-weight:400;font-size:.88rem">(109쪽)</span></h3>
+    <div class="sp-three">
+      <div style="--k:#2f9a5a"><b>기록하고 분석하기</b>각종 스포츠 경기의 모든 요소를 수치화된 데이터로 기록하고 이를 분석해요. 육상, 수영 등의 개인 종목과 축구, 야구 등의 단체 종목에서 나오는 기록을 체계적으로 정리해요.</div>
+      <div style="--k:#2f6fd0"><b>객관적인 근거 찾기</b>경기의 특성과 내용에 맞게 분석하고, 수치로 나타나는 객관적인 근거로 상대 팀이나 선수의 기록과 전략을 파악해요.</div>
+      <div style="--k:#9b4fc4"><b>시스템과 기법 연구하기</b>경기를 객관적으로 분석하기 위한 기록 시스템과 분석 기법을 개발하고, 다양한 분석 기법과 통계를 활용한 학문적인 연구를 해요.</div>
+    </div>
+    <p class="note" style="margin-bottom:0">교과서의 [자료 6]은 경기장에서 노트북 등으로 경기를 지켜보며 기록·분석하는 모습, [자료 7]은 경기 화면 위에 선수의 움직임을 점과 선으로 겹쳐 분석하는 화면의 예예요. 사진은 이곳에 싣지 않고 글로 옮겼어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🗣️ 해 보기 · 목적에 맞는 데이터 유형 탐색하기 <span class="muted" style="font-weight:400;font-size:.88rem">(109쪽 · 분석·토의)</span></h3>
+    <div class="sp-task"><b>해 보기</b>스포츠 팀을 구성할 때 중요한 요소가 무엇인지 생각해 보고, 팀 구성을 위해 어떤 데이터를 수집하여 분석할지 친구와 토의해 보자.</div>
+    <div class="memo"><label>팀을 구성할 때 중요한 요소 <small>내 생각을 적어 보세요.</small></label><textarea data-memo="spFactor" rows="3"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>그 요소를 알기 위해 수집해 분석할 데이터 <small>친구와 이야기한 것도 적어 보세요.</small></label><textarea data-memo="spCollect" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 실습 데이터 수집 -->
+<section class="page" data-name="실습 데이터 수집" data-acc="#2fa0a8">
+  <div class="head"><div class="num">02</div><div><h2>실습 · 선수 데이터를 분석해 선발팀 구성하기 — 데이터 수집</h2><p>교과서 110쪽 · 1단계 데이터 수집</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>먼저 <b>어떤 자료로 무엇을 할지</b> 정하고, 세계 축구 선수들의 기록이 담긴 <b>players_21.csv</b> 파일을 내려받아 열어 봐요. 한 줄이 선수 한 명, 한 칸이 속성 하나예요.</span></div>
+
+  <div class="card">
+    <h3>📋 실습 개요 <span class="muted" style="font-weight:400;font-size:.88rem">(110쪽)</span></h3>
+    <p style="margin-top:0">지난 시즌 5연패로 리그를 마감한 축구팀이 있어요. 올해는 기필코 승리를 쟁취하고자 선수 데이터를 철저히 분석해 팀을 꾸리기로 했어요. <b>개념 학습에서 배운 데이터 분석 단계에 따라</b> 선수 데이터를 분석하고, 이를 활용해 새로운 선발팀을 구성해 봐요.</p>
+    <table class="sp-tb">
+      <tr><td>문제 상황</td><td>5연패의 늪에 빠진 축구팀의 첫 승리를 위해 선수들의 데이터를 분석해 선발팀을 구성해야 한다.</td></tr>
+      <tr><td>활용 데이터</td><td>FIFA 선수 데이터</td></tr>
+      <tr><td>사용 소프트웨어</td><td>스프레드시트, 오렌지(Orange)</td></tr>
+    </table>
+    <div class="sp-steps">
+      <div style="--k:#2fa0a8" class="cur"><b>1단계</b>데이터 수집</div>
+      <div style="--k:#2f9a5a"><b>2단계</b>데이터 처리</div>
+      <div style="--k:#c98a0a"><b>3단계</b>데이터 시각화</div>
+      <div style="--k:#9b4fc4"><b>4단계</b>분석 결과 해석</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📥 1 데이터 수집 <span class="muted" style="font-weight:400;font-size:.88rem">(110쪽)</span></h3>
+    <p style="margin-top:0">기록 분석을 위해 세계 축구 선수들의 데이터를 수집해 봐요. 데이터는 <b>캐글(Kaggle)</b>에서 내려받을 수 있어요.</p>
+    <ol class="sp-ol" style="margin:6px 0 8px;padding-left:1.3em;line-height:1.7">
+      <li>캐글 사이트에서 「FIFA 22」 선수 정보가 취합된 데이터를 검색해요. 캐글은 로그인(구글 계정과 연동)을 해야 데이터를 내려받을 수 있어요.</li>
+      <li>다운로드 버튼을 눌러 파일을 내려받고, 분석에 사용할 <code>players_21.csv</code> 파일을 찾아요. 해당 파일만 받고 싶으면 스크롤을 내려 Data Explorer에서 파일 이름을 찾아 클릭한 뒤 내려받기 버튼을 눌러요.</li>
+      <li>받은 파일을 열어 데이터를 확인해요. 선수별로 <b>110개의 칼럼</b>(이름, 포지션 등의 속성)이 있어요.</li>
+    </ol>
+    <p class="note">데이터를 확인해 보면 선수별 <b>결측값</b>이 있어요. 이는 선수별 포지션에 따른 차이이거나 분석에 크게 영향을 주지 않는 것이라서, 그대로 두고 사용해요.</p>
+    <div class="easy" style="border-color:#e8b4a8"><b class="t">주의</b><span>관련 데이터를 수집할 때 선수들의 <b>사생활을 침해하거나 민감한 내용</b>이 들어 있지 않은지 살펴보고, 개인 정보 등 불필요한 정보까지 수집하지 않도록 해야 해요.</span></div>
+  </div>
+
+  <div class="card">
+    <h3>🗂️ 데이터 주요 속성 안내 <span class="muted" style="font-weight:400;font-size:.88rem">(110쪽)</span></h3>
+    <div class="of-tw"><table class="tbl">
+      <tr><th>속성명</th><th>속성 의미</th><th>속성명</th><th>속성 의미</th></tr>
+      <tr><td class="mono">short_name</td><td>선수 이름</td><td class="mono">club_position</td><td>팀 내 포지션</td></tr>
+      <tr><td class="mono">overall</td><td>종합 점수</td><td class="mono">potential</td><td>가능성</td></tr>
+      <tr><td class="mono">wage_eur</td><td>선수의 주급(일주일 급여)</td><td class="mono">preferred_foot</td><td>선호하는 발</td></tr>
+    </table></div>
+    <p class="note" style="margin-bottom:0">다음 화면부터 이 속성들로 선수를 골라 볼 거예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🗣️ 해 보기 · 데이터 탐색하기 <span class="muted" style="font-weight:400;font-size:.88rem">(110쪽 · 분석·토의)</span></h3>
+    <div class="sp-task"><b>해 보기</b>선수들에 대한 정보 중 어떤 속성을 분석에 활용하면 좋을지 친구들과 이야기 나누어 보자.</div>
+    <div class="memo"><label>분석에 활용하면 좋을 속성과 그 까닭 <small>위 표의 속성이나 110개 칼럼 중에서 골라 적어 보세요.</small></label><textarea data-memo="spAttr" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 3 실습 데이터 처리 -->
+<section class="page" data-name="실습 데이터 처리" data-acc="#2f9a5a">
+  <div class="head"><div class="num">03</div><div><h2>실습 · 데이터 처리</h2><p>교과서 111쪽 · 2단계 데이터 처리</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>받은 파일을 <b>스프레드시트나 오렌지</b>로 열어서 선수가 몇 명인지, 어떤 속성이 있는지 살펴보는 단계예요. 글자가 깨지면 불러오는 방법만 바꾸면 돼요.</span></div>
+
+  <div class="card">
+    <h3>🧹 2 데이터 처리 <span class="muted" style="font-weight:400;font-size:.88rem">(111쪽)</span></h3>
+    <p style="margin-top:0">수집한 players_21.csv 파일을 열어 FIFA에서 제공하는 선수들의 데이터를 확인해 보아요. csv 파일의 인코딩 방식 때문에 한글이 깨져 보이는 현상은 데이터를 불러오는 방법을 바꿔 해결할 수 있어요.</p>
+    <div class="sp-three">
+      <div style="--k:#2f9a5a"><b>① 스프레드시트로 열기</b>엑셀에서는 [데이터] 메뉴의 [데이터 가져오기] → [텍스트/CSV]를 눌러 파일을 열고, 파일 원본을 <b>[65001: 유니코드(UTF-8)]</b>로 선택하면 모든 글자가 제대로 나타나요.</div>
+      <div style="--k:#e0702b"><b>② 오렌지에서 File 위젯으로 열기</b>오렌지를 열고 [Data] 카테고리의 <b>File</b> 위젯을 작업창으로 끌어 와요. 더블 클릭한 뒤 폴더 모양 버튼으로 players_21.csv가 있는 위치를 지정해요.</div>
+      <div style="--k:#2f6fd0"><b>③ Info에서 정보 확인하기</b>File 위젯 창의 [Info]에서 데이터의 정보를 확인해요. 아래에서 줄을 눌러 뜻을 살펴봐요.</div>
+    </div>
+    <div class="easy"><b class="t">스프레드시트</b><span>표에 숫자나 문자 데이터를 입력하고 이를 조작하여 데이터를 처리하는 소프트웨어예요. 단순한 계산뿐 아니라 데이터를 도표로 나타내는 그래픽 기능과 데이터베이스 기능, 문서 작성 기능도 있어요.</span></div>
+    <div class="easy"><b class="t">오렌지</b><span>데이터를 분석하기 위한 오픈 소스 소프트웨어로, 설치해서 사용해요. 위젯을 끌어다 놓는 간단한 과정으로 데이터를 분석하고 직관적으로 시각화할 수 있어요.</span></div>
+  </div>
+
+  <div class="card">
+    <h3>🔎 File 위젯의 Info 읽어 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(111쪽)</span></h3>
+    <p style="margin-top:0">Info에는 이런 줄이 나와요. 눌러서 해설을 확인해요.</p>
+    <div class="row sp-tab" id="spInfoBtn"></div>
+    <div class="sp-info" id="spInfoView" aria-live="polite"></div>
+    <p class="note" style="margin-bottom:0">Info 창의 <b>feature</b>는 기계학습에 영향을 미치는 속성을, <b>target</b>은 예측하는 결과 속성을, <b>meta</b>는 참고만 하는 속성을 의미해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 ④ 데이터 테이블로 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(111쪽)</span></h3>
+    <p style="margin:0">데이터를 데이터 테이블(표) 형태로 확인하기 위해 <b>File</b> 위젯에 <b>Data Table</b> 위젯을 연결해요. Data 카테고리의 Data Table 위젯을 File 위젯 옆으로 끌어다 놓은 다음 두 위젯을 연결해요.</p>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 실습 데이터 시각화 -->
+<section class="page" data-name="실습 데이터 시각화" data-acc="#c98a0a">
+  <div class="head"><div class="num">04</div><div><h2>실습 · 데이터 시각화</h2><p>교과서 112~113쪽 · 3단계 데이터 시각화</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>수많은 선수 중에서 <b>조건에 맞는 선수만 뽑아</b> 막대그래프로 그려 봐요. 조건을 바꾸면 뽑히는 선수도, 그래프도 달라져요.</span></div>
+
+  <div class="card">
+    <h3>🍊 오렌지 위젯 연결 흐름 <span class="muted" style="font-weight:400;font-size:.88rem">(112~113쪽)</span></h3>
+    <p style="margin-top:0">원하는 조건의 선수만 뽑아서 시각화해 봐요. 각 포지션에 조건을 어떻게 설정하느냐에 따라 다양한 결과가 나타나요. 위젯 상자나 아래 표의 줄을 누르면 서로 짝이 맞춰져요.</p>
+    <div><svg id="spFlow" role="img" aria-label="오렌지 위젯 연결 흐름도. File에서 Data Table로, Data Table에서 Feature Statistics로 이어지고, File에서 Select Rows, Data Table 1, Bar Plot으로 이어진다."></svg></div>
+    <div class="of-tw"><table class="tbl" id="spSet">
+      <tr><th>번호</th><th>위젯 (카테고리)</th><th>어디에 연결</th><th>설정 · 할 일</th><th>확인할 것</th></tr>
+      <tr data-s="1"><td>1</td><td><b>File</b> (Data)</td><td>처음 위젯</td><td><span class="mono">players_21.csv</span> 열기</td><td>111쪽에서 확인한 18944명의 데이터</td></tr>
+      <tr data-s="2"><td>2</td><td><b>Data Table</b> (Data)</td><td>File →</td><td>데이터를 표 형태로 확인</td><td>선수별 속성이 줄과 칸으로 보여요</td></tr>
+      <tr data-s="3"><td>3</td><td><b>Feature Statistics</b> (Data)</td><td>Data Table →</td><td>별도 설정 없이 연결해서 열기</td><td>각 속성값의 통계 정보와 도수 분포를 동시에 볼 수 있어요</td></tr>
+      <tr data-s="4"><td>4</td><td><b>Select Rows</b> (Transform)</td><td>File →</td><td>콤보 박스를 눌러 조건 고르기<br>① <span class="mono">club_position</span> – <b>is</b> – <span class="mono">GK</span><br>② <b>Add Condition</b>으로 행 추가 → <span class="mono">overall</span> – <b>is greater than</b> – <span class="mono">85</span>(입력)</td><td>속성 이름을 정확하게 입력해요. 텍스트는 띄어쓰기와 영어 대소문자를 구분해야 해요.</td></tr>
+      <tr data-s="5"><td>5</td><td><b>Data Table (1)</b> (Data)</td><td>Select Rows →</td><td>조건에 해당하는 선수 확인</td><td>조건에 맞는 선수들이 정렬된 것을 볼 수 있어요</td></tr>
+      <tr data-s="6"><td>6</td><td><b>Bar Plot</b> (Visualize)</td><td>Data Table (1) →</td><td><b>Annotations</b>: short_name<br><b>Color</b>: preferred_foot</td><td>overall 순위별로 선수의 이름이 나열되고 선호하는 발이 구분돼요</td></tr>
+    </table></div>
+    <div id="spFlowDone"></div>
+    <div class="easy" style="margin-top:10px"><b class="t">TIP · 오렌지 카테고리 메뉴</b><span>창에서 원하는 카테고리가 보이지 않으면, 열려 있는 카테고리의 제목 부분(색 표시)을 눌러요. 그러면 아이콘이 접히면서 카테고리 이름만 보여요.</span></div>
+    <div class="of-tw"><table class="tbl">
+      <tr><th>카테고리</th><th>하는 일</th><th>카테고리</th><th>하는 일</th></tr>
+      <tr><td><b>Data</b></td><td>데이터 입출력</td><td><b>Evaluate</b></td><td>모델 성능 평가</td></tr>
+      <tr><td><b>Transform</b></td><td>데이터 처리</td><td><b>Unsupervised</b></td><td>비지도 학습</td></tr>
+      <tr><td><b>Visualize</b></td><td>데이터 시각화</td><td><b>Geo</b></td><td>지역 분석</td></tr>
+      <tr><td><b>Model</b></td><td>모델</td><td></td><td></td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>🧪 Select Rows → Bar Plot 흉내 내 보기</h3>
+    <p style="margin-top:0">오렌지에서는 18944명 전체에서 골라요. 여기서는 <b>players_21.csv에서 고른 선수 14명</b>(값은 파일에 있는 그대로)만 담았어요. 조건 버튼을 눌러 Select Rows처럼 줄을 골라 보고, 아래 막대그래프(Bar Plot)가 어떻게 바뀌는지 봐요.</p>
+    <b style="font-size:.92rem">① 선수 14명 (Data Table)</b>
+    <div id="spTbl"></div>
+    <b style="font-size:.92rem;display:block;margin-top:10px">② 조건 고르기 (Select Rows)</b>
+    <div class="sp-cond" id="spCondPos"><span>club_position</span></div>
+    <div class="sp-cond" id="spCondOvr"><span>overall</span></div>
+    <div class="sp-res" id="spResMsg" aria-live="polite"></div>
+    <b style="font-size:.92rem">③ 뽑힌 선수 (Data Table (1))</b>
+    <div id="spResTbl"></div>
+    <b style="font-size:.92rem;display:block;margin-top:10px">④ 막대그래프 (Bar Plot · overall 큰 순)</b>
+    <div class="sp-leg"><span><i style="background:#2f6fd0"></i>preferred_foot: Right</span><span><i style="background:#d64535"></i>preferred_foot: Left</span></div>
+    <svg id="spBars" role="img" aria-label="뽑힌 선수의 overall 막대그래프"></svg>
+    <p class="note" style="margin-bottom:0">막대 색이 다른 이유는 preferred_foot(선호하는 발)로 색을 나눴기 때문이에요. 오렌지 Bar Plot의 Color 설정과 같은 일이에요. 색 이름은 이 화면에서 정한 거예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🐍 같은 일을 기본 파이썬으로 해 보기</h3>
+    <p style="margin-top:0">교과서는 오렌지의 위젯으로 하지만, 여기서는 <b>같은 일을 기본 파이썬</b>(리스트와 딕셔너리)으로 해 봐요. 선수 한 명은 딕셔너리, 선수 모음은 리스트예요. 조건을 바꿔 다시 실행해 보세요.</p>
+    <div id="spRun"></div>
+    <p class="note" style="margin-bottom:0">조건 <code>p['overall'] &gt; 85</code>를 <code>&gt;= 85</code>로, <code>'GK'</code>를 <code>'ST'</code>나 <code>'CF'</code>로 바꾸면 어떻게 되나요? (ST와 CF 둘 다 보고 싶다면 <code>p['club_position'] in ['ST', 'CF']</code>로 써요.) 작은 표본이라 오렌지로 18944명에서 뽑은 결과와 달라요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✍️ 해 보기 · 다양한 속성 추출해서 시각화하기 <span class="muted" style="font-weight:400;font-size:.88rem">(113쪽 · 시각화)</span></h3>
+    <div class="sp-task"><b>해 보기</b>다양한 속성을 기준으로 선수들을 뽑아서 시각화해 보자.<br><small class="muted">교과서 예) overall이 85 이상이고, 포지션이 CF이거나 ST인 선수를 preferred_foot로 구분해서 시각화한다.</small></div>
+    <div class="memo"><label>내가 뽑아 본 조건과 결과 <small>예시 말고 나만의 조건을 적어 보세요. 어떤 속성으로 어떤 선수를 뽑았나요?</small></label><textarea data-memo="spExtract" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 분석 결과 해석·데이터 윤리 -->
+<section class="page" data-name="결과 해석 · 데이터 윤리" data-acc="#9b4fc4">
+  <div class="head"><div class="num">05</div><div><h2>분석 결과 해석 · 데이터 윤리</h2><p>교과서 113쪽 · 4단계 분석 결과 해석, 더 알아보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>분석 결과는 선수를 고르는 데 <b>큰 도움</b>이 되지만 <b>정해진 답은 아니에요</b>. 그리고 분석에 쓰는 데이터에는 개인 정보가 있을 수 있어서 <b>안전하고 올바르게</b> 다뤄야 해요.</span></div>
+
+  <div class="card">
+    <h3>🧭 4 분석 결과 해석 <span class="muted" style="font-weight:400;font-size:.88rem">(113쪽)</span></h3>
+    <p style="margin-top:0">players_21.csv 파일로 선수들의 데이터를 분석해 보니, 원하는 속성별로 선수를 추출하여 <b>뛰어난 선수가 누구인지</b> 알아낼 수 있었어요. 이처럼 데이터 분석 결과를 토대로 팀을 구성하고 경기를 운영한다면 좀 더 효과적으로 팀을 운영할 수 있어요.</p>
+    <p style="margin-bottom:0">이렇게 분석한 결과가 선수를 선발하고 팀을 구성하는 데 있어서 절대적인 기준이 될 수는 없어요. 하지만 이러한 스포츠 분석에서 얻은 <b>다양한 데이터를 종합해서 활용</b>한다면 팀의 성적 향상에 도움이 될 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔐 더 알아보기 · 데이터를 윤리적으로 활용하려면? <span class="muted" style="font-weight:400;font-size:.88rem">(113쪽)</span></h3>
+    <p style="margin-top:0">카드를 눌러 두 가지를 확인해요.</p>
+    <div id="spEthics" class="tcards"></div>
+    <div class="memo" style="margin-top:12px"><label>내가 좋아하는 선수나 팀의 데이터를 분석한다면, 어떤 점에 조심해야 할까요? <small>내 말로 적어 보세요.</small></label><textarea data-memo="spEthMemo" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 융합 진로 마무리 -->
+<section class="page" data-name="나만의 축구팀 만들기" data-acc="#2fa0a8">
+  <div class="head"><div class="num">06</div><div><h2>융합 진로 마무리 · 나만의 축구팀 만들기</h2><p>교과서 114쪽 · 분석 결과로 선발팀 구성하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>앞에서 분석한 데이터로 <b>나만의 선발팀</b>을 짜 봐요. 몇 명을 뽑을지, 어떤 기준으로 뽑을지 정하고, 이름까지 적어 보는 활동이에요.</span></div>
+
+  <div class="card">
+    <h3>⚽ 1 포지션별 인원 정하기 <span class="muted" style="font-weight:400;font-size:.88rem">(114쪽)</span></h3>
+    <p style="margin-top:0">공격수, 미드필더, 수비수까지 총 <b>10명</b>, 골키퍼 <b>1명</b>으로 자유롭게 구성해요. 아래는 FIFA 데이터에서 제공하는 각 포지션의 위치예요. 교과서의 경기장 그림을 약어만 남겨 다시 그렸어요.</p>
+    <svg class="sp-svg" viewBox="0 0 300 372" role="img" aria-label="FIFA 데이터의 포지션 위치. 위쪽 공격수는 LS ST RS LF RF LW CF RW, 가운데 미드필더는 LAM CAM RAM LM LCM CM RCM RM LDM CDM RDM, 아래쪽 수비수는 LWB RWB LB LCB CB RCB RB, 맨 아래 골키퍼는 GK.">
+      <rect x="4" y="4" width="292" height="364" rx="14" fill="#e6f4ea" stroke="#2f9a5a" stroke-width="2"/>
+      <path d="M4 186 H296" stroke="#9bc9ad" stroke-width="1.5"/><circle cx="150" cy="186" r="34" fill="none" stroke="#9bc9ad" stroke-width="1.5"/>
+      <g id="spPitch"></g>
+    </svg>
+    <div class="sp-leg" style="justify-content:center"><span><i style="background:#ffd9c7"></i>공격수</span><span><i style="background:#cfe3ff"></i>미드필더</span><span><i style="background:#fff0a8"></i>수비수</span><span><i style="background:#f6c0c0"></i>골키퍼</span></div>
+    <p class="note" style="margin-bottom:0">교과서 그림에서 공격수·미드필더·수비수·골키퍼로 묶은 위치를 색으로 나타냈어요. 어느 위치까지 같은 묶음인지 경계는 그림을 보고 옮긴 거예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>📏 2 선발 기준 정하기 <span class="muted" style="font-weight:400;font-size:.88rem">(114쪽)</span></h3>
+    <p style="margin-top:0">데이터의 속성값 기준을 어떻게 하느냐에 따라 팀 구성을 다양하게 할 수 있어요.</p>
+    <div class="sp-ok">
+      <div style="--k:#d64535"><b>교과서 예 · 공격수</b>club_position이 ST 또는 CF이면서 overall이 80 이상 → 그중 나이가 어린 선수 선발</div>
+      <div style="--k:#2f6fd0"><b>교과서 예 · 수비수</b>club_position이 LB 또는 RB이면서 wage_eur이 50,000 이상 → 그중 overall이 높은 선수 선발</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 3 선발팀 구성하기 <span class="muted" style="font-weight:400;font-size:.88rem">(114쪽)</span></h3>
+    <p style="margin-top:0">Select Rows 위젯을 사용해 얻은 결과를 Bar Plot 위젯으로 시각화하여, 선발팀 리스트를 작성해 봐요. 칸을 채워 보세요.</p>
+    <div class="of-tw"><table class="tbl sp-team">
+      <tr><th>포지션</th><th>선발 기준</th><th>인원</th><th>이름</th></tr>
+      <tr><td>공격수</td><td><input type="text" data-memo="spT1c" aria-label="공격수 선발 기준"><div class="saved"></div></td><td><input type="text" data-memo="spT1n" aria-label="공격수 인원" inputmode="numeric" size="3"><div class="saved"></div></td><td><input type="text" data-memo="spT1m" aria-label="공격수 이름"><div class="saved"></div></td></tr>
+      <tr><td>미드필더</td><td><input type="text" data-memo="spT2c" aria-label="미드필더 선발 기준"><div class="saved"></div></td><td><input type="text" data-memo="spT2n" aria-label="미드필더 인원" inputmode="numeric" size="3"><div class="saved"></div></td><td><input type="text" data-memo="spT2m" aria-label="미드필더 이름"><div class="saved"></div></td></tr>
+      <tr><td>수비수</td><td><input type="text" data-memo="spT3c" aria-label="수비수 선발 기준"><div class="saved"></div></td><td><input type="text" data-memo="spT3n" aria-label="수비수 인원" inputmode="numeric" size="3"><div class="saved"></div></td><td><input type="text" data-memo="spT3m" aria-label="수비수 이름"><div class="saved"></div></td></tr>
+      <tr><td>골키퍼</td><td><input type="text" data-memo="spT4c" aria-label="골키퍼 선발 기준"><div class="saved"></div></td><td><input type="text" data-memo="spT4n" aria-label="골키퍼 인원" inputmode="numeric" size="3"><div class="saved"></div></td><td><input type="text" data-memo="spT4m" aria-label="골키퍼 이름"><div class="saved"></div></td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>☑️ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(114쪽)</span></h3>
+    <p style="margin-top:0">할 수 있다고 느끼는 것을 모두 눌러 보세요. 부족하면 괄호 속 쪽으로 돌아가요.</p>
+    <div id="spAch"></div>
+  </div>
+</section>
+
+<!-- 7 교과 융합 진로 탐색 -->
+<section class="page" data-name="융합 진로 탐색" data-acc="#9b4fc4">
+  <div class="head"><div class="num">07</div><div><h2>교과 융합 진로 탐색</h2><p>교과서 115쪽 · 소프트웨어 + 사회·과학 융합 진로 분야</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>각 분야에서 쏟아지는 <b>방대한 데이터</b>를 모으고 처리해서 현상을 분석하는 일은 앞으로 더 중요해져요. 소프트웨어와 사회·과학을 합친 <b>직업</b>을 만나 봐요.</span></div>
+  <div class="card">
+    <h3>🧭 소프트웨어 + 사회·과학 융합 진로 분야 <span class="muted" style="font-weight:400;font-size:.88rem">(115쪽)</span></h3>
+    <p style="margin-top:0">각 분야에서 발생하는 방대한 데이터를 효율적으로 수집하고 처리해서 현상을 합리적으로 분석하는 일은 현재뿐만 아니라 미래에서도 중요하게 다뤄질 거예요. 카드를 눌러 설명과 필요 역량을 확인해요.</p>
+    <div id="spJobFlip" class="tcards"></div>
+  </div>
+  <div class="card">
+    <h3>🙋 가장 관심이 가는 직업</h3>
+    <div id="spJobVote" class="vote"></div>
+    <p class="sp-vres" id="spJobRes"></p>
+    <div class="memo"><label>그 직업을 고른 이유 <small>내가 가진 강점이나 해 보고 싶은 일과 연결해 보세요.</small></label><textarea data-memo="spJobWhy" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="7"></div>
+</section>
+
+<!-- 8 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">08</div><div><h2>마무리</h2><p>오늘 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#2f9a5a"><b>스포츠 기록 분석 연구원</b>은 경기의 모든 요소를 수치화된 데이터로 기록하고 분석해, 팀과 선수의 성과를 과학적으로 분석해요. 어떤 항목을 쓰느냐에 따라 <b>정확도와 신뢰도</b>가 달라져요.</div>
+    <div style="--k:#c98a0a">선수 데이터는 <b>수집 → 처리 → 시각화 → 분석 결과 해석</b>의 4단계로 분석해요. 오렌지에서는 <b>Select Rows</b>로 조건에 맞는 선수를 뽑고 <b>Bar Plot</b>으로 그려요. 기본 파이썬으로는 리스트에서 조건으로 골라 정렬할 수 있어요.</div>
+    <div style="--k:#9b4fc4">분석 결과는 선발과 팀 구성의 유일한 기준은 아니지만 도움이 돼요. 개인 정보는 <b>필요한 내용만 안전하게</b> 다루고, 올바른 절차로 얻은 데이터인지, 조작·편향은 없는지 <b>검증</b>해야 해요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">앞에서 적은 메모를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">선수 데이터를 분석하면 어떻게 선발팀을 구성할 수 있고, 그 데이터는 어떻게 다뤄야 할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="8"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>선수 데이터에서 <b>조건에 맞는 선수를 뽑아 그래프로 나타내는 과정</b>을 순서대로 설명하세요. <span class="muted">(화면 04 참고)</span></li>
+      <li>내가 만든 <b>선발팀의 선발 기준</b>과 그렇게 정한 까닭을 설명하세요. <span class="muted">(화면 06 메모 참고)</span></li>
+      <li>선수 데이터를 <b>윤리적으로 활용</b>해야 하는 이유를 내 말로 설명하세요. <span class="muted">(화면 05 메모 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

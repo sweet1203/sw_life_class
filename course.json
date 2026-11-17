@@ -122,41 +122,41 @@
      "no": "12",
      "id": "u3-data",
      "title": "데이터와 데이터 분석",
-     "pages": "84~90",
+     "pages": "84~91",
      "form": "sw-u3-data",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "13",
      "id": "u3-collect",
-     "title": "데이터 수집과 전처리",
-     "pages": "91~97",
+     "title": "정형 데이터 수집과 처리",
+     "pages": "92~95",
      "form": "sw-u3-collect",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "14",
      "id": "u3-visual",
-     "title": "데이터 시각화와 분석",
-     "pages": "98~103",
+     "title": "정형 데이터 시각화와 결과 해석",
+     "pages": "96~99",
      "form": "sw-u3-visual",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "15",
      "id": "u3-value",
-     "title": "데이터 분석의 사회적 가치",
-     "pages": "104~105",
+     "title": "비정형 데이터 분석과 데이터의 사회적 가치",
+     "pages": "100~107",
      "form": "sw-u3-value",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "16",
      "id": "u3-sports",
-     "title": "스포츠 기록 분석 연구원",
-     "pages": "108~113",
+     "title": "팀을 승리로! 스포츠 기록 분석 연구원",
+     "pages": "108~115",
      "form": "sw-u3-sports",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "17",
@@ -164,7 +164,7 @@
      "title": "융합 프로젝트 · 대단원 정리",
      "pages": "116~125",
      "form": "sw-u3-project",
-     "status": "todo"
+     "status": "draft"
     }
    ]
   },

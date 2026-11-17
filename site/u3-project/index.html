@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>융합 프로젝트 · 대단원 정리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202c; --muted:#5b6776; --paper:#f3efe7; --card:#fff; --line:#e3ddd2;
+    --navy:#0f2742; --amber:#f2a516; --red:#d64535; --mint:#1f9d74;
+    --acc:#2f6fd0; --acc-soft:#e6eefb;
+    --shadow:0 18px 50px rgba(15,39,66,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:17px;line-height:1.65;
+    background-image:radial-gradient(rgba(15,39,66,.07) 1px,transparent 1px);background-size:22px 22px;display:flex;flex-direction:column}
+  .top{position:sticky;top:0;z-index:10;background:rgba(15,39,66,.97);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+  .brand{font-family:"Black Han Sans",sans-serif;font-size:1.15rem;letter-spacing:.01em;white-space:nowrap;color:inherit;text-decoration:none}
+  .steps{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .steps::-webkit-scrollbar{display:none}
+  .steps button{flex:0 0 auto;border:0;background:transparent;color:#9fb3cc;font:inherit;font-size:.82rem;padding:5px 9px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .steps button.on{background:var(--amber);color:var(--navy);font-weight:900}
+  .steps button.done::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#5fd3a5;margin-left:5px;vertical-align:middle}
+  .score{font-size:.85rem;background:rgba(255,255,255,.1);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .progress{height:4px;background:rgba(15,39,66,.12)}
+  .progress i{display:block;height:100%;background:var(--amber);width:0;transition:width .4s}
+  main{flex:1;width:100%;max-width:1120px;margin:0 auto;padding:26px 20px 30px}
+  .page{display:none}
+  .page.on{display:block;animation:enter .45s cubic-bezier(.2,.7,.2,1) both}
+  .page.on.back{animation-name:enterBack}
+  @keyframes enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  @keyframes enterBack{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  .head{display:flex;align-items:flex-end;gap:16px;margin-bottom:16px}
+  .num{font-family:"Black Han Sans",sans-serif;font-size:4.2rem;line-height:.85;color:var(--acc);opacity:.9}
+  .head h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:2.1rem;margin:0;line-height:1.1;letter-spacing:-.01em}
+  .head p{margin:4px 0 0;color:var(--muted)}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px;border:1px solid rgba(0,0,0,.04)}
+  .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  .grid2.even{grid-template-columns:1fr 1fr}
+  @media (max-width:860px){.grid2,.grid2.even{grid-template-columns:1fr}.num{font-size:3rem}.head h2{font-size:1.6rem}}
+  h3{margin:0 0 8px;font-size:1.1rem}
+  h4{margin:0 0 4px}
+  p{margin:6px 0}
+  a{color:var(--acc)}
+  .muted{color:var(--muted)}
+  .book{display:inline-block;font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 10px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:.93rem;margin:8px 0}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:center}
+  th{color:var(--muted);font-weight:700;font-size:.85rem}
+  td.l,th.l{text-align:left}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;font:inherit;font-size:.92rem;cursor:pointer;transition:.15s;color:var(--ink)}
+  .chip.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .btn{border:0;border-radius:10px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;transition:transform .1s, box-shadow .2s;box-shadow:0 6px 16px rgba(15,39,66,.18)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--acc);border:2px solid var(--acc);box-shadow:none}
+  .btn.sm{padding:5px 12px;font-size:.88rem}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ctrl{display:grid;grid-template-columns:70px 1fr 48px;align-items:center;gap:4px 10px;margin:4px 0}
+  .ctrl label{font-weight:900;font-size:.95rem}
+  .ctrl output{font-weight:900;text-align:right;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--acc)}
+  input[type=text],input[type=number]{font:inherit;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px;background:#fff;color:var(--ink)}
+  .big{font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums}
+  .ok{color:var(--mint);font-weight:700}.ng{color:var(--red);font-weight:700}
+  .callout{border-radius:12px;padding:12px 16px;background:var(--acc-soft);border-left:5px solid var(--acc);margin:12px 0}
+  svg{display:block;width:100%;height:auto}
+  select{max-width:100%}
+  .mono{overflow-wrap:anywhere;font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#f1f3f6;padding:1px 6px;border-radius:5px}
+  .cx{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 24px;margin-bottom:18px;border-left:6px solid var(--acc)}
+  .cx>h3{margin:0 0 4px;font-size:1.15rem}
+  .cx>.lead2{color:var(--muted);margin:0 0 12px}
+  .qa{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:860px){.qa{grid-template-columns:1fr}}
+  .qa>div{background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .qa b.q{display:block;color:var(--acc);margin-bottom:3px}
+  .vsteps{list-style:none;margin:0;padding:0;counter-reset:v}
+  .vsteps>li{position:relative;padding:9px 0 9px 44px;border-top:1px dashed var(--line)}
+  .vsteps>li:first-child{border-top:0}
+  .vsteps>li::before{counter-increment:v;content:counter(v);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:900;display:grid;place-items:center;font-size:.9rem}
+  .vsteps p{margin:2px 0 0;font-size:.93rem}
+  .case{background:#fff8e6;border:2px solid #f6d58a;border-radius:16px;padding:16px 20px;margin-bottom:18px}
+  .case>h3{margin:0 0 8px;font-size:1.05rem;color:#8a5a00}
+  /* 퀴즈 */
+  .quiz{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:16px;padding:20px 22px;margin-top:6px;box-shadow:var(--shadow)}
+  .quiz .qh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .quiz .qh b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.25rem;color:var(--amber)}
+  .quiz .qh span{font-size:.85rem;color:#a9bbd2}
+  .qi{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .qi .qq{font-weight:700;margin-bottom:8px}
+  .qi .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .qi .opts button{font:inherit;font-size:.93rem;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:10px;padding:6px 14px;cursor:pointer;transition:.15s}
+  .qi .opts button:hover:not(:disabled){border-color:var(--amber)}
+  .qi .opts button.right{background:var(--mint);border-color:var(--mint);font-weight:700}
+  .qi .opts button.wrong{background:var(--red);border-color:var(--red);text-decoration:line-through}
+  .qi .opts button:disabled{cursor:default}
+  .qi .why{margin-top:8px;font-size:.9rem;color:#d7e3f2;display:none}
+  .qi.answered .why{display:block}
+  .qi.answered.correct{box-shadow:inset 4px 0 0 var(--mint)}
+  .qi.answered.incorrect{box-shadow:inset 4px 0 0 var(--red)}
+  .shake{animation:shake .35s}
+  @keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+  .foot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(243,239,231,.94);backdrop-filter:blur(6px);border-top:1px solid var(--line)}
+  .foot .btn{min-width:110px}
+  .foot .pg{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+  /* 표지 */
+  .cover{position:relative;border-radius:22px;overflow:hidden;background:radial-gradient(ellipse at 20% 0%,#24507f 0%,#0f2742 55%,#0a1a2e 100%);color:#fff;min-height:520px;padding:46px 44px;box-shadow:var(--shadow)}
+  .cover canvas{position:absolute;right:0;top:0;height:100%;width:62%;image-rendering:pixelated;opacity:.95}
+  .cover .fade{position:absolute;inset:0;background:linear-gradient(90deg,#0f2742 34%,rgba(15,39,66,.75) 50%,rgba(15,39,66,0) 70%)}
+  .cover .in{position:relative;max-width:560px}
+  .cover .tag{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:.85rem;padding:4px 12px;border-radius:999px}
+  .cover h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:3.1rem;line-height:1.15;margin:16px 0 10px}
+  .cover p{color:#c8d6e8;font-size:1.05rem}
+  .cover ol{margin:18px 0 26px;padding-left:20px;color:#e1e9f4;columns:2;column-gap:28px;font-size:.95rem}
+  @media (max-width:700px){.cover{padding:30px 22px}.cover h1{font-size:2.2rem}.cover ol{columns:1}.cover canvas{width:100%;opacity:.3}.cover .fade{display:none}}
+  .today{margin-top:26px}
+  .kicker{display:inline-block;font-family:"Black Han Sans",sans-serif;font-size:1.15rem;color:var(--navy);margin-bottom:6px;border-bottom:4px solid var(--amber);line-height:1.2}
+  .today-lead{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:22px 26px;margin-bottom:16px}
+  .today-lead p{font-size:1.12rem;margin:6px 0 0}
+  .why3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+  @media (max-width:900px){.why3{grid-template-columns:1fr}}
+  .why{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 22px}
+  .why ul{margin:6px 0 0;padding-left:18px;font-size:.95rem}
+  .why li{margin:6px 0}
+  .why ul.can{list-style:none;padding:0}
+  .why ul.can li{padding-left:28px;position:relative}
+  .why ul.can li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 7' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+  .why ul.uses{list-style:none;padding:0}
+  .why ul.uses li{border-left:3px solid var(--amber);padding-left:10px}
+  .glossary-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .glossary-head .muted{font-size:.88rem}
+  .glossary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+  @media (max-width:1000px){.glossary{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.glossary{grid-template-columns:1fr}}
+  .gcard{all:unset;box-sizing:border-box;cursor:pointer;display:block;background:#fff;border-radius:14px;padding:16px 16px 12px;box-shadow:var(--shadow);border-top:6px solid var(--g);position:relative;transition:transform .18s, box-shadow .18s}
+  .gcard:hover,.gcard:focus-visible{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,39,66,.16)}
+  .gcard:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+  .gcard i{position:absolute;right:14px;top:8px;font-style:normal;font-family:"Black Han Sans",sans-serif;font-size:1.9rem;color:var(--g);opacity:.25}
+  .gcard h4{margin:0 0 6px;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;color:var(--g)}
+  .gcard dl{margin:0;font-size:.88rem;line-height:1.45}
+  .gcard dt{font-weight:900;margin-top:7px}
+  .gcard dd{margin:1px 0 0;color:#3c4654}
+  .prob{display:grid;grid-template-columns:60px 1fr 46px;gap:6px;align-items:center;font-size:.88rem;min-width:200px}
+  .prob i{display:block;height:12px;border-radius:6px;background:var(--acc)}
+  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:860px){.apps{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:2rem;display:block}
+  .apps button b{display:block}
+  .appd{display:none}
+  .appd.on{display:block;animation:enter .35s both}
+  .ex2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  @media (max-width:640px){.ex2{grid-template-columns:1fr}}
+  .ex2>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;font-size:.93rem;border-left:4px solid var(--acc)}
+  .try{margin-top:12px;background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.92rem}
+  .try ol{margin:4px 0 0;padding-left:20px}
+  /* 3단원 공통 */
+  .easy{display:flex;gap:12px;align-items:flex-start;background:#fffbea;border:2px solid #f6d58a;border-radius:14px;padding:12px 16px;margin:-4px 0 16px;font-size:1rem;line-height:1.6}
+  .easy>span{min-width:0;overflow-wrap:anywhere}
+  .easy b.t{flex:0 0 auto;background:#f2a516;color:#0f2742;border-radius:999px;padding:2px 10px;font-size:.82rem;margin-top:2px}
+  .route{position:absolute;right:30px;top:36px;width:min(430px,44%);display:grid;gap:10px}
+  .route .st{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:14px;padding:10px 14px;color:#fff;opacity:0;transform:translateX(20px);animation:rin .6s forwards}
+  .route .st i{font-style:normal;font-size:1.6rem}
+  .route .st b{display:block;font-size:1.02rem}
+  .route .st small{color:#c8d6e8;font-size:.82rem}
+  .route .ar{color:var(--amber);text-align:center;font-weight:900;opacity:0;animation:rin .5s forwards}
+  @keyframes rin{to{opacity:1;transform:none}}
+  @media (max-width:1080px){.route{position:relative;right:auto;top:auto;width:100%;margin-top:22px}}
+  .story{background:rgba(255,255,255,.08);border-left:4px solid var(--amber);border-radius:10px;padding:10px 14px;margin:14px 0;color:#e1e9f4;font-size:.95rem}
+  .story b{color:#fff}
+  /* 카드 묶음 */
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media (max-width:900px){.cards3,.cards4{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.cards3,.cards2,.cards4{grid-template-columns:1fr}}
+  .kc{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:14px 16px;border-top:6px solid var(--k,var(--acc))}
+  .kc h4{color:var(--k,var(--acc));font-size:1.05rem;margin:0 0 4px}
+  .kc p{font-size:.92rem;margin:4px 0 0}
+  .kc .ic{font-size:1.7rem;line-height:1}
+  .kc small{display:block;color:var(--muted);font-size:.8rem;margin-top:6px}
+  .tagt{display:inline-block;font-size:.76rem;font-weight:900;border-radius:999px;padding:1px 9px;background:color-mix(in srgb,var(--k,var(--acc)) 14%,white);color:var(--k,var(--acc));margin:6px 4px 0 0}
+  /* 연표 */
+  .tl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tl button{flex:1;min-width:92px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 6px;font:inherit;font-weight:900;cursor:pointer;color:var(--ink)}
+  .tl button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .tlv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:640px){.tlv{grid-template-columns:1fr}}
+  .tlv>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:5px solid var(--k)}
+  .tlv h4{color:var(--k)}
+  .tlv .it{margin:6px 0 0;font-size:.93rem}
+  .tlv .it b{display:block}
+  /* 분류 게임 */
+  .sit{background:#fbfaf7;border:2px dashed var(--line);border-radius:14px;padding:14px 16px;text-align:center;min-height:170px}
+  .sit .cnt{font-size:.82rem;color:var(--muted)}
+  .sit .sq{font-size:1.08rem;font-weight:900;margin:6px 0 12px;min-height:52px}
+  .sit .ic{font-size:2rem}
+  .sit .row{justify-content:center}
+  .sit .fb{min-height:24px;margin-top:8px;font-size:.93rem}
+  .sit .cat{border:2px solid var(--k);color:var(--k);background:#fff;font-weight:900}
+  .sit .cat:hover{background:color-mix(in srgb,var(--k) 12%,white)}
+  .board{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:8px;margin-top:12px}
+  @media (max-width:760px){.board{grid-template-columns:1fr 1fr}}
+  .board>div{background:#fff;border-radius:12px;border-top:5px solid var(--k);padding:8px 10px;font-size:.84rem;min-height:70px}
+  .board>div b{display:block;color:var(--k);font-size:.92rem}
+  .board>div span{display:block;border-top:1px dashed var(--line);padding:3px 0}
+  .board>div span.x{color:var(--red)}
+  /* 뒤집는 카드 */
+  .tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .tcard{perspective:900px;height:172px;cursor:pointer}
+  .tcard .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .tcard.flip .in{transform:rotateY(180deg)}
+  .tcard .f,.tcard .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:12px 14px;box-shadow:0 6px 16px rgba(15,39,66,.09);overflow:auto}
+  .tcard .f{background:#fff;border-top:6px solid var(--acc);display:flex;flex-direction:column;justify-content:center;text-align:center}
+  .tcard .f i{font-style:normal;font-size:2rem;line-height:1.1}
+  .tcard .f b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;line-height:1.25;margin-top:4px}
+  .tcard .f small{color:var(--muted);font-size:.78rem;margin-top:6px}
+  .tcard .b{background:var(--acc);color:#fff;transform:rotateY(180deg);font-size:.9rem;line-height:1.5}
+  .tcard .b .x{margin-top:6px;background:rgba(255,255,255,.16);border-radius:8px;padding:5px 8px;font-size:.84rem}
+  /* 사례 탭 */
+  .apps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .apps.a6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:860px){.apps,.apps.a6{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:480px){.apps,.apps.a6{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:12px 8px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s;font-size:.92rem}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:1.8rem;display:block}
+  .apps button b{display:block}
+  .cview{margin-top:14px}
+  .pr{display:grid;grid-template-columns:1fr 1.3fr;gap:12px}
+  @media (max-width:760px){.pr{grid-template-columns:1fr}}
+  .pr>div{border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .pr .p{background:#fdecea;border-left:5px solid var(--red)}
+  .pr .s{background:#e7f6ef;border-left:5px solid var(--mint)}
+  .pr h4{font-size:.95rem}
+  .pr .p h4{color:#9b2c20}.pr .s h4{color:#13684d}
+  .dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.9rem;margin-top:10px;background:#fbfaf7;border-radius:10px;padding:10px 12px}
+  .dl b{color:var(--acc)}
+  /* 메모 */
+  .memo{margin-top:10px}
+  .memo label{display:block;font-weight:700;font-size:.93rem;margin:10px 0 4px}
+  .memo label small{font-weight:400;color:var(--muted)}
+  .memo input[type=text]{width:100%}
+  textarea{font:inherit;width:100%;min-height:64px;padding:8px 10px;border:1px solid #c5ccd5;border-radius:8px;resize:vertical;color:var(--ink);background:#fff}
+  .saved{font-size:.8rem;color:var(--mint);min-height:1em}
+  /* 투표 */
+  .vote{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  @media (max-width:560px){.vote{grid-template-columns:1fr}}
+  .vote button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border:3px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center;font-weight:900}
+  .vote button.on{border-color:var(--acc);background:var(--acc-soft)}
+  .vote button small{display:block;font-weight:400;color:var(--muted);font-size:.84rem}
+  .reveal{display:none;margin-top:12px}
+  .reveal.on{display:block;animation:fadein .4s both}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .pct{display:grid;grid-template-columns:120px 1fr 50px;gap:8px;align-items:center;margin:6px 0;font-size:.93rem}
+  .pct i{display:block;height:16px;border-radius:8px;background:var(--acc);width:0;transition:width .8s}
+  /* 질문폼 연결 */
+  .formgo{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);margin-top:18px}
+  .formgo .kicker{color:#fff;border-bottom-color:var(--amber)}
+  .formgo h3{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;margin:4px 0 8px}
+  .formgo ol{margin:6px 0 12px;padding-left:22px;color:#e1e9f4}
+  .formgo ol li{margin:6px 0}
+  .formgo p{color:#c8d6e8;font-size:.92rem}
+  .formgo .go{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:1.1rem;text-decoration:none;border-radius:12px;padding:12px 22px;margin-top:6px}
+  .formgo .go:hover{filter:brightness(1.05)}
+  .msum{background:#fff;border-radius:14px;padding:12px 16px;margin-top:12px;color:var(--ink);font-size:.9rem}
+  .msum h4{color:var(--navy)}
+  .msum dl{margin:6px 0 0}
+  .msum dt{font-weight:700;margin-top:8px;color:var(--muted);font-size:.84rem}
+  .msum dd{margin:2px 0 0;white-space:pre-wrap}
+  .msum dd.e{color:#aab2bd}
+  .key3{display:grid;gap:10px;margin-bottom:18px}
+  .key3 div{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;border-left:6px solid var(--k);font-size:1.02rem}
+  .note{font-size:.84rem;color:var(--muted);margin-top:8px}
+  .flow2{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .flow2>div{flex:1;min-width:140px;background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .flow2>div b{display:block}
+  .flow2>div span{font-size:.88rem}
+  .flow2>.ar{flex:0 0 auto;min-width:0;background:none;border:0;align-self:center;font-weight:900;color:var(--muted);padding:0}
+  @media (max-width:640px){.flow2>.ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .chk{display:flex;flex-wrap:wrap;gap:8px}
+  .chk button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink)}
+  .chk button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .tbl td,.tbl th{padding:8px 10px;vertical-align:top}
+  .tbl td{text-align:left;font-size:.92rem}
+  .mx{min-width:560px}
+  .mx th{background:#fbfaf7}
+  .mx td{border:1px solid var(--line);height:74px;width:30%;font-size:.86rem;cursor:pointer;background:#fff;transition:background .2s}
+  .mx td:hover{background:var(--acc-soft)}
+  .mx td.fill{background:#e7f6ef;cursor:default}
+  .mx td.bad{background:#fdecea}
+  .mx th.r{white-space:nowrap}
+  #mxPool button{border-radius:12px;text-align:left;max-width:100%}
+  /* 4단원 */
+  .sdg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  @media (max-width:760px){.sdg{grid-template-columns:repeat(3,1fr)}}
+  .sdg button{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:8px 6px;color:#fff;background:var(--c);min-height:74px;font-size:.78rem;line-height:1.3;font-weight:700;display:flex;flex-direction:column;gap:2px;transition:transform .15s}
+  .sdg button b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.3rem;line-height:1}
+  .sdg button:hover,.sdg button.on{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .sdg button.on{outline:3px solid var(--navy)}
+  .sdgv{margin-top:12px;background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:6px solid var(--c,#0f2742);min-height:60px}
+  .five{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.five{grid-template-columns:1fr}}
+  .five>div{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:12px 12px;border-top:6px solid var(--k)}
+  .five b.n{font-family:"Black Han Sans",sans-serif;color:var(--k);font-size:1.2rem}
+  .five h4{margin:2px 0 4px;font-size:.98rem}
+  .five p{font-size:.86rem;margin:4px 0}
+  .five .ml{margin-top:8px;background:color-mix(in srgb,var(--k) 10%,white);border-radius:8px;padding:6px 8px;font-size:.82rem}
+  .quad{display:grid;grid-template-columns:28px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:6px;margin-top:8px}
+  .quad .ax{font-size:.78rem;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+  .quad .ax.v{writing-mode:vertical-rl}
+  .quad .cell{background:#fbfaf7;border:2px dashed var(--line);border-radius:12px;min-height:84px;padding:6px 8px;font-size:.84rem;cursor:pointer}
+  .quad .cell.best{border-color:var(--mint);background:#e7f6ef}
+  .quad .cell small{display:block;color:var(--muted);font-size:.74rem}
+  .quad .cell span{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:2px 2px 0 0}
+  .qbuild{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:1.08rem;font-weight:700;background:#fff8e6;border:2px solid #f6d58a;border-radius:12px;padding:12px 14px}
+  .qbuild input{flex:1;min-width:200px;font:inherit;font-weight:400;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px}
+  .plan{width:100%}
+  .plan td:first-child{width:150px;font-weight:700;font-size:.9rem;background:#fbfaf7}
+  .plan input{width:100%;font:inherit;padding:5px 8px;border:1px solid #c5ccd5;border-radius:6px}
+  /* 시뮬레이터 */
+  .sim{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:760px){.sim{grid-template-columns:1fr}}
+  .sim .cls{background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .sim .cls h4{color:var(--k);display:flex;justify-content:space-between}
+  .sim .cls ul{margin:6px 0 0;padding-left:18px;font-size:.88rem}
+  .sim .cls li.new{color:var(--k);font-weight:700}
+  .cand{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .cand button{border:2px dashed var(--k);background:#fff;border-radius:10px;padding:4px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
+  .cand button.on{border-style:solid;background:color-mix(in srgb,var(--k) 15%,white);font-weight:700}
+  .tt td,.tt th{padding:6px 8px;font-size:.88rem}
+  .tt td.r{color:var(--mint);font-weight:900}.tt td.w{color:var(--red);font-weight:900}
+  .score2{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .score2 div{flex:1;min-width:140px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .score2 b{display:block;font-family:"Black Han Sans",sans-serif;font-size:1.8rem;color:var(--acc)}
+  /* 스크래치 블록 */
+  .blocks{font-family:ui-sans-serif,system-ui;font-size:.86rem;display:inline-block}
+  .blk{display:block;border-radius:6px;padding:5px 10px;margin:3px 0;color:#fff;width:max-content;max-width:100%}
+  .blk.ev{background:#ffbf00;color:#333;border-radius:14px 14px 6px 6px}
+  .blk.ctl{background:#ffab19;color:#333}
+  .blk.ml{background:#4c97ff}
+  .blk.lk{background:#9966ff}
+  .blk.in{margin-left:22px}
+  .blk i{font-style:normal;background:rgba(255,255,255,.9);color:#333;border-radius:10px;padding:0 6px;margin:0 2px}
+  .penguin{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  @media (max-width:560px){.penguin{grid-template-columns:1fr}}
+  .penguin div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .dist td,.dist th{padding:6px 8px;font-size:.88rem;text-align:center}
+  .dist tr.near{background:#fff4d6;font-weight:900}
+  .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.roles{grid-template-columns:1fr 1fr}}
+  .roles div{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px;text-align:center;font-size:.84rem}
+  .roles div i{font-style:normal;font-size:1.6rem;display:block}
+  .roles div b{display:block;font-size:.92rem}
+  .roles div em{display:block;font-style:normal;margin-top:6px;background:#e6eefb;border-radius:8px;padding:4px 6px;color:#1b3d66}
+  .types div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .types div b{display:block}
+  .types div small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+
+  /* 카드 격자 칸이 안의 긴 코드·표 때문에 늘어나지 않게 */
+  .cards2>*,.cards3>*,.cards4>*,.grid2>*{min-width:0}
+
+  /* 공용 그림·실습 부품 (charts.js) */
+  .of-box{overflow-x:auto}
+  .of-box svg{display:block;width:100%;max-width:880px;height:auto}
+  .of-box .fe{fill:none;stroke:#8a94a3;stroke-width:2}
+  .of-box .fl{font-size:11px;fill:#5b6776;text-anchor:middle}
+  .of-box .fn{cursor:pointer}
+  .of-box .fb{fill:#fff;stroke-width:2}
+  .of-box .fn.on .fb{fill:#fff4d6;stroke-width:4}
+  .of-box .fn:focus{outline:none}
+  .of-box .fn:focus .fb{stroke-width:4}
+  .of-box .fnum{font-size:14px;font-weight:900;fill:#fff;text-anchor:middle}
+  .of-box .ft{font-size:13px;font-weight:700;fill:#16202c}
+  .of-box .fs{font-size:11px;fill:#5b6776}
+  .of-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:8px;font-size:.85rem}
+  .of-legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;background:var(--k);margin-right:5px;vertical-align:-2px}
+  .of-legend small{color:var(--muted)}
+  .of-tw{overflow-x:auto}
+  .of-set{min-width:760px;margin:0}
+  .of-set th{text-align:left;background:#fbfaf7;white-space:nowrap}
+  .of-set td{border-top:1px solid #eef0f3;font-size:.92rem;text-align:left}
+  .of-set td:first-child{font-weight:900;color:var(--acc);text-align:center;width:44px}
+  .of-set tr[data-s]{cursor:pointer;transition:background .3s}
+  .of-set tr.hl td{background:#fff4d6}
+  .sp-wrap{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;overflow-x:auto}
+  .sp-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  .sp-svg .sp-pt{cursor:grab}
+  .sp-read{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  .sp-read>div{background:#fbfaf7;border-radius:10px;padding:6px 12px;font-size:.9rem}
+  .sp-read b{font-size:1.15rem;color:var(--acc)}
+  .mt-wrap{overflow-x:auto}
+  .mt{margin:0}
+  .mt td{padding:4px 6px}
+  .mt .mt-in{width:5.5em;font:inherit;text-align:center;border:1px solid var(--line);border-radius:6px;padding:3px}
+  .mt tr.on td{background:#fff4d6}
+  /* 파이썬 실행 칸 (pyrun) */
+  .pyrun{margin:12px 0}
+  .pr-code,.pr-stdin{display:block;width:100%;font-family:"Menlo","Consolas","Courier New",monospace;
+    font-size:.92rem;line-height:1.5;color:#e1e9f4;background:#0f2742;border:1px solid #1d3a5c;
+    border-radius:10px;padding:12px 14px;resize:vertical;tab-size:4;-webkit-text-size-adjust:100%}
+  .pr-code{white-space:pre;overflow-x:auto}
+  .pr-code:focus,.pr-stdin:focus{outline:2px solid var(--amber);outline-offset:1px}
+  .pr-code[readonly]{opacity:.96}
+  .pr-in{margin-top:8px}
+  .pr-in label{display:block;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:3px}
+  .pr-in label small{font-weight:400}
+  .pr-stdin{font-size:.88rem;min-height:2.4em}
+  .pr-bar{display:flex;gap:8px;align-items:center;margin:8px 0 0;flex-wrap:wrap}
+  .pr-stat{font-size:.82rem;color:var(--muted)}
+  .pr-out{margin:8px 0 0;font-family:"Menlo","Consolas","Courier New",monospace;font-size:.9rem;
+    line-height:1.5;white-space:pre-wrap;word-break:break-word;color:#0c2a1e;background:#e7f6ee;
+    border-left:4px solid var(--mint);border-radius:0 8px 8px 0;padding:10px 12px;overflow-x:auto}
+  .pr-out.err{color:#4a1512;background:#fdecea;border-left-color:var(--red)}
+
+  /* 넓은 표는 가로로 스크롤되게 감싼다(폰 폭 넘침 방지) */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 0}
+  .tscroll>table{margin-top:0}
+
+  /* 읽기용 코드 카드 (실행하지 않고 보여 주기만) */
+  .code{background:#0f2742;color:#e1e9f4;border-radius:10px;padding:12px 14px;margin:10px 0;
+    font-family:"Menlo","Consolas","Courier New",monospace;font-size:.92rem;line-height:1.55;
+    overflow-x:auto;white-space:pre;-webkit-overflow-scrolling:touch}
+  .code b{color:var(--amber);font-weight:700}
+  .code i{color:#8aa6cc;font-style:normal}
+  /* 진도 보내기 */
+  .tr-gate{position:fixed;inset:0;z-index:200;background:rgba(15,39,66,.72);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
+  .tr-card{background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.3);padding:22px 22px 16px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px}
+  .tr-card h2{margin:0;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;color:var(--navy)}
+  .tr-sub{margin:-4px 0 4px;color:var(--muted);font-size:.92rem}
+  .tr-cls{display:flex;gap:8px}
+  .tr-cls label{flex:1;cursor:pointer}
+  .tr-cls input{position:absolute;opacity:0;pointer-events:none}
+  .tr-cls span{display:block;text-align:center;padding:10px 0;border:2px solid var(--line);border-radius:12px;font-weight:900;font-size:1.05rem}
+  .tr-cls input:checked+span{border-color:var(--navy);background:var(--navy);color:#fff}
+  .tr-cls input:focus-visible+span{outline:3px solid var(--amber)}
+  .tr-f{display:flex;align-items:center;gap:10px}
+  .tr-f span{width:40px;font-weight:700}
+  .tr-f input{flex:1;min-width:0;font:inherit;font-size:1.05rem;padding:9px 12px;border:1px solid #c5ccd5;border-radius:10px}
+  .tr-err{color:var(--red);font-weight:700;font-size:.9rem;min-height:1.2em}
+  .tr-card .btn{padding:12px;font-size:1.05rem;background:var(--navy)}
+  .tr-note{margin:2px 0 0;color:var(--muted);font-size:.8rem;line-height:1.5;text-align:center}
+  .tr-who,.tr-badge{display:flex;align-items:center;gap:6px;font-size:.82rem;background:rgba(255,255,255,.12);border-radius:999px;padding:3px 4px 3px 12px;white-space:nowrap}
+  .tr-badge{padding:3px 12px;background:var(--amber);color:#111;font-weight:700}
+  .tr-who button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(255,255,255,.18);border-radius:999px;padding:2px 9px}
+  .tr-who button:hover{background:rgba(255,255,255,.3)}
+  .tr-cls[hidden]{display:none}
+  .tr-badge button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(0,0,0,.14);border-radius:999px;padding:2px 9px;margin-left:6px}
+  /* page-guard: 글자 선택·복사 막기 (입력 칸은 편집 가능) */
+  body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  input,textarea,select,[contenteditable]{-webkit-user-select:text;user-select:text}
+  .pg-toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#0f2742;color:#fff;padding:9px 16px;border-radius:999px;font-size:.9rem;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:opacity .2s;pointer-events:none}
+  .pg-toast.on{opacity:1}
+  /* u3-project 전용 (pj-) */
+  .pj-say{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 10px}
+  .pj-say>div{background:#eef6ff;border:2px solid #b9d4f4;border-radius:16px;padding:11px 14px;font-size:.93rem;line-height:1.55}
+  .pj-say>div:nth-child(2){background:#effaf4;border-color:#b5e0cb}
+  .pj-say>div:nth-child(3){background:#fff5ea;border-color:#f3cfa3}
+  .pj-say>div:nth-child(4){background:#f6efff;border-color:#d6c3ee}
+  .pj-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 12px}
+  @media (max-width:720px){.pj-flow{grid-template-columns:1fr}}
+  .pj-flow>div{background:#fff;border-radius:12px;border-top:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .pj-flow .n{display:inline-flex;width:28px;height:28px;border-radius:999px;background:var(--k);color:#fff;font-weight:900;align-items:center;justify-content:center}
+  .pj-flow b{display:block;color:var(--k);margin-top:4px}
+  .pj-tb{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:.92rem}
+  .pj-tb th{background:#d9f0e2;padding:7px 10px;border:1px solid var(--line);text-align:left}
+  .pj-tb td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+  .pj-tb td:first-child{white-space:nowrap;font-weight:800;background:#eef8f1}
+  .pj-tb input,.pj-tb textarea{width:100%;box-sizing:border-box}
+  .pj-ex{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:9px 13px;font-size:.9rem;margin:8px 0;line-height:1.6}
+  .pj-ex b:first-child{color:#a8730c}
+  .pj-goal{background:#fff;border:2px solid #2f9a5a;border-radius:14px;padding:11px 16px;font-weight:800;margin:8px 0;text-align:center}
+  .pj-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}
+  @media (max-width:600px){.pj-grid2{grid-template-columns:1fr}}
+  .pj-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0}
+  @media (max-width:720px){.pj-grid3{grid-template-columns:1fr}}
+  .pj-grid2 label,.pj-grid3 label{display:block;font-weight:800;font-size:.9rem;margin-bottom:3px}
+  .pj-grid2 textarea,.pj-grid3 textarea,.pj-grid2 input{width:100%;box-sizing:border-box}
+  .pj-svg{width:100%;height:auto;display:block;margin:6px auto}
+  .pj-svg text{fill:var(--ink);text-anchor:middle}
+  .pj-svg .ax{font-family:inherit;font-size:10.5px;font-weight:600;fill:var(--muted)}
+  .pj-svg .ay{font-family:inherit;font-size:10.5px;font-weight:600;fill:var(--muted);text-anchor:end}
+  .pj-tab{gap:8px;margin:4px 0 10px}
+  .pj-tab button,.pj-seg button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;color:var(--ink)}
+  .pj-seg{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 8px}
+  .pj-seg button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .pj-read{background:#fbfaf7;border:2px solid var(--line);border-radius:12px;padding:9px 14px;font-size:.93rem;line-height:1.7;margin:6px 0}
+  .pj-read input[type=range]{width:100%;margin:6px 0 2px}
+  .pj-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.86rem;margin:2px 0}
+  .pj-leg i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:5px;vertical-align:-2px}
+  .pj-ox{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0}
+  .pj-ox p{margin:0;flex:1 1 260px;font-size:.93rem}
+  .pj-match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:560px){.pj-match{grid-template-columns:1fr}}
+  .pj-match button{display:block;width:100%;text-align:left;box-sizing:border-box;margin:0 0 7px;padding:8px 11px;border:2px solid var(--line);background:#fff;border-radius:10px;font:inherit;font-size:.9rem;line-height:1.45;cursor:pointer;color:var(--ink)}
+  .pj-match button.sel{border-color:var(--acc);background:var(--acc-soft)}
+  .pj-match button.ok{border-color:var(--c);background:var(--c);color:#fff;cursor:default}
+  .pj-match button.no{border-color:#d64535}
+  .pj-rate{display:grid;grid-template-columns:1fr;gap:6px;margin:6px 0}
+  .pj-rate>div{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0}
+  .pj-rate p{margin:0;flex:1 1 260px;font-size:.92rem}
+  .pj-pyrun-note{margin-bottom:0}
+</style>
+</head>
+<body>
+<div class="top">
+  <span class="brand">소프트웨어와 생활</span>
+  <nav class="steps" id="steps"></nav>
+  <div class="score" id="score"></div>
+</div>
+<div class="progress"><i id="prog"></i></div>
+
+<main id="main">
+
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#2f9a5a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅲ. 현상을 분석하는 소프트웨어 · 융합 프로젝트</span>
+      <h1>나도 SW 탐험가!<br>인구 데이터를 분석해<br>우리나라 인구 변화 현황 알아보기</h1>
+      <div class="story"><b>인구 변화 현황을 데이터로 알아보자 (116쪽)</b><br>데이터를 분석하고 시각화하는 과정을 통해 우리나라의 <b>인구 변화 현황</b>을 파악하고, 분석 결과를 해석해 미래 인구 정책을 수립하는 데 활용할 수 있는 <b>인포그래픽 데이터</b>를 만들어 봐요.</div>
+      <p>모둠이 프로젝트 <b>5단계</b>를 차례로 밟아 가며 인구 데이터를 분석하고, 마지막에는 Ⅲ단원 전체를 정리해요.</p>
+      <ol>
+        <li>준비하기 · 5단계 알아보기</li><li>문제 탐색 및 정의 · 데이터 수집</li><li>데이터 처리 · 데이터 시각화</li>
+        <li>분석 결과 해석 · SW 융합 완전 정복</li><li>대단원 마무리</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">프로젝트 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🔍</i><div><b>문제 탐색 및 정의</b><small>인구 변화 현황 알아보기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>📥</i><div><b>데이터 수집 · 처리</b><small>주민 등록 인구·출생아 수</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>📈</i><div><b>데이터 시각화</b><small>선그래프와 막대그래프</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🧭</i><div><b>분석 결과 해석</b><small>인포그래픽 기획서</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">융합 프로젝트 안내 · Ⅲ. 현상을 분석하는 소프트웨어 (116~125쪽)</span>
+      <p>이 프로젝트는 새 개념을 외우는 시간이 아니라, 단원에서 배운 <b>데이터 분석 단계</b>를 직접 밟아 보는 시간이에요. 우리나라의 <b>주민 등록 인구수, 출생아 수, 1인 가구 비율</b> 데이터로 인구 변화를 살펴봐요. 교과서 표에 쓰는 활동은 이 화면의 <b>메모 칸</b>에 적어요.</p>
+    </div>
+    <div class="card">
+      <h3>💬 책상 위의 대화 <span class="muted" style="font-weight:400;font-size:.88rem">(116쪽 그림 속 말풍선)</span></h3>
+      <div class="pj-say">
+        <div>「정부는 2006년부터 고령 사회 대비를 위한 출산 장려 정책을 추진하고 있습니다. 그러나 2021년 합계 출산율은 0.81명으로 OECD 회원국 중 압도적으로 낮은 수치를 기록하고 있습니다. 앞으로…」 <small class="muted">(뉴스 속 말)</small></div>
+        <div>「인포그래픽 데이터를 만들려면 시각화 방법도 정해야 하겠는걸?」</div>
+        <div>「인구 변화가 어떻게 진행되고 있는지 알아보려면 어떤 데이터가 필요할까?」</div>
+        <div>「먼저 인구 관련 데이터를 수집할 수 있는 사이트가 있는지 찾아보자!」</div>
+      </div>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 데이터를 수집하고 처리해 시각화하면, 우리나라 인구 변화에 대해 무엇을 알 수 있을까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>데이터 분석 5단계를 순서대로 말할 수 있다.</li>
+          <li>두 데이터를 연도로 합치고 그래프로 나타내는 과정을 설명할 수 있다.</li>
+          <li>시각화 결과를 해석해 인포그래픽 기획서를 쓸 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">주민 등록 인구 · 출생아 수 · 1인 가구 비율 · 결측치 · merge(합치기) · 선그래프 · 막대그래프 · 인포그래픽</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>우리나라 인구가 어떻게 변해 왔을지 예상해 보세요. 그렇게 생각한 까닭은? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 준비하기부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 준비하기 -->
+<section class="page" data-name="준비하기" data-acc="#2fa0a8">
+  <div class="head"><div class="num">01</div><div><h2>준비하기 · 프로젝트 5단계</h2><p>교과서 116쪽 · 진행 순서를 설계하고 고려할 점 정리하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>프로젝트는 <b>다섯 단계</b>로 나눠서 진행해요. 단계마다 무엇을 조심해야 할지 <b>미리 적어 두면</b> 실수를 줄일 수 있어요.</span></div>
+  <div class="card">
+    <h3>🧭 프로젝트 진행 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(116쪽 TIP)</span></h3>
+    <div class="pj-flow">
+      <div style="--k:#d64535"><span class="n">1</span><b>문제 탐색 및 정의</b></div>
+      <div style="--k:#e0702b"><span class="n">2</span><b>데이터 수집</b></div>
+      <div style="--k:#c98a0a"><span class="n">3</span><b>데이터 처리</b></div>
+      <div style="--k:#1f9d74"><span class="n">4</span><b>데이터 시각화</b></div>
+      <div style="--k:#2f6fd0"><span class="n">5</span><b>분석 결과 해석</b></div>
+    </div>
+    <p class="note" style="margin-bottom:0">프로젝트를 진행하기 위한 순서를 설계하고, 각 단계에서 고려해야 할 점을 미리 정리해 봐요.</p>
+  </div>
+  <div class="card">
+    <h3>📝 단계별로 고려해야 할 점 <span class="muted" style="font-weight:400;font-size:.88rem">(116쪽)</span></h3>
+    <p style="margin-top:0">내가 생각하는 고려할 점을 적어 보세요. 아래 화면 02~06을 마친 뒤 다시 돌아와 고쳐도 좋아요.</p>
+    <table class="pj-tb">
+      <tr><th>순서</th><th>고려해야 할 점</th></tr>
+      <tr><td>1단계</td><td><input type="text" data-memo="pjCon1" aria-label="1단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>2단계</td><td><input type="text" data-memo="pjCon2" aria-label="2단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>3단계</td><td><input type="text" data-memo="pjCon3" aria-label="3단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>4단계</td><td><input type="text" data-memo="pjCon4" aria-label="4단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>5단계</td><td><input type="text" data-memo="pjCon5" aria-label="5단계 고려할 점"><div class="saved"></div></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>🎯 단계에 맞는 활동 찾기</h3>
+    <p class="muted" style="margin-top:0">이 프로젝트에서 하는 일을 보고, 5단계 중 어느 단계의 활동인지 골라 봐요.</p>
+    <div id="pjStepGame"></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 문제 탐색 및 정의 -->
+<section class="page" data-name="1 문제 탐색 및 정의" data-acc="#d64535">
+  <div class="head"><div class="num">02</div><div><h2>1단계 · 문제 탐색 및 정의</h2><p>교과서 117쪽 · 무엇을 알아볼지 정하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>데이터 분석은 <b>무엇을 알고 싶은지</b> 분명히 정하는 것에서 시작해요. 이번에는 <b>우리나라 인구가 어떻게 변하고 있는지</b>를 알아봐요.</span></div>
+  <div class="card">
+    <h3>🔍 분석할 문제 <span class="muted" style="font-weight:400;font-size:.88rem">(117쪽)</span></h3>
+    <div class="pj-goal">우리나라 주민 등록 인구를 분석해 보고 인구 변화 현황을 알아보자.</div>
+    <p style="margin-bottom:0">교과서는 이렇게 설명해요. <b>전체 인구수, 출생아 수, 1인 가구 수 등</b>을 분석하면 <b>인구 추이와 가구 형태 변화</b> 등을 예측할 수 있어요.</p>
+  </div>
+  <div class="card">
+    <h3>🗣️ 우리 모둠의 세부 주제</h3>
+    <div class="memo"><label>우리 모둠이 알아보고 싶은 것 <small>인구에 대한 궁금한 점, 그리고 그것을 알려 줄 데이터를 적어 보세요.</small></label><textarea data-memo="pjTopic" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 3 데이터 수집 -->
+<section class="page" data-name="2 데이터 수집" data-acc="#e0702b">
+  <div class="head"><div class="num">03</div><div><h2>2단계 · 데이터 수집</h2><p>교과서 117~118쪽 · 통계 데이터, 텍스트 데이터, 추가 데이터</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>인구 변화를 알 수 있는 데이터를 <b>여러 가지 경로</b>로 모으고, 각각 어떤 <b>유형</b>이고 어떤 <b>특징</b>이 있는지, 어디에 쓸지 정리하는 단계예요.</span></div>
+
+  <div class="card">
+    <h3>① 통계 데이터 수집 <span class="muted" style="font-weight:400;font-size:.88rem">(117쪽)</span></h3>
+    <p style="margin-top:0">국가통계포털(KOSIS)에 접속한 뒤, 검색창에 「주민등록인구」를 입력해요. 검색 결과 중 통계청의 「주민등록인구」를 선택해요. 통계 목록 창이 뜨면 <b>[인구] 폴더</b>에서 「주민등록인구」와 「출생아수」를, <b>[가족] 폴더</b>에서 「1인가구비율」 데이터를 내려받아요. 화면의 순서와 수치는 접속 시기에 따라 달라질 수 있어요.</p>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th colspan="2">참고 · 데이터 저장 시 설정 안내</th></tr>
+      <tr><td>행렬전환</td><td>표측은 「시점」, 표두는 「행정구역별」로 위치를 바꿔요.</td></tr>
+      <tr><td>조회설정</td><td>항목은 「계」를 고르고, 행정구역별은 「전체해제」를 누른 뒤 「전국」을 골라요. 시점은 전체선택을 해제하고 「년」을 고른 뒤 시작 연도를 「1997년」으로 정해요. (1인가구비율은 「전체년도」를 골라요.)</td></tr>
+      <tr><td>다운로드</td><td>파일 형태는 <b>CSV</b>를 골라요.</td></tr>
+    </table></div>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th>출처</th><th>수집 데이터</th><th>데이터 유형 및 특징</th><th>분석 목적</th></tr>
+      <tr><td>국가통계포털(통계청, e-지방지표, 1992~2023)</td><td>주민 등록 인구</td><td>정형 데이터</td><td>우리나라 전체 인구</td></tr>
+    </table></div>
+    <div class="memo"><label>내가 내려받은 통계 데이터 정리 <small>수집 데이터 · 데이터 유형과 특징 · 분석 목적을 적어 보세요. 교과서 표에는 첫 줄이 위처럼 채워져 있어요.</small></label><textarea data-memo="pjStat" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>② 텍스트 데이터 수집 <span class="muted" style="font-weight:400;font-size:.88rem">(117쪽)</span></h3>
+    <p style="margin-top:0">인구 관련 정책이나 기사를 스크랩해요. 마음에 드는 기사나 연설문을 골라 내용을 메모장에 복사해 데이터로 준비해요.</p>
+    <div class="memo"><label>내가 고른 텍스트 데이터 정리 <small>출처 · 수집 데이터 · 데이터 유형과 특징 · 분석 목적</small></label><textarea data-memo="pjText" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>③ 추가 데이터 수집 <span class="muted" style="font-weight:400;font-size:.88rem">(118쪽)</span></h3>
+    <p style="margin-top:0">제시한 데이터 외에 인구 변화 분석에 쓸 수 있는 데이터를 모둠원들과 상의해서 찾아봐요.</p>
+    <div class="easy"><b class="t">TIP · 추가 데이터 수집 사이트 안내</b><span>행정안전부 &gt; 주민등록 인구통계 / 나라지표(지표누리) &gt; 국가 발전지표 &gt; 인구/가족</span></div>
+    <div class="memo"><label>우리 모둠이 찾은 추가 데이터 <small>출처 · 수집 데이터 · 데이터 유형과 특징 · 분석 목적</small></label><textarea data-memo="pjExtra" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 데이터 처리 -->
+<section class="page" data-name="3 데이터 처리" data-acc="#c98a0a">
+  <div class="head"><div class="num">04</div><div><h2>3단계 · 데이터 처리</h2><p>교과서 118쪽 · 칼럼명 처리, 두 데이터 합치기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>내려받은 파일은 <b>그대로 쓰기 어려워요</b>. 표 위쪽의 필요 없는 줄을 지우고 <b>열 이름을 알아보기 쉽게</b> 고친 뒤, 같은 연도끼리 비교할 수 있게 <b>하나로 합쳐요</b>.</span></div>
+
+  <div class="card">
+    <h3>① 칼럼명 처리 <span class="muted" style="font-weight:400;font-size:.88rem">(118쪽)</span></h3>
+    <p style="margin-top:0">내려받은 각 데이터의 <b>1행은 삭제</b>하고 <b>2행의 칼럼명은 수정</b>해요. 1인 가구 수 데이터의 <b>2열(1인가구비율)은 삭제</b>해요.</p>
+    <p class="note">내려받은 파일의 첫 줄들을 간단히 옮겨 보면 이런 모양이에요. (값은 파일에 있는 그대로)</p>
+    <div class="of-tw"><table class="tbl">
+      <tr><th>데이터</th><th>1행</th><th>2행(칼럼명)</th><th>3행부터</th></tr>
+      <tr><td>주민 등록 인구수</td><td>시점, 전국</td><td>시점, 계 (명)</td><td>1997, 46684069 …</td></tr>
+      <tr><td>출생아 수</td><td>시점, 전국</td><td>시점, 계 (명)</td><td>1997, 675394 …</td></tr>
+      <tr><td>1인 가구 수</td><td>시점, 전국, 전국, 전국</td><td>시점, 1인가구비율(A÷B×100)(%), 1인가구(A)(가구), 일반가구(B)(가구)</td><td>2000, 15.5, 2224433, 14311807 …</td></tr>
+    </table></div>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th colspan="2">참고 · 칼럼명 수정 안내</th></tr>
+      <tr><th>데이터</th><th>수정 예시</th></tr>
+      <tr><td>주민 등록 인구수</td><td>연도, 주민 등록 인구수</td></tr>
+      <tr><td>출생아 수</td><td>연도, 출생아 수</td></tr>
+      <tr><td>1인 가구 수</td><td>연도, 1인 가구 수, 일반 가구 수</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>② 데이터 처리 · 결측치 확인과 합치기 <span class="muted" style="font-weight:400;font-size:.88rem">(118쪽)</span></h3>
+    <p style="margin-top:0">이 데이터에는 <b>결측치가 없으므로</b> 시각화 작업에 바로 쓸 수 있어요. 「주민 등록 인구수」와 「출생아 수」의 변화를 한눈에 알아보려고, 두 데이터를 아래와 같이 <b>한 개의 파일로 합쳐요</b>. 합친 파일에는 <b>연도 · 주민 등록 인구수 · 출생아 수</b> 세 열이 있어요.</p>
+    <div class="easy"><b class="t">교과서 말풍선</b><span>같은 연도의 주민 등록 인구수와 출생아 수를 비교하려면 결측치(빈칸)가 없어야 정확하게 처리할 수 있어요!</span></div>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th colspan="2">참고 · 데이터의 결측치(빈값)를 확인하는 방법</th></tr>
+      <tr><td>눈으로</td><td>직접 파일을 열어서 눈으로 데이터를 살펴보며 확인해요.</td></tr>
+      <tr><td>양이 많을 때</td><td>눈으로 확인이 힘든 경우에는 <code>data.isnull().sum()</code> 함수로 확인해요.</td></tr>
+      <tr><td>삭제하기</td><td><code>data.dropna(axis=0)</code> 함수로 결측치가 있는 행을 삭제해요.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>🧪 연도로 짝지어 합쳐 보기 (merge 흉내)</h3>
+    <p style="margin-top:0">교과서는 <b>pandas</b>의 <code>pd.merge</code>로 하고, 여기서는 <b>같은 일을 기본 파이썬</b>(딕셔너리)으로 해 봐요. 두 데이터에서 <b>같은 연도</b>를 찾아 한 줄로 묶고, 숫자에 <b>천 단위 기호(,)</b>를 붙여 출력해요. 데이터는 파일의 앞부분(1997~2002년)만 담았어요.</p>
+    <div id="pjRun1"></div>
+    <p class="note pj-pyrun-note">실행해 본 뒤 <code>data2</code>에서 1999년 줄을 지우고 다시 실행해 보세요. 짝지어진 연도는 몇 개가 되나요? 값이 비어 있으면 왜 처리가 필요한지 알 수 있어요.</p>
+    <div class="memo"><label>처리하면서 알게 된 점 <small>우리 모둠이 내려받은 데이터에서는 어떤 처리를 했는지도 적어 보세요.</small></label><textarea data-memo="pjProc" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 데이터 시각화 -->
+<section class="page" data-name="4 데이터 시각화" data-acc="#1f9d74">
+  <div class="head"><div class="num">05</div><div><h2>4단계 · 데이터 시각화</h2><p>교과서 119~120쪽 · 선그래프, 막대그래프, 워드 클라우드</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>숫자만 보면 변화를 알기 어려워요. <b>그래프로 그리면</b> 인구가 언제부터 늘고 줄었는지 한눈에 보여요. 그래프마다 <b>잘 보이는 것과 안 보이는 것</b>이 달라요.</span></div>
+
+  <div class="card">
+    <h3>📈 선그래프 · 주민 등록 인구수 변화 <span class="muted" style="font-weight:400;font-size:.88rem">(119쪽)</span></h3>
+    <p style="margin-top:0">교과서 표의 <b>그래프 코드</b>는 <code>plt.plot</code>(선그래프), <b>데이터 코드</b>는 <code>data['연도'], data['주민 등록 인구수']</code>예요. 코드는 읽기만 해요. 아래에서 값을 읽어 볼 수 있는 그래프로 대신 보여 줄게요.</p>
+    <pre class="code"><b>import</b> pandas as pd <i># pandas 라이브러리 추가</i>
+data = pd.read_csv('주민 등록 인구수.csv', encoding='cp949')
+
+<b>import</b> matplotlib.pyplot as plt <i>#그래프를 그리기 위한 라이브러리</i>
+plt.rc('font', family = 'NanumGothic') <i># 글꼴 설정, 그래프에 한글 사용</i>
+
+plt.title('주민 등록 인구수 변화') <i># 그래프 제목</i>
+
+<i># x축(연도), y축(주민 등록 인구수)값으로 선 그래프 그리기</i>
+plt.plot(data['연도'], data['주민 등록 인구수'])
+plt.xlabel('연도') <i># x축 레이블 설정</i>
+plt.ylabel('인구수') <i># y축 레이블 설정</i>
+
+<i># y축에 표현되는 값 읽어들이기</i>
+current_values = plt.gca().get_yticks()
+<i># y축 숫자에 천 단위 기호(,) 적용</i>
+plt.gca().set_yticklabels(['{:,.0f}'.format(x) for x in current_values])
+
+plt.show() <i># 그래프 보여주기</i></pre>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th colspan="2">코드 가이드 (파란 부분)</th></tr>
+      <tr><td><code>plt.plot(x, y)</code></td><td>x축 값(연도)과 y축 값(주민 등록 인구수)으로 <b>선그래프</b>를 그려요.</td></tr>
+      <tr><td><code>get_yticks()</code> 와 <code>set_yticklabels()</code></td><td>y축에 표시되는 값을 읽어 와서, 아주 큰 숫자를 한번에 읽기 쉽도록 <b>천 단위 기호(,)</b>를 붙여 다시 적어요.</td></tr>
+    </table></div>
+    <b style="font-size:.92rem">그래프로 살펴보기 · 주민 등록 인구수 (1997~2022)</b>
+    <svg id="pjLine" class="pj-svg" role="img" aria-label="주민 등록 인구수 선그래프. 1997년 46,684,069명에서 해마다 늘다가 2019년 51,849,861명이 가장 많고 2022년에는 51,439,038명이다."></svg>
+    <div class="pj-read" aria-live="polite">
+      <label for="pjYear" style="font-weight:800">연도를 골라 값 읽기</label>
+      <input type="range" id="pjYear" min="1997" max="2022" step="1" value="2019">
+      <div id="pjReadout"></div>
+    </div>
+    <div class="pj-ex"><b>교과서 예시 결과</b> · 인구수는 계속해서 증가해 왔으나 2015년부터 증가 추세가 완만해지더니 2020년 이후에는 하락세가 시작되었다.</div>
+    <div class="memo"><label>위 그래프에서 내가 읽은 것 <small>어느 해에 가장 많았나요? 늘어나는 속도는 어떻게 달라지나요? (연도 막대를 움직여 값을 비교해 보세요.)</small></label><textarea data-memo="pjLineRead" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>📊 막대그래프 · 인구 변화 <span class="muted" style="font-weight:400;font-size:.88rem">(119쪽)</span></h3>
+    <p style="margin-top:0">두 데이터를 <b>합친</b> 뒤 <code>plt.bar</code>(막대그래프)를 두 번 써서 「주민 등록 인구수」와 「출생아 수」를 같은 그래프에 겹쳐 그려요. <code>label</code>은 범례에 나올 이름이에요.</p>
+    <pre class="code"><b>import</b> pandas as pd <i># pandas 라이브러리 추가</i>
+data1 = pd.read_csv('주민 등록 인구수.csv', encoding='cp949')
+data2 = pd.read_csv('출생아 수.csv', encoding='cp949')
+
+plt.title('인구 변화') <i># 그래프 제목</i>
+
+data = pd.merge(data1, data2, on='연도')
+
+<i># x축(연도), y축(주민 등록 인구수) 값으로 막대그래프 그리기</i>
+plt.bar(data['연도'], data['주민 등록 인구수'], label='주민 등록 인구수')
+
+<i># x축(연도), y축(출생아 수) 값으로 막대그래프 그리기</i>
+plt.bar(data['연도'], data['출생아 수'],label='출생아 수')
+
+plt.xlabel('연도') <i># x축 레이블 설정</i>
+plt.ylabel('인구수') <i># y축 레이블 설정</i>
+
+<i># y축에 표현되는 값 읽어들이기</i>
+current_values = plt.gca().get_yticks()
+<i># y축 숫자에 천 단위 기호(,) 적용</i>
+plt.gca().set_yticklabels(['{:,.0f}'.format(x) for x in current_values])
+
+plt.legend() <i># 범례 표시</i>
+plt.show() <i># 그래프 보여주기</i></pre>
+    <p class="note">앞 단계에서 만든 <code>data1</code>(주민 등록 인구수)과 <code>data2</code>(출생아 수)를 <code>on='연도'</code>로 합친 것이 <code>pd.merge(data1, data2, on='연도')</code>예요. 코드는 교과서의 119쪽 소스 코드를 옮긴 것이에요.</p>
+    <b style="font-size:.92rem">그래프로 살펴보기 · 보기 방법 고르기</b>
+    <div class="pj-seg" id="pjBarMode"></div>
+    <svg id="pjBar" class="pj-svg" role="img" aria-label="연도별 주민 등록 인구수와 출생아 수 막대그래프"></svg>
+    <div class="pj-leg" id="pjBarLeg"></div>
+    <div class="pj-ex"><b>교과서 예시 결과</b> · 주민 등록 인구수는 꾸준히 증가하는 듯 보인다. 그에 비해 출생아 수는 줄어드는 듯하지만 그래프상에서는 알아보기 힘드니, 출생아 수를 따로 시각화하면 좋을 것 같다.</div>
+    <div class="memo"><label>「출생아 수만」 보기로 바꿔 보고 알게 된 점 <small>출생아 수는 언제부터 어떻게 달라졌나요? 처음 그래프와 어떤 점이 달랐나요?</small></label><textarea data-memo="pjBarRead" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🧪 우리 모둠의 시각화 정리 <span class="muted" style="font-weight:400;font-size:.88rem">(119쪽 표)</span></h3>
+    <p style="margin-top:0">교과서 표의 빈칸처럼, 두 번째 그래프(<b>출생아 수 변화</b>, <b>가구 형태 변화</b>)에 쓸 그래프 종류와 코드, 알게 된 결과를 정리해 봐요. 96~98쪽의 시각화 방법을 참고해요.</p>
+    <div class="pj-grid2">
+      <div><label>그래프 코드 · 데이터 코드</label><textarea data-memo="pjVizCode" rows="3" placeholder="예) 어떤 그래프를 어떤 데이터로 그릴지"></textarea><div class="saved"></div></div>
+      <div><label>시각화 결과로 알게 된 것</label><textarea data-memo="pjVizResult" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>☁️ 텍스트 데이터 시각화 · 워드 클라우드 <span class="muted" style="font-weight:400;font-size:.88rem">(120쪽)</span></h3>
+    <p style="margin-top:0">인구 관련 텍스트 데이터도 시각화해 봐요. 수집한 텍스트 데이터를 아래 작업 안내에 따라 <b>워드 클라우드</b> 형태로 시각화하고 결과를 확인해요. 방법은 101~104쪽을 참고해요.</p>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th colspan="2">참고 · 워드 클라우드 시각화 작업 안내</th></tr>
+      <tr><td>①</td><td>구글 코랩에 수집한 텍스트 파일을 업로드해요.</td></tr>
+      <tr><td>②</td><td>불필요한 문자를 제거해요.</td></tr>
+      <tr><td>③</td><td>한글 형태소 분석기를 사용해 내용을 단어별로 구분해요.</td></tr>
+      <tr><td>④</td><td>글자 수를 확인한 후, 두 글자 이상의 단어만 남겨요.</td></tr>
+      <tr><td>⑤</td><td>단어의 빈도수를 구하고 데이터프레임을 딕셔너리 형태로 변환해요.</td></tr>
+      <tr><td>⑥</td><td>사용할 글꼴을 준비하고, 워드 클라우드를 생성해요.</td></tr>
+    </table></div>
+    <div class="memo"><label>워드 클라우드에서 크게 나타난 핵심 키워드 <small>다양한 기사와 관련 문서를 스크랩해 시각화해 보고, 결과에 나타난 핵심 키워드를 적어 보세요. 텍스트 내용에 따라 결과가 달라지므로 내용 선정이 중요해요.</small></label><textarea data-memo="pjKeyword" rows="3"></textarea><div class="saved"></div></div>
+    <p style="margin-bottom:0"><b>참고 · 관련 데이터를 시각화해서 제공하는 사이트</b><br><span>국가균형발전종합정보시스템(nabis.go.kr)에서는 「전국 주민 등록 인구 현황(시도)」와 「전국 합계 출산율 현황(권역)」을 지도 위에 시각화해서 보여 줘요.</span></p>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 분석 결과 해석 -->
+<section class="page" data-name="5 분석 결과 해석" data-acc="#2f6fd0">
+  <div class="head"><div class="num">06</div><div><h2>5단계 · 분석 결과 해석</h2><p>교과서 121쪽 · 해석하고 인포그래픽 기획하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>그래프에서 읽은 것을 <b>근거 데이터와 함께</b> 풀어 쓰고, 이를 바탕으로 미래 인구 정책에 활용할 <b>인포그래픽</b>을 계획하는 단계예요.</span></div>
+
+  <div class="card">
+    <h3>🧪 1인 가구 비율 확인해 보기</h3>
+    <p style="margin-top:0">내려받은 1인 가구 데이터에는 <b>1인 가구 비율(A÷B×100)(%)</b>, <b>1인 가구(A)</b>, <b>일반 가구(B)</b>가 있었어요. 비율이 정말 이 식으로 나오는지 기본 파이썬으로 확인해 봐요. (교과서는 표를 보고 확인해요. 연도는 파일의 2000~2022년 중 일부만 담았어요.)</p>
+    <div id="pjRun2"></div>
+    <p class="note" style="margin-bottom:6px">아래는 파일에 있는 2000~2022년 1인 가구 비율(%)을 막대그래프로 나타낸 거예요.</p>
+    <svg id="pjHH" class="pj-svg" role="img" aria-label="연도별 1인 가구 비율 막대그래프. 2000년 15.5퍼센트에서 2022년 34.5퍼센트까지 늘어난다."></svg>
+  </div>
+
+  <div class="card">
+    <h3>🧭 우리나라 인구 변화 현황 해석하기 <span class="muted" style="font-weight:400;font-size:.88rem">(121쪽)</span></h3>
+    <p style="margin-top:0">여러 가지 데이터를 시각화한 결과를 참고해서 인구 변화가 어떻게 진행되고 있는지 해석해 봐요. 근거로 쓴 데이터와 그에 따른 해석을 짝지어 적어요.</p>
+    <div class="pj-grid2">
+      <div><label>근거 데이터</label><textarea data-memo="pjEvid" rows="4"></textarea><div class="saved"></div></div>
+      <div><label>결과 해석</label><textarea data-memo="pjInterp" rows="4"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🖼️ 인포그래픽 기획서 <span class="muted" style="font-weight:400;font-size:.88rem">(121쪽)</span></h3>
+    <p style="margin-top:0">해석한 내용을 바탕으로 미래 인구 정책에 활용할 수 있는 <b>인포그래픽 데이터</b>를 만들어 봐요. 이때 먼저 <b>기획서</b>를 쓰고, 제작 도구를 활용해 인포그래픽을 표현해요.</p>
+    <table class="pj-tb">
+      <tr><td>분석 주제</td><td><input type="text" data-memo="pjInfoTopic" aria-label="분석 주제"><div class="saved"></div></td></tr>
+      <tr><td>제작 목적</td><td><textarea data-memo="pjInfoGoal" rows="2" aria-label="제작 목적"></textarea><div class="saved"></div></td></tr>
+      <tr><td>공개 대상</td><td><input type="text" data-memo="pjInfoWho" aria-label="공개 대상"><div class="saved"></div></td></tr>
+      <tr><td>기대 효과</td><td><textarea data-memo="pjInfoEffect" rows="2" aria-label="기대 효과"></textarea><div class="saved"></div></td></tr>
+      <tr><td>인포그래픽 데이터(글 또는 그림)</td><td><textarea data-memo="pjInfoData" rows="4" aria-label="인포그래픽 데이터" placeholder="어떤 글이나 그림을 어떻게 배치할지 말로 적어도 좋아요."></textarea><div class="saved"></div></td></tr>
+    </table>
+    <div class="easy"><b class="t">TIP · 인포그래픽 제작 도구 안내</b><span>디자인 소프트웨어는 파워포인트, 포토샵, 일러스트가 있고, 온라인 그래픽 디자인 도구는 미리캔버스, 캔바, 망고보드가 있어요.</span></div>
+    <p class="note" style="margin-bottom:0">교과서의 참고 예시는 「우리나라 총인구 전망」을 선과 그림으로, 「합계 출산율」을 막대와 그림으로 한 장에 나타낸 인포그래픽이에요.</p>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 SW 융합 완전 정복 -->
+<section class="page" data-name="SW 융합 완전 정복" data-acc="#9b4fc4">
+  <div class="head"><div class="num">07</div><div><h2>SW 융합 완전 정복</h2><p>교과서 123쪽 · 핵심 개념, 응용 확장, 진로 탐색</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>이번 프로젝트에서 한 <b>데이터 분석이 어떤 분야와 만나는지</b>, 분석 결과를 <b>어디에 응용</b>할 수 있는지, 어떤 <b>직업과 이어지는지</b> 생각해 봐요.</span></div>
+  <div class="card">
+    <h3>💪 이 활동으로 키우는 역량 <span class="muted" style="font-weight:400;font-size:.88rem">(123쪽 위)</span></h3>
+    <div class="pj-grid3">
+      <div style="background:#fbfaf7;border-radius:12px;padding:9px 12px"><b style="color:#2f9a5a">컴퓨팅 사고력 UP!</b><br>추상화 능력 · 자동화 능력 · 창의·융합 능력</div>
+      <div style="background:#fbfaf7;border-radius:12px;padding:9px 12px"><b style="color:#2f6fd0">디지털 문화 소양 UP!</b><br>디지털 의사소통·협업 능력 · 디지털 윤리 의식 · 디지털 기술 활용 능력</div>
+      <div style="background:#fbfaf7;border-radius:12px;padding:9px 12px"><b style="color:#9b4fc4">인공지능 소양 UP!</b><br>인공지능 문제 해결력 · 데이터 문해력 · 인공지능 윤리 의식</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🔑 핵심 개념 <span class="muted" style="font-weight:400;font-size:.88rem">(123쪽)</span></h3>
+    <p style="margin-top:0">프로젝트 활동에서 파악한 <b>데이터 분석의 주제</b>는 어떤 분야와 융합하였으며, 분석 결과가 사회 현상에 미치는 <b>역할</b>과 분석 과정에서 나에게 필요한 <b>역량</b>은 무엇인지 정리해 봐요.</p>
+    <div class="pj-ex"><b>교과서 예</b> · 융합 분야: 사회 / 역할: 인구 변화를 예측하여 교육과 의료 등 전반적인 사회 정책을 미리 구상할 수 있다. / 필요 역량: 문제 해결 능력, 데이터 문해력</div>
+    <div class="pj-grid3">
+      <div><label>데이터 분석 주제 · 융합 분야</label><textarea data-memo="pjFld" rows="3"></textarea><div class="saved"></div></div>
+      <div><label>역할</label><textarea data-memo="pjRole" rows="3"></textarea><div class="saved"></div></div>
+      <div><label>필요 역량</label><textarea data-memo="pjCap" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🌱 응용 확장 <span class="muted" style="font-weight:400;font-size:.88rem">(123쪽)</span></h3>
+    <p style="margin-top:0">프로젝트 활동에서 파악한 데이터 분석 결과를 적용하거나 응용할 수 있는 사례를 생각해서 적어 봐요.</p>
+    <div class="pj-ex"><b>교과서 예</b> · 응용 사례 1 — 새로운 메뉴 개발이나 창업을 준비하는 사람이 1인 가구의 증가를 근거로 맞춤형 아이템을 준비할 수 있다.</div>
+    <div class="pj-grid3">
+      <div><label>응용 사례 1</label><textarea data-memo="pjApp1" rows="3"></textarea><div class="saved"></div></div>
+      <div><label>응용 사례 2</label><textarea data-memo="pjApp2" rows="3"></textarea><div class="saved"></div></div>
+      <div><label>응용 사례 3</label><textarea data-memo="pjApp3" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🧭 진로 탐색 <span class="muted" style="font-weight:400;font-size:.88rem">(123쪽)</span></h3>
+    <p style="margin-top:0">데이터 분석 결과를 실제 문제 해결에 활용하려면 각 단계(데이터 분석 전 구상 단계 · 데이터 분석 및 시각화 단계 · 데이터 분석 후 활용 단계)마다 분야별로 어떠한 역할이나 업무가 필요할지 정리해 봐요. 각 단계에서 더 많은 사람에게 유익할지도 생각해 봐요.</p>
+    <div class="pj-ex"><b>교과서 예</b> · 인문·사회 / 분석 전 구상: 저출산, 노령화 사회를 대비하여 정책을 구상해야 하는 공공 기관의 담당자<br>과학·공학 / 분석 및 시각화: 많은 양의 데이터를 손쉽게 시각화해 주는 소프트웨어 개발자<br>예체능 외 / 분석 후 활용: 소수 정예 또는 1인을 대상으로 맞춤형 운동 강좌 강사</div>
+    <div class="pj-grid3">
+      <div><label>인문·사회</label><textarea data-memo="pjJob1" rows="3"></textarea><div class="saved"></div></div>
+      <div><label>과학·공학</label><textarea data-memo="pjJob2" rows="3"></textarea><div class="saved"></div></div>
+      <div><label>예체능 외</label><textarea data-memo="pjJob3" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 대단원 마무리 -->
+<section class="page" data-name="대단원 마무리" data-acc="#2fa0a8">
+  <div class="head"><div class="num">08</div><div><h2>대단원 마무리</h2><p>교과서 124~125쪽 · Ⅲ. 현상을 분석하는 소프트웨어 정리</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>Ⅲ단원에서 배운 <b>데이터 분석 과정</b>을 분류하고 짝지으며 정리하고, 분야별로 <b>데이터 분석이 어떤 도움이 되는지</b> 내 말로 적어 봐요.</span></div>
+
+  <div class="card">
+    <h3>🗂️ 활동을 5단계에 맞게 분류하기</h3>
+    <p class="muted" style="margin-top:0">스포츠 기록 분석과 인구 데이터 분석 활동을 보고, 데이터 분석의 어느 단계인지 골라 봐요.</p>
+    <div id="pjUnitSort"></div>
+  </div>
+  <div class="card">
+    <h3>🔗 도구와 하는 일 짝 맞추기</h3>
+    <p class="muted" style="margin-top:0">왼쪽 도구 이름을 누른 다음, 알맞은 하는 일을 눌러요. 맞으면 같은 색으로 묶여요.</p>
+    <div class="pj-match"><div id="pjmL"></div><div id="pjmR"></div></div>
+    <div class="row" style="gap:10px;align-items:center;margin-top:8px"><span id="pjmMsg" class="muted" aria-live="polite"></span><button class="btn ghost sm" id="pjmReset" type="button">다시 섞기</button></div>
+  </div>
+
+  <div class="card">
+    <h3>📝 스스로 정리하기 ① 데이터를 분석하는 과정 <span class="muted" style="font-weight:400;font-size:.88rem">(124쪽)</span></h3>
+    <p style="margin-top:0">소프트웨어를 활용해 데이터를 분석하는 과정을 단계별로 정리해 봐요. 정리한 내용은 이 기기에만 저장돼요.</p>
+    <table class="pj-tb">
+      <tr><td>문제 탐색 및 정의</td><td><textarea data-memo="pjSum1" rows="2" aria-label="문제 탐색 및 정의 정리"></textarea><div class="saved"></div></td></tr>
+      <tr><td>데이터 수집</td><td><textarea data-memo="pjSum2" rows="2" aria-label="데이터 수집 정리" placeholder="데이터 종류 · 수집 방법"></textarea><div class="saved"></div></td></tr>
+      <tr><td>데이터 처리</td><td><textarea data-memo="pjSum3" rows="2" aria-label="데이터 처리 정리"></textarea><div class="saved"></div></td></tr>
+      <tr><td>데이터 시각화</td><td><textarea data-memo="pjSum4" rows="2" aria-label="데이터 시각화 정리" placeholder="시각화 종류"></textarea><div class="saved"></div></td></tr>
+      <tr><td>분석 결과 해석</td><td><textarea data-memo="pjSum5" rows="2" aria-label="분석 결과 해석 정리"></textarea><div class="saved"></div></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>📝 스스로 정리하기 ② 데이터 분석의 장점 <span class="muted" style="font-weight:400;font-size:.88rem">(125쪽)</span></h3>
+    <p style="margin-top:0">다양한 분야의 현상을 합리적으로 해석하는 데이터 분석의 장점을 정리해 봐요.</p>
+    <div class="of-tw"><table class="pj-tb">
+      <tr><th>분야</th><th>데이터 수집</th><th>장점</th></tr>
+      <tr><td>스포츠 관련 데이터 분석</td><td>선수별 능력 데이터, 팀별 전력 데이터</td><td>팀 구성 인원 선별 및 새로운 시즌 전략 수립에 활용할 수 있다.</td></tr>
+      <tr><td>의료 관련 데이터 분석</td><td>환자별 상태 데이터, 동일 질병 데이터</td><td><textarea data-memo="pjAdv1" rows="2" aria-label="의료 관련 데이터 분석의 장점"></textarea><div class="saved"></div></td></tr>
+      <tr><td>기온·기후 관련 데이터 분석</td><td><textarea data-memo="pjAdv2d" rows="2" aria-label="기온 기후 관련 수집 데이터"></textarea><div class="saved"></div></td><td><textarea data-memo="pjAdv2" rows="2" aria-label="기온 기후 관련 데이터 분석의 장점"></textarea><div class="saved"></div></td></tr>
+      <tr><td><input type="text" data-memo="pjAdv3f" aria-label="내가 고른 분야" placeholder="내가 고른 분야"><div class="saved"></div></td><td><textarea data-memo="pjAdv3d" rows="2" aria-label="내가 고른 분야의 수집 데이터"></textarea><div class="saved"></div></td><td><textarea data-memo="pjAdv3" rows="2" aria-label="내가 고른 분야의 장점"></textarea><div class="saved"></div></td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>✅ 스스로 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(124쪽)</span></h3>
+    <p style="margin-top:0">다음을 읽고 옳은 설명이라고 생각하면 <b>O</b>, 옳지 않다고 생각하면 <b>X</b>를 눌러 보세요. 정답과 해설은 교과서 208쪽에서 확인해요.</p>
+    <div class="pj-ox"><p>❶ 데이터 시각화 그래프 중에 변수 간의 관계를 나타내는 방법은 워드 클라우드이다.</p><div id="ox1"></div></div>
+    <div class="pj-ox"><p>❷ 데이터 처리 단계에서는 비어 있는 값, 이상한 값, 중복된 값 등을 확인하고 정리해야 한다.</p><div id="ox2"></div></div>
+    <div class="pj-ox"><p>❸ 관리가 비교적 쉽고 숫자, 날짜, 문자 등의 행과 열로 표현할 수 있는 데이터는 비정형 데이터이다.</p><div id="ox3"></div></div>
+    <div class="pj-ox"><p>❹ 신뢰도 있는 데이터를 활용해 데이터 분석을 하고자 할 때에는 공개 데이터를 수집해서 활용하면 된다.</p><div id="ox4"></div></div>
+    <div class="pj-ox"><p>❺ 데이터 분석의 결과는 기존 현상에 대한 패턴을 파악하는 것뿐만 아니라 미래를 예측하고 문제를 해결하는 데 도움을 준다.</p><div id="ox5"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🌟 스스로 평가하기 · 단원 학습으로 자란 정도 <span class="muted" style="font-weight:400;font-size:.88rem">(125쪽)</span></h3>
+    <p style="margin-top:0">단원 학습을 통해 얼마나 성장했는지 점수를 골라 봐요. <b>5점 매우 그렇다 · 4점 조금 그렇다 · 3점 보통이다 · 2점 조금 부족하다 · 1점 매우 부족하다</b>. 고르면 아래 방사형 그래프가 그려져요.</p>
+    <div class="pj-rate">
+      <div><p><b>창의적 사고</b> · 데이터 분석에 적합한 형태의 시각화를 통해 가장 효과적인 표현 방법을 찾아내게 되었다.</p><div id="rd0"></div></div>
+      <div><p><b>협력적 소통</b> · 분석 결과를 기반으로 민주적으로 의사소통할 수 있게 되었다.</p><div id="rd1"></div></div>
+      <div><p><b>자기 관리</b> · 사회 현상을 분석하기 위한 데이터를 수집할 때 사회적, 윤리적으로 편향되지 않는 관점을 유지할 수 있게 되었다.</p><div id="rd2"></div></div>
+      <div><p><b>지식 정보 처리</b> · 현상을 분석하는 소프트웨어를 활용하여 문제를 분석하고 해석하기 위해 필요한 역량이 무엇인지 알게 되었다.</p><div id="rd3"></div></div>
+      <div><p><b>공동체적 역량</b> · 현상을 분석해 보면서 다양한 관점으로 사회 현상을 바라보게 되었다.</p><div id="rd4"></div></div>
+    </div>
+    <svg id="pjRadar" class="pj-svg" style="max-width:340px" role="img" aria-label="다섯 가지 역량의 자기 평가 방사형 그래프"></svg>
+  </div>
+</section>
+
+<!-- 9 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">09</div><div><h2>마무리</h2><p>Ⅲ단원 전체 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#2f9a5a">데이터 분석은 <b>문제 탐색 및 정의 → 데이터 수집 → 데이터 처리 → 데이터 시각화 → 분석 결과 해석</b>의 5단계로 진행해요. 수집한 데이터는 <b>칼럼명을 고치고 결측치를 확인</b>해서 쓸 수 있게 처리해요.</div>
+    <div style="--k:#c98a0a">두 데이터를 <b>연도 기준으로 합치고(merge)</b> 선그래프와 막대그래프로 그리면 변화를 한눈에 볼 수 있어요. 그래프마다 잘 보이는 것이 달라서, 필요하면 <b>따로 시각화</b>해요.</div>
+    <div style="--k:#2f6fd0">시각화 결과는 <b>근거 데이터와 함께 해석</b>하고, 해석한 내용은 인구 정책에 쓸 <b>인포그래픽</b>으로 나타낼 수 있어요. 데이터 분석은 스포츠, 의료, 기후, 인구 등 다양한 분야의 현상을 합리적으로 해석하게 도와줘요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">화면 02~06에서 정리한 우리 모둠의 프로젝트를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">데이터를 수집하고 처리해 시각화하면, 우리나라 인구 변화에 대해 무엇을 알 수 있을까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="9"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>우리 모둠이 <b>어떤 데이터를 수집하고 어떻게 처리</b>했는지 설명하세요. <span class="muted">(화면 03~04 메모 참고)</span></li>
+      <li>시각화한 그래프에서 <b>읽어 낸 인구 변화</b>와 그 근거를 설명하세요. <span class="muted">(화면 05~06 메모 참고)</span></li>
+      <li>Ⅲ단원을 마치며, <b>데이터 분석이 우리 삶에 주는 도움</b>과 내가 키우고 싶은 역량을 적으세요. <span class="muted">(화면 07~08 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="../forms/sw-u3-project.html" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>
+
+</main>
+
+<div class="foot">
+  <button class="btn ghost" id="prev">← 이전</button>
+  <span class="pg" id="pg"></span>
+  <button class="btn" id="next">다음 →</button>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const fmt=n=>n.toLocaleString('ko-KR');
+
+
+
+const LESSON='u3-project', PEP='';
+
+/* 진도 보내기 ①: 누가 쓰는지 확인 (반·학번마다 퀴즈·메모를 따로 저장) */
+const WHO=(function(){
+  if(!PEP) return {off:true,sfx:''};
+  if(/[?&]preview(=|&|$)/.test(location.search)) return {preview:true,sfx:'@preview'};
+  let w=null; try{w=JSON.parse(sessionStorage.getItem('aiw-who')||'null');}catch(e){}
+  if(w&&w.teacher) return {preview:true,teacher:true,sfx:'@preview'};
+  if(!w||!/^\d{5}$/.test(w.no||'')) return {need:true,sfx:'@none'};
+  return {cls:w.cls,no:w.no,name:w.name,sfx:'@'+w.no};
+})();
+/* 퀴즈 · 융합 프로젝트 · 대단원 정리 */
+const QUIZ={
+ 1:[{q:'프로젝트 진행 단계에서 데이터 처리 바로 다음에 오는 단계는 무엇일까요?',o:['데이터 수집','데이터 시각화','분석 결과 해석'],a:1,w:'프로젝트는 문제 탐색 및 정의 → 데이터 수집 → 데이터 처리 → 데이터 시각화 → 분석 결과 해석 순서로 진행해요.'}],
+ 3:[{q:'국가통계포털에서 주민등록인구 데이터를 내려받을 때 선택하는 파일 형태는 무엇일까요?',o:['CSV','그림 파일','한글 문서'],a:0,w:'다운로드 단계에서 파일 형태를 CSV로 선택해요.'}],
+ 4:[{q:'교과서에서 주민 등록 인구수와 출생아 수의 변화를 한눈에 보려고 한 처리는 무엇일까요?',o:['그래프의 색을 바꿔요','두 데이터를 연도로 합쳐요','출생아 수 칸을 지우고 인구수만 남겨요'],a:1,w:'두 데이터를 연도 기준으로 한 개의 파일로 합쳐서 변화를 함께 살펴봐요.'},
+    {q:'데이터 양이 많아 눈으로 결측치를 확인하기 힘들 때 교과서가 소개한 방법은 무엇일까요?',o:['plt.plot()','plt.legend()','data.isnull().sum()'],a:2,w:'data.isnull().sum() 함수로 결측치를 확인하고, data.dropna(axis=0)로 결측치가 있는 행을 삭제할 수 있어요.'}],
+ 5:[{q:'plt.plot()으로 그리는 그래프는 무엇일까요?',o:['원그래프','선그래프','막대그래프'],a:1,w:'plt.plot()은 선그래프, plt.bar()는 막대그래프를 그려요.'},
+    {q:'주민 등록 인구수와 출생아 수를 한 막대그래프에 그렸을 때 교과서는 어떻게 하면 좋겠다고 했나요?',o:['출생아 수만 따로 보아요','막대의 개수를 줄여서 그려요','주민 등록 인구수를 모두 지워요'],a:0,w:'출생아 수가 줄어드는 듯하지만 그래프에서는 알아보기 힘들어서, 출생아 수를 따로 시각화하면 좋겠다고 했어요.'}],
+ 6:[{q:'인포그래픽 기획서의 항목으로 교과서에 나오지 않는 것은 무엇일까요?',o:['색상 코드','공개 대상','기대 효과'],a:0,w:'기획서는 분석 주제, 제작 목적, 공개 대상, 기대 효과, 인포그래픽 데이터(글 또는 그림)로 구성돼요.'}],
+ 9:[{q:'pd.merge(data1, data2, on=\'연도\')는 어떤 일을 할까요?',o:['연도로 두 데이터를 합쳐요','제목과 축 이름을 한꺼번에 정해요','y축에 천 단위 기호를 넣어 줘요'],a:0,w:'merge는 on에 적은 열(연도)을 기준으로 두 데이터를 하나로 합쳐요.'},
+    {q:'1인 가구 비율(%)을 구하는 식으로 교과서 표에 나온 것은 무엇일까요?',o:['1인 가구 × 일반 가구','일반 가구 ÷ 1인 가구 × 100','1인 가구 ÷ 일반 가구 × 100'],a:2,w:'표의 열 이름에 1인 가구 비율은 A÷B×100(%)이고, A는 1인 가구, B는 일반 가구라고 나와 있어요.'}],
+};
+
+const QK='ds-u3-project-quiz'+WHO.sfx;
+const MK='ds-u3-project-memo'+WHO.sfx;
+let QS={}; try{QS=JSON.parse(localStorage.getItem(QK)||'{}')||{};}catch(e){QS={};}
+function saveQ(){try{localStorage.setItem(QK,JSON.stringify(QS));}catch(e){}}
+const TOTALQ=Object.values(QUIZ).reduce((a,b)=>a+b.length,0);
+function qperm(n,key){ let h=2166136261; for(const c of key){h^=c.charCodeAt(0);h=Math.imul(h,16777619)>>>0;}
+  const p=[...Array(n).keys()]; for(let i=n-1;i>0;i--){h=Math.imul(h^(h>>>15),2246822507)>>>0; h=(h+0x6D2B79F5)>>>0; const j=h%(i+1); [p[i],p[j]]=[p[j],p[i]];} return p; }
+function renderQuiz(box){
+  const k=box.dataset.quiz; box.innerHTML=`<div class="qh"><b>개념 퀴즈</b><span>${QUIZ[k].length}문제 · 고르면 바로 채점</span></div>`;
+  QUIZ[k].forEach((it,i)=>{
+    const id=k+'-'+i, d=document.createElement('div'); d.className='qi';
+    /* 보기 순서는 학생마다 섞되(새로 고쳐도 같은 순서), 저장·채점은 원래 번호로 */
+    const perm=qperm(it.o.length, QK+'|'+id);
+    d.innerHTML=`<div class="qq">${i+1}. ${it.q}</div><div class="opts">${perm.map(j=>`<button data-j="${j}">${it.o[j]}</button>`).join('')}</div><div class="why"></div>`;
+    const btn=j=>d.querySelector(`button[data-j="${j}"]`);
+    const mark=(j,anim)=>{
+      const bs=d.querySelectorAll('button'); bs.forEach(b=>b.disabled=true);
+      btn(it.a).classList.add('right'); if(j!==it.a){btn(j).classList.add('wrong'); if(anim) d.classList.add('shake');}
+      d.classList.add('answered', j===it.a?'correct':'incorrect');
+      d.querySelector('.why').textContent=(j===it.a?'정답. ':'정답은 「'+it.o[it.a]+'」. ')+it.w;
+    };
+    d.querySelectorAll('button').forEach(b=>b.onclick=()=>{const j=+b.dataset.j;QS[id]=j;saveQ();mark(j,true);updScore();});
+    if(QS[id]!=null && QS[id]<it.o.length) mark(QS[id],false);
+    box.appendChild(d);
+  });
+}
+
+/* 페이지 이동 */
+const pages=[...document.querySelectorAll('.page')];
+const stepBtns=pages.map((p,i)=>{const b=document.createElement('button');b.textContent=i?`${i}. ${p.dataset.name}`:'시작';b.onclick=()=>go(i);$('steps').appendChild(b);return b;});
+function updScore(){
+  let ok=0; for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{if(QS[k+'-'+i]===it.a) ok++;});
+  $('score').textContent=`퀴즈 ${ok} / ${TOTALQ}`;
+  pages.forEach((p,i)=>{const q=p.querySelector('[data-quiz]'); if(!q) return; const k=q.dataset.quiz; stepBtns[i].classList.toggle('done',QUIZ[k].every((_,j)=>QS[k+'-'+j]!=null));});
+  let h='<tr><th class="l">개념</th><th>맞힌 문제</th></tr>';
+  for(const k in QUIZ){const n=QUIZ[k].length, c=QUIZ[k].filter((it,i)=>QS[k+'-'+i]===it.a).length, a=QUIZ[k].filter((_,i)=>QS[k+'-'+i]!=null).length;
+    h+=`<tr><td class="l">${k}. ${pages[k].dataset.name}</td><td>${a?`<b class="${c===n?'ok':''}">${c} / ${n}</b>`:'<span class="muted">아직 안 풂</span>'}</td></tr>`;}
+  h+=`<tr><td class="l"><b>합계</b></td><td><b>${ok} / ${TOTALQ}</b></td></tr>`;
+  $('result').innerHTML=h;
+}
+let cur=-1;
+const onShow={};
+function go(i){
+  i=Math.max(0,Math.min(pages.length-1,i)); if(i===cur) return;
+  const back=i<cur; if(cur>=0) pages[cur].classList.remove('on','back');
+  pages[i].classList.add('on'); pages[i].classList.toggle('back',back);
+  document.documentElement.style.setProperty('--acc',pages[i].dataset.acc);
+  document.documentElement.style.setProperty('--acc-soft',pages[i].dataset.acc+'1a');
+  stepBtns.forEach((b,j)=>b.classList.toggle('on',j===i));
+  const sb=$('steps'), btn=stepBtns[i]; sb.scrollLeft=btn.offsetLeft-sb.clientWidth/2+btn.clientWidth/2;
+  $('prog').style.width=(i/(pages.length-1)*100)+'%';
+  $('pg').textContent=`${i} / ${pages.length-1}`;
+  $('prev').style.visibility=i?'visible':'hidden'; $('next').style.visibility=i<pages.length-1?'visible':'hidden';
+  cur=i; try{history.replaceState(null,'','#p'+i);}catch(e){} window.scrollTo(0,0);
+  if(onShow[i]) onShow[i]();
+}
+$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.defaultPrevented)return; if(e.target.matches&&e.target.matches('input,select,textarea'))return; if(e.key==='ArrowRight')go(cur+1); if(e.key==='ArrowLeft')go(cur-1);});
+document.querySelectorAll('.gcard').forEach(g=>g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.click();}}));
+document.querySelectorAll('[data-quiz]').forEach(renderQuiz);
+$('quizReset').onclick=()=>{QS={};saveQ();document.querySelectorAll('[data-quiz]').forEach(renderQuiz);updScore();};
+
+
+/* 공용 부품: 메모·카드·분류 게임·탭·투표·칩 */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+
+/* 메모: data-memo가 있는 입력칸은 이 기기에 저장 */
+let MEMO=store.get(MK,{});
+function bindMemos(){
+  document.querySelectorAll('[data-memo]').forEach(t=>{
+    const k=t.dataset.memo; if(MEMO[k]!=null) t.value=MEMO[k];
+    let tm; t.addEventListener('input',()=>{MEMO[k]=t.value; clearTimeout(tm); tm=setTimeout(()=>{store.set(MK,MEMO); const s=t.parentElement.querySelector('.saved'); if(s){s.textContent='이 기기에 저장됨'; setTimeout(()=>s.textContent='',1400);} t.dispatchEvent(new Event('memo'));},300);});
+  });
+}
+function memoSummary(box,list){
+  const h=list.map(([k,label])=>{const v=(MEMO[k]||'').trim(); return `<dt>${esc(label)}</dt><dd class="${v?'':'e'}">${v?esc(v):'(아직 안 씀)'}</dd>`;}).join('');
+  $(box).innerHTML=`<h4>오늘 화면에 적어 둔 내 메모</h4><dl>${h}</dl>`;
+}
+
+/* 뒤집는 카드 */
+function flipCards(box,items){
+  $(box).innerHTML=items.map(c=>`<div class="tcard" tabindex="0"><div class="in"><div class="f"><i>${c.ic||''}</i><b>${c.f}</b>${c.s?`<small>${c.s}</small>`:''}</div><div class="b">${c.b}${c.x?`<div class="x">${c.x}</div>`:''}</div></div></div>`).join('');
+  $(box).querySelectorAll('.tcard').forEach(t=>{const f=()=>t.classList.toggle('flip'); t.onclick=f; t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f();}};});
+}
+
+/* 분류 게임: 문장을 보고 알맞은 묶음 고르기 */
+function sorter(box,cfg){
+  const B=$(box);
+  function start(){
+    const order=shuffle(cfg.items.map((_,i)=>i)); let pos=0, ok=0; const placed=cfg.cats.map(()=>[]);
+    B.innerHTML=`<div class="sit"><div class="cnt"></div><div class="ic"></div><div class="sq"></div><div class="row btns">${cfg.cats.map((c,j)=>`<button class="btn sm cat" style="--k:${c.k}" data-j="${j}">${c.n}</button>`).join('')}</div><div class="fb"></div><div class="row nx" style="margin-top:8px"></div></div><div class="board" style="--n:${cfg.cats.length}">${cfg.cats.map(c=>`<div style="--k:${c.k}"><b>${c.n}</b></div>`).join('')}</div>`;
+    const sq=B.querySelector('.sq'), ic=B.querySelector('.ic'), cnt=B.querySelector('.cnt'), fb=B.querySelector('.fb'), nx=B.querySelector('.nx'), btns=[...B.querySelectorAll('.cat')], cols=[...B.querySelectorAll('.board>div')];
+    function show(){
+      if(pos>=order.length){cnt.textContent=''; ic.textContent='🎉'; sq.innerHTML=`${order.length}개 중 <b>${ok}개</b>를 바로 맞혔어요.`; fb.innerHTML=cfg.end||''; btns.forEach(b=>b.style.display='none'); nx.innerHTML='<button class="btn ghost sm">처음부터 다시</button>'; nx.firstChild.onclick=start; return;}
+      const it=cfg.items[order[pos]]; cnt.textContent=`${pos+1} / ${order.length}`; ic.textContent=it.ic||''; sq.innerHTML=it.t; fb.textContent=''; nx.innerHTML=''; btns.forEach(b=>{b.disabled=false;b.style.display='';});
+    }
+    btns.forEach(b=>b.onclick=()=>{
+      const it=cfg.items[order[pos]], j=+b.dataset.j, right=j===it.c; if(right) ok++;
+      btns.forEach(x=>x.disabled=true);
+      fb.innerHTML=(right?'<span class="ok">맞아요!</span> ':`<span class="ng">아쉬워요.</span> 정답은 <b>${cfg.cats[it.c].n}</b>. `)+(it.w||'');
+      const s=document.createElement('span'); s.innerHTML=it.short||it.t; if(!right) s.className='x'; cols[it.c].appendChild(s);
+      nx.innerHTML='<button class="btn sm">다음 →</button>'; nx.firstChild.onclick=()=>{pos++;show();}; nx.firstChild.focus();
+    });
+    show();
+  }
+  start();
+}
+
+/* 탭 보기: 버튼을 누르면 내용 바꾸기 */
+function tabs(btnBox,viewBox,items,render){
+  $(btnBox).innerHTML=items.map((it,i)=>`<button data-i="${i}"><span class="e">${it.ic||''}</span><b>${it.n}</b></button>`).join('');
+  const bs=[...$(btnBox).querySelectorAll('button')];
+  const pick=i=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); $(viewBox).innerHTML=render(items[i],i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i)); pick(0);
+}
+
+/* 투표: 고르면 결과 보이기 (이 기기에만 저장) */
+function vote(box,key,opts,onPick){
+  const B=$(box); B.innerHTML=opts.map((o,i)=>`<button data-i="${i}">${o[0]}${o[1]?`<small>${o[1]}</small>`:''}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')];
+  const pick=(i,save)=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); if(save){MEMO[key]=opts[i][0]; store.set(MK,MEMO);} onPick&&onPick(i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i,true));
+  const prev=opts.findIndex(o=>o[0]===MEMO[key]); if(prev>=0) pick(prev,false);
+}
+function chips(box,key,opts,multi){
+  const B=$(box); B.classList.add('chk'); B.innerHTML=opts.map(o=>`<button>${o}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')]; let sel=(MEMO[key]||'').split(' · ').filter(Boolean);
+  const draw=()=>bs.forEach(b=>b.classList.toggle('on',sel.includes(b.textContent)));
+  bs.forEach(b=>b.onclick=()=>{const t=b.textContent; if(multi) sel=sel.includes(t)?sel.filter(x=>x!==t):[...sel,t]; else sel=sel.includes(t)?[]:[t]; MEMO[key]=sel.join(' · '); store.set(MK,MEMO); draw(); B.dispatchEvent(new Event('memo'));});
+  draw();
+}
+
+/* 파이썬 실행 칸: 학생이 코드를 고쳐 바로 돌려 보는 부품 (Pyodide, CDN에서 불러옴).
+   pyrun('박스id', {code:'...', rows:8, stdin:'3\n5', readonly:false})
+   - code   : 처음에 보여 줄 코드 (여러 줄 문자열)
+   - rows   : 편집칸 높이(줄). 없으면 코드 줄 수로 정함
+   - stdin  : input() 이 위에서부터 한 줄씩 받을 값 (코드에 input 이 있으면 입력칸이 자동으로 생김)
+   - readonly: true 면 편집 없이 실행만 (코드는 그대로 보여 줌)
+   파이썬은 처음 실행할 때 한 번만 불러오고, 그다음부터는 바로 돈다. 인터넷이 없으면 안내만 보인다. */
+const PY_VER = '0.26.4';
+const PY_BASE = `https://cdn.jsdelivr.net/pyodide/v${PY_VER}/full/`;
+let _pyLoad = null;                 /* Pyodide 로딩 Promise(한 번만) */
+let _pyLock = Promise.resolve();    /* 모든 실행 칸이 파이썬 하나를 공유하므로 한 번에 하나씩만 실행 */
+const _pyWaiters = [];              /* 로딩 중일 때 상태 글을 바꿔 줄 콜백들 */
+
+function _loadPy() {
+  if (_pyLoad) return _pyLoad;
+  _pyLoad = new Promise((resolve, reject) => {
+    const tell = m => _pyWaiters.forEach(f => { try { f(m); } catch (e) {} });
+    const s = document.createElement('script');
+    s.src = PY_BASE + 'pyodide.js';
+    s.onload = async () => {
+      try {
+        tell('파이썬 준비 중…');
+        const py = await loadPyodide({ indexURL: PY_BASE });
+        resolve(py);
+      } catch (e) { reject(e); }
+    };
+    s.onerror = () => reject(new Error('스크립트를 불러오지 못함'));
+    document.head.appendChild(s);
+  });
+  return _pyLoad;
+}
+
+function pyrun(box, cfg) {
+  cfg = cfg || {};
+  const B = $(box); if (!B) return;
+  const code0 = String(cfg.code || '').replace(/^\n+/, '').replace(/\s+$/, '');
+  const rows = cfg.rows || Math.min(16, Math.max(3, code0.split('\n').length + 1));
+  const needIn = /\binput\s*\(/.test(code0) || cfg.stdin != null;
+  const ro = !!cfg.readonly;
+  B.classList.add('pyrun');
+  B.innerHTML =
+    `<textarea class="pr-code" spellcheck="false" rows="${rows}" ${ro ? 'readonly' : ''} aria-label="파이썬 코드"></textarea>` +
+    (needIn ? `<div class="pr-in"><label>입력값 <small>input() 이 위에서부터 한 줄씩 받아요</small></label>` +
+      `<textarea class="pr-stdin" spellcheck="false" rows="2" aria-label="입력값" placeholder="한 줄에 하나씩"></textarea></div>` : '') +
+    `<div class="pr-bar"><button class="btn sm pr-go">▶ 실행</button>` +
+    (ro ? '' : `<button class="btn ghost sm pr-reset">처음 코드로</button>`) +
+    `<span class="pr-stat"></span></div>` +
+    `<pre class="pr-out" aria-live="polite" hidden></pre>`;
+  const ed = B.querySelector('.pr-code'), out = B.querySelector('.pr-out'),
+    stat = B.querySelector('.pr-stat'), goBtn = B.querySelector('.pr-go'),
+    reset = B.querySelector('.pr-reset'), sin = B.querySelector('.pr-stdin');
+  ed.value = code0;
+  if (cfg.stdin != null && sin) sin.value = String(cfg.stdin);
+  /* 탭키로 네 칸 들여쓰기 */
+  if (!ro) ed.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const a = ed.selectionStart, b = ed.selectionEnd;
+      ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(b);
+      ed.selectionStart = ed.selectionEnd = a + 4;
+    }
+  });
+  if (reset) reset.onclick = () => {
+    ed.value = code0; if (sin) sin.value = cfg.stdin != null ? String(cfg.stdin) : '';
+    out.hidden = true; out.textContent = ''; out.classList.remove('err');
+  };
+
+  async function run() {
+    const setStat = m => stat.textContent = m;
+    setStat('파이썬 불러오는 중…'); _pyWaiters.push(setStat);
+    let py;
+    try { py = await _loadPy(); }
+    catch (e) {
+      setStat(''); out.hidden = false; out.classList.add('err');
+      out.textContent = '⚠ 파이썬을 불러오지 못했어요. 인터넷 연결을 확인하고 「실행」을 다시 눌러 주세요.';
+      goBtn.disabled = false; return;
+    } finally { const i = _pyWaiters.indexOf(setStat); if (i >= 0) _pyWaiters.splice(i, 1); }
+    setStat('실행 중…');
+    const lines = [];
+    py.setStdout({ batched: s => lines.push(s) });
+    py.setStderr({ batched: s => lines.push(s) });
+    const feed = (sin ? sin.value : '').split('\n');
+    try {
+      py.globals.set('_pyrun_feed', feed);
+      py.globals.set('_pyrun_src', ed.value);
+      await py.runPythonAsync(
+        'import builtins as _b\n' +
+        '_f=[str(x) for x in list(_pyrun_feed)]\n' +
+        '_ix=[0]\n' +
+        'def _inp(prompt=""):\n' +
+        '    if prompt: print(prompt, end="")\n' +
+        '    if _ix[0] < len(_f):\n' +
+        '        v=_f[_ix[0]]; _ix[0]+=1; return v\n' +
+        '    raise EOFError("입력값이 더 없어요. 위 입력값 칸에 값을 더 적어 주세요.")\n' +
+        '_b.input=_inp\n');
+      await py.runPythonAsync("exec(compile(_pyrun_src,'<내 코드>','exec'), {'__name__':'__main__'})");
+      out.classList.remove('err');
+    } catch (err) {
+      /* 파이썬 내부(Pyodide) 프레임은 지우고 학생이 쓴 코드 줄만 남긴다 */
+      const raw = String(err && err.message || err).split('\n'), keep = [];
+      for (let i = 0; i < raw.length; i++) {
+        const m = raw[i].match(/^ *File "([^"]*)"/);
+        if (m && (m[1].indexOf('/lib/') === 0 || m[1].indexOf('_pyodide') >= 0 || m[1] === '<exec>')) {
+          while (i + 1 < raw.length && /^\s+/.test(raw[i + 1]) && !/^\s*File "/.test(raw[i + 1])) i++;
+          continue;
+        }
+        keep.push(raw[i]);
+      }
+      lines.push(keep.join('\n').trim() || '오류가 났어요.');
+      out.classList.add('err');
+    } finally {
+      try { py.globals.delete('_pyrun_feed'); py.globals.delete('_pyrun_src'); } catch (e) {}
+    }
+    setStat('');
+    out.hidden = false;
+    out.textContent = lines.join('').replace(/\n+$/, '') || '(출력이 없어요)';
+    goBtn.disabled = false;
+  }
+  /* 다른 칸이 실행 중이면 끝날 때까지 기다렸다가(직렬화) 실행 — 파이썬 하나를 공유하기 때문 */
+  goBtn.onclick = () => {
+    goBtn.disabled = true;
+    stat.textContent = '실행 준비 중…';
+    _pyLock = _pyLock.then(run, run);
+  };
+}
+
+/* ===== 공용 그림·실습 부품 (framework/charts.js) =====
+   차시는 설정값만 넘긴다. 쓰는 법은 docs/widgets.md
+   orangeFlow · scatter · bars · boxes · miniTable · stat(평균·표준편차·상관·회귀·k-평균) · memoOf */
+
+/* 다른 차시에서 적어 둔 메모 읽기 (check.py 가 차시·키가 있는지 확인) */
+function memoOf(lid,key){ try{ return String((store.get('ds-'+lid+'-memo'+WHO.sfx,{})||{})[key]||'').trim(); }catch(e){ return ''; } }
+
+/* 통계 계산 */
+const stat={
+  mean:a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:NaN,
+  sd(a,sample){const m=stat.mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-(sample?1:0)));},
+  q(a,p){const s=a.slice().sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i);return s[lo]+(s[Math.min(lo+1,s.length-1)]-s[lo])*(i-lo);},
+  r(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0,syy=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;syy+=(y-my)**2;});return sxx&&syy?sxy/Math.sqrt(sxx*syy):null;},
+  /* 최소제곱 직선 y = a + b·x, 결정 계수 r2, 평균 제곱 오차 mse */
+  fit(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;});if(!sxx)return null;const b=sxy/sxx,a=my-b*mx;return {a,b,...stat.err(P,a,b)};},
+  err(P,a,b){let se=0,st=0;const my=stat.mean(P.map(p=>p[1]));P.forEach(([x,y])=>{se+=(y-(a+b*x))**2;st+=(y-my)**2;});return {mse:se/P.length,rmse:Math.sqrt(se/P.length),r2:st?1-se/st:NaN};},
+  /* k-평균 한 단계: 점마다 가까운 중심 → 중심을 그 점들의 평균으로 */
+  assign:(P,C)=>P.map(p=>{let bi=0,bd=Infinity;C.forEach((c,i)=>{const d=(p[0]-c[0])**2+(p[1]-c[1])**2;if(d<bd){bd=d;bi=i;}});return bi;}),
+  center:(P,L,C)=>C.map((c,i)=>{const m=P.filter((_,j)=>L[j]===i);return m.length?[stat.mean(m.map(p=>p[0])),stat.mean(m.map(p=>p[1]))]:c.slice();}),
+  /* 군집 안 거리 제곱합(SSE)과 평균 실루엣 점수 */
+  sse:(P,L,C)=>P.reduce((s,p,j)=>s+(p[0]-C[L[j]][0])**2+(p[1]-C[L[j]][1])**2,0),
+  silhouette(P,L){const k=Math.max(...L)+1;if(k<2)return NaN;const d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);let s=0;P.forEach((p,i)=>{const avg=c=>{const m=P.filter((_,j)=>L[j]===c&&j!==i);return m.length?stat.mean(m.map(q=>d(p,q))):NaN;};const a=avg(L[i]);let b=Infinity;for(let c=0;c<k;c++)if(c!==L[i]){const v=avg(c);if(v<b)b=v;}s+=(isNaN(a)||!isFinite(b))?0:(b-a)/Math.max(a,b);});return s/P.length;},
+  fmt:(v,d=2)=>v==null||isNaN(v)?'—':(v<0?'−':'')+Math.abs(v).toFixed(d)
+};
+const PAL=['#2f6fd0','#d64535','#1f9d74','#f2a516','#9b4fc4','#e0702b','#5b6776'];
+
+/* 오렌지3 위젯 연결 흐름도 + 설정 표 + (선택) 진행 칩
+   orangeFlow({svg:'id', table:'id', nodes:[{s:1,t:'File',sub:'파일.csv',c:'Data',x,y}], edges:[[1,2]], w, h, done:{box,key,items}})
+   c: Data · Transform · Visualize · Model · Evaluate · Unsupervised · Associate · Explore
+   설정 표는 화면에 <table class="tbl of-set" id="…"><tr data-s="1">…</tr></table> 로 두면 위젯을 누를 때 그 줄이 강조된다. */
+const OF_COL={Data:'#f2b84b',Transform:'#f0875a',Visualize:'#fdb3a0',Model:'#f6a3c6',Evaluate:'#c5a1e8',Unsupervised:'#7fb2e0',Associate:'#8fd3c1',Explore:'#a7d36f'};
+function orangeFlow(o){
+  const S=$(o.svg), BW=o.bw||180, BH=48, N={}, id=o.svg;
+  o.nodes.forEach(n=>N[n.s]=n);
+  const W=o.w||Math.max(...o.nodes.map(n=>n.x))+BW+10, H=o.h||Math.max(...o.nodes.map(n=>n.y))+BH+10;
+  let g=`<defs><marker id="${id}A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a94a3"/></marker></defs>`;
+  o.edges.forEach(([a,b,lab])=>{const p=N[a],q=N[b],x1=p.x+BW,y1=p.y+BH/2,x2=q.x-2,y2=q.y+BH/2;
+    g+=`<path d="M${x1} ${y1}C${x1+40} ${y1} ${x2-40} ${y2} ${x2} ${y2}" class="fe" marker-end="url(#${id}A)"/>`;
+    if(lab) g+=`<text x="${(x1+x2)/2}" y="${(y1+y2)/2-6}" class="fl">${esc(lab)}</text>`;});
+  o.nodes.forEach(n=>{const k=OF_COL[n.c]||'#ccc';
+    g+=`<g class="fn" data-s="${n.s}" tabindex="0" role="button" aria-label="${n.s}번 ${esc(n.t)}"><rect x="${n.x}" y="${n.y}" width="${BW}" height="${BH}" rx="10" class="fb" style="stroke:${k}"/><rect x="${n.x}" y="${n.y}" width="28" height="${BH}" rx="10" fill="${k}"/><rect x="${n.x+18}" y="${n.y}" width="10" height="${BH}" fill="${k}"/><text x="${n.x+14}" y="${n.y+29}" class="fnum">${n.s}</text><text x="${n.x+36}" y="${n.y+(n.sub?20:29)}" class="ft">${esc(n.t)}</text>${n.sub?`<text x="${n.x+36}" y="${n.y+37}" class="fs">${esc(n.sub)}</text>`:''}</g>`;});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.innerHTML=g;
+  S.parentElement.classList.add('of-box'); S.style.minWidth=Math.min(W,o.minw||640)+'px';
+  const T=o.table?$(o.table):null;
+  const pick=s=>{S.querySelectorAll('.fn').forEach(x=>x.classList.toggle('on',x.dataset.s==s));
+    if(T){T.querySelectorAll('tr[data-s]').forEach(tr=>tr.classList.toggle('hl',tr.dataset.s==s)); const tr=T.querySelector(`tr[data-s="${s}"]`); if(tr) tr.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+  S.querySelectorAll('.fn').forEach(x=>{x.onclick=()=>pick(x.dataset.s); x.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(x.dataset.s);}};});
+  if(T){T.classList.add('of-set'); T.querySelectorAll('tr[data-s]').forEach(tr=>tr.onclick=()=>pick(tr.dataset.s));}
+  if(o.legend!==false){const used=[...new Set(o.nodes.map(n=>n.c))]; const L=document.createElement('div'); L.className='of-legend';
+    L.innerHTML=used.map(c=>`<span style="--k:${OF_COL[c]}">${c}</span>`).join('')+'<small>색은 오렌지3 왼쪽 위젯 카테고리예요.</small>'; S.parentElement.after(L);}
+  if(o.done) chips(o.done.box,o.done.key,o.done.items,true);
+  return {pick};
+}
+
+/* 산점도 탐색기
+   const sp=scatter({svg:'id', x:[0,10,2], y:[0,100,20], xl:'x 이름', yl:'y 이름', edit:true, max:40, onChange(P){…}})
+   onChange 는 set()과 학생이 점을 옮길 때만 불림(line·centers·resid 는 안 부름 → onChange 안에서 sp.line 해도 됨)
+   sp.set([[x,y,색 또는 군집번호],…]) · sp.line(a,b,'색',점선?) · sp.lines([...]) · sp.centers([[x,y],…]) · sp.resid(true) · sp.points() */
+function scatter(o){
+  const S=$(o.svg), W=o.w||460, H=o.h||340, L=52, R=14, T=12, B=46, pw=W-L-R, ph=H-T-B;
+  const [x0,x1,xs]=o.x, [y0,y1,ys]=o.y;
+  const X=v=>L+(v-x0)/(x1-x0)*pw, Y=v=>T+ph-(v-y0)/(y1-y0)*ph, IX=x=>x0+(x-L)/pw*(x1-x0), IY=y=>y0+(T+ph-y)/ph*(y1-y0);
+  const cl=(v,a,b)=>Math.max(a,Math.min(b,v)), dg=o.dec??1, rd=v=>+v.toFixed(dg), lab=v=>String(+v.toFixed(2)).replace('-','−');
+  let P=[], LN=[], C=[], RES=false, drag=-1;
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg');
+  let g=`<rect x="${L}" y="${T}" width="${pw}" height="${ph}" fill="#fbfaf7"/>`;
+  for(let v=x0;v<=x1+1e-9;v+=xs) g+=`<line x1="${X(v)}" y1="${T}" x2="${X(v)}" y2="${T+ph}" stroke="#eceae4"/><text x="${X(v)}" y="${T+ph+16}" text-anchor="middle" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  for(let v=y0;v<=y1+1e-9;v+=ys) g+=`<line x1="${L}" y1="${Y(v)}" x2="${L+pw}" y2="${Y(v)}" stroke="#eceae4"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  g+=`<path d="M${L} ${T}V${T+ph}H${L+pw}" fill="none" stroke="#16202c" stroke-width="2"/><text x="${L+pw/2}" y="${H-6}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c">${o.xl} →</text><text x="14" y="${T+ph/2}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c" transform="rotate(-90 14 ${T+ph/2})">${o.yl} →</text><defs><clipPath id="${o.svg}C"><rect x="${L}" y="${T}" width="${pw}" height="${ph}"/></clipPath></defs><g class="ln" clip-path="url(#${o.svg}C)"></g><g class="pts"></g><g class="cs"></g>`;
+  S.innerHTML=g;
+  const col=p=>typeof p[2]==='number'?PAL[p[2]%PAL.length]:(p[2]||o.color||'#1f9d74');
+  function draw(fin,quiet){
+    let lg='';
+    if(RES&&LN[0]) P.forEach(p=>{const yh=LN[0].a+LN[0].b*p[0]; lg+=`<line x1="${X(p[0])}" y1="${Y(p[1])}" x2="${X(p[0])}" y2="${Y(yh)}" stroke="#d64535" stroke-width="1.5" stroke-dasharray="3 3"/>`;});
+    LN.forEach(l=>lg+=`<line x1="${X(x0)}" y1="${Y(l.a+l.b*x0)}" x2="${X(x1)}" y2="${Y(l.a+l.b*x1)}" stroke="${l.c||'#16202c'}" stroke-width="2.5"${l.dash?' stroke-dasharray="7 5"':''}/>`);
+    S.querySelector('.ln').innerHTML=lg;
+    S.querySelector('.pts').innerHTML=P.map((p,i)=>`<circle data-i="${i}" cx="${X(p[0])}" cy="${Y(p[1])}" r="${o.edit?7:5.5}" fill="${col(p)}" fill-opacity=".82" stroke="#fff" stroke-width="1.5"${o.edit?' class="sp-pt"':''}/>`).join('');
+    S.querySelector('.cs').innerHTML=C.map((c,i)=>`<g transform="translate(${X(c[0])} ${Y(c[1])})"><path d="M-9 -9L9 9M9 -9L-9 9" stroke="#fff" stroke-width="7"/><path d="M-9 -9L9 9M9 -9L-9 9" stroke="${PAL[i%PAL.length]}" stroke-width="4"/></g>`).join('');
+    if(o.onChange&&!quiet) o.onChange(P,fin);
+  }
+  const pt=e=>{const m=S.getScreenCTM(); if(!m) return [0,0]; const q=new DOMPoint(e.clientX,e.clientY).matrixTransform(m.inverse()); return [q.x,q.y];};
+  if(o.edit){
+    S.style.touchAction='none';
+    S.addEventListener('pointerdown',e=>{const c=e.target.closest('circle[data-i]');
+      if(c){drag=+c.dataset.i; S.setPointerCapture(e.pointerId); return;}
+      const [x,y]=pt(e); if(x<L||x>L+pw||y<T||y>T+ph) return;
+      if(P.length>=(o.max||40)) return;
+      P.push([rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1))]); draw(true);});
+    S.addEventListener('pointermove',e=>{if(drag<0)return; const [x,y]=pt(e); P[drag]=[rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1)),P[drag][2]]; draw(false);});
+    const up=()=>{if(drag>=0){drag=-1; draw(true);}}; S.addEventListener('pointerup',up); S.addEventListener('pointercancel',up);
+    S.addEventListener('dblclick',e=>{const c=e.target.closest('circle[data-i]'); if(c){P.splice(+c.dataset.i,1); draw(true);}});
+  }
+  draw(false);
+  return {set(pts){P=pts.map(p=>p.slice()); draw(false); return this;}, points:()=>P.map(p=>p.slice()),
+    line(a,b,c,dash){LN=a==null?[]:[{a,b,c,dash}]; draw(false,1); return this;}, lines(ls){LN=ls; draw(false,1); return this;},
+    centers(cs){C=cs||[]; draw(false,1); return this;}, resid(on){RES=on; draw(false,1); return this;}, X, Y};
+}
+
+/* 막대그래프  bars('svgId',[['이름',값,'색'?],…],{max, unit, dec, w, h, horiz}) */
+function bars(id,data,o={}){
+  const S=$(id), W=o.w||460, n=data.length, horiz=o.horiz, rowH=30, H=o.h||(horiz?n*rowH+20:260);
+  const mx=o.max||Math.max(...data.map(d=>d[1]))*1.1||1, dec=o.dec??0, u=o.unit||'';
+  let g='';
+  if(horiz){const L=o.left||120, pw=W-L-60;
+    data.forEach(([k,v,c],i)=>{const y=10+i*rowH; g+=`<text x="${L-8}" y="${y+18}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><rect x="${L}" y="${y+4}" width="${Math.max(0,v/mx*pw)}" height="${rowH-10}" rx="5" fill="${c||PAL[0]}"/><text x="${L+v/mx*pw+6}" y="${y+18}" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text>`;});
+  }else{const L=36, B=40, T=18, ph=H-B-T, bw=(W-L-10)/n;
+    g+=`<path d="M${L} ${T}V${T+ph}H${W-6}" fill="none" stroke="#16202c" stroke-width="1.5"/>`;
+    data.forEach(([k,v,c],i)=>{const x=L+i*bw+bw*.15, h=Math.max(0,v/mx*ph); g+=`<rect x="${x}" y="${T+ph-h}" width="${bw*.7}" height="${h}" rx="4" fill="${c||PAL[i%PAL.length]}"/><text x="${x+bw*.35}" y="${T+ph-h-5}" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text><text x="${x+bw*.35}" y="${T+ph+16}" text-anchor="middle" font-size="12" fill="#16202c">${esc(k)}</text>`;});
+  }
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 상자 그림  boxes('svgId',[['이름',[값…],'색'?],…],{min,max,step,unit,w}) — 가로 상자, 1.5×IQR 밖 값은 점 */
+function boxes(id,groups,o={}){
+  const S=$(id), W=o.w||460, rowH=44, L=o.left||90, R=16, H=groups.length*rowH+34, pw=W-L-R;
+  const all=groups.flatMap(g=>g[1]), lo=o.min??Math.min(...all), hi=o.max??Math.max(...all), X=v=>L+(v-lo)/(hi-lo)*pw;
+  let g=''; const st=o.step||(hi-lo)/5;
+  for(let v=lo;v<=hi+1e-9;v+=st) g+=`<line x1="${X(v)}" y1="6" x2="${X(v)}" y2="${H-26}" stroke="#eceae4"/><text x="${X(v)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#5b6776">${+v.toFixed(2)}${o.unit||''}</text>`;
+  groups.forEach(([k,a,c],i)=>{const y=8+i*rowH+rowH/2-4, q1=stat.q(a,.25), q2=stat.q(a,.5), q3=stat.q(a,.75), iq=q3-q1, fl=a.filter(v=>v>=q1-1.5*iq), fh=a.filter(v=>v<=q3+1.5*iq), wl=Math.min(...fl), wh=Math.max(...fh), k2=c||PAL[i%PAL.length];
+    g+=`<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><line x1="${X(wl)}" y1="${y}" x2="${X(wh)}" y2="${y}" stroke="${k2}" stroke-width="2"/><rect x="${X(q1)}" y="${y-12}" width="${Math.max(1,X(q3)-X(q1))}" height="24" rx="4" fill="${k2}" fill-opacity=".25" stroke="${k2}" stroke-width="2"/><line x1="${X(q2)}" y1="${y-12}" x2="${X(q2)}" y2="${y+12}" stroke="${k2}" stroke-width="3"/>`+a.filter(v=>v<wl||v>wh).map(v=>`<circle cx="${X(v)}" cy="${y}" r="4" fill="#fff" stroke="#d64535" stroke-width="2"/>`).join('');});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 작은 표  miniTable('boxId',{cols:['이름',…], rows:[[…],…], edit:[열번호…], pick:true, onChange(rows), onPick(i)}) — 칸을 고치거나 줄을 고를 수 있음 */
+function miniTable(box,o){
+  const B=$(box); B.classList.add('mt-wrap'); let rows=o.rows.map(r=>r.slice()), sel=new Set();
+  function draw(){
+    B.innerHTML=`<table class="tbl mt"><tr>${o.pick?'<th></th>':''}${o.cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map((r,i)=>`<tr data-i="${i}" class="${sel.has(i)?'on':''}">${o.pick?`<td><input type="checkbox" aria-label="${i+1}번째 줄 고르기" ${sel.has(i)?'checked':''}></td>`:''}${r.map((v,j)=>(o.edit||[]).includes(j)?`<td><input class="mt-in" data-j="${j}" value="${esc(v)}" inputmode="decimal" aria-label="${esc(o.cols[j])}"></td>`:`<td>${v}</td>`).join('')}</tr>`).join('')}</table>`;
+    B.querySelectorAll('.mt-in').forEach(inp=>inp.oninput=()=>{const i=+inp.closest('tr').dataset.i, j=+inp.dataset.j, v=inp.value.trim(); rows[i][j]=v===''||isNaN(+v)?v:+v; o.onChange&&o.onChange(rows);});
+    B.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{const i=+cb.closest('tr').dataset.i; cb.checked?sel.add(i):sel.delete(i); cb.closest('tr').classList.toggle('on',cb.checked); o.onPick&&o.onPick([...sel].sort((a,b)=>a-b));});
+  }
+  draw();
+  return {rows:()=>rows.map(r=>r.slice()), set(r){rows=r.map(x=>x.slice()); sel.clear(); draw();}, picked:()=>[...sel]};
+}
+/* u3-project 전용 (pj-) — 공용 부품 pyrun · sorter · bars · chips 사용 */
+const PJ_CATS=[{n:'1 문제 탐색 및 정의',k:'#d64535'},{n:'2 데이터 수집',k:'#e0702b'},{n:'3 데이터 처리',k:'#c98a0a'},{n:'4 데이터 시각화',k:'#1f9d74'},{n:'5 분석 결과 해석',k:'#2f6fd0'}];
+
+/* 01 단계에 맞는 활동 찾기 (분류) */
+sorter('pjStepGame',{
+  cats:PJ_CATS,
+  items:[
+    {t:'우리나라 주민 등록 인구를 분석해 보고 인구 변화 현황을 알아보기로 정한다',short:'인구 변화 현황 알아보기로 정함',c:0,ic:'🔍',w:'무엇을 분석할지 정하는 일은 문제 탐색 및 정의 단계예요.'},
+    {t:'전체 인구수, 출생아 수, 1인 가구 수를 분석하면 인구 추이와 가구 형태 변화를 예측할 수 있다고 정리한다',short:'분석 내용 정리',c:0,ic:'🧾',w:'분석으로 알아낼 수 있는 것을 정리하는 일도 문제 탐색 및 정의 단계예요.'},
+    {t:'국가통계포털에서 주민등록인구와 출생아수 데이터를 CSV 파일로 내려받는다',short:'통계 데이터 내려받기',c:1,ic:'📥',w:'필요한 데이터를 모으는 일은 데이터 수집 단계예요.'},
+    {t:'인구 관련 정책이나 기사를 스크랩해 메모장에 복사해 둔다',short:'기사 스크랩·텍스트 준비',c:1,ic:'📰',w:'텍스트 데이터를 모으는 일도 데이터 수집 단계예요.'},
+    {t:'1행은 삭제하고 2행의 칼럼명을 「연도, 주민 등록 인구수」로 고친다',short:'칼럼명 고치기',c:2,ic:'✏️',w:'내려받은 데이터를 쓸 수 있게 고치는 일은 데이터 처리 단계예요.'},
+    {t:'주민 등록 인구수와 출생아 수를 연도 기준으로 한 개의 파일로 합친다',short:'연도 기준으로 합치기',c:2,ic:'🔗',w:'두 데이터를 합치는 일도 데이터 처리 단계예요.'},
+    {t:'plt.plot으로 주민 등록 인구수 변화를 선그래프로 그린다',short:'선그래프 그리기',c:3,ic:'📈',w:'그래프로 나타내는 일은 데이터 시각화 단계예요.'},
+    {t:'텍스트 데이터를 워드 클라우드로 나타내 핵심 키워드를 찾는다',short:'워드 클라우드로 나타내기',c:3,ic:'☁️',w:'텍스트 데이터를 그림으로 나타내는 일도 데이터 시각화 단계예요.'},
+    {t:'그래프를 근거 데이터와 함께 살펴 인구 변화 현황을 해석한다',short:'근거와 함께 해석',c:4,ic:'🧭',w:'결과를 읽고 의미를 정리하는 일은 분석 결과 해석 단계예요.'},
+    {t:'해석한 내용으로 인구 정책에 활용할 인포그래픽 기획서를 쓴다',short:'인포그래픽 기획서',c:4,ic:'🖼️',w:'해석한 내용을 바탕으로 결과를 활용하는 계획도 분석 결과 해석 단계에서 해요.'},
+  ],
+  end:'<b>정리</b> 정하기(1) → 모으기(2) → 고치기(3) → 그리기(4) → 읽기(5)의 흐름으로 기억하면 좋아요.'
+});
+
+/* 04 pyrun ① 연도로 짝짓기 · 천 단위 기호 */
+pyrun('pjRun1',{rows:16,code:[
+"# 교과서는 pandas의 pd.merge로, 여기서는 기본 파이썬(딕셔너리)으로 같은 일을 해요.",
+"data1 = {1997: 46684069, 1998: 46991171, 1999: 47335678,",
+"         2000: 47732558, 2001: 48021543, 2002: 48229948}   # 주민 등록 인구수",
+"data2 = {1997: 675394, 1998: 641594, 1999: 620668,",
+"         2000: 640089, 2001: 559934, 2002: 496911}         # 출생아 수",
+"",
+"merged = []",
+"for year in data1:                         # 연도를 기준으로 짝짓기(merge)",
+"    if year in data2:",
+"        merged.append({'연도': year, '주민 등록 인구수': data1[year], '출생아 수': data2[year]})",
+"",
+"for row in merged:",
+"    print(row['연도'], f\"{row['주민 등록 인구수']:,}\", f\"{row['출생아 수']:,}\")   # 천 단위 기호(,)",
+"print(len(merged), '개 연도를 짝지었어요')"
+].join('\n')});
+
+/* 05 주민 등록 인구수·출생아 수 (파일 값 그대로: 주민등록인구수_…csv · 출생아수_…csv) */
+const PJ_YEARS=[1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022];
+const PJ_POP=[46684069,46991171,47335678,47732558,48021543,48229948,48386823,48583805,48782274,48991779,49268928,49540367,49773145,50515666,50734284,50948272,51141463,51327916,51529338,51696216,51778544,51826059,51849861,51829023,51638809,51439038];
+const PJ_BIRTH=[675394,641594,620668,640089,559934,496911,495036,476958,438707,451759,496822,465892,444849,470171,471265,484550,436455,435435,438420,406243,357771,326822,302676,272337,260562,249186];
+/* 1인 가구 [연도, 비율(%), 1인 가구(가구), 일반 가구(가구)] — 1인가구비율_…csv 값 그대로 */
+const PJ_HH=[[2000,15.5,2224433,14311807],[2005,20.0,3170675,15887128],[2010,23.9,4142165,17339422],[2015,27.2,5203440,19111030],[2016,27.9,5397615,19367696],[2017,28.6,5618677,19673875],[2018,29.3,5848594,19979188],[2019,30.2,6147516,20343188],[2020,31.7,6643354,20926710],[2021,33.4,7165788,21448463],[2022,34.5,7502350,21773507]];
+const PJ_F=n=>Number(n).toLocaleString('en-US');
+
+/* 05 선그래프 + 연도 읽기 */
+function pjLineDraw(yr){
+  const W=460,H=270,L=70,R=14,T=14,B=34, y0=46e6, y1=52e6, X=y=>L+(y-1997)/(2022-1997)*(W-L-R), Y=v=>T+(H-T-B)*(1-(v-y0)/(y1-y0));
+  let g='';
+  [46e6,48e6,50e6,52e6].forEach(v=>{g+='<line x1="'+L+'" y1="'+Y(v)+'" x2="'+(W-R)+'" y2="'+Y(v)+'" stroke="#e6e3dc"/><text x="'+(L-6)+'" y="'+(Y(v)+4)+'" class="ay">'+PJ_F(v)+'</text>';});
+  [1997,2000,2005,2010,2015,2020,2022].forEach(y=>{g+='<text x="'+X(y)+'" y="'+(H-14)+'" class="ax">'+y+'</text>';});
+  g+='<path d="M'+L+' '+T+'V'+(H-B)+'H'+(W-R)+'" fill="none" stroke="#16202c" stroke-width="1.4"/>';
+  g+='<polyline fill="none" stroke="#2f6fd0" stroke-width="2.5" points="'+PJ_YEARS.map((y,i)=>X(y).toFixed(1)+','+Y(PJ_POP[i]).toFixed(1)).join(' ')+'"/>';
+  const i=yr-1997;
+  g+='<line x1="'+X(yr)+'" y1="'+T+'" x2="'+X(yr)+'" y2="'+(H-B)+'" stroke="#d64535" stroke-dasharray="4 3"/><circle cx="'+X(yr)+'" cy="'+Y(PJ_POP[i])+'" r="5" fill="#d64535"/>';
+  g+='<text x="'+(W/2+L/2)+'" y="'+(H-1)+'" class="ax">연도</text>';
+  $('pjLine').setAttribute('viewBox','0 0 '+W+' '+H); $('pjLine').innerHTML=g;
+  const d=i>0?PJ_POP[i]-PJ_POP[i-1]:null;
+  $('pjReadout').innerHTML='<b>'+yr+'년</b> · 주민 등록 인구수 <b>'+PJ_F(PJ_POP[i])+'</b>명'+(d==null?'':' · 전년보다 <b>'+PJ_F(Math.abs(d))+'</b>명 '+(d>=0?'늘었어요':'줄었어요'))+' · 출생아 수 <b>'+PJ_F(PJ_BIRTH[i])+'</b>명';
+}
+$('pjYear').oninput=()=>{const y=+$('pjYear').value; pjLineDraw(y); pjBarDraw();};
+
+/* 05 막대그래프 (겹쳐 그리기 / 출생아 수만) */
+let pjMode=0;
+function pjBarDraw(){
+  const W=460,H=270,L=70,R=10,T=14,B=34, mx=pjMode===0?52e6:7e5, n=PJ_YEARS.length, bw=(W-L-R)/n, yr=+$('pjYear').value;
+  const Y=v=>T+(H-T-B)*(1-v/mx); let g='';
+  const ticks=pjMode===0?[0,1e7,2e7,3e7,4e7,5e7]:[0,1e5,2e5,3e5,4e5,5e5,6e5,7e5];
+  ticks.forEach(v=>{g+='<line x1="'+L+'" y1="'+Y(v)+'" x2="'+(W-R)+'" y2="'+Y(v)+'" stroke="#e6e3dc"/><text x="'+(L-6)+'" y="'+(Y(v)+4)+'" class="ay">'+PJ_F(v)+'</text>';});
+  PJ_YEARS.forEach((y,i)=>{
+    const x=L+i*bw+bw*.12, w=bw*.76;
+    if(pjMode===0) g+='<rect x="'+x+'" y="'+Y(PJ_POP[i])+'" width="'+w+'" height="'+(Y(0)-Y(PJ_POP[i]))+'" fill="#2f6fd0"/>';
+    g+='<rect x="'+x+'" y="'+Y(PJ_BIRTH[i])+'" width="'+w+'" height="'+Math.max(1,Y(0)-Y(PJ_BIRTH[i]))+'" fill="#e0702b"/>';
+    if(y===yr) g+='<rect x="'+(x-1.5)+'" y="'+T+'" width="'+(w+3)+'" height="'+(H-B-T)+'" fill="none" stroke="#d64535" stroke-width="2"/>';
+    if([1997,2000,2005,2010,2015,2020,2022].includes(y)) g+='<text x="'+(x+w/2)+'" y="'+(H-14)+'" class="ax">'+y+'</text>';
+  });
+  g+='<path d="M'+L+' '+T+'V'+(H-B)+'H'+(W-R)+'" fill="none" stroke="#16202c" stroke-width="1.4"/><text x="'+(W/2+L/2)+'" y="'+(H-1)+'" class="ax">연도</text>';
+  $('pjBar').setAttribute('viewBox','0 0 '+W+' '+H); $('pjBar').innerHTML=g;
+  $('pjBarLeg').innerHTML=(pjMode===0?'<span><i style="background:#2f6fd0"></i>주민 등록 인구수</span>':'')+'<span><i style="background:#e0702b"></i>출생아 수</span><span class="muted">빨간 테두리는 위에서 고른 연도(<b>'+yr+'년</b>)예요.</span>';
+}
+(function(){
+  const B=$('pjBarMode'); const L=['인구수와 출생아 수 함께','출생아 수만'];
+  B.innerHTML=L.map((t,i)=>'<button type="button" data-i="'+i+'">'+t+'</button>').join('');
+  const bs=[...B.querySelectorAll('button')];
+  const set=i=>{pjMode=i; bs.forEach((b,j)=>b.classList.toggle('on',j===i)); pjBarDraw();};
+  bs.forEach((b,i)=>b.onclick=()=>set(i)); set(0);
+})();
+pjLineDraw(+$('pjYear').value);
+
+/* 06 pyrun ② 1인 가구 비율 */
+pyrun('pjRun2',{rows:11,code:[
+"# 1인 가구 비율(%) = 1인 가구 ÷ 일반 가구 × 100  (2000~2022년 가운데 일부)",
+"households = {2000: (2224433, 14311807), 2010: (4142165, 17339422),",
+"              2020: (6643354, 20926710), 2022: (7502350, 21773507)}",
+"csv_rate = {2000: 15.5, 2010: 23.9, 2020: 31.7, 2022: 34.5}   # 내려받은 파일에 적힌 비율",
+"",
+"for year, (one, total) in households.items():",
+"    rate = one / total * 100",
+"    same = round(rate, 1) == csv_rate[year]",
+"    print(year, f'{one:,} ÷ {total:,} × 100 =', round(rate, 1), '%', '(파일과 같아요)' if same else '(달라요)')"
+].join('\n')});
+bars('pjHH',PJ_HH.map(r=>[String(r[0]),r[1],'#2f9a5a']),{dec:1,unit:'%',max:40,w:460,h:250});
+
+/* 08 활동을 5단계에 맞게 분류 */
+sorter('pjUnitSort',{
+  cats:PJ_CATS,
+  items:[
+    {t:'5연패에 빠진 축구팀의 첫 승리를 위해 선발팀을 구성해야 한다고 정한다',short:'선발팀 구성 문제 정하기',c:0,ic:'⚽',w:'풀어야 할 문제를 정하는 일은 문제 탐색 및 정의 단계예요.'},
+    {t:'캐글에서 players_21.csv 파일을 내려받는다',short:'선수 데이터 내려받기',c:1,ic:'📥',w:'필요한 데이터를 모으는 일은 데이터 수집 단계예요.'},
+    {t:'선수들의 사생활을 침해하거나 민감한 내용이 들어 있지 않은지 살핀다',short:'민감한 내용 살피기',c:1,ic:'🔐',w:'교과서는 수집할 때 사생활 침해나 민감한 내용이 없는지 살피라고 해요.'},
+    {t:'엑셀에서 파일 원본을 UTF-8로 골라 글자가 깨지지 않게 연다',short:'UTF-8로 열기',c:2,ic:'🔤',w:'파일을 열고 확인하는 일은 데이터 처리 단계예요.'},
+    {t:'오렌지의 File 위젯으로 파일을 열고 Info를 확인한다',short:'File 위젯으로 열기',c:2,ic:'🍊',w:'데이터가 어떻게 생겼는지 살피는 일은 데이터 처리 단계예요.'},
+    {t:'Select Rows로 뽑은 선수들을 Bar Plot으로 나타낸다',short:'Select Rows → Bar Plot',c:3,ic:'📊',w:'그래프로 나타내는 일은 데이터 시각화 단계예요.'},
+    {t:'주민 등록 인구수와 출생아 수를 plt.bar로 막대그래프에 그린다',short:'인구·출생아 막대그래프',c:3,ic:'📈',w:'그래프로 나타내는 일은 데이터 시각화 단계예요.'},
+    {t:'분석 결과를 선수를 고르는 하나의 기준으로만 삼지 않고 종합해 활용한다',short:'결과를 종합해 활용',c:4,ic:'🧭',w:'결과의 의미를 해석하고 활용하는 일은 분석 결과 해석 단계예요.'},
+    {t:'근거 데이터와 함께 우리나라 인구 변화 현황을 해석한다',short:'인구 변화 해석',c:4,ic:'🖼️',w:'결과의 의미를 해석하는 일은 분석 결과 해석 단계예요.'},
+  ],
+  end:'<b>정리</b> 문제 정하기 → 데이터 모으기 → 고치기 → 그리기 → 읽기. 스포츠도 인구도 같은 흐름이었어요.'
+});
+
+/* 08 도구 ↔ 하는 일 짝 맞추기 */
+const PJM=[
+  ['File 위젯','오렌지에서 데이터 파일을 불러와요'],
+  ['Data Table 위젯','데이터를 표 형태로 확인해요'],
+  ['Feature Statistics 위젯','속성별 통계 정보와 도수 분포를 한꺼번에 봐요'],
+  ['Select Rows 위젯','조건에 맞는 행(선수)만 뽑아요'],
+  ['Bar Plot 위젯','뽑아낸 데이터를 막대그래프로 나타내요'],
+  ['pd.merge','연도 같은 열을 기준으로 두 데이터를 한 개로 합쳐요'],
+];
+const PJM_COL=['#d64535','#e0702b','#c98a0a','#1f9d74','#2f6fd0','#9b4fc4'];
+(function(){
+  const L=$('pjmL'), R=$('pjmR'), msg=$('pjmMsg'); let selL=-1, done=0;
+  const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+  function draw(){
+    selL=-1; done=0; msg.textContent='';
+    const li=shuf(PJM.map((_,i)=>i)), ri=shuf(PJM.map((_,i)=>i));
+    L.innerHTML=li.map(i=>'<button type="button" data-i="'+i+'">'+PJM[i][0]+'</button>').join('');
+    R.innerHTML=ri.map(i=>'<button type="button" data-i="'+i+'">'+PJM[i][1]+'</button>').join('');
+    const lb=[...L.children], rb=[...R.children];
+    lb.forEach(b=>b.onclick=()=>{ if(b.classList.contains('ok')) return; lb.forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); selL=+b.dataset.i; msg.textContent='이 도구가 하는 일을 오른쪽에서 골라요.'; });
+    rb.forEach(b=>b.onclick=()=>{
+      if(b.classList.contains('ok')) return;
+      if(selL<0){ msg.textContent='먼저 왼쪽 도구를 눌러요.'; return; }
+      if(+b.dataset.i===selL){
+        const lbtn=lb.find(x=>+x.dataset.i===selL);
+        [lbtn,b].forEach(x=>{x.classList.remove('sel'); x.classList.add('ok'); x.style.setProperty('--c',PJM_COL[selL]);});
+        done++; selL=-1; msg.textContent=done===PJM.length?'모두 짝을 찾았어요! 🎉':'맞아요! ('+done+' / '+PJM.length+')';
+      } else { b.classList.add('no'); setTimeout(()=>b.classList.remove('no'),500); msg.textContent='다시 생각해 봐요. 도구를 다시 눌러 골라도 돼요.'; }
+    });
+  }
+  $('pjmReset').onclick=draw; draw();
+})();
+
+/* 08 스스로 확인하기 O/X · 내 생각 (정답 표시 없음) */
+chips('ox1','ox1Key',['O','X'],false);
+chips('ox2','ox2Key',['O','X'],false);
+chips('ox3','ox3Key',['O','X'],false);
+chips('ox4','ox4Key',['O','X'],false);
+chips('ox5','ox5Key',['O','X'],false);
+
+/* 08 스스로 평가하기 · 방사형 그래프 */
+const PJ_RD=['창의적 사고','협력적 소통','자기 관리','지식 정보 처리','공동체적 역량'];
+chips('rd0','pjRd0',['1','2','3','4','5'],false);
+chips('rd1','pjRd1',['1','2','3','4','5'],false);
+chips('rd2','pjRd2',['1','2','3','4','5'],false);
+chips('rd3','pjRd3',['1','2','3','4','5'],false);
+chips('rd4','pjRd4',['1','2','3','4','5'],false);
+function pjRadar(){
+  const cx=180, cy=150, R=90, ang=i=>-Math.PI/2+i*2*Math.PI/5, P=(i,r)=>[cx+Math.cos(ang(i))*r, cy+Math.sin(ang(i))*r];
+  let g='';
+  for(let k=1;k<=5;k++) g+='<polygon fill="none" stroke="#d9d6cd" points="'+PJ_RD.map((_,i)=>P(i,R*k/5).join(',')).join(' ')+'"/>';
+  PJ_RD.forEach((n,i)=>{const e=P(i,R), t=P(i,R+18); g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="#d9d6cd"/><text x="'+t[0]+'" y="'+(t[1]+4)+'" style="font-size:12px;font-weight:700">'+n+'</text>';});
+  const v=PJ_RD.map((_,i)=>Math.max(0,Math.min(5,parseInt(MEMO['pjRd'+i],10)||0)));
+  if(v.some(x=>x>0)){
+    g+='<polygon fill="rgba(47,154,90,.28)" stroke="#2f9a5a" stroke-width="2" points="'+v.map((x,i)=>P(i,R*x/5).join(',')).join(' ')+'"/>';
+    v.forEach((x,i)=>{const p=P(i,R*x/5); g+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="#2f9a5a"/>';});
+  }
+  $('pjRadar').setAttribute('viewBox','0 0 360 300'); $('pjRadar').innerHTML=g;
+}
+[0,1,2,3,4].forEach(i=>$('rd'+i).addEventListener('memo',pjRadar));
+pjRadar();
+
+/* 09 마무리 */
+const MEMOLIST=[['planMemo','나의 계획 · 인구 변화 예상'],['pjCon1','고려할 점 · 1단계'],['pjCon2','고려할 점 · 2단계'],['pjCon3','고려할 점 · 3단계'],['pjCon4','고려할 점 · 4단계'],['pjCon5','고려할 점 · 5단계'],['pjTopic','우리 모둠의 세부 주제'],['pjStat','통계 데이터 수집 정리'],['pjText','텍스트 데이터 수집 정리'],['pjExtra','추가 데이터 수집 정리'],['pjProc','데이터 처리하며 알게 된 점'],['pjLineRead','선그래프에서 읽은 것'],['pjBarRead','막대그래프에서 알게 된 점'],['pjVizCode','시각화 · 그래프 코드와 데이터 코드'],['pjVizResult','시각화 결과로 알게 된 것'],['pjKeyword','워드 클라우드 핵심 키워드'],['pjEvid','근거 데이터'],['pjInterp','결과 해석'],['pjInfoTopic','기획서 · 분석 주제'],['pjInfoGoal','기획서 · 제작 목적'],['pjInfoWho','기획서 · 공개 대상'],['pjInfoEffect','기획서 · 기대 효과'],['pjInfoData','기획서 · 인포그래픽 데이터'],['pjFld','핵심 개념 · 분석 주제와 융합 분야'],['pjRole','핵심 개념 · 역할'],['pjCap','핵심 개념 · 필요 역량'],['pjApp1','응용 사례 1'],['pjApp2','응용 사례 2'],['pjApp3','응용 사례 3'],['pjJob1','진로 탐색 · 인문·사회'],['pjJob2','진로 탐색 · 과학·공학'],['pjJob3','진로 탐색 · 예체능 외'],['pjSum1','정리 · 문제 탐색 및 정의'],['pjSum2','정리 · 데이터 수집'],['pjSum3','정리 · 데이터 처리'],['pjSum4','정리 · 데이터 시각화'],['pjSum5','정리 · 분석 결과 해석'],['pjAdv1','장점 · 의료 관련 데이터 분석'],['pjAdv2d','기온·기후 관련 수집 데이터'],['pjAdv2','장점 · 기온·기후 관련 데이터 분석'],['pjAdv3f','내가 고른 분야'],['pjAdv3d','내가 고른 분야 · 수집 데이터'],['pjAdv3','내가 고른 분야 · 장점'],['ox1Key','O/X ❶'],['ox2Key','O/X ❷'],['ox3Key','O/X ❸'],['ox4Key','O/X ❹'],['ox5Key','O/X ❺'],['pjRd0','평가 · 창의적 사고'],['pjRd1','평가 · 협력적 소통'],['pjRd2','평가 · 자기 관리'],['pjRd3','평가 · 지식 정보 처리'],['pjRd4','평가 · 공동체적 역량'],['keyQ','오늘의 질문에 대한 내 답']];
+onShow[9]=()=>memoSummary('msum',MEMOLIST);
+
+/* 진도 보내기 ②: 화면 이동·퀴즈·메모·창 이탈을 선생님 시트로 */
+(function(){
+  if(WHO.off) return;
+  const box=document.createElement('div');
+  if(WHO.preview){
+    box.className='tr-badge';
+    box.innerHTML=WHO.teacher?'교사 모드 · 전송 안 함 <button type="button">끝내기</button>':'미리보기 · 진도 전송 안 함';
+    (document.querySelector('.top')||document.body).appendChild(box);
+    const b=box.querySelector('button'); if(b) b.onclick=()=>{ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); };
+    return;
+  }
+
+  if(WHO.need){
+    let last={}; try{last=JSON.parse(localStorage.getItem('aiw-last')||'{}')||{};}catch(e){}
+    box.className='tr-gate';
+    box.innerHTML=`<form class="tr-card" autocomplete="off">
+      <h2>수업 시작 전에</h2>
+      <p class="tr-sub">학번과 이름을 써 주세요.</p>
+      <label class="tr-f"><span>학번</span><input name="no" inputmode="numeric" maxlength="5" placeholder="예: 20101" value="${esc(last.no||'')}"></label>
+      <label class="tr-f"><span>이름</span><input name="name" maxlength="10" placeholder="이름" value="${esc(last.name||'')}"></label>
+      <div class="tr-cls" hidden>${[].map(c=>`<label><input type="radio" name="cls" value="${c}"><span>${c}</span></label>`).join('')}</div>
+      <div class="tr-err"></div>
+      <button class="btn" type="submit">시작하기 →</button>
+      <p class="tr-note">어느 화면까지 왔는지, 퀴즈와 메모가 선생님께 전달돼요.<br>다른 친구 이름으로 들어가지 마세요.</p>
+    </form>`;
+    document.body.appendChild(box);
+    const f=box.querySelector('form'), err=box.querySelector('.tr-err'), go2=f.querySelector('button[type=submit]'), clsBox=box.querySelector('.tr-cls');
+    f.no.addEventListener('input',()=>{f.no.value=f.no.value.replace(/\D/g,'').slice(0,5);});
+    const TEACH=t=>{let h=2166136261;for(const c of t){h^=c.codePointAt(0);h=Math.imul(h,16777619)>>>0;}return h.toString(36);}, TEACH_H='853zuh';
+    const enter=w=>{ try{sessionStorage.setItem('aiw-who',JSON.stringify(w)); if(!w.teacher) localStorage.setItem('aiw-last',JSON.stringify({no:w.no,name:w.name}));}catch(e){} location.reload(); };
+    const busy=on=>{ go2.disabled=on; go2.textContent=on?'명단에서 확인하는 중…':'시작하기 →'; };
+    f.onsubmit=async e=>{
+      e.preventDefault(); err.textContent='';
+      const no=f.no.value.trim(), name=f.name.value.replace(/\s+/g,'').trim();
+      if(TEACH(no+'|'+name)===TEACH_H) return enter({teacher:true});
+      if(!/^\d{5}$/.test(no)){err.textContent='학번 다섯 자리를 숫자로 써 주세요.';f.no.focus();return;}
+      if(name.length<2){err.textContent='이름을 써 주세요.';f.name.focus();return;}
+      /* 명단에서 확인이 안 될 때만 반을 직접 고른다 */
+      if(!clsBox.hidden){
+        const cls=(f.querySelector('input[name=cls]:checked')||{}).value;
+        if(!cls){err.textContent='반을 골라 주세요.';return;}
+        return enter({cls,no,name});
+      }
+      busy(true);
+      try{
+        const r=await fetch(PEP,{method:'POST',body:JSON.stringify({op:'who',no,name})});
+        const d=await r.json();
+        if(d.ok) return enter({cls:d.cls,no,name});
+        busy(false);
+        if(d.err==='notfound'){ err.textContent='명단에서 찾지 못했어요. 학번과 이름을 다시 확인해 주세요. 계속 안 되면 선생님께 말해 주세요.'; return; }
+        throw new Error(d.err);
+      }catch(x){
+        busy(false);
+        if(clsBox.hidden){ clsBox.hidden=false; err.textContent='명단을 확인하지 못했어요. 내 반을 골라 주세요.'; }
+      }
+    };
+    setTimeout(()=>{ (f.no.value?(f.name.value?go2:f.name):f.no).focus(); },50);
+    return;
+  }
+
+  /* 이름 표시 + 바꾸기 */
+  box.className='tr-who';
+  box.innerHTML=`<span>${esc(WHO.cls)} ${esc(WHO.no)} <b>${esc(WHO.name)}</b></span><button type="button" title="다른 학생으로 바꾸기">바꾸기</button>`;
+  (document.querySelector('.top')||document.body).appendChild(box);
+  box.querySelector('button').onclick=()=>{ if(confirm('다른 학생으로 바꿀까요? (지금까지 한 것은 이 학번으로 저장돼 있어요)')){ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); } };
+
+  const SK=QK+'-seen', AK=QK+'-away';
+  const seen=new Set(store.get(SK,[]));
+  const A=store.get(AK,{n:0,s:0});
+  let awayAt=null, lastAct=Date.now(), sent=0, lastSent=0, tmr=null, dirty=false;
+
+  function snap(){
+    let ok=0, done=0;
+    for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{const v=QS[k+'-'+i]; if(v!=null){done++; if(v===it.a) ok++;}});
+    const ML=(typeof MEMOLIST!=='undefined')?MEMOLIST:[];
+    return {op:'put',lesson:LESSON,title:document.title,cls:WHO.cls,no:WHO.no,name:WHO.name,
+      scr:cur,names:pages.map((p,i)=>i?p.dataset.name:'시작'),seen:[...seen].sort((a,b)=>a-b),
+      qOk:ok,qDone:done,qTot:TOTALQ,
+      memo:ML.map(([k,l])=>[l,String(MEMO[k]==null?'':MEMO[k]).slice(0,1500)]),
+      away:awayAt?1:0,leaves:A.n,awaySec:Math.round(A.s+(awayAt?(Date.now()-awayAt)/1000:0)),idle:Math.round((Date.now()-lastAct)/1000),n:++sent};
+  }
+  function flush(){
+    if(!dirty) return; dirty=false; lastSent=Date.now();
+    const body=JSON.stringify(snap());
+    try{ if(navigator.sendBeacon && navigator.sendBeacon(PEP,new Blob([body],{type:'text/plain'}))) return; }catch(e){}
+    try{ fetch(PEP,{method:'POST',mode:'no-cors',body,keepalive:true}).catch(()=>{}); }catch(e){}
+  }
+  /* 너무 자주 보내지 않기: 보통 15초, 창 이탈·복귀는 3초 간격 */
+  function send(urgent){
+    dirty=true; clearTimeout(tmr);
+    const gap=urgent?3000:15000, wait=Math.max(0,gap-(Date.now()-lastSent));
+    tmr=setTimeout(flush,wait);
+  }
+
+  const _go=go; go=function(i){ _go(i); if(!seen.has(cur)){seen.add(cur); store.set(SK,[...seen]);} send(true); };
+  const _upd=updScore; updScore=function(){ _upd(); send(); };
+  const _set=store.set; store.set=function(k,v){ _set(k,v); if(k===MK) send(); };
+
+  function leave(){ if(awayAt) return; awayAt=Date.now(); A.n++; _set(AK,A); send(true); }
+  function back(){ if(!awayAt) return; A.s+=(Date.now()-awayAt)/1000; awayAt=null; _set(AK,A); send(true); }
+  document.addEventListener('visibilitychange',()=>{ document.hidden?leave():(document.hasFocus()&&back()); });
+  window.addEventListener('blur',()=>setTimeout(()=>{ if(!document.hasFocus()) leave(); },300));
+  window.addEventListener('focus',back);
+  window.addEventListener('pagehide',()=>{ dirty=true; flush(); });
+  ['pointerdown','keydown','input','wheel','touchstart'].forEach(t=>document.addEventListener(t,()=>{lastAct=Date.now();},{capture:true,passive:true}));
+  /* 화면에 머물러 있으면 2분마다 한 번 신호 */
+  setInterval(()=>{ if(!document.hidden) send(); },120000);
+})();
+
+/* 시작 */
+bindMemos();
+updScore();
+const h0=parseInt((location.hash.match(/^#p(\d+)$/)||[])[1],10);
+go(isNaN(h0)?0:h0);
+</script>
+<script>
+/* page-guard: 복사·잘라내기·드래그·오른쪽 클릭 막기 (복사 버튼은 그대로 동작) */
+(function(){
+  var t=null, tm=null, MSG='수업 자료는 복사할 수 없어요. 내 말로 정리해 보세요.';
+  function say(){ if(!t){t=document.createElement('div');t.className='pg-toast';document.body.appendChild(t);} t.textContent=MSG; t.classList.add('on'); clearTimeout(tm); tm=setTimeout(function(){t.classList.remove('on');},1800); }
+  function inField(e){ return e.target && e.target.closest && e.target.closest('input,textarea,select,[contenteditable]'); }
+  ['copy','cut'].forEach(function(type){ document.addEventListener(type,function(e){ e.preventDefault(); say(); },true); });
+  document.addEventListener('contextmenu',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('selectstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('dragstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('keydown',function(e){ var k=(e.key||'').toLowerCase(); if((e.ctrlKey||e.metaKey)&&(k==='c'||k==='x')){ e.preventDefault(); say(); } if((e.ctrlKey||e.metaKey)&&k==='a'&&!inField(e)) e.preventDefault(); },true);
+})();
+</script>
+</body>
+</html>

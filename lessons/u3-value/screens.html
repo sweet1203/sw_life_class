@@ -1,0 +1,436 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#2f9a5a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅲ. 현상을 분석하는 소프트웨어 · 비정형 데이터 분석과 데이터의 사회적 가치</span>
+      <h1>글에서 중요한 말을<br>찾을 수 있을까?</h1>
+      <div class="story"><b>비정형 데이터로 사회 현상을 분석할 수 있을까? (100쪽)</b><br>비정형 데이터는 구조화되지 않은 형태로 <b>텍스트, 이미지, 동영상</b> 같은 데이터로 이루어져 있어요. 이번에는 기후 변화와 관련된 <b>연설문(텍스트)</b>에서 자주 언급되는 단어를 찾아 <b>워드 클라우드</b>로 보여 줘요. 그리고 데이터 분석이 사회에 주는 가치도 생각해 봐요.</div>
+      <p>글 속의 단어를 세어서 많이 나온 말을 크게 보여 주면, 그 글이 무엇을 강조하는지 한눈에 알 수 있어요.</p>
+      <ol>
+        <li>수집 · 전처리</li><li>단어 빈도 · 워드 클라우드</li><li>사회적 가치 · 마무리</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 할 일 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>📝</i><div><b>수집·전처리</b><small>연설문 → 한글만, 단어로</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🔢</i><div><b>단어 빈도</b><small>딕셔너리로 세기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>☁️</i><div><b>워드 클라우드</b><small>많이 나온 말은 크게</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🌍</i><div><b>사회적 가치</b><small>의료·재난·범죄 예방</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">시작 · 비정형 데이터로 사회 현상을 분석할 수 있을까? (100쪽)</span>
+      <p>기후 변화와 관련된 핵심 키워드(주요 언급 단어)를 사용해 홍보 자료를 구성하면 더 많은 사람들의 주목을 끌 수 있을 거예요. 기후 변화와 관련된 기사나 글을 수집한 뒤, 데이터를 분석해 <b>중요하게 언급되는 단어들이 무엇인지</b> 찾아봐요.</p>
+    </div>
+    <div class="card">
+      <h3>🌿 실습 · 기후 변화와 관련해 주로 언급되는 단어 찾기 <span class="muted" style="font-weight:400;font-size:.88rem">(100쪽 실습 개요)</span></h3>
+      <div class="tscroll"><table class="tbl">
+        <tr><th>문제 상황</th><td>기후 변화와 관련해 주로 언급되는 단어를 사용해 홍보 자료를 작성하여 더 많은 사람들이 볼 수 있게 해야 한다.</td></tr>
+        <tr><th>활용 데이터</th><td>기후 변화 관련 기사, 연설문 등</td></tr>
+        <tr><th>시각화 방법</th><td>워드 클라우드</td></tr>
+        <tr><th>사용 소프트웨어</th><td>구글 코랩, 파이썬</td></tr>
+      </table></div>
+      <p style="margin:12px 0 4px"><b>데이터 분석 단계</b></p>
+      <div class="vl-flow">
+        <div style="--k:#2f9a5a"><small>1</small><b>데이터 수집</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#2f9a5a"><small>2</small><b>데이터 처리</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#2f9a5a"><small>3</small><b>데이터 시각화</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#2f9a5a"><small>4</small><b>분석 결과 해석</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🐍 코드는 두 가지로 만나요</h3>
+      <div class="grid2 even">
+        <div class="vl-two" style="margin:0"><div style="--k:#1f2f4a"><b>📖 읽는 코드</b><span>교과서의 <code>konlpy</code>·<code>pandas</code>·<code>wordcloud</code> 코드는 구글 코랩에서 돌리는 코드예요. 여기서는 어두운 <b>코드 카드</b>로 읽어요.</span></div></div>
+        <div class="vl-two" style="margin:0"><div style="--k:#1f9d74"><b>▶ 돌려 보는 코드</b><span>같은 일을 <b>기본 파이썬</b>(<code>re</code>·리스트·딕셔너리)으로 따라 한 코드예요. 고쳐서 <b>실행</b>을 눌러 봐요.</span></div></div>
+      </div>
+      <p class="note" style="margin-bottom:0">처음 실행하면 파이썬을 불러오느라 몇 초 걸려요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 글(비정형 데이터)에서 중요한 단어는 어떻게 찾을 수 있을까? 데이터 분석은 사회에 어떤 가치를 줄까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>텍스트 데이터를 수집하고 분석에 알맞게 정리하는 과정을 설명할 수 있다.</li>
+          <li>단어의 빈도수를 딕셔너리로 만들어 워드 클라우드로 나타내는 과정을 설명할 수 있다.</li>
+          <li>데이터 분석의 사회적 가치를 분야별 사례로 설명할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">비정형 데이터 · 워드 클라우드 · 형태소 분석 · 빈도수 · 딕셔너리 · 핵심 키워드 · 사회적 가치 · 인포그래픽</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>기후 변화를 다룬 글에는 어떤 단어가 가장 많이 나올 것 같나요? <small>떠오르는 단어를 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planW" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 데이터 수집부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 데이터 수집 -->
+<section class="page" data-name="데이터 수집" data-acc="#2f9a5a">
+  <div class="head"><div class="num">01</div><div><h2>데이터 수집 · 텍스트 글 모으기</h2><p>교과서 100쪽 · 연설문 복사하기, 메모장에 저장하기, 내용 살펴보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>분석할 <b>글을 찾아서 복사해 메모장에 저장</b>하면 텍스트 데이터가 준비돼요. 그다음 <b>내용이 알맞은지, 줄바꿈이 고른지, 이름 같은 개인 정보가 없는지</b> 살펴보고 정리해요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 데이터 수집 <span class="muted" style="font-weight:400;font-size:.88rem">(100쪽)</span></h3>
+    <p style="margin-top:0">기후 변화와 관련된 내용을 분석하기 위해 <b>연관성 있는 텍스트</b>를 수집해 보아요.</p>
+    <div class="vl-steps">
+      <div style="--k:#2f9a5a"><b>① 글 고르기</b><p style="margin:4px 0 8px;font-size:.93rem">환경부 열린장관실의 <b>말과글 → 연설문/축사</b>에서 원하는 내용을 선택해요. 교과서 예시에서는 <b>「2022 에너지대전환포럼」</b> 연설문을 사용했어요.</p></div>
+      <div style="--k:#2f6fd0"><b>② 복사해서 저장하기</b><p style="margin:4px 0 8px;font-size:.93rem">선택한 내용을 복사해서 <b>메모장에 붙여 넣고 텍스트 파일로 저장</b>해요. 텍스트 파일의 줄바꿈 상태가 고르지 않을 수 있어요. 실습 파일 이름은 <code>temp_text.txt</code>예요.</p></div>
+    </div>
+    <p class="callout" style="margin-bottom:0">💡 <b>TIP · 텍스트 데이터 수집 방법</b> 내가 원하는 텍스트 데이터를 검색해서 내용을 복사해 메모장에 붙여 넣고 저장해요. 메모장에 원하는 내용을 직접 입력해도 돼요.</p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 데이터 처리의 첫걸음 · 글 살펴보기 <span class="muted" style="font-weight:400;font-size:.88rem">(100쪽)</span></h3>
+    <p style="margin-top:0">메모장에 붙여 넣은 텍스트 파일의 내용이 적절한지 파악해 보아요. 카드를 눌러 무엇을 살펴야 하는지 확인해요.</p>
+    <div id="vlCheck" class="tcards"></div>
+    <div class="callout" style="margin-bottom:0">⚠️ <b>주의</b> 인터넷에서 검색해서 내려받은 내용이나 내가 사용하고자 하는 글에 <b>개인 정보와 같은 민감한 내용이나 허위 사실</b> 등이 포함되어 있지 않은지 살펴봐야 해요.</div>
+  </div>
+
+  <div class="card">
+    <h3>📖 비정형 데이터란? <span class="muted" style="font-weight:400;font-size:.88rem">(100쪽)</span></h3>
+    <p style="margin-top:0">비정형 데이터는 <b>구조화되지 않은 형태</b>로 텍스트, 이미지, 동영상과 같은 데이터로 구성돼요. 표처럼 칸이 나뉜 정형 데이터(앞 시간의 기온 데이터)와 달리, 연설문 같은 글은 <b>줄글</b> 그대로라서 분석하기 전에 내용을 살펴 정리해야 해요.</p>
+    <div class="memo"><label>내가 분석해 보고 싶은 글(기사·연설문 등)이 있나요? <small>(선택)</small></label><textarea data-memo="textIdea" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 불러오기 · 전처리 -->
+<section class="page" data-name="불러오기 · 전처리" data-acc="#2f9a5a">
+  <div class="head"><div class="num">02</div><div><h2>데이터 불러오기와 전처리</h2><p>교과서 101쪽 · 워드 클라우드 준비, 한글만 남기기, 단어로 나누기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>글에는 숫자·기호·한자가 섞여 있어서, 먼저 <b>한글만 남기고</b> 나머지는 빈칸으로 바꿔요. 그다음 글을 <b>단어별로 나누는데</b>, 한국어는 「기후위기에」처럼 <b>조사가 붙어 있어서</b> 띄어쓰기만으로는 알맞게 나뉘지 않아요. 그래서 <b>형태소 분석기</b>가 명사만 뽑아 줘요.</span></div>
+
+  <div class="card">
+    <h3>☁️ 워드 클라우드란? <span class="muted" style="font-weight:400;font-size:.88rem">(101쪽 주석 5)</span></h3>
+    <p style="margin-top:0">텍스트 데이터를 시각화하기 위해 사용되는 기술로, 문서의 문구와 단어를 분석하여 <b>중요도나 사용 빈도</b>를 직관적으로 파악할 수 있도록 하는 표현 기법이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>1️⃣ 데이터 불러오기 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(101쪽)</span></h3>
+    <div class="vl-steps">
+      <div style="--k:#2f6fd0"><b>① 워드 클라우드 관련 설치 파일 실행</b>
+<pre class="code"><i># 워드 클라우드 관련 설치 파일</i>
+!pip install nltk
+!pip install konlpy
+!apt-get update -qq
+!apt-get install fonts-nanum* -qq
+<i># 실행 후 [런타임] - [세션 다시 시작] 하면 워드 클라우드 작업을 위한 환경 준비</i></pre>
+        <p class="out">설치 파일을 실행하기 전, 코랩 환경에서 한글을 사용할 수 있도록 정형 데이터 실습과 같은 방법으로 글꼴을 먼저 설치해요.</p></div>
+      <div style="--k:#d0602f"><b>② 데이터 업로드</b>
+<pre class="code">from google.colab import files        <i># 구글 코랩 환경에 파일 업로드를 위한 작업</i>
+uploaded = files.upload()             <i># 파일 업로드 작업 실행</i></pre></div>
+      <div style="--k:#1f9d74"><b>③ 업로드한 데이터 확인</b>
+<pre class="code">data = open('temp_text.txt', encoding = 'UTF-8').read()   <i># 업로드한 파일을 열어서 data 변수에 저장</i>
+data                                                       <i># data 내용 출력</i></pre>
+        <p class="out">출력되는 글: 「먼저, 기후위기 대응을 위한 에너지 전환에 많은 관심을 가지고 …」 (줄바꿈은 \n으로 보여요.)</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 데이터 전처리하기 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(101쪽)</span></h3>
+    <div class="vl-steps">
+      <div style="--k:#2f9a5a"><b>① 불필요한 문자 제거하기</b>
+<pre class="code"><i># 불필요한 문자 제거하기</i>
+import re      <i># 정규 표현 처리를 위한 라이브러리</i>
+<i># 특수 문자, 한자, 공백 등을 제거하기 위한 정규 표현식-&gt; [^가-힣]의 뜻: 한글이 아닌 모든 문자를 의미</i>
+data1 = re.sub('[^가-힣]', ' ', data)
+data1      <i># data1 내용 출력</i></pre>
+        <p class="out">코드를 실행하여 원래 메모장 내용에서 숫자나 특수 기호 등이 제거되었는지 확인해요.</p></div>
+      <div style="--k:#9b4fc4"><b>② 내용을 단어별로 구분하기</b>
+<pre class="code">import konlpy                       <i># 한국어 정보 처리를 위한 파이썬 패키지</i>
+from konlpy.tag import Hannanum     <i># 한글 형태소 분석기 중 Hannanum을 사용</i>
+hannanum = konlpy.tag.Hannanum()    <i># 형태소를 분석하여 hannanum에 저장</i>
+data2 = hannanum.nouns(data1)       <i># data1에서 명사(nouns)를 추출해서 data2에 저장</i>
+data2                               <i># data2 내용 출력</i></pre>
+        <p class="out">출력되는 글(교과서 화면의 끝부분): '축소', '병행', '재생에너지', '원전', '활용' … 명사만 뽑혀요.</p></div>
+    </div>
+    <div class="callout" style="margin-bottom:0">💡 <b>TIP · 형태소 분석이 필요한 이유</b> 한글로 워드 클라우드 작업을 할 때, 영어와는 다르게 띄어쓰기를 기준으로 나누게 되면 그 의미를 제대로 파악하기가 힘들어요. 조사, 명사, 동사처럼 문장에 사용된 단어의 <b>형태소를 분석</b>해야 해요.</div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 한글만 남기고 띄어쓰기로 나눠 보기</h3>
+    <p style="margin-top:0">교과서는 <code>re.sub</code>로 한글만 남기고, 형태소 분석기(<code>konlpy</code>)로 명사를 뽑았어요. 여기서는 <b>같은 정규 표현식</b>(<code>[^가-힣]</code>)으로 한글만 남긴 뒤, <b>띄어쓰기로만</b> 나눠서 어떤 일이 생기는지 봐요. 연설문의 앞 세 줄이에요.</p>
+    <div id="vlRun1"></div>
+    <p class="note">띄어쓰기로만 나누면 「기후위기」와 「기후위기에」가 서로 다른 낱말이 돼요. 교과서에서는 형태소 분석기가 조사를 떼어 내서 명사를 뽑았고, 이 낱말이 「기후위」로 나왔어요(105쪽에서 다시 만나요).</p>
+    <div class="memo"><label>출력된 낱말 목록에서 조사가 붙어 있는 낱말을 찾아 적어 보세요. <small>(선택)</small></label><textarea data-memo="josaFind" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 단어 정리 · 빈도 -->
+<section class="page" data-name="단어 정리 · 빈도" data-acc="#2f9a5a">
+  <div class="head"><div class="num">03</div><div><h2>단어 정리와 빈도수 구하기</h2><p>교과서 102~103쪽 · 데이터프레임, 글자 수, 정렬, 빈도수, 딕셔너리</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>뽑아 낸 명사에서 <b>한 글자짜리를 빼고</b>, 같은 단어가 <b>몇 번 나왔는지 세어서</b> 많이 나온 순으로 줄을 세워요. 마지막에는 <b>「단어: 횟수」 짝</b>(딕셔너리)으로 바꿔서 워드 클라우드에 넣을 준비를 해요.</span></div>
+
+  <div class="card">
+    <h3>단계별 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(102~103쪽 ③~⑧)</span></h3>
+    <div class="vl-steps">
+      <div style="--k:#2f6fd0"><b>③ 단어별로 구분된 내용을 데이터프레임으로</b>
+<pre class="code">import pandas as pd                       <i># 데이터 핸들링을 위한 라이브러리</i>
+df_word = pd.DataFrame({'word' : data2})  <i># data2 내용을 데이터프레임으로 변환하여 df_word에 저장</i>
+df_word                                   <i># df_word 내용 출력</i></pre></div>
+      <div style="--k:#2f6fd0"><b>④ 단어들의 글자 수 추가</b>
+<pre class="code">df_word['count'] = df_word['word'].str.len()   <i># 단어(word)별 글자 수(count) 추가</i>
+df_word                                         <i># df_word 내용 출력</i></pre>
+        <p class="out">결과(앞부분): 기후위 3 · 대응 2 · 에너지 3 · 전환 2 · 관심 2</p></div>
+      <div style="--k:#d0602f"><b>⑤ 글자 수 기준으로 오름차순 정렬</b>
+<pre class="code">df_word1 = df_word.sort_values('count')   <i># 글자 수 기준으로 정렬하여 df_word1에 저장</i>
+df_word1                                  <i># df_word1 내용 출력</i></pre></div>
+      <div style="--k:#d0602f"><b>⑥ 두 글자 이상의 단어만 남기기</b>
+<pre class="code">df_word2 = df_word1.query('count &gt;= 2')   <i># 두 글자 이상 단어만 남겨 df_word2에 저장</i>
+df_word2                                  <i># df_word2 내용 출력</i></pre></div>
+      <div style="--k:#1f9d74"><b>⑦ 단어별 빈도수 구하기</b>
+<pre class="code">df_word3 = df_word2.groupby('word', as_index = False).agg(n = ('word', 'count')).sort_values('n', ascending = False)
+<i># 단어별로(word) 분리해서 구한 빈도수(n)를 내림차순으로 정렬하여 df_word3에 저장</i>
+df_word3                                  <i># df_word3 내용 출력</i></pre>
+        <p class="out">결과(앞부분): 기후위 7 · 에너지 6 · 대응 5 · 배출량 4</p></div>
+      <div style="--k:#9b4fc4"><b>⑧ 데이터프레임을 딕셔너리로</b>
+<pre class="code"><i># 워드 클라우드는 단어는 키(key), 빈도수는 값(value)으로 구성된 딕셔너리 데이터 구조를 이용</i>
+dic_word = df_word3.set_index('word').to_dict()['n']   <i># df_word는 데이터프레임이므로 딕셔너리로 변환</i>
+dic_word</pre>
+        <p class="out">결과(앞부분): {'기후위': 7, '에너지': 6, '대응': 5, '배출량': 4, …} · 문서에서 자주 언급되는 단어가 빈도수 기준 내림차순으로 정렬되어 출력돼요.</p></div>
+    </div>
+    <div class="callout" style="margin-bottom:0">💡 <b>TIP · 딕셔너리</b> <code>딕셔너리명 = {key1:value1, key2:value2, …}</code>와 같이 콜론(:)으로 구분한 <b>key(키)와 value(값)</b>의 한 쌍으로 구성돼요. ⑧번 활동으로 워드 클라우드 작업을 위한 딕셔너리 형태인 <code>dic_word = {'기후위' : 7, '에너지' : 6, '대응' : 5, …}</code>가 준비된 상태예요.</div>
+  </div>
+
+  <div class="card">
+    <h3>🔁 한눈에 보는 흐름</h3>
+    <div class="tscroll"><table class="tbl" style="min-width:420px">
+      <tr><th>단계</th><th>하는 일</th><th>교과서 코드</th></tr>
+      <tr><td>③</td><td>단어 목록을 표(데이터프레임)로</td><td><code>pd.DataFrame</code></td></tr>
+      <tr><td>④</td><td>글자 수 칸 만들기</td><td><code>.str.len()</code></td></tr>
+      <tr><td>⑤</td><td>글자 수로 줄 세우기</td><td><code>sort_values('count')</code></td></tr>
+      <tr><td>⑥</td><td>두 글자 이상만 남기기</td><td><code>query('count &gt;= 2')</code></td></tr>
+      <tr><td>⑦</td><td>단어별 횟수 세고 많은 순 정렬</td><td><code>groupby … agg … sort_values</code></td></tr>
+      <tr><td>⑧</td><td>「단어: 횟수」 딕셔너리로</td><td><code>set_index('word').to_dict()['n']</code></td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 단어 세어서 딕셔너리 만들기</h3>
+    <p style="margin-top:0">교과서 실습에서 형태소 분석기가 뽑은 <b>명사 목록(131개)</b>이에요. 같은 일(<b>두 글자 이상만 남기기 → 횟수 세기 → 많은 순 정렬</b>)을 기본 파이썬으로 해 봐요. 결과가 교과서 ⑦·⑧과 같은지 비교해 봐요. 숫자 <code>2</code>를 바꾸거나 <code>rank[:8]</code>의 8을 바꿔 봐요.</p>
+    <div id="vlRun2"></div>
+    <div class="memo"><label>결과에서 가장 많이 나온 단어는? 그 단어를 보고 이 연설문이 무엇을 강조한다고 생각하나요? <small>(선택)</small></label><textarea data-memo="freqNote" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🖱️ 해 보기 · 비정형 데이터 다루기 <span class="muted" style="font-weight:400;font-size:.88rem">(102쪽)</span></h3>
+    <p style="margin-top:0">날씨마루 사이트에서 텍스트 데이터를 쉽게 처리해 보자. 사이트에서 직접 텍스트를 입력해 분석하면 쉽게 분석 결과를 내려받아 확인할 수 있어요.</p>
+    <div class="callout" style="margin-bottom:0">⚠️ <b>주의</b> 텍스트 분석을 할 때 어떤 방식을 적용하느냐에 따라 결과는 조금씩 다를 수 있어요.</div>
+    <div class="memo"><label>사이트로 분석해 본 결과는 코드로 한 결과와 어떻게 달랐나요? <small>(선택)</small></label><textarea data-memo="weatherTry" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 워드 클라우드 · 해석 -->
+<section class="page" data-name="워드 클라우드 · 해석" data-acc="#2f9a5a">
+  <div class="head"><div class="num">04</div><div><h2>워드 클라우드로 그리고 해석하기</h2><p>교과서 103~105쪽 · 워드 클라우드 생성, 분석 결과 해석, 해 보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>「단어: 횟수」 딕셔너리를 워드 클라우드에 넣으면 <b>많이 나온 단어일수록 큰 글씨</b>로 그려져요. 큰 글씨의 단어가 이 글의 <b>핵심 키워드</b>이고, 이 단어들로 홍보 자료를 만들 수 있어요.</span></div>
+
+  <div class="card">
+    <h3>3️⃣ 데이터 시각화 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(103쪽)</span></h3>
+    <p style="margin-top:0">구글 코랩에 준비한 데이터를 불러들여서 워드 클라우드로 시각화해요.</p>
+    <div class="vl-steps">
+      <div style="--k:#2f6fd0"><b>① 글꼴을 관리할 matplotlib.font_manager 불러오기</b>
+<pre class="code">import matplotlib.pyplot as plt            <i># 생성한 워드 클라우드 데이터를 시각화하기 위해 사용</i>
+import matplotlib.font_manager as fm       <i># 폰트 확인</i>
+sys_font = fm.findSystemFonts()
+
+<i># 마음에 드는 폰트 선택 (여기서는 나눔펜 글꼴 선택)</i>
+path = '/usr/share/fonts/truetype/nanum/NanumPen.ttf'</pre></div>
+      <div style="--k:#2f9a5a"><b>② 워드 클라우드 생성하기</b>
+<pre class="code"><i># 텍스트를 추출하고 빈도수를 추출하기 위해 사용</i>
+from collections import Counter       <i># 수치 연산 패키지</i>
+import numpy as np                    <i># 그림을 배열로 나타내 쉽게 처리할 수 있도록 사용</i>
+from wordcloud import WordCloud       <i># 워드 클라우드 생성을 위한 패키지</i>
+<i># 워드 클라우드 만들기</i>
+wordcloud = WordCloud(font_path = path,        <i># 폰트 설정</i>
+                      width = 300,             <i># 가로 크기 (x축)</i>
+                      height = 300,            <i># 세로 크기 (y축)</i>
+                      background_color = 'white')   <i># 배경색</i>
+<b>wordcloud = wordcloud.generate_from_frequencies(dic_word)</b>
+<b>array = np.array(wordcloud.to_image())</b>
+fig = plt.figure(figsize = (5,5))
+plt.imshow(array, interpolation = 'bilinear')
+plt.show()</pre></div>
+    </div>
+    <div class="callout" style="margin-bottom:0">💡 교과서 말풍선 · 굵게 표시한 줄은 딕셔너리 형태의 데이터를 <b>빈도수 순으로 워드 클라우드로 표현</b>해요. 워드 클라우드에서는 사람들이 많이 사용한 단어가 크게 나타나요.</div>
+  </div>
+
+  <div class="card">
+    <h3>🎛️ 글자 크기로 그려 보는 워드 클라우드 <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">아래 「단어: 횟수」 목록이 딕셔너리라고 생각해요. 횟수가 클수록 글자가 커져요. 앞의 네 줄(기후위 7·에너지 6·대응 5·배출량 4)은 교과서 103쪽에 인쇄된 값이고, 나머지는 같은 실습 결과에서 옮긴 값이에요. 직접 고치거나 새 줄을 더해 「다시 그리기」를 눌러 봐요.</p>
+    <div class="vl-ctl">
+      <textarea id="vlDict" rows="8" aria-label="단어와 횟수 목록"></textarea>
+      <div class="vl-row"><label for="vlMin">보여 줄 최소 횟수</label><input id="vlMin" type="range" min="1" max="7" step="1" value="1"><output id="vlMinV">1회 이상</output></div>
+      <div class="vl-row"><button class="btn sm" id="vlDraw">다시 그리기</button><button class="btn sm ghost" id="vlMix">섞어서 배치하기</button><button class="btn sm ghost" id="vlReset">처음 값으로</button></div>
+    </div>
+    <div class="vl-cloud" id="vlCloud" role="img" aria-label="단어를 빈도수에 따라 다른 크기로 보여 주는 워드 클라우드"></div>
+    <div class="vl-read" id="vlRead"></div>
+    <p class="note">교과서의 워드 클라우드는 실행할 때마다 글자의 배열이나 크기, 색이 조금씩 달라지지만, 큰 글씨로 표현되는 단어들은 같아요. 여기서도 「섞어서 배치하기」를 눌러 보면 모양은 바뀌어도 큰 단어는 그대로예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>4️⃣ 분석 결과 해석 <span class="muted" style="font-weight:400;font-size:.88rem">(104쪽)</span></h3>
+    <p style="margin-top:0">기후 변화와 관련된 비정형 데이터를 워드 클라우드로 시각화한 결과, 데이터 처리 단계에서 빈도수가 높았던 단어인 <b>기후위, 에너지, 대응, 배출량</b> 등이 큰 글씨로 표현된 것을 볼 수 있어요. 이 주요 단어(핵심 키워드)들을 활용해 홍보 자료를 구성한다면 더 많은 사람을 설득할 수 있어요.</p>
+    <p>비정형 데이터로 사회 현상을 분석할 때에는 <b>데이터를 어디서, 얼마나 수집하느냐</b>에 따라 분석 결과에 나타나는 핵심 키워드가 달라질 수 있어요. 그러므로 <b>데이터 편향이 생기지 않도록 많은 양의 데이터를 다양한 곳에서 수집</b>하는 것도 중요해요.</p>
+    <div class="grid2 even">
+      <div class="vl-two" style="margin:0"><div style="--k:#2f9a5a"><b>💡 TIP · x, y축 설정 방법</b><span>x축과 y축의 숫자는 워드 클라우드를 만들 때 <code>width</code>와 <code>height</code>를 조절하면 돼요.</span></div></div>
+      <div class="vl-two" style="margin:0"><div style="--k:#d0602f"><b>❓ 교과서의 물음</b><span>「기후 위기」라는 단어가 「기후위」로 표현되었어요. 이를 제대로 표현하려면 필요한 작업은 무엇일까요? 105쪽 해 보기 ②에서 해결해 봐요.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 해 보기 ① · 워드 클라우드로 시각화하기 <span class="muted" style="font-weight:400;font-size:.88rem">(104쪽)</span></h3>
+    <p style="margin-top:0">지구 온난화와 관련된 내용을 찾아서 워드 클라우드 작업으로 중요 단어를 찾아보자. 교과서 예시를 참고해요.</p>
+    <div class="tscroll"><table class="tbl" style="min-width:420px">
+      <tr><th>단계</th><th>교과서 예시</th></tr>
+      <tr><td>데이터 수집</td><td>사이트: 김해시 누리집의 김해분야포털<br>작업: [환경위생]-[자연환경]-[지구온난화] 내용을 메모장으로 복사해서 텍스트 자료를 준비한다.<br>파일명: <code>word_text.txt</code></td></tr>
+      <tr><td>중요 단어</td><td>온실가스, 지구, 기후 시스템, 상승, 기후, 지구 온난화</td></tr>
+    </table></div>
+    <div class="memo"><label>나는 어떤 글로 시도해 볼까요? 찾은 중요 단어도 적어 보세요. <small>(선택)</small></label><textarea data-memo="warmTry" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>📝 해 보기 ② · 형태소 분석기 바꿔 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(105쪽)</span></h3>
+    <p style="margin-top:0">본문 101쪽의 「데이터 전처리하기」 ② 단계(내용을 단어별로 구분하는 단계)에서 <b>한글 형태소 분석기의 종류를 바꿔</b> 보자.</p>
+<pre class="code">import konlpy                       <i># 한국어 정보 처리를 위한 파이썬 패키지</i>
+from konlpy.tag import Okt          <i># 한글 형태소 분석기 중 okt를 사용</i>
+okt = konlpy.tag.Okt()              <i># 형태소를 분석하여 okt에 저장</i>
+data2 = okt.nouns(data1)            <i># data1에서 명사(nouns) 추출해서 data2에 저장</i>
+data2                               <i># data2 내용 출력</i></pre>
+    <p style="margin:0 0 6px">결과(교과서 화면의 앞부분): '먼저', '기후', '위기', '대응', '위', '에너지' … 「기후」와 「위기」로 나뉘어 나와요.</p>
+    <div class="callout">형태소란 말의 형태를 지닌 요소이며, 의미를 가진 가장 작은 말의 단위로 더 나누면 뜻을 잃어버려요. 형태소 분석기를 변경해서 작업해 보니 <b>단어 추출 방법이 달라져 출력된 결과가 달라진 것</b>을 확인할 수 있어요.</div>
+    <div class="callout">💡 <b>TIP · 형태소 분석을 위한 파이썬 라이브러리</b> 코엔엘파이(koNLPy)는 한글 자연어 처리를 쉽고 간결하게 처리하도록 만들어진 오픈 소스 라이브러리예요. Hannanum, Okt, Kkma, Komoran, Mecab이라는 형태소 분석기를 제공하고 있으며, 형태소 분석기에 따라 분석한 결과가 달라져요.</div>
+    <div class="memo"><label>「기후 위기」가 「기후위」로 나온 까닭은 무엇일까요? Okt로 바꾸면 무엇이 달라졌나요? <small>(선택)</small></label><textarea data-memo="oktWhy" rows="3"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>＋ 심화 · 형태소 분석기의 종류를 찾아보고, 다른 분석기를 썼을 때 같은 내용이 어떻게 표현되는지 비교해 보세요. <small>(선택)</small></label><textarea data-memo="oktCompare" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 데이터 분석의 사회적 가치 -->
+<section class="page" data-name="사회적 가치" data-acc="#2f9a5a">
+  <div class="head"><div class="num">05</div><div><h2>데이터 분석의 사회적 가치</h2><p>교과서 105쪽 · 사회적 가치의 뜻, 자료 5 분야별 사례</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span><b>사회적 가치</b>는 우리 사회 모두에게 도움이 되는 가치예요. 데이터를 분석하면 <b>환자를 더 잘 치료하고, 재난에 미리 대비하고, 범죄를 막는 데</b> 쓸 수 있어서 사회에 큰 가치를 줘요.</span></div>
+
+  <div class="card">
+    <h3>📖 사회적 가치란? <span class="muted" style="font-weight:400;font-size:.88rem">(105쪽)</span></h3>
+    <p style="margin-top:0">사회적 가치란 <b>사회, 경제, 환경, 문화 등 모든 영역에서 공공의 이익과 공동체의 발전에 기여할 수 있는 가치</b>예요.</p>
+    <p style="margin:12px 0 4px"><b>[자료 5] 데이터 분석의 사회적 가치</b></p>
+    <div class="vl-two">
+      <div style="--k:#d64535"><b>🏥 의료 분야</b><span>환자의 상태와 가족력 등을 분석하여 맞춤형 의료 서비스를 제공한다. / 빅데이터를 분석하여 질병을 원천적으로 차단하는 예방 의료를 실시한다.</span></div>
+      <div style="--k:#d0602f"><b>🌪️ 재난 관리 분야</b><span>빅데이터를 분석하여 기상 정보 및 지질 정보를 추정한다. / 기온과 상대 습도의 조합을 계산하여 폭염 특보와 건강 관리 정보를 제공한다.</span></div>
+      <div style="--k:#2f6fd0"><b>🚓 범죄 예방 및 수사 분야</b><span>과거에 발생한 범죄 수법, 시공간 환경적 통계 정보를 분석한다. / 범죄 발생을 미연에 방지하는 범죄 예측 서비스를 운영한다.</span></div>
+    </div>
+    <div class="callout" style="margin-bottom:0">데이터 분석은 다양한 분야의 현상을 합리적으로 해석하여 <b>문제를 해결하고 미래를 예측하는 데 도움</b>을 준다. 양질의 데이터를 수집하고 안전하게 관리하여, 데이터를 분석하고 활용하는 과정을 통해 데이터의 사회적 가치를 확대할 수 있다.</div>
+  </div>
+
+  <div class="card">
+    <h3>🧩 이 사례는 어느 분야일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">자료 5의 사례를 읽고 어느 분야인지 골라 봐요.</p>
+    <div id="vlSort"></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 개념 학습 마무리 -->
+<section class="page" data-name="개념 학습 마무리" data-acc="#2f9a5a">
+  <div class="head"><div class="num">06</div><div><h2>기후 데이터 시각화 활동 정리하기</h2><p>교과서 106쪽 · 단계별 정리, 인포그래픽 기획, 성취도 점검</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>앞에서 한 <b>기온 그래프(정형)</b>와 <b>워드 클라우드(비정형)</b> 활동을 다섯 단계로 나눠 <b>내 말로 정리</b>해요. 정리한 것을 바탕으로 기후 변화의 심각성을 알리는 <b>인포그래픽</b>도 기획해 봐요.</span></div>
+
+  <div class="card">
+    <h3>📝 활동 정리 · 단계에 맞춰 적어 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(106쪽)</span></h3>
+    <p style="margin-top:0">앞서 진행한 기후 관련 데이터 시각화 실습 활동을 단계에 맞춰 정리한 다음, 이를 활용해 기후 변화의 심각성을 알리는 <b>인포그래픽</b> 자료를 기획해 보자.</p>
+    <div class="vl-five">
+      <div style="--k:#2f6fd0"><span class="n">1</span><div><b>수집 데이터</b><div class="memo"><label>어떤 데이터를 사용해 분석을 진행했는지 적어 보자. <small>(선택)</small></label><textarea data-memo="wrap1" rows="2"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#2f9a5a"><span class="n">2</span><div><b>시각화 방법</b><div class="memo"><label>어떤 시각화 방법을 사용하였는지 적어 보자. <small>(선택)</small></label><textarea data-memo="wrap2" rows="2"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#d0602f"><span class="n">3</span><div><b>핵심 키워드</b><div class="memo"><label>워드 클라우드로 분석한 기후 관련 핵심 키워드는 무엇인지 적어 보자. <small>(선택)</small></label><textarea data-memo="wrap3" rows="2"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#9b4fc4"><span class="n">4</span><div><b>표어 작성</b><div class="memo"><label>핵심 키워드를 사용해 기후 위기 관련 표어를 만들어 보자. <small>(선택)</small></label><textarea data-memo="wrap4" rows="2"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#5b6776"><span class="n">5</span><div><b>인포그래픽 기획</b><div class="memo"><label>위에서 만든 자료를 활용해 기후 위기를 알리는 인포그래픽을 기획해 보자. <small>(선택)</small></label><textarea data-memo="wrap5" rows="3"></textarea><div class="saved"></div></div></div></div>
+    </div>
+    <div class="callout" style="margin-bottom:0"><b>인포그래픽</b> 인포메이션 그래픽(Information graphics)의 줄임말로, 데이터나 지식 정보를 시각적으로 표현한 것을 뜻해요. 이미지로 패턴과 경향을 파악하는 시각 표현으로 보는 이의 흥미를 유발하고, 정보를 쉽고 빠르게 전달하는 것이 특징이에요.</div>
+  </div>
+
+  <div class="card">
+    <h3>✅ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(106쪽)</span></h3>
+    <p style="margin-top:0">각 문장을 읽고 나는 어떤지 「예」나 「아니요」를 골라 봐요. 「아니요」라면 오른쪽에 적힌 쪽을 다시 읽어 봐요.</p>
+    <div class="vl-ach">
+      <div><span class="tg">지식·이해</span><p>데이터의 유형에 따라 적합한 방법으로 데이터를 수집할 수 있다.</p><div id="ach1" class="vote"></div><small>보충하기 · 87쪽</small></div>
+      <div><span class="tg">지식·이해</span><p>데이터 분석 과정을 설명할 수 있다.</p><div id="ach2" class="vote"></div><small>보충하기 · 88~91쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>다양한 분야의 데이터를 탐색하고 처리할 수 있는 형태로 가공할 수 있다.</p><div id="ach3" class="vote"></div><small>보충하기 · 92~104쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>데이터 시각화로 사회 현상을 분석하고 의미를 파악할 수 있다.</p><div id="ach4" class="vote"></div><small>보충하기 · 92~104쪽</small></div>
+      <div><span class="tg">가치·태도</span><p>데이터의 사회적 가치에 대해 설명할 수 있다.</p><div id="ach5" class="vote"></div><small>보충하기 · 105쪽</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 전문가 인터뷰 -->
+<section class="page" data-name="전문가 인터뷰" data-acc="#2f9a5a">
+  <div class="head"><div class="num">07</div><div><h2>전문가 인터뷰 · 지구 분석 연구원</h2><p>교과서 107쪽 · 위성 데이터를 분석해 지구를 지키다</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span><b>지구 분석 연구원</b>은 인공위성이 찍은 영상 데이터를 분석해서 <b>지구가 어떻게 변하는지 살피고</b>, 그 결과를 농업·환경·도시 계획 같은 여러 분야에 써요. 데이터 분석이 사회에 도움이 되는 사례예요.</span></div>
+
+  <div class="card">
+    <h3>🛰️ 위성 데이터를 분석해 지구를 지키다! <span class="muted" style="font-weight:400;font-size:.88rem">(107쪽)</span></h3>
+    <p style="margin-top:0">지리 공간 분석가, 기상 및 해양 전문가, 소프트웨어 개발자, 데이터 과학자 등이 모여 빅데이터를 분석해 국가 안보와 기술 개발에 적용할 수 있는 인사이트를 찾아내고 있는 곳이 있어요. <b>한컴인스페이스에서 근무하는 양윤정 연구원</b>을 만나 지구 분석 연구원이 하는 일을 들어 보았어요. 카드를 눌러 확인해요. <span class="muted">(내용을 줄여 옮겼어요.)</span></p>
+    <div id="vlIntFlip" class="tcards"></div>
+    <div class="memo"><label>이 직업에서 흥미로운 점이나 나에게 있는 역량은 무엇인가요? <small>(선택)</small></label><textarea data-memo="intThink" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 8 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">08</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#2f9a5a"><b>비정형 데이터(텍스트)</b>는 수집한 뒤 <b>내용·줄바꿈·개인 정보</b>를 살펴 정리하고, <code>[^가-힣]</code> 정규 표현식으로 <b>한글만 남긴 다음 형태소 분석기로 명사</b>를 뽑아 분석한다.</div>
+    <div style="--k:#2f6fd0">뽑은 단어에서 <b>두 글자 이상</b>만 남겨 <b>빈도수를 세고</b> 「단어: 횟수」 <b>딕셔너리</b>로 바꾸면 <b>워드 클라우드</b>에서 많이 나온 단어가 크게 나타나 <b>핵심 키워드</b>를 알 수 있다.</div>
+    <div style="--k:#d0602f">데이터 분석은 <b>의료·재난 관리·범죄 예방 및 수사</b> 분야에서 문제를 해결하고 미래를 예측하는 데 도움을 주며, 양질의 데이터를 안전하게 관리·활용할수록 <b>사회적 가치</b>가 커진다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">워드 클라우드를 그려 본 일과 분야별 사례를 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">글(비정형 데이터)에서 중요한 단어는 어떻게 찾을 수 있을까? 데이터 분석은 사회에 어떤 가치를 줄까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="8"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>연설문 같은 <b>텍스트 데이터를 워드 클라우드로 만드는 과정</b>(수집 → 전처리 → 빈도수 → 시각화)을 내 말로 설명하고, <b>형태소 분석이 필요한 이유</b>를 쓰세요.</li>
+      <li>워드 클라우드에서 <b>큰 글씨로 나온 단어</b>가 무엇이고, 그 단어로 <b>어떤 홍보 자료</b>를 만들 수 있을지 쓰세요.</li>
+      <li><b>데이터 분석의 사회적 가치</b>를 나타내는 사례를 한 분야 골라 설명하고, 데이터를 분석할 때 <b>조심할 점</b>(데이터 편향, 개인 정보 등)을 한 가지 쓰세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

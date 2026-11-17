@@ -1,0 +1,28 @@
+  /* u3-collect 전용 (cl-) */
+  .cl-flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+  .cl-flow>div:not(.ar){flex:1;min-width:120px;background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .cl-flow small{display:block;color:var(--muted);font-weight:700}
+  .cl-flow b{font-size:.95rem}
+  .cl-flow .ar{flex:0 0 auto;align-self:center;font-weight:900;color:var(--muted)}
+  @media (max-width:640px){.cl-flow>div:not(.ar){flex-basis:100%}.cl-flow .ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .cl-kind{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px}
+  .cl-kind b{display:block;color:var(--k)}
+  .cl-kind span{display:block;font-size:.92rem;margin-top:3px}
+  .cl-steps{display:grid;gap:12px;margin:8px 0 12px}
+  .cl-steps>div{display:flex;gap:12px;align-items:flex-start;background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px;min-width:0}
+  .cl-steps .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--k);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .cl-steps>div>div{min-width:0;overflow-wrap:anywhere}
+  .cl-steps b{color:var(--k)}
+  .cl-steps span:not(.n){display:block;font-size:.93rem;margin-top:3px}
+  .cl-ul{margin:6px 0 0;padding-left:20px}
+  .cl-ul li{margin:3px 0}
+  .cl-tbl th,.cl-tbl td{font-size:.84rem;white-space:nowrap;text-align:center}
+  .cl-tbl{min-width:420px}
+  .cl-note{background:#fbfaf7;border:1px solid var(--line);border-left:6px solid #2f9a5a;border-radius:10px;padding:10px 14px;font-size:.92rem;margin:8px 0;overflow-wrap:anywhere}
+  .cl-ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
+  @media (max-width:640px){.cl-ways{grid-template-columns:1fr}}
+  .cl-ways>div{background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .cl-ways b{color:var(--k)}
+  .cl-ways span{display:block;font-size:.9rem;margin-top:3px}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}
