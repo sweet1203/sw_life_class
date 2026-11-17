@@ -1,0 +1,302 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#c0397a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅴ. 가치를 창출하는 소프트웨어 · 융합 진로</span>
+      <h1>만든 앱, 잘 돌아갈까?<br>그리고 어떤 가치가 있을까?</h1>
+      <div class="story"><b>상상을 현실로! 소프트웨어 개발자 (194~199쪽)</b><br>음성 인식 키오스크 앱을 다 만들었다면 이제 <b>테스트</b>하고, 스마트폰에 <b>설치</b>하고, 앱이 가진 <b>가치</b>를 평가해 볼 차례예요.</div>
+      <p>오늘 걸어갈 길은 이렇게 이어져요.</p>
+      <ol>
+        <li>테스트 · 스마트폰 설정과 앱 실행</li><li>패키징 및 배포 · 앱 설치하기</li><li>완성 화면 다시 보기</li>
+        <li>소프트웨어 평가 · 세 가지 가치</li><li>융합 진로 · 스타트업 전문가</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 배울 것 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🧪</i><div><b>테스트</b><small>오류 찾아 고치기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>📲</i><div><b>패키징 및 배포</b><small>스마트폰에 설치</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>⚖️</i><div><b>소프트웨어 평가</b><small>사회적·기능적·윤리적 가치</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🧭</i><div><b>융합 진로 탐색</b><small>스타트업의 전문가들</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">융합 진로 · 개발 마무리 (194~199쪽)</span>
+      <p>앞에서 설계하고 만든 키오스크 앱을 이제 <b>진짜 스마트폰에서</b> 돌려 봐요. 잘 되는지 확인하고(<b>테스트</b>), 설치 파일로 만들어 깔고(<b>패키징 및 배포</b>), 만든 앱이 세상에 어떤 도움이 될지 <b>가치</b>를 따져 봐요. 교과서에 쓰는 활동은 <b>메모 칸</b>에 적어요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 만든 앱을 어떻게 확인하고, 어떤 가치를 지녔는지 어떻게 평가할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>테스트와 패키징 및 배포 과정을 순서대로 말할 수 있다.</li>
+          <li>개발한 소프트웨어의 가치를 사회적, 기능적, 윤리적 관점에서 평가할 수 있다.</li>
+          <li>스타트업에서 일하는 여러 전문가가 하는 일과 필요한 역량을 설명할 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">테스트 · 오류 · 패키징 · 배포 · .apk · 소프트웨어 평가 · 사회적 가치 · 기능적 가치 · 윤리적 가치 · 프로젝트 매니저</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>내가 만든 앱(또는 우리 모둠의 앱)을 스마트폰에서 처음 실행한다면, 가장 확인하고 싶은 것은 무엇인가요? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 테스트부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 테스트 -->
+<section class="page" data-name="(3) 테스트" data-acc="#d64535">
+  <div class="head"><div class="num">01</div><div><h2>(3) 테스트</h2><p>교과서 194쪽 · 스마트폰 설정하기, 앱 실행하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>만든 앱이 <b>정말 잘 돌아가는지</b> 직접 써 보며 확인하는 단계예요. 잘못 움직이는 곳을 찾으면 고쳐요.</span></div>
+  <div class="card">
+    <h3>🧪 테스트 단계란? <span class="muted" style="font-weight:400;font-size:.88rem">(194쪽)</span></h3>
+    <p style="margin-top:0">테스트 단계는 개발 단계에서 구현한 기능들이 <b>유기적으로 정확하게 작동하는지 확인</b>하면서, 혹시 발견하지 못한 <b>오류를 찾아 수정</b>하는 단계예요. 꼼꼼한 테스트를 거쳐 개발한 소프트웨어를 고객들에게 선보일 수 있도록 해요.</p>
+  </div>
+  <div class="card">
+    <h3>1️⃣ 스마트폰 설정하기</h3>
+    <p style="margin-top:0">앱의 음성 인식을 사용하려면 <b>스마트폰에서 미리 설정</b>해 두어야 해요. 다음 설명이 몇 번째 순서인지 골라 봐요.</p>
+    <div id="vlSetSort"></div>
+  </div>
+  <div class="card">
+    <h3>2️⃣ 앱 실행하기</h3>
+    <p style="margin-top:0">앱인벤터로 제작한 소프트웨어를 테스트하려면 <b>관련된 앱을 설치하고 QR코드를 만들어</b> 앱을 실행해요. 이 설명은 몇 번째 순서일까요?</p>
+    <div id="vlRunSort"></div>
+    <div class="vl-say">💬 <b>교과서 말풍선</b> · 앱에서 메뉴 주문 수량을 말할 때 「일, 이, 삼」이라는 짧은 단어로 말하면 인식이 잘 되지 않아요. 음식 메뉴와 수량을 함께 말해 보세요. <span class="muted">(예) 치즈 버거 일!</span></div>
+    <div class="vl-tip"><b>TIP · 앱 실행과 재실행</b><br>스마트폰으로 QR코드를 찍었을 때 소요 시간이 100%가 되면 자동으로 실행되고, 이 상태에서 코드를 수정하면 자동으로 적용돼요. 테스트하면서 앱을 재시작하고 싶다면 앱인벤터 &gt; 연결 &gt; Refresh Companion Screen을 눌러 새로고침해 앱을 재실행해요.</div>
+  </div>
+  <div class="card">
+    <h3>🧪 테스트 케이스 흉내 내기</h3>
+    <p style="margin-top:0">앱인벤터는 <b>블록</b>으로, 여기서는 <b>같은 생각을 파이썬</b>으로 해 봐요. 말한 문장 몇 개를 넣어 보고, 주문 수량(숫자)을 <b>잘 찾는지</b> 확인하는 테스트예요. 문장은 내가 연습용으로 정한 거예요.</p>
+    <div id="vlRun"></div>
+    <p class="note vl-pyn">이 흉내 함수는 <b>아라비아 숫자(1, 2, 3)</b>만 찾아요. 「일」「삼」처럼 한글로 쓴 숫자는 못 찾아서 「다시 말하기」가 나와요. <code>테스트문장</code> 리스트에 문장을 더 넣고 다시 실행해 보세요. 어떤 문장이 통과하나요?</p>
+    <div class="memo"><label>테스트해 보고 알게 된 점 <small>어떤 말은 통과하고, 어떤 말은 다시 말해야 했나요?</small></label><textarea data-memo="vlTest" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 패키징 및 배포 -->
+<section class="page" data-name="(4) 패키징 및 배포" data-acc="#e0702b">
+  <div class="head"><div class="num">02</div><div><h2>(4) 패키징 및 배포</h2><p>교과서 195쪽 · 앱을 스마트폰에 설치하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>지금까지는 앱인벤터와 연결해서만 돌려 봤어요. 이제 <b>스마트폰에 설치 파일을 깔아서</b> 그냥 켜서 쓸 수 있게 만들어요.</span></div>
+  <div class="card">
+    <h3>📦 패키징 및 배포란? <span class="muted" style="font-weight:400;font-size:.88rem">(195쪽)</span></h3>
+    <p style="margin-top:0">소프트웨어 개발 및 테스트 과정을 마쳤다면 다음 단계는 <b>스마트폰에서 앱을 직접 실행할 수 있도록</b> 개발한 프로그램을 <b>패키징하고 배포</b>하여 설치하는 과정이에요. 앱인벤터에서는 크게 세 덩어리, 모두 여섯 단계로 해요.</p>
+    <div class="vl-flow">
+      <div style="--k:#d64535"><b>빌드 메뉴</b>Android App(.apk)을 골라요.</div>
+      <div style="--k:#e0702b"><b>QR코드</b>스마트폰 앱으로 스캔해요.</div>
+      <div style="--k:#c0397a"><b>설치</b>다운로드 후 설정을 바꾸고 설치해요.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🔢 설치 순서 맞히기</h3>
+    <p style="margin-top:0">설명을 보고 몇 번째 단계인지 골라 봐요. (휴대폰 화면 모양은 직접 설치해 보며 확인해요.)</p>
+    <div id="vlPackSort"></div>
+  </div>
+  <div class="card">
+    <h3>📝 소프트웨어 구현 및 테스트하기 <span class="muted" style="font-weight:400;font-size:.88rem">(195쪽 해 보기)</span></h3>
+    <p style="margin-top:0">개발한 소프트웨어가 <b>계획대로 개발되었는지 확인</b>해 보고, 수정할 부분을 모둠원들과 함께 정리해 봐요.</p>
+    <table class="vl-tb">
+      <tr><th>계획한 기능 및 디자인</th><th>수정 사항</th></tr>
+      <tr><td><input type="text" data-memo="vlPlan1" aria-label="계획한 기능 및 디자인 첫째"><div class="saved"></div></td><td><input type="text" data-memo="vlFix1" aria-label="수정 사항 첫째"><div class="saved"></div></td></tr>
+      <tr><td><input type="text" data-memo="vlPlan2" aria-label="계획한 기능 및 디자인 둘째"><div class="saved"></div></td><td><input type="text" data-memo="vlFix2" aria-label="수정 사항 둘째"><div class="saved"></div></td></tr>
+      <tr><td><input type="text" data-memo="vlPlan3" aria-label="계획한 기능 및 디자인 셋째"><div class="saved"></div></td><td><input type="text" data-memo="vlFix3" aria-label="수정 사항 셋째"><div class="saved"></div></td></tr>
+    </table>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 완성 화면 다시 보기 -->
+<section class="page" data-name="완성 화면 다시 보기" data-acc="#c98a0a">
+  <div class="head"><div class="num">03</div><div><h2>완성 화면 다시 보기</h2><p>교과서 196쪽 · 완성 화면 예시와 맛집 앱 바꾸기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>화면의 <b>뼈대는 그대로</b> 두고 <b>이름과 메뉴만 바꾸면</b> 다른 맛집의 키오스크 앱이 돼요.</span></div>
+  <div class="card">
+    <h3>📱 완성 화면 예시 <span class="muted" style="font-weight:400;font-size:.88rem">(196쪽 · 사진 대신 색 상자로 다시 그린 모형)</span></h3>
+    <div class="vl-say">💬 <b>교과서 말풍선</b> · 제목과 주문 버튼, 주문 내역의 메뉴 이름만 바뀌면 또 다른 맛집 앱을 만들 수 있어요. 참고 표를 활용해 원하는 맛집으로 바꿔 보세요! 「메뉴1」「메뉴2」「메뉴3」이라고 적힌 곳에 우리 모둠이 원하는 메뉴 이름을 넣어요.</div>
+    <div class="vl-wrap">
+      <div class="vl-phone" aria-label="키오스크 앱 완성 화면 모형">
+        <div class="vl-bar">Screen1</div>
+        <div class="vl-scr">
+          <div class="vl-title" id="vlTitle">소문난 햄버거 맛집</div>
+          <div class="vl-menus"><div id="vlMb1">치즈 버거</div><div id="vlMb2">새우 버거</div><div id="vlMb3">치킨 버거</div></div>
+          <div class="vl-gap"></div>
+          <div class="vl-ord"><span class="l" id="vlMo1">치즈 버거 주문</span><span class="q">수량</span><span class="p">금액</span></div>
+          <div class="vl-ord"><span class="l" id="vlMo2">새우 버거 주문</span><span class="q">수량</span><span class="p">금액</span></div>
+          <div class="vl-ord"><span class="l" id="vlMo3">치킨 버거 주문</span><span class="q">수량</span><span class="p">금액</span></div>
+          <div class="vl-gap"></div>
+          <div class="vl-tot"><span>총 금액</span><span>금액</span></div>
+          <div class="vl-end"><span>종료</span></div>
+        </div>
+      </div>
+      <div class="vl-fields">
+        <b>우리 모둠 맛집으로 바꿔 보기</b>
+        <label for="vlApp">앱(음식점) 이름</label>
+        <div><input type="text" id="vlApp" data-memo="vlApp" placeholder="소문난 햄버거 맛집" maxlength="20"><div class="saved"></div></div>
+        <label for="vlMenu1">메뉴 1</label>
+        <div><input type="text" id="vlMenu1" data-memo="vlMenu1" placeholder="치즈 버거" maxlength="12"><div class="saved"></div></div>
+        <label for="vlMenu2">메뉴 2</label>
+        <div><input type="text" id="vlMenu2" data-memo="vlMenu2" placeholder="새우 버거" maxlength="12"><div class="saved"></div></div>
+        <label for="vlMenu3">메뉴 3</label>
+        <div><input type="text" id="vlMenu3" data-memo="vlMenu3" placeholder="치킨 버거" maxlength="12"><div class="saved"></div></div>
+        <p class="note">연한 글씨는 교과서에 인쇄된 예(소문난 햄버거 맛집)예요. 입력하면 왼쪽 모형이 바로 바뀌어요.</p>
+      </div>
+    </div>
+    <div class="vl-leg"><span><i style="background:#dbe9ff;border:1px solid #9bbbe6"></i>레이블(글자 안내)</span><span><i style="background:#f6c2da;border:1px solid #d889ab"></i>버튼(종료)</span><span><i style="background:#e7c9a2"></i>메뉴 주문 버튼(그림 자리)</span></div>
+  </div>
+  <div class="card">
+    <h3>🏷️ 화면의 부분 이름 <span class="muted" style="font-weight:400;font-size:.88rem">(196쪽 오른쪽 설명)</span></h3>
+    <div class="of-tw"><table class="tbl">
+      <tr><th>화면 위에서부터</th><th>하는 일</th></tr>
+      <tr><td>제목</td><td>앱(음식점) 이름</td></tr>
+      <tr><td>메뉴 주문 버튼</td><td>누르면 해당 메뉴를 주문해요</td></tr>
+      <tr><td>요소 사이 간격</td><td>화면 요소 사이를 띄워 줘요</td></tr>
+      <tr><td>메뉴별 주문 내역 안내</td><td>주문 수량에 따른 금액을 알려 줘요</td></tr>
+      <tr><td>주문 합계</td><td>총 주문 금액을 안내해요</td></tr>
+      <tr><td>앱 종료 버튼</td><td>앱을 끝내요</td></tr>
+    </table></div>
+    <p class="note" style="margin-bottom:0">컴포넌트의 이름과 높이·너비 같은 속성은 교과서 196쪽 표에서 확인해요.</p>
+  </div>
+</section>
+
+<!-- 4 소프트웨어 평가 -->
+<section class="page" data-name="⑤ 소프트웨어 평가" data-acc="#9b4fc4">
+  <div class="head"><div class="num">04</div><div><h2>⑤ 소프트웨어 평가</h2><p>교과서 197쪽 · 사회적·기능적·윤리적 가치</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>앱이 세상에 나갔을 때 <b>사람들에게 어떤 영향</b>을 줄지 따져 보는 거예요. 돈이 되는지(경제적 관점)뿐 아니라 <b>세 가지 가치</b>도 함께 봐요.</span></div>
+  <div class="card">
+    <h3>⚖️ 소프트웨어 평가란? <span class="muted" style="font-weight:400;font-size:.88rem">(197쪽)</span></h3>
+    <p style="margin-top:0">소프트웨어를 평가한다는 것은 개발한 소프트웨어가 <b>세상에 공개되었을 때 사용자들에게 미칠 영향</b>을 생각해 보는 것이에요. 즉 소프트웨어의 가치를 경제적 관점은 물론, <b>사회적, 기능적, 윤리적</b> 관점에서 평가해 보아야 해요. 카드를 눌러 뜻을 확인해요.</p>
+    <div id="vlValFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">세 가지 가치를 살펴보면 <b>사회적으로 긍정적인 영향을 미치고 사용자 이익에 도움이 되는지</b> 알 수 있어요.</p>
+  </div>
+  <div class="card">
+    <h3>🎯 질문과 설명은 어떤 가치일까?</h3>
+    <p class="muted" style="margin-top:0">교과서에 나온 가치의 설명과 평가 질문이에요. 어느 가치에 해당하는지 골라 봐요.</p>
+    <div id="vlValSort"></div>
+  </div>
+  <div class="card">
+    <h3>📝 소프트웨어의 가치 성찰하기 <span class="muted" style="font-weight:400;font-size:.88rem">(197쪽 해 보기)</span></h3>
+    <p style="margin-top:0">우리가 만든 소프트웨어의 가치를 다양한 관점에서 평가할 수 있도록 <b>평가 기준을 추가로 만들고</b>, 점수(1~10점)를 매겨 봐요. 슬라이더를 움직인 칸만 합계에 들어가요.</p>
+
+    <div class="vl-ev" style="--k:#c0397a">
+      <h4>사회적 가치</h4>
+      <div class="vl-crit"><p class="q">공공의 이익과 공동체 발전에 얼마나 기여할 수 있는가?</p><p class="g">(크게 기여함: 10점 / 기여함: 5점 / 기여하지 못함: 1점)</p>
+        <div class="vl-sl"><div><input type="range" min="1" max="10" step="1" value="5" data-memo="vlSc0" aria-label="사회적 가치 교과서 기준 점수"><div class="saved"></div></div><b id="vlSv0">–</b></div></div>
+      <div class="vl-crit"><label for="vlOw0">내가 만든 평가 기준</label><input type="text" id="vlOw0" data-memo="vlOw0" placeholder="우리 앱만의 기준을 질문으로 써 보세요"><div class="saved"></div>
+        <div class="vl-sl"><div><input type="range" min="1" max="10" step="1" value="5" data-memo="vlOs0" aria-label="사회적 가치 내가 만든 기준 점수"><div class="saved"></div></div><b id="vlOv0">–</b></div></div>
+      <div class="vl-sub" id="vlSub0"></div>
+    </div>
+
+    <div class="vl-ev" style="--k:#2f6fd0">
+      <h4>기능적 가치</h4>
+      <div class="vl-crit"><p class="q">소프트웨어를 통해 사용자들의 삶의 형태가 바뀌거나 삶의 질이 향상되는가?</p><p class="g">(삶의 형태가 바뀜: 10점 / 삶의 질이 향상됨: 5점 / 삶이 달라지지 않음: 1점)</p>
+        <div class="vl-sl"><div><input type="range" min="1" max="10" step="1" value="5" data-memo="vlSc1" aria-label="기능적 가치 교과서 기준 점수"><div class="saved"></div></div><b id="vlSv1">–</b></div></div>
+      <div class="vl-crit"><label for="vlOw1">내가 만든 평가 기준</label><input type="text" id="vlOw1" data-memo="vlOw1" placeholder="우리 앱만의 기준을 질문으로 써 보세요"><div class="saved"></div>
+        <div class="vl-sl"><div><input type="range" min="1" max="10" step="1" value="5" data-memo="vlOs1" aria-label="기능적 가치 내가 만든 기준 점수"><div class="saved"></div></div><b id="vlOv1">–</b></div></div>
+      <div class="vl-sub" id="vlSub1"></div>
+    </div>
+
+    <div class="vl-ev" style="--k:#1f9d74">
+      <h4>윤리적 가치</h4>
+      <div class="vl-crit"><p class="q">사용자들이 소프트웨어를 사용함으로써 선한 영향을 받을 수 있는가?</p><p class="g">(긍정적인 영향을 받음: 10점 / 영향을 받지 못함: 5점 / 부정적인 영향을 받음: 1점)</p>
+        <div class="vl-sl"><div><input type="range" min="1" max="10" step="1" value="5" data-memo="vlSc2" aria-label="윤리적 가치 교과서 기준 점수"><div class="saved"></div></div><b id="vlSv2">–</b></div></div>
+      <div class="vl-crit"><label for="vlOw2">내가 만든 평가 기준</label><input type="text" id="vlOw2" data-memo="vlOw2" placeholder="우리 앱만의 기준을 질문으로 써 보세요"><div class="saved"></div>
+        <div class="vl-sl"><div><input type="range" min="1" max="10" step="1" value="5" data-memo="vlOs2" aria-label="윤리적 가치 내가 만든 기준 점수"><div class="saved"></div></div><b id="vlOv2">–</b></div></div>
+      <div class="vl-sub" id="vlSub2"></div>
+    </div>
+
+    <div class="vl-total" id="vlTotal" aria-live="polite"></div>
+    <p class="note" style="margin-bottom:0">점수는 우리 앱을 생각해 보는 도구예요. 높고 낮음에 정답은 없어요. 점수를 그렇게 매긴 까닭도 모둠과 이야기해 보세요.</p>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 융합 진로 마무리 -->
+<section class="page" data-name="융합 진로 마무리" data-acc="#2fa0a8">
+  <div class="head"><div class="num">05</div><div><h2>소프트웨어 개발 활동 정리하기</h2><p>교과서 198쪽 · 활동 돌아보기와 성취도 점검</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>「정보 접근성을 높이기 위한 소프트웨어 만들기」 활동을 <b>다섯 단계</b>로 되돌아보고, 잘한 점과 더 해 볼 점을 정리해요.</span></div>
+  <div class="card">
+    <h3>🔁 단계별로 돌아보기 <span class="muted" style="font-weight:400;font-size:.88rem">(198쪽)</span></h3>
+    <p style="margin-top:0">앞서 진행한 활동을 단계별로 떠올려 보고, <b>했다고 생각하는 것을 모두 눌러요</b>. 누르지 않은 것은 「더 해 볼래요」로 남겨 두면 돼요.</p>
+    <div class="vl-chk"><h4>1단계 · 주제 탐색과 사용자 요구 분석</h4><div id="vlR1"></div></div>
+    <div class="vl-chk"><h4>2단계 · 주제 선정</h4><div id="vlR2"></div></div>
+    <div class="vl-chk"><h4>3단계 · 해결 아이디어 구안</h4><div id="vlR3"></div></div>
+    <div class="vl-chk"><h4>4단계 · 소프트웨어 설계 및 제작</h4><div id="vlR4"></div></div>
+    <div class="vl-chk"><h4>5단계 · 소프트웨어 평가</h4><div id="vlR5"></div></div>
+    <div class="memo"><label>6 느낀 점 <small>활동하면서 느낀 점을 적어 보세요.</small></label><textarea data-memo="vlFeel" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="card">
+    <h3>☑️ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(198쪽)</span></h3>
+    <p style="margin-top:0">할 수 있다고 느끼는 것을 모두 눌러 보세요. 부족하면 괄호 속 쪽으로 돌아가요.</p>
+    <div id="vlAch"></div>
+  </div>
+</section>
+
+<!-- 6 교과 융합 진로 탐색 -->
+<section class="page" data-name="교과 융합 진로 탐색" data-acc="#9b4fc4">
+  <div class="head"><div class="num">06</div><div><h2>교과 융합 진로 탐색</h2><p>교과서 199쪽 · 소프트웨어 + 스타트업 융합 진로 분야</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>스타트업에는 <b>여러 분야의 전문가</b>가 모여 일해요. 각자 하는 일과 필요한 역량이 달라요.</span></div>
+  <div class="card">
+    <h3>🧭 소프트웨어 + 스타트업 융합 진로 분야 <span class="muted" style="font-weight:400;font-size:.88rem">(199쪽)</span></h3>
+    <p style="margin-top:0">스타트업은 프로젝트와 구성원 전체를 이끌어 가는 <b>프로젝트 매니저</b>, 소프트웨어를 개발하는 <b>개발자</b>, 사용자 환경을 만드는 <b>디자이너</b>, 마케팅을 담당하는 <b>홍보 전문가</b> 등 다양한 분야의 전문가들이 모여 각자의 역량을 발휘하며 성장해 나가요. 카드를 눌러 하는 일과 필요한 역량을 확인해요.</p>
+    <div id="vlJobFlip" class="tcards"></div>
+  </div>
+  <div class="card">
+    <h3>🙋 가장 관심이 가는 직업</h3>
+    <div id="vlJobVote" class="vote"></div>
+    <p class="note" id="vlJobRes" style="margin-bottom:0">직업을 하나 골라 보세요.</p>
+    <div class="memo"><label>그 직업을 고른 이유 <small>내가 가진 강점이나 해 보고 싶은 일과 연결해 보세요.</small></label><textarea data-memo="vlJobWhy" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">07</div><div><h2>마무리</h2><p>오늘 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#d64535"><b>테스트</b>는 기능이 정확하게 작동하는지 확인하고 오류를 찾아 고치는 단계예요. 스마트폰에서 음성 인식 설정을 해 두고, <b>QR코드</b>로 앱을 실행해 확인해요.</div>
+    <div style="--k:#e0702b"><b>패키징 및 배포</b>는 앱을 스마트폰에서 직접 실행할 수 있게 설치하는 단계예요. 앱인벤터 <b>빌드 &gt; Android App(.apk)</b>로 시작해요.</div>
+    <div style="--k:#9b4fc4">소프트웨어 평가는 공개되었을 때 사용자에게 미칠 영향을 생각하는 일이에요. <b>사회적·기능적·윤리적 가치</b>로 나누어 살펴보고, 스타트업에는 프로젝트 매니저·개발자·UI 디자이너·홍보 전문가가 함께해요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">앞에서 적은 메모를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">만든 앱을 어떻게 확인하고, 어떤 가치를 지녔는지 어떻게 평가할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="7"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>앱을 <b>테스트하고 스마트폰에 설치하는 과정</b>을 순서대로 설명하세요. <span class="muted">(화면 01~02 참고)</span></li>
+      <li>우리 앱이 가진 <b>사회적·기능적·윤리적 가치</b>를 각각 한 가지씩 설명하세요. <span class="muted">(화면 04 메모 참고)</span></li>
+      <li>스타트업에서 일하는 전문가 중 <b>관심 가는 직업</b>과 그 까닭을 적으세요. <span class="muted">(화면 06 메모 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

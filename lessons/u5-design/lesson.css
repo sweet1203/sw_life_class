@@ -1,0 +1,48 @@
+  /* u5-design 전용 (ds-) */
+  .ds-note{background:#fbfaf7;border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:10px;padding:10px 14px;font-size:.92rem;margin:8px 0;overflow-wrap:anywhere}
+  .ds-steps{display:grid;gap:12px;margin:8px 0 12px}
+  .ds-steps>div{display:flex;gap:12px;align-items:flex-start;background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k,var(--acc));padding:10px 14px;min-width:0}
+  .ds-steps .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--k,var(--acc));color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .ds-steps>div>div{min-width:0;overflow-wrap:anywhere}
+  .ds-steps b{color:var(--k,var(--acc))}
+  .ds-steps span:not(.n){display:block;font-size:.93rem;margin-top:3px}
+  .ds-three{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+  .ds-three>div{background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k,var(--acc));padding:10px 14px;font-size:.93rem;line-height:1.55;min-width:0;overflow-wrap:anywhere}
+  .ds-three b{display:block;color:var(--k,var(--acc))}
+  .ds-ul{margin:6px 0 0;padding-left:20px}
+  .ds-ul li{margin:3px 0}
+  .ds-tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+  .ds-tbl th,.ds-tbl td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+  .ds-tbl th{background:#f6e3ec;white-space:nowrap}
+  .ds-tbl th.r{background:#fbf0f5;white-space:normal}
+  .ds-svg{display:block;width:100%;max-width:420px;height:auto;margin:8px auto}
+  .ds-svg text{font-family:inherit;fill:#16202c}
+  .ds-trend{display:block;width:100%;max-width:440px;height:auto;margin:8px auto;background:#fff;border:1px solid var(--line);border-radius:10px}
+  .ds-trend text{font-family:inherit;font-size:11px;fill:#16202c}
+  .ds-fc .nd rect,.ds-fc .nd path,.ds-fc .nd ellipse{fill:#fff;stroke:#9aa5b4;stroke-width:1.5}
+  .ds-fc .nd.pk rect{fill:#fbe3ee;stroke:#c0397a}
+  .ds-fc .nd.cur rect,.ds-fc .nd.cur path,.ds-fc .nd.cur ellipse{fill:#ffe8a3;stroke:#c0397a;stroke-width:3}
+  .ds-fc .nd text{font-size:11px;text-anchor:middle}
+  .ds-fc .ln{fill:none;stroke:#2f6fd0;stroke-width:1.6}
+  .ds-fc .lab{font-size:10px;fill:#5b6776;text-anchor:start}
+  .ds-fcbar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+  .ds-fcsay{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:8px 12px;font-size:.93rem;min-height:3.2em;margin:6px 0;overflow-wrap:anywhere}
+  .ds-phone{width:100%;max-width:300px;margin:8px auto;border:6px solid #2b3445;border-radius:26px;padding:12px 10px;background:#fff;display:grid;gap:5px}
+  .ds-phone .r{border-radius:6px;padding:6px 6px;font-size:.8rem;text-align:center;cursor:pointer;border:2px solid transparent;overflow-wrap:anywhere;line-height:1.35}
+  .ds-phone .l{background:#dff0f5;color:#1d4e63}
+  .ds-phone .b{background:#fbd9d4;color:#8a2a1c}
+  .ds-phone .g{background:#f0eee8;color:#6b7280;font-size:.72rem;padding:2px 6px}
+  .ds-phone .r.on{border-color:#16202c;box-shadow:0 0 0 2px #ffe08a}
+  .ds-phone .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .ds-phone .row3 .r{min-height:54px;display:flex;align-items:center;justify-content:center}
+  .ds-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.86rem;margin:4px 0;justify-content:center}
+  .ds-leg i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:5px;vertical-align:-2px}
+  .ds-cloud{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:center;align-items:baseline;background:#fbfaf7;border-radius:12px;padding:12px;margin:8px 0}
+  .ds-cloud span{font-weight:700;line-height:1.2}
+  .ds-rel{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+  @media (max-width:520px){.ds-rel{grid-template-columns:1fr}}
+  .ds-rel ol{margin:6px 0 0;padding-left:0;list-style:none;background:#fbfaf7;border-radius:10px;padding:8px 10px}
+  .ds-rel li{font-size:.9rem;padding:4px 6px;border-radius:6px;margin:2px 0;overflow-wrap:anywhere}
+  .ds-rel li.red{outline:2px solid #d64535;background:#fff}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}

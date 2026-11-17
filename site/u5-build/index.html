@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>앱인벤터로 음성 인식 키오스크 앱 만들기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202c; --muted:#5b6776; --paper:#f3efe7; --card:#fff; --line:#e3ddd2;
+    --navy:#0f2742; --amber:#f2a516; --red:#d64535; --mint:#1f9d74;
+    --acc:#2f6fd0; --acc-soft:#e6eefb;
+    --shadow:0 18px 50px rgba(15,39,66,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:17px;line-height:1.65;
+    background-image:radial-gradient(rgba(15,39,66,.07) 1px,transparent 1px);background-size:22px 22px;display:flex;flex-direction:column}
+  .top{position:sticky;top:0;z-index:10;background:rgba(15,39,66,.97);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+  .brand{font-family:"Black Han Sans",sans-serif;font-size:1.15rem;letter-spacing:.01em;white-space:nowrap;color:inherit;text-decoration:none}
+  .steps{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .steps::-webkit-scrollbar{display:none}
+  .steps button{flex:0 0 auto;border:0;background:transparent;color:#9fb3cc;font:inherit;font-size:.82rem;padding:5px 9px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .steps button.on{background:var(--amber);color:var(--navy);font-weight:900}
+  .steps button.done::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#5fd3a5;margin-left:5px;vertical-align:middle}
+  .score{font-size:.85rem;background:rgba(255,255,255,.1);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .progress{height:4px;background:rgba(15,39,66,.12)}
+  .progress i{display:block;height:100%;background:var(--amber);width:0;transition:width .4s}
+  main{flex:1;width:100%;max-width:1120px;margin:0 auto;padding:26px 20px 30px}
+  .page{display:none}
+  .page.on{display:block;animation:enter .45s cubic-bezier(.2,.7,.2,1) both}
+  .page.on.back{animation-name:enterBack}
+  @keyframes enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  @keyframes enterBack{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  .head{display:flex;align-items:flex-end;gap:16px;margin-bottom:16px}
+  .num{font-family:"Black Han Sans",sans-serif;font-size:4.2rem;line-height:.85;color:var(--acc);opacity:.9}
+  .head h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:2.1rem;margin:0;line-height:1.1;letter-spacing:-.01em}
+  .head p{margin:4px 0 0;color:var(--muted)}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px;border:1px solid rgba(0,0,0,.04)}
+  .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  .grid2.even{grid-template-columns:1fr 1fr}
+  @media (max-width:860px){.grid2,.grid2.even{grid-template-columns:1fr}.num{font-size:3rem}.head h2{font-size:1.6rem}}
+  h3{margin:0 0 8px;font-size:1.1rem}
+  h4{margin:0 0 4px}
+  p{margin:6px 0}
+  a{color:var(--acc)}
+  .muted{color:var(--muted)}
+  .book{display:inline-block;font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 10px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:.93rem;margin:8px 0}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:center}
+  th{color:var(--muted);font-weight:700;font-size:.85rem}
+  td.l,th.l{text-align:left}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;font:inherit;font-size:.92rem;cursor:pointer;transition:.15s;color:var(--ink)}
+  .chip.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .btn{border:0;border-radius:10px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;transition:transform .1s, box-shadow .2s;box-shadow:0 6px 16px rgba(15,39,66,.18)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--acc);border:2px solid var(--acc);box-shadow:none}
+  .btn.sm{padding:5px 12px;font-size:.88rem}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ctrl{display:grid;grid-template-columns:70px 1fr 48px;align-items:center;gap:4px 10px;margin:4px 0}
+  .ctrl label{font-weight:900;font-size:.95rem}
+  .ctrl output{font-weight:900;text-align:right;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--acc)}
+  input[type=text],input[type=number]{font:inherit;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px;background:#fff;color:var(--ink)}
+  .big{font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums}
+  .ok{color:var(--mint);font-weight:700}.ng{color:var(--red);font-weight:700}
+  .callout{border-radius:12px;padding:12px 16px;background:var(--acc-soft);border-left:5px solid var(--acc);margin:12px 0}
+  svg{display:block;width:100%;height:auto}
+  select{max-width:100%}
+  .mono{overflow-wrap:anywhere;font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#f1f3f6;padding:1px 6px;border-radius:5px}
+  .cx{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 24px;margin-bottom:18px;border-left:6px solid var(--acc)}
+  .cx>h3{margin:0 0 4px;font-size:1.15rem}
+  .cx>.lead2{color:var(--muted);margin:0 0 12px}
+  .qa{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:860px){.qa{grid-template-columns:1fr}}
+  .qa>div{background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .qa b.q{display:block;color:var(--acc);margin-bottom:3px}
+  .vsteps{list-style:none;margin:0;padding:0;counter-reset:v}
+  .vsteps>li{position:relative;padding:9px 0 9px 44px;border-top:1px dashed var(--line)}
+  .vsteps>li:first-child{border-top:0}
+  .vsteps>li::before{counter-increment:v;content:counter(v);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:900;display:grid;place-items:center;font-size:.9rem}
+  .vsteps p{margin:2px 0 0;font-size:.93rem}
+  .case{background:#fff8e6;border:2px solid #f6d58a;border-radius:16px;padding:16px 20px;margin-bottom:18px}
+  .case>h3{margin:0 0 8px;font-size:1.05rem;color:#8a5a00}
+  /* 퀴즈 */
+  .quiz{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:16px;padding:20px 22px;margin-top:6px;box-shadow:var(--shadow)}
+  .quiz .qh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .quiz .qh b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.25rem;color:var(--amber)}
+  .quiz .qh span{font-size:.85rem;color:#a9bbd2}
+  .qi{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .qi .qq{font-weight:700;margin-bottom:8px}
+  .qi .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .qi .opts button{font:inherit;font-size:.93rem;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:10px;padding:6px 14px;cursor:pointer;transition:.15s}
+  .qi .opts button:hover:not(:disabled){border-color:var(--amber)}
+  .qi .opts button.right{background:var(--mint);border-color:var(--mint);font-weight:700}
+  .qi .opts button.wrong{background:var(--red);border-color:var(--red);text-decoration:line-through}
+  .qi .opts button:disabled{cursor:default}
+  .qi .why{margin-top:8px;font-size:.9rem;color:#d7e3f2;display:none}
+  .qi.answered .why{display:block}
+  .qi.answered.correct{box-shadow:inset 4px 0 0 var(--mint)}
+  .qi.answered.incorrect{box-shadow:inset 4px 0 0 var(--red)}
+  .shake{animation:shake .35s}
+  @keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+  .foot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(243,239,231,.94);backdrop-filter:blur(6px);border-top:1px solid var(--line)}
+  .foot .btn{min-width:110px}
+  .foot .pg{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+  /* 표지 */
+  .cover{position:relative;border-radius:22px;overflow:hidden;background:radial-gradient(ellipse at 20% 0%,#24507f 0%,#0f2742 55%,#0a1a2e 100%);color:#fff;min-height:520px;padding:46px 44px;box-shadow:var(--shadow)}
+  .cover canvas{position:absolute;right:0;top:0;height:100%;width:62%;image-rendering:pixelated;opacity:.95}
+  .cover .fade{position:absolute;inset:0;background:linear-gradient(90deg,#0f2742 34%,rgba(15,39,66,.75) 50%,rgba(15,39,66,0) 70%)}
+  .cover .in{position:relative;max-width:560px}
+  .cover .tag{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:.85rem;padding:4px 12px;border-radius:999px}
+  .cover h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:3.1rem;line-height:1.15;margin:16px 0 10px}
+  .cover p{color:#c8d6e8;font-size:1.05rem}
+  .cover ol{margin:18px 0 26px;padding-left:20px;color:#e1e9f4;columns:2;column-gap:28px;font-size:.95rem}
+  @media (max-width:700px){.cover{padding:30px 22px}.cover h1{font-size:2.2rem}.cover ol{columns:1}.cover canvas{width:100%;opacity:.3}.cover .fade{display:none}}
+  .today{margin-top:26px}
+  .kicker{display:inline-block;font-family:"Black Han Sans",sans-serif;font-size:1.15rem;color:var(--navy);margin-bottom:6px;border-bottom:4px solid var(--amber);line-height:1.2}
+  .today-lead{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:22px 26px;margin-bottom:16px}
+  .today-lead p{font-size:1.12rem;margin:6px 0 0}
+  .why3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+  @media (max-width:900px){.why3{grid-template-columns:1fr}}
+  .why{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 22px}
+  .why ul{margin:6px 0 0;padding-left:18px;font-size:.95rem}
+  .why li{margin:6px 0}
+  .why ul.can{list-style:none;padding:0}
+  .why ul.can li{padding-left:28px;position:relative}
+  .why ul.can li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 7' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+  .why ul.uses{list-style:none;padding:0}
+  .why ul.uses li{border-left:3px solid var(--amber);padding-left:10px}
+  .glossary-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .glossary-head .muted{font-size:.88rem}
+  .glossary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+  @media (max-width:1000px){.glossary{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.glossary{grid-template-columns:1fr}}
+  .gcard{all:unset;box-sizing:border-box;cursor:pointer;display:block;background:#fff;border-radius:14px;padding:16px 16px 12px;box-shadow:var(--shadow);border-top:6px solid var(--g);position:relative;transition:transform .18s, box-shadow .18s}
+  .gcard:hover,.gcard:focus-visible{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,39,66,.16)}
+  .gcard:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+  .gcard i{position:absolute;right:14px;top:8px;font-style:normal;font-family:"Black Han Sans",sans-serif;font-size:1.9rem;color:var(--g);opacity:.25}
+  .gcard h4{margin:0 0 6px;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;color:var(--g)}
+  .gcard dl{margin:0;font-size:.88rem;line-height:1.45}
+  .gcard dt{font-weight:900;margin-top:7px}
+  .gcard dd{margin:1px 0 0;color:#3c4654}
+  .prob{display:grid;grid-template-columns:60px 1fr 46px;gap:6px;align-items:center;font-size:.88rem;min-width:200px}
+  .prob i{display:block;height:12px;border-radius:6px;background:var(--acc)}
+  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:860px){.apps{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:2rem;display:block}
+  .apps button b{display:block}
+  .appd{display:none}
+  .appd.on{display:block;animation:enter .35s both}
+  .ex2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  @media (max-width:640px){.ex2{grid-template-columns:1fr}}
+  .ex2>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;font-size:.93rem;border-left:4px solid var(--acc)}
+  .try{margin-top:12px;background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.92rem}
+  .try ol{margin:4px 0 0;padding-left:20px}
+  /* 3단원 공통 */
+  .easy{display:flex;gap:12px;align-items:flex-start;background:#fffbea;border:2px solid #f6d58a;border-radius:14px;padding:12px 16px;margin:-4px 0 16px;font-size:1rem;line-height:1.6}
+  .easy>span{min-width:0;overflow-wrap:anywhere}
+  .easy b.t{flex:0 0 auto;background:#f2a516;color:#0f2742;border-radius:999px;padding:2px 10px;font-size:.82rem;margin-top:2px}
+  .route{position:absolute;right:30px;top:36px;width:min(430px,44%);display:grid;gap:10px}
+  .route .st{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:14px;padding:10px 14px;color:#fff;opacity:0;transform:translateX(20px);animation:rin .6s forwards}
+  .route .st i{font-style:normal;font-size:1.6rem}
+  .route .st b{display:block;font-size:1.02rem}
+  .route .st small{color:#c8d6e8;font-size:.82rem}
+  .route .ar{color:var(--amber);text-align:center;font-weight:900;opacity:0;animation:rin .5s forwards}
+  @keyframes rin{to{opacity:1;transform:none}}
+  @media (max-width:1080px){.route{position:relative;right:auto;top:auto;width:100%;margin-top:22px}}
+  .story{background:rgba(255,255,255,.08);border-left:4px solid var(--amber);border-radius:10px;padding:10px 14px;margin:14px 0;color:#e1e9f4;font-size:.95rem}
+  .story b{color:#fff}
+  /* 카드 묶음 */
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media (max-width:900px){.cards3,.cards4{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.cards3,.cards2,.cards4{grid-template-columns:1fr}}
+  .kc{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:14px 16px;border-top:6px solid var(--k,var(--acc))}
+  .kc h4{color:var(--k,var(--acc));font-size:1.05rem;margin:0 0 4px}
+  .kc p{font-size:.92rem;margin:4px 0 0}
+  .kc .ic{font-size:1.7rem;line-height:1}
+  .kc small{display:block;color:var(--muted);font-size:.8rem;margin-top:6px}
+  .tagt{display:inline-block;font-size:.76rem;font-weight:900;border-radius:999px;padding:1px 9px;background:color-mix(in srgb,var(--k,var(--acc)) 14%,white);color:var(--k,var(--acc));margin:6px 4px 0 0}
+  /* 연표 */
+  .tl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tl button{flex:1;min-width:92px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 6px;font:inherit;font-weight:900;cursor:pointer;color:var(--ink)}
+  .tl button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .tlv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:640px){.tlv{grid-template-columns:1fr}}
+  .tlv>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:5px solid var(--k)}
+  .tlv h4{color:var(--k)}
+  .tlv .it{margin:6px 0 0;font-size:.93rem}
+  .tlv .it b{display:block}
+  /* 분류 게임 */
+  .sit{background:#fbfaf7;border:2px dashed var(--line);border-radius:14px;padding:14px 16px;text-align:center;min-height:170px}
+  .sit .cnt{font-size:.82rem;color:var(--muted)}
+  .sit .sq{font-size:1.08rem;font-weight:900;margin:6px 0 12px;min-height:52px}
+  .sit .ic{font-size:2rem}
+  .sit .row{justify-content:center}
+  .sit .fb{min-height:24px;margin-top:8px;font-size:.93rem}
+  .sit .cat{border:2px solid var(--k);color:var(--k);background:#fff;font-weight:900}
+  .sit .cat:hover{background:color-mix(in srgb,var(--k) 12%,white)}
+  .board{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:8px;margin-top:12px}
+  @media (max-width:760px){.board{grid-template-columns:1fr 1fr}}
+  .board>div{background:#fff;border-radius:12px;border-top:5px solid var(--k);padding:8px 10px;font-size:.84rem;min-height:70px}
+  .board>div b{display:block;color:var(--k);font-size:.92rem}
+  .board>div span{display:block;border-top:1px dashed var(--line);padding:3px 0}
+  .board>div span.x{color:var(--red)}
+  /* 뒤집는 카드 */
+  .tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .tcard{perspective:900px;height:172px;cursor:pointer}
+  .tcard .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .tcard.flip .in{transform:rotateY(180deg)}
+  .tcard .f,.tcard .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:12px 14px;box-shadow:0 6px 16px rgba(15,39,66,.09);overflow:auto}
+  .tcard .f{background:#fff;border-top:6px solid var(--acc);display:flex;flex-direction:column;justify-content:center;text-align:center}
+  .tcard .f i{font-style:normal;font-size:2rem;line-height:1.1}
+  .tcard .f b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;line-height:1.25;margin-top:4px}
+  .tcard .f small{color:var(--muted);font-size:.78rem;margin-top:6px}
+  .tcard .b{background:var(--acc);color:#fff;transform:rotateY(180deg);font-size:.9rem;line-height:1.5}
+  .tcard .b .x{margin-top:6px;background:rgba(255,255,255,.16);border-radius:8px;padding:5px 8px;font-size:.84rem}
+  /* 사례 탭 */
+  .apps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .apps.a6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:860px){.apps,.apps.a6{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:480px){.apps,.apps.a6{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:12px 8px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s;font-size:.92rem}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:1.8rem;display:block}
+  .apps button b{display:block}
+  .cview{margin-top:14px}
+  .pr{display:grid;grid-template-columns:1fr 1.3fr;gap:12px}
+  @media (max-width:760px){.pr{grid-template-columns:1fr}}
+  .pr>div{border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .pr .p{background:#fdecea;border-left:5px solid var(--red)}
+  .pr .s{background:#e7f6ef;border-left:5px solid var(--mint)}
+  .pr h4{font-size:.95rem}
+  .pr .p h4{color:#9b2c20}.pr .s h4{color:#13684d}
+  .dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.9rem;margin-top:10px;background:#fbfaf7;border-radius:10px;padding:10px 12px}
+  .dl b{color:var(--acc)}
+  /* 메모 */
+  .memo{margin-top:10px}
+  .memo label{display:block;font-weight:700;font-size:.93rem;margin:10px 0 4px}
+  .memo label small{font-weight:400;color:var(--muted)}
+  .memo input[type=text]{width:100%}
+  textarea{font:inherit;width:100%;min-height:64px;padding:8px 10px;border:1px solid #c5ccd5;border-radius:8px;resize:vertical;color:var(--ink);background:#fff}
+  .saved{font-size:.8rem;color:var(--mint);min-height:1em}
+  /* 투표 */
+  .vote{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  @media (max-width:560px){.vote{grid-template-columns:1fr}}
+  .vote button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border:3px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center;font-weight:900}
+  .vote button.on{border-color:var(--acc);background:var(--acc-soft)}
+  .vote button small{display:block;font-weight:400;color:var(--muted);font-size:.84rem}
+  .reveal{display:none;margin-top:12px}
+  .reveal.on{display:block;animation:fadein .4s both}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .pct{display:grid;grid-template-columns:120px 1fr 50px;gap:8px;align-items:center;margin:6px 0;font-size:.93rem}
+  .pct i{display:block;height:16px;border-radius:8px;background:var(--acc);width:0;transition:width .8s}
+  /* 질문폼 연결 */
+  .formgo{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);margin-top:18px}
+  .formgo .kicker{color:#fff;border-bottom-color:var(--amber)}
+  .formgo h3{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;margin:4px 0 8px}
+  .formgo ol{margin:6px 0 12px;padding-left:22px;color:#e1e9f4}
+  .formgo ol li{margin:6px 0}
+  .formgo p{color:#c8d6e8;font-size:.92rem}
+  .formgo .go{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:1.1rem;text-decoration:none;border-radius:12px;padding:12px 22px;margin-top:6px}
+  .formgo .go:hover{filter:brightness(1.05)}
+  .msum{background:#fff;border-radius:14px;padding:12px 16px;margin-top:12px;color:var(--ink);font-size:.9rem}
+  .msum h4{color:var(--navy)}
+  .msum dl{margin:6px 0 0}
+  .msum dt{font-weight:700;margin-top:8px;color:var(--muted);font-size:.84rem}
+  .msum dd{margin:2px 0 0;white-space:pre-wrap}
+  .msum dd.e{color:#aab2bd}
+  .key3{display:grid;gap:10px;margin-bottom:18px}
+  .key3 div{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;border-left:6px solid var(--k);font-size:1.02rem}
+  .note{font-size:.84rem;color:var(--muted);margin-top:8px}
+  .flow2{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .flow2>div{flex:1;min-width:140px;background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .flow2>div b{display:block}
+  .flow2>div span{font-size:.88rem}
+  .flow2>.ar{flex:0 0 auto;min-width:0;background:none;border:0;align-self:center;font-weight:900;color:var(--muted);padding:0}
+  @media (max-width:640px){.flow2>.ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .chk{display:flex;flex-wrap:wrap;gap:8px}
+  .chk button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink)}
+  .chk button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .tbl td,.tbl th{padding:8px 10px;vertical-align:top}
+  .tbl td{text-align:left;font-size:.92rem}
+  .mx{min-width:560px}
+  .mx th{background:#fbfaf7}
+  .mx td{border:1px solid var(--line);height:74px;width:30%;font-size:.86rem;cursor:pointer;background:#fff;transition:background .2s}
+  .mx td:hover{background:var(--acc-soft)}
+  .mx td.fill{background:#e7f6ef;cursor:default}
+  .mx td.bad{background:#fdecea}
+  .mx th.r{white-space:nowrap}
+  #mxPool button{border-radius:12px;text-align:left;max-width:100%}
+  /* 4단원 */
+  .sdg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  @media (max-width:760px){.sdg{grid-template-columns:repeat(3,1fr)}}
+  .sdg button{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:8px 6px;color:#fff;background:var(--c);min-height:74px;font-size:.78rem;line-height:1.3;font-weight:700;display:flex;flex-direction:column;gap:2px;transition:transform .15s}
+  .sdg button b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.3rem;line-height:1}
+  .sdg button:hover,.sdg button.on{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .sdg button.on{outline:3px solid var(--navy)}
+  .sdgv{margin-top:12px;background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:6px solid var(--c,#0f2742);min-height:60px}
+  .five{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.five{grid-template-columns:1fr}}
+  .five>div{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:12px 12px;border-top:6px solid var(--k)}
+  .five b.n{font-family:"Black Han Sans",sans-serif;color:var(--k);font-size:1.2rem}
+  .five h4{margin:2px 0 4px;font-size:.98rem}
+  .five p{font-size:.86rem;margin:4px 0}
+  .five .ml{margin-top:8px;background:color-mix(in srgb,var(--k) 10%,white);border-radius:8px;padding:6px 8px;font-size:.82rem}
+  .quad{display:grid;grid-template-columns:28px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:6px;margin-top:8px}
+  .quad .ax{font-size:.78rem;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+  .quad .ax.v{writing-mode:vertical-rl}
+  .quad .cell{background:#fbfaf7;border:2px dashed var(--line);border-radius:12px;min-height:84px;padding:6px 8px;font-size:.84rem;cursor:pointer}
+  .quad .cell.best{border-color:var(--mint);background:#e7f6ef}
+  .quad .cell small{display:block;color:var(--muted);font-size:.74rem}
+  .quad .cell span{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:2px 2px 0 0}
+  .qbuild{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:1.08rem;font-weight:700;background:#fff8e6;border:2px solid #f6d58a;border-radius:12px;padding:12px 14px}
+  .qbuild input{flex:1;min-width:200px;font:inherit;font-weight:400;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px}
+  .plan{width:100%}
+  .plan td:first-child{width:150px;font-weight:700;font-size:.9rem;background:#fbfaf7}
+  .plan input{width:100%;font:inherit;padding:5px 8px;border:1px solid #c5ccd5;border-radius:6px}
+  /* 시뮬레이터 */
+  .sim{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:760px){.sim{grid-template-columns:1fr}}
+  .sim .cls{background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .sim .cls h4{color:var(--k);display:flex;justify-content:space-between}
+  .sim .cls ul{margin:6px 0 0;padding-left:18px;font-size:.88rem}
+  .sim .cls li.new{color:var(--k);font-weight:700}
+  .cand{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .cand button{border:2px dashed var(--k);background:#fff;border-radius:10px;padding:4px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
+  .cand button.on{border-style:solid;background:color-mix(in srgb,var(--k) 15%,white);font-weight:700}
+  .tt td,.tt th{padding:6px 8px;font-size:.88rem}
+  .tt td.r{color:var(--mint);font-weight:900}.tt td.w{color:var(--red);font-weight:900}
+  .score2{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .score2 div{flex:1;min-width:140px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .score2 b{display:block;font-family:"Black Han Sans",sans-serif;font-size:1.8rem;color:var(--acc)}
+  /* 스크래치 블록 */
+  .blocks{font-family:ui-sans-serif,system-ui;font-size:.86rem;display:inline-block}
+  .blk{display:block;border-radius:6px;padding:5px 10px;margin:3px 0;color:#fff;width:max-content;max-width:100%}
+  .blk.ev{background:#ffbf00;color:#333;border-radius:14px 14px 6px 6px}
+  .blk.ctl{background:#ffab19;color:#333}
+  .blk.ml{background:#4c97ff}
+  .blk.lk{background:#9966ff}
+  .blk.in{margin-left:22px}
+  .blk i{font-style:normal;background:rgba(255,255,255,.9);color:#333;border-radius:10px;padding:0 6px;margin:0 2px}
+  .penguin{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  @media (max-width:560px){.penguin{grid-template-columns:1fr}}
+  .penguin div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .dist td,.dist th{padding:6px 8px;font-size:.88rem;text-align:center}
+  .dist tr.near{background:#fff4d6;font-weight:900}
+  .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.roles{grid-template-columns:1fr 1fr}}
+  .roles div{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px;text-align:center;font-size:.84rem}
+  .roles div i{font-style:normal;font-size:1.6rem;display:block}
+  .roles div b{display:block;font-size:.92rem}
+  .roles div em{display:block;font-style:normal;margin-top:6px;background:#e6eefb;border-radius:8px;padding:4px 6px;color:#1b3d66}
+  .types div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .types div b{display:block}
+  .types div small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+
+  /* 카드 격자 칸이 안의 긴 코드·표 때문에 늘어나지 않게 */
+  .cards2>*,.cards3>*,.cards4>*,.grid2>*{min-width:0}
+
+  /* 공용 그림·실습 부품 (charts.js) */
+  .of-box{overflow-x:auto}
+  .of-box svg{display:block;width:100%;max-width:880px;height:auto}
+  .of-box .fe{fill:none;stroke:#8a94a3;stroke-width:2}
+  .of-box .fl{font-size:11px;fill:#5b6776;text-anchor:middle}
+  .of-box .fn{cursor:pointer}
+  .of-box .fb{fill:#fff;stroke-width:2}
+  .of-box .fn.on .fb{fill:#fff4d6;stroke-width:4}
+  .of-box .fn:focus{outline:none}
+  .of-box .fn:focus .fb{stroke-width:4}
+  .of-box .fnum{font-size:14px;font-weight:900;fill:#fff;text-anchor:middle}
+  .of-box .ft{font-size:13px;font-weight:700;fill:#16202c}
+  .of-box .fs{font-size:11px;fill:#5b6776}
+  .of-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:8px;font-size:.85rem}
+  .of-legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;background:var(--k);margin-right:5px;vertical-align:-2px}
+  .of-legend small{color:var(--muted)}
+  .of-tw{overflow-x:auto}
+  .of-set{min-width:760px;margin:0}
+  .of-set th{text-align:left;background:#fbfaf7;white-space:nowrap}
+  .of-set td{border-top:1px solid #eef0f3;font-size:.92rem;text-align:left}
+  .of-set td:first-child{font-weight:900;color:var(--acc);text-align:center;width:44px}
+  .of-set tr[data-s]{cursor:pointer;transition:background .3s}
+  .of-set tr.hl td{background:#fff4d6}
+  .sp-wrap{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;overflow-x:auto}
+  .sp-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  .sp-svg .sp-pt{cursor:grab}
+  .sp-read{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  .sp-read>div{background:#fbfaf7;border-radius:10px;padding:6px 12px;font-size:.9rem}
+  .sp-read b{font-size:1.15rem;color:var(--acc)}
+  .mt-wrap{overflow-x:auto}
+  .mt{margin:0}
+  .mt td{padding:4px 6px}
+  .mt .mt-in{width:5.5em;font:inherit;text-align:center;border:1px solid var(--line);border-radius:6px;padding:3px}
+  .mt tr.on td{background:#fff4d6}
+  /* 파이썬 실행 칸 (pyrun) */
+  .pyrun{margin:12px 0}
+  .pr-code,.pr-stdin{display:block;width:100%;font-family:"Menlo","Consolas","Courier New",monospace;
+    font-size:.92rem;line-height:1.5;color:#e1e9f4;background:#0f2742;border:1px solid #1d3a5c;
+    border-radius:10px;padding:12px 14px;resize:vertical;tab-size:4;-webkit-text-size-adjust:100%}
+  .pr-code{white-space:pre;overflow-x:auto}
+  .pr-code:focus,.pr-stdin:focus{outline:2px solid var(--amber);outline-offset:1px}
+  .pr-code[readonly]{opacity:.96}
+  .pr-in{margin-top:8px}
+  .pr-in label{display:block;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:3px}
+  .pr-in label small{font-weight:400}
+  .pr-stdin{font-size:.88rem;min-height:2.4em}
+  .pr-bar{display:flex;gap:8px;align-items:center;margin:8px 0 0;flex-wrap:wrap}
+  .pr-stat{font-size:.82rem;color:var(--muted)}
+  .pr-out{margin:8px 0 0;font-family:"Menlo","Consolas","Courier New",monospace;font-size:.9rem;
+    line-height:1.5;white-space:pre-wrap;word-break:break-word;color:#0c2a1e;background:#e7f6ee;
+    border-left:4px solid var(--mint);border-radius:0 8px 8px 0;padding:10px 12px;overflow-x:auto}
+  .pr-out.err{color:#4a1512;background:#fdecea;border-left-color:var(--red)}
+
+  /* 넓은 표는 가로로 스크롤되게 감싼다(폰 폭 넘침 방지) */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 0}
+  .tscroll>table{margin-top:0}
+
+  /* 읽기용 코드 카드 (실행하지 않고 보여 주기만) */
+  .code{background:#0f2742;color:#e1e9f4;border-radius:10px;padding:12px 14px;margin:10px 0;
+    font-family:"Menlo","Consolas","Courier New",monospace;font-size:.92rem;line-height:1.55;
+    overflow-x:auto;white-space:pre;-webkit-overflow-scrolling:touch}
+  .code b{color:var(--amber);font-weight:700}
+  .code i{color:#8aa6cc;font-style:normal}
+  /* 진도 보내기 */
+  .tr-gate{position:fixed;inset:0;z-index:200;background:rgba(15,39,66,.72);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
+  .tr-card{background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.3);padding:22px 22px 16px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px}
+  .tr-card h2{margin:0;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;color:var(--navy)}
+  .tr-sub{margin:-4px 0 4px;color:var(--muted);font-size:.92rem}
+  .tr-cls{display:flex;gap:8px}
+  .tr-cls label{flex:1;cursor:pointer}
+  .tr-cls input{position:absolute;opacity:0;pointer-events:none}
+  .tr-cls span{display:block;text-align:center;padding:10px 0;border:2px solid var(--line);border-radius:12px;font-weight:900;font-size:1.05rem}
+  .tr-cls input:checked+span{border-color:var(--navy);background:var(--navy);color:#fff}
+  .tr-cls input:focus-visible+span{outline:3px solid var(--amber)}
+  .tr-f{display:flex;align-items:center;gap:10px}
+  .tr-f span{width:40px;font-weight:700}
+  .tr-f input{flex:1;min-width:0;font:inherit;font-size:1.05rem;padding:9px 12px;border:1px solid #c5ccd5;border-radius:10px}
+  .tr-err{color:var(--red);font-weight:700;font-size:.9rem;min-height:1.2em}
+  .tr-card .btn{padding:12px;font-size:1.05rem;background:var(--navy)}
+  .tr-note{margin:2px 0 0;color:var(--muted);font-size:.8rem;line-height:1.5;text-align:center}
+  .tr-who,.tr-badge{display:flex;align-items:center;gap:6px;font-size:.82rem;background:rgba(255,255,255,.12);border-radius:999px;padding:3px 4px 3px 12px;white-space:nowrap}
+  .tr-badge{padding:3px 12px;background:var(--amber);color:#111;font-weight:700}
+  .tr-who button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(255,255,255,.18);border-radius:999px;padding:2px 9px}
+  .tr-who button:hover{background:rgba(255,255,255,.3)}
+  .tr-cls[hidden]{display:none}
+  .tr-badge button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(0,0,0,.14);border-radius:999px;padding:2px 9px;margin-left:6px}
+  /* page-guard: 글자 선택·복사 막기 (입력 칸은 편집 가능) */
+  body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  input,textarea,select,[contenteditable]{-webkit-user-select:text;user-select:text}
+  .pg-toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#0f2742;color:#fff;padding:9px 16px;border-radius:999px;font-size:.9rem;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:opacity .2s;pointer-events:none}
+  .pg-toast.on{opacity:1}
+  /* u5-build 전용 (bd-) */
+  .bd-note{background:#fbfaf7;border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:10px;padding:10px 14px;font-size:.92rem;margin:8px 0;overflow-wrap:anywhere}
+  .bd-kind{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px}
+  .bd-kind b{display:block;color:var(--k)}
+  .bd-kind span{display:block;font-size:.92rem;margin-top:3px}
+  .bd-steps{display:grid;gap:12px;margin:8px 0 12px}
+  .bd-steps>div{display:flex;gap:12px;align-items:flex-start;background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k,var(--acc));padding:10px 14px;min-width:0}
+  .bd-steps .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--k,var(--acc));color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .bd-steps>div>div{min-width:0;overflow-wrap:anywhere}
+  .bd-steps b{color:var(--k,var(--acc))}
+  .bd-steps span:not(.n){display:block;font-size:.93rem;margin-top:3px}
+  .bd-stage{display:grid;gap:10px;margin:8px 0}
+  .bd-stage>div{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px;min-width:0;overflow-wrap:anywhere}
+  .bd-stage b{color:var(--k)}
+  .bd-stage ol{margin:4px 0 0;padding-left:20px;font-size:.92rem}
+  .bd-ul{margin:6px 0 0;padding-left:20px}
+  .bd-ul li{margin:3px 0}
+  .bd-tbl{width:100%;border-collapse:collapse;font-size:.86rem}
+  .bd-tbl th,.bd-tbl td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+  .bd-tbl th{background:#f6e3ec}
+  .bd-tbl td.c{white-space:nowrap}
+  .bd-svg{display:block;width:100%;max-width:440px;height:auto;margin:8px auto}
+  .bd-svg text{font-family:inherit;fill:#16202c;font-size:10px}
+  .bd-svg .rg rect{fill:#fff;stroke:#9aa5b4;stroke-width:1.5;cursor:pointer}
+  .bd-svg .rg{cursor:pointer}
+  .bd-svg .rg.on rect{fill:#ffe8a3;stroke:#c0397a;stroke-width:2.5}
+  .bd-svg .rg.on rect.pv{fill:#ffe8a3}
+  .bd-say{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:8px 12px;font-size:.93rem;min-height:3.2em;margin:6px 0;overflow-wrap:anywhere}
+  .bd-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  @media (max-width:640px){.bd-two{grid-template-columns:1fr}}
+  .bd-tree{display:grid;gap:6px;grid-template-columns:minmax(0,1fr)}
+  .bd-tree button{display:block;width:100%;min-width:0;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:2px 4px;font:inherit;cursor:pointer;color:var(--ink)}
+  .bd-tree button.on{border-color:var(--acc);background:#fdf0f6}
+  .bd-tree pre{margin:0;padding:6px 8px;font-size:.78rem;line-height:1.5;overflow-x:auto;white-space:pre;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:none}
+  .bd-tree .ep{padding:0}
+  .bd-phone{width:100%;max-width:290px;margin:0 auto;border:6px solid #2b3445;border-radius:26px;padding:10px 8px;background:#f6a21e;display:grid;gap:5px}
+  .bd-phone [data-g]{border:2px solid transparent;border-radius:6px;cursor:pointer;min-width:0}
+  .bd-phone [data-g].on{border-color:#16202c;box-shadow:0 0 0 3px #fff6c9}
+  .bd-phone .ttl{background:#fde7b0;text-align:center;font-weight:800;font-size:.95rem;padding:4px}
+  .bd-phone .mn{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;height:62px}
+  .bd-phone .mn span{background:#fff;border:1px solid #d9a23a;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.72rem;color:#8a6a1c;text-align:center}
+  .bd-phone .gp{background:rgba(255,255,255,.5);font-size:.64rem;text-align:center;color:#7a5a1a;padding:0}
+  .bd-phone .od{background:#fff;display:grid;gap:3px;padding:4px}
+  .bd-phone .od>div,.bd-phone .tt{display:flex;gap:3px;font-size:.66rem}
+  .bd-phone .od>div span{border:1px solid #cfd6df;border-radius:3px;padding:2px 3px;text-align:center;color:#5b6776;min-width:0;overflow-wrap:anywhere}
+  .bd-phone .tt{background:#fff;padding:4px}
+  .bd-phone .tt span{border:1px solid #cfd6df;border-radius:3px;padding:2px 3px;color:#5b6776;min-width:0}
+  .bd-phone .ex{background:#e6e3dc;text-align:center;font-size:.8rem;padding:5px;color:#16202c}
+  .bd-phone .iv{background:rgba(255,255,255,.6);font-size:.66rem;text-align:center;padding:3px;color:#5b6776}
+  .bd-mini{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.86rem;margin:4px 0}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}
+</style>
+</head>
+<body>
+<div class="top">
+  <span class="brand">소프트웨어와 생활</span>
+  <nav class="steps" id="steps"></nav>
+  <div class="score" id="score"></div>
+</div>
+<div class="progress"><i id="prog"></i></div>
+
+<main id="main">
+
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#c0397a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅴ. 가치를 창출하는 소프트웨어 · 융합 진로</span>
+      <h1>말로 주문하는<br>키오스크 앱 만들기</h1>
+      <div class="story"><b>설계를 바탕으로 앱을 만들어 볼까요? (186쪽)</b><br>앞에서 정한 <b>알고리즘(순서도)</b>과 <b>기본 화면 구성</b>을 바탕으로, 우리 모둠의 메뉴로 <b>음성 인식 키오스크 앱</b>을 만들어 봐요. 개발 도구는 블록을 끌어다 놓는 방식으로 앱을 만드는 <b>앱인벤터</b>예요.</div>
+      <p>화면을 만들고(1단계), 기능을 넣는(2단계) 순서를 따라가요.</p>
+      <ol>
+        <li>앱인벤터 살펴보기</li><li>화면 개발</li><li>기능 개발 1 · 환영 인사와 변수</li><li>기능 개발 2 · 주문 인식과 총 금액</li><li>앱 종료하기</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 할 일 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🧰</i><div><b>준비</b><small>앱인벤터 화면 알아보기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>📱</i><div><b>1단계 · 화면 개발</b><small>버튼과 레이블 배치하기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🧩</i><div><b>2단계 · 기능 개발</b><small>블록으로 동작 넣기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">2) 소프트웨어 제작 (186쪽)</span>
+      <p>설계 단계에서 작성한 알고리즘과 기본 화면 구성을 바탕으로, 185쪽 〈해 보기〉에서 정한 우리 모둠의 메뉴로 음성 인식 키오스크 앱을 제작해 봐요. 개발 도구는 블록 기반 방식으로 앱 또는 웹 사이트를 쉽게 만들 수 있는 <b>앱인벤터</b>를 써요.</p>
+    </div>
+    <div class="card">
+      <h3>🐍 이 차시에서 코드는 두 가지로 만나요</h3>
+      <div class="grid2 even">
+        <div class="bd-kind" style="--k:#1f2f4a"><b>📖 읽는 블록</b><span>앱인벤터는 웹에서 바로 돌릴 수 없어요. 교과서의 블록은 어두운 <b>코드 카드</b>에 블록 글자 그대로 옮겼어요. 블록 안에 블록이 끼워진 모양은 <b>들여쓰기</b>로 나타냈어요.</span></div>
+        <div class="bd-kind" style="--k:#1f9d74"><b>▶ 돌려 보는 파이썬</b><span>블록이 하는 일과 같은 생각을 <b>파이썬</b>으로 흉내 낸 코드예요. 앱인벤터는 블록으로, 여기서는 같은 생각을 파이썬으로 해 봐요.</span></div>
+      </div>
+      <p class="note" style="margin-bottom:0">처음 실행하면 파이썬을 불러오느라 몇 초 걸려요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses"><li><b>오늘의 질문</b> · 말로 주문하는 키오스크 앱은 어떤 화면과 블록으로 만들어질까?</li></ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>앱인벤터의 화면 구성과 앱 제작 4단계를 설명할 수 있다.</li>
+          <li>화면 개발에서 만드는 컴포넌트와 속성을 말할 수 있다.</li>
+          <li>환영 인사·주문 인식·총 금액 안내·종료 블록이 하는 일을 설명할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">앱인벤터 · 팔레트 · 뷰어 · 컴포넌트 · 속성 · 변수 · 함수 · 음성 변환 · 음성 인식</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>우리 모둠의 키오스크 앱에는 <b>어떤 메뉴</b> 세 가지를 넣고 싶나요? <small>185쪽 〈해 보기〉에서 정한 메뉴를 적어도 좋아요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="bdPlan" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 앱인벤터 살펴보기부터 →</button></div>
+  </div>
+</section>
+
+<!-- 1 앱인벤터 -->
+<section class="page" data-name="앱인벤터 살펴보기" data-acc="#c0397a">
+  <div class="head"><div class="num">01</div><div><h2>준비 학습 · 개발 도구 살펴보기</h2><p>교과서 186쪽 · 앱인벤터 실행과 화면 구성</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>앱인벤터는 <b>블록을 끌어다 놓아</b> 앱을 만드는 도구예요. 인터넷 사이트에 들어가서 바로 쓸 수 있고, 중학교 때 배운 <b>엔트리·스크래치</b>와 사용 방법이 비슷해요.</span></div>
+
+  <div class="card">
+    <h3>🧰 앱인벤터란? <span class="muted" style="font-weight:400;font-size:.88rem">(186쪽)</span></h3>
+    <p style="margin-top:0">앱인벤터는 안드로이드 기반 스마트 기기나 <b>에뮬레이터</b>(대리 실행기)를 이용해 앱을 만들 수 있도록 해 주는 개발 도구예요. 웹상에서 개발 환경을 제공하기 때문에 사이트에 접속해서 프로그래밍할 수 있어요. 드래그 앤 드롭 방식이라서 앱을 만들려는 의지만 있다면 누구든 간단히 개발할 수 있도록 지원해요.</p>
+    <div class="bd-steps">
+      <div style="--k:#2f6fd0"><span class="n">1</span><div><b>실행하기</b><span>앱인벤터 사이트(appinventor.mit.edu)에 접속하고, 왼쪽 상단의 [Create Apps!]를 누른 뒤 구글 계정으로 로그인해요.</span></div></div>
+      <div style="--k:#2f9a5a"><span class="n">2</span><div><b>프로젝트 생성하기</b><span>프로그램 창이 열리면 상단 맨 오른쪽 계정 옆의 언어 메뉴에서 「한국어」를 선택해요. 그다음 상단 메뉴에서 [New project]를 누르고 <b>프로젝트명</b>을 정해요.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🖥️ 앱인벤터 화면 구성 (디자이너 화면) <span class="muted" style="font-weight:400;font-size:.88rem">(186쪽)</span></h3>
+    <p style="margin-top:0">아래 그림은 설명을 위해 간단히 그린 <b>모형</b>이에요. 칸을 눌러 이름과 하는 일을 확인해 봐요.</p>
+    <svg class="bd-svg" id="bdDesigner" viewBox="0 0 360 250" role="img" aria-label="앱인벤터 디자이너 화면 모형. 위쪽에 프로젝트명과 전환 버튼, 아래에 왼쪽부터 팔레트, 뷰어, 컴포넌트와 미디어, 속성 칸">
+      <g class="rg" data-r="0"><rect x="6" y="6" width="90" height="24" rx="5"/><text x="51" y="22" text-anchor="middle">프로젝트명</text></g>
+      <g class="rg" data-r="6"><rect x="258" y="6" width="96" height="24" rx="5"/><text x="306" y="22" text-anchor="middle">[디자이너][블록]</text></g>
+      <g class="rg" data-r="1"><rect x="6" y="38" width="82" height="206" rx="5"/><text x="47" y="56" text-anchor="middle" font-weight="700">팔레트</text><text x="47" y="78" text-anchor="middle">버튼</text><text x="47" y="96" text-anchor="middle">레이블</text><text x="47" y="114" text-anchor="middle">이미지</text><text x="47" y="132" text-anchor="middle">…</text></g>
+      <g class="rg" data-r="2"><rect x="94" y="38" width="104" height="206" rx="5"/><text x="146" y="56" text-anchor="middle" font-weight="700">뷰어</text><rect class="pv" x="116" y="66" width="60" height="164" rx="8" fill="#fff" stroke="#2b3445" stroke-width="2"/><text x="146" y="82" text-anchor="middle">Screen1</text></g>
+      <g class="rg" data-r="3"><rect x="204" y="38" width="70" height="116" rx="5"/><text x="239" y="56" text-anchor="middle" font-weight="700">컴포넌트</text><text x="212" y="76">Screen1</text></g>
+      <g class="rg" data-r="4"><rect x="204" y="160" width="70" height="84" rx="5"/><text x="239" y="178" text-anchor="middle" font-weight="700">미디어</text><text x="239" y="198" text-anchor="middle">파일 올리기</text></g>
+      <g class="rg" data-r="5"><rect x="280" y="38" width="74" height="206" rx="5"/><text x="317" y="56" text-anchor="middle" font-weight="700">속성</text><text x="317" y="78" text-anchor="middle">높이</text><text x="317" y="96" text-anchor="middle">너비</text><text x="317" y="114" text-anchor="middle">글꼴 크기</text></g>
+    </svg>
+    <div class="bd-say" id="bdDesSay" aria-live="polite">그림의 칸을 눌러 보세요.</div>
+    <p class="bd-note" style="margin-bottom:0">💬 교과서 말풍선 「앱인벤터는 블록 기반의 소프트웨어로, 중학교 때 배운 엔트리나 스크래치와 사용 방법이 비슷해!」</p>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 단계 미리보기 -->
+<section class="page" data-name="제작 단계 미리보기" data-acc="#c0397a">
+  <div class="head"><div class="num">02</div><div><h2>개발 앱 제작 단계 미리보기</h2><p>교과서 187쪽 · 4단계와 단계별 작업</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>앱 만들기는 <b>화면 → 기능 → 테스트 → 배포</b> 순서로 해요. 먼저 눈에 보이는 화면을 만들고, 그다음 움직이게 하고, 잘 되는지 확인한 뒤 사람들에게 내놓아요.</span></div>
+
+  <div class="card">
+    <h3>🪜 소프트웨어 제작 4단계 <span class="muted" style="font-weight:400;font-size:.88rem">(187쪽)</span></h3>
+    <p style="margin-top:0">소프트웨어 설계를 바탕으로 제작 단계를 정하고, 각 단계에서 할 작업을 알아봐요.</p>
+    <div class="bd-stage">
+      <div style="--k:#2f9a5a"><b>1단계 · 화면 개발</b> 음성 인식 키오스크 앱 화면 설계를 토대로 버튼을 구성해 화면을 개발하는 단계 <span class="muted">(188쪽)</span>
+        <ol><li>메인 화면 설정 및 제목 넣기</li><li>메뉴 버튼 만들기</li><li>메뉴 주문 확인 창 만들기</li><li>총 금액 만들기</li><li>종료 버튼 및 음성 인식 요소 만들기</li></ol></div>
+      <div style="--k:#2f6fd0"><b>2단계 · 기능 개발</b> 설계 단계에서 계획한 소프트웨어의 기능들이 동작할 수 있도록 코딩하는 단계 <span class="muted">(190쪽)</span>
+        <ol><li>환영 인사 설정하기</li><li>변수 만들기</li><li>주문 메뉴 인식하기</li><li>숫자 인식 함수 만들기</li><li>음성 인식 후 총 금액 안내하기</li><li>앱 종료하기 기능 만들기</li></ol></div>
+      <div style="--k:#d0602f"><b>3단계 · 테스트</b> 기능이 정상적으로 작동되고, 예상하지 못한 오류가 발생하는지 확인하는 단계 <span class="muted">(194쪽)</span>
+        <ol><li>스마트폰 설정하기</li><li>앱 실행하기</li></ol></div>
+      <div style="--k:#7a6ad0"><b>4단계 · 패키징 및 배포</b> 모듈로 생성한 실행 파일들을 묶어 앱스토어나 웹 사이트에 등록 및 배포하는 단계 <span class="muted">(195쪽)</span></div>
+    </div>
+    <p class="bd-note" style="margin-bottom:0">오늘은 1단계와 2단계를 해요. 3·4단계는 다음 차시에서 만나요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎮 이 작업은 몇 단계일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <div id="bdStageSort"></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 화면 개발 -->
+<section class="page" data-name="화면 개발" data-acc="#c0397a">
+  <div class="head"><div class="num">03</div><div><h2>(1) 화면 개발</h2><p>교과서 188~189쪽 · 컴포넌트 구성과 속성</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>화면은 <b>상자(배치) 안에 부품(버튼·레이블)을 넣는</b> 식으로 만들어요. 큰 상자 안에 작은 상자를 넣고, 그 안에 글자 칸을 넣어요.</span></div>
+
+  <div class="card">
+    <h3>📱 화면 개발 5단계 <span class="muted" style="font-weight:400;font-size:.88rem">(188~189쪽)</span></h3>
+    <p style="margin-top:0">앱을 실행했을 때 주문할 수 있는 메뉴 버튼이 나오고, 음식의 수량을 말하면 음성을 인식해 금액을 표시하는 동시에 음성으로 알려 주는 화면을 개발해 봐요.</p>
+    <div class="bd-steps">
+      <div style="--k:#c0397a"><span class="n">1</span><div><b>메인 화면 설정 및 제목 넣기</b><span>컴포넌트의 Screen1 속성에서 <b>수평정렬</b>을 「가운데:3」으로 설정해요. 레이블을 뷰어로 끌어다 놓고 이름 바꾸기에서 <b>제목</b>이라고 입력해요.</span></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>메뉴 버튼 만들기</b><span>제목 아래에 메뉴 버튼이 가로로 나열되도록 레이아웃의 <b>스크롤가능수평배치</b>를 가져와 높이를 정하고(<b>35퍼센트</b>), 그 안에 버튼을 세 개 넣어요. 버튼 모양을 만든 뒤, 미디어에 이미지를 올려 버튼의 <b>이미지</b> 속성으로 골라요.</span></div></div>
+      <div style="--k:#2f9a5a"><span class="n">3</span><div><b>메뉴 주문 확인 창 만들기</b><span><b>수직배치</b> 안에 <b>수평배치</b>를 넣고, 그 안에 레이블 3개를 넣어요. 완성된 수평배치를 메뉴 개수만큼 늘려요(주문 내역이 가로로, 메뉴는 세로로 정렬돼요).</span></div></div>
+      <div style="--k:#d0602f"><span class="n">4</span><div><b>총 금액 만들기</b><span>주문 내역 아래에 <b>수평배치</b>를 놓고 너비를 넓힌 뒤 레이블 2개를 넣어요.</span></div></div>
+      <div style="--k:#7a6ad0"><span class="n">5</span><div><b>종료 버튼 및 음성 인식 요소 만들기</b><span>버튼을 끌어다 놓고, 미디어의 <b>음성 변환</b>·<b>음성 인식</b>, 사용자 인터페이스의 <b>알림</b>을 뷰어로 끌어다 놓아요. 이 셋은 앱 화면에는 나타나지 않으나 기능은 쓸 수 있는 <b>보이지 않는 컴포넌트</b>예요.</span></div></div>
+    </div>
+    <p class="callout" style="margin-bottom:0">💡 <b>TIP · 간격 만들기</b> 4와 5 사이에 여유 간격이 생기도록 사용자 인터페이스에서 레이블을 추가해요. 3과 4 사이, 2와 3 사이에도 같은 방법으로 간격을 추가해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🌳 자료 8 · 컴포넌트 구성 예 <span class="muted" style="font-weight:400;font-size:.88rem">(188쪽)</span></h3>
+    <p style="margin-top:0">컴포넌트 구성 칸이나 화면 모형을 <b>눌러 보세요</b>. 서로 짝이 되는 부분이 표시되고, 속성(196쪽 표)이 나와요. 화면 모형은 쉽게 그린 그림이에요.</p>
+    <div class="bd-two">
+      <div class="bd-tree" id="bdTree">
+        <button data-g="1"><pre>[1] Screen1
+     └ 제목</pre></button>
+        <button data-g="2"><pre>[2] 스크롤가능수평배치_메뉴
+     ├ 메뉴1_주문버튼
+     ├ 메뉴2_주문버튼
+     └ 메뉴3_주문버튼</pre></button>
+        <button data-g="a"><pre>    레이블_간격1</pre></button>
+        <button data-g="3"><pre>[3] 수직배치_주문
+     ├ 수평배치_메뉴1
+     │   ├ 메뉴1_주문안내
+     │   ├ 메뉴1_주문수량
+     │   └ 메뉴1_주문금액
+     ├ 수평배치_메뉴2
+     │   └ (메뉴2_주문안내 · 주문수량 · 주문금액)
+     └ 수평배치_메뉴3
+         └ (메뉴3_주문안내 · 주문수량 · 주문금액)</pre></button>
+        <button data-g="b"><pre>    레이블_간격2</pre></button>
+        <button data-g="4"><pre>[4] 수평배치_총금액
+     ├ 총금액_주문안내
+     └ 총금액_계산</pre></button>
+        <button data-g="c"><pre>    레이블_간격3</pre></button>
+        <button data-g="5"><pre>[5] 종료버튼
+     음성변환1  (보이지 않음)
+     음성인식1  (보이지 않음)
+     알림1      (보이지 않음)</pre></button>
+      </div>
+      <div>
+        <div class="bd-phone" id="bdPhone" aria-label="앱 화면 모형">
+          <div class="ttl" data-g="1">(앱 이름)</div>
+          <div class="mn" data-g="2"><span>메뉴1</span><span>메뉴2</span><span>메뉴3</span></div>
+          <div class="gp" data-g="a">간격</div>
+          <div class="od" data-g="3"><div><span style="flex:3">메뉴1 주문</span><span style="flex:2">수량</span><span style="flex:3">금액</span></div><div><span style="flex:3">메뉴2 주문</span><span style="flex:2">수량</span><span style="flex:3">금액</span></div><div><span style="flex:3">메뉴3 주문</span><span style="flex:2">수량</span><span style="flex:3">금액</span></div></div>
+          <div class="gp" data-g="b">간격</div>
+          <div class="tt" data-g="4"><span style="flex:3">총 금액</span><span style="flex:4;text-align:right">계산 결과</span></div>
+          <div class="gp" data-g="c">간격</div>
+          <div class="ex" data-g="5">종료</div>
+          <div class="iv" data-g="5">보이지 않는 컴포넌트: 음성변환1 · 음성인식1 · 알림1</div>
+        </div>
+      </div>
+    </div>
+    <div class="bd-say" id="bdTreeSay" aria-live="polite">구성 칸이나 화면 모형을 눌러 보세요.</div>
+  </div>
+
+  <div class="card">
+    <h3>📏 컴포넌트 요소별 속성 안내 (핵심) <span class="muted" style="font-weight:400;font-size:.88rem">(196쪽 참고)</span></h3>
+    <p style="margin-top:0">높이·너비는 <b>퍼센트(%)</b>로 정하고, 글자 크기는 <b>글꼴 크기</b>로 정해요. 메뉴 이름은 〈해 보기〉에서 정한 우리 모둠의 메뉴로 바꿔요.</p>
+    <div class="tscroll"><table class="bd-tbl">
+      <tr><th>컴포넌트</th><th>높이 · 너비</th><th>글꼴 · 텍스트</th></tr>
+      <tr><td>Screen1</td><td class="c">—</td><td>배경색 주황, 수평 정렬 가운데:3, 스크롤가능여부 체크</td></tr>
+      <tr><td>제목</td><td>높이 자동, 너비 부모 요소에 맞추기</td><td>글꼴 25, 텍스트(앱 이름), 가운데</td></tr>
+      <tr><td>스크롤가능수평배치_메뉴</td><td>높이 35%, 너비 자동</td><td>—</td></tr>
+      <tr><td>메뉴N_주문버튼</td><td>높이 부모 요소에 맞추기, 너비 30%</td><td>텍스트 빈칸</td></tr>
+      <tr><td>레이블_간격 1·2·3</td><td>높이 4%</td><td>—</td></tr>
+      <tr><td>메뉴N_주문안내</td><td>너비 30%</td><td>글꼴 14, 텍스트 「메뉴N 주문」</td></tr>
+      <tr><td>메뉴N_주문수량</td><td>너비 20%</td><td>글꼴 14, 빈칸, 오른쪽</td></tr>
+      <tr><td>메뉴N_주문금액</td><td>너비 30%</td><td>글꼴 14, 빈칸, 오른쪽</td></tr>
+      <tr><td>총금액_주문안내</td><td>—</td><td>글꼴 14, 텍스트 「총 금액」, 왼쪽</td></tr>
+      <tr><td>총금액_계산</td><td>너비 40%</td><td>글꼴 14, 빈칸, 오른쪽</td></tr>
+      <tr><td>종료버튼</td><td>너비 자동</td><td>글꼴 14, 텍스트 「종료」, 가운데</td></tr>
+    </table></div>
+    <p class="bd-note" style="margin-bottom:0"><b>TIP · 이미지 조정하기</b> 이미지가 버튼보다 크게 들어간다면 버튼 높이와 너비를 버튼 크기에 맞춰 정해야 해요. 이미지 위에 겹친 글자는 속성의 텍스트를 빈칸으로 지우면 돼요. <b>이미지 파일 이름이 한글이면 업로드되지 않으니</b> 파일명은 알파벳으로 만들어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 소프트웨어 구현하기 <span class="muted" style="font-weight:400;font-size:.88rem">(189쪽, 선택)</span></h3>
+    <p style="margin-top:0">❶ 「스크롤가능수평배치」 높이와 각 버튼의 너비를 고쳐서 버튼을 원하는 크기로 맞춰 봐요.</p>
+    <div class="memo"><label>스크롤가능수평배치 높이</label><textarea data-memo="bdHeight" rows="1"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>각 버튼의 너비</label><textarea data-memo="bdWidth" rows="1"></textarea><div class="saved"></div></div>
+    <p style="margin:14px 0 0">❷ 「스크롤가능수직배치」는 어떤 상황에서 쓸 수 있을지 생각해 적어 봐요.</p>
+    <div class="memo"><textarea data-memo="bdVert" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 환영 인사 · 변수 -->
+<section class="page" data-name="환영 인사 · 변수" data-acc="#c0397a">
+  <div class="head"><div class="num">04</div><div><h2>(2) 기능 개발 ① 환영 인사 · ② 변수</h2><p>교과서 190쪽 · 첫 블록과 변수 만들기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>화면을 다 만들었으면 이제 <b>동작</b>을 넣어요. 앱이 켜지면 <b>말로 인사</b>하게 하고, 주문 내용을 담아 둘 <b>변수(저장 상자)</b>를 미리 만들어요.</span></div>
+
+  <div class="card">
+    <h3>🔁 디자이너 화면 ↔ 블록 화면 <span class="muted" style="font-weight:400;font-size:.88rem">(190쪽)</span></h3>
+    <p style="margin-top:0">표현하고자 하는 화면을 모두 구성한 뒤, 각 요소들이 제대로 기능할 수 있도록 소프트웨어 명령어를 입력해 봐요. 음성 인식 키오스크 앱은 하나의 화면에서 모든 기능이 구현되기 때문에 명령어 블록을 모두 하나의 화면에 구성해요. 디자이너 화면에서 블록 화면으로의 전환은 메뉴 오른쪽 <b>[디자이너], [블록]</b> 버튼을 눌러서 해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>👋 ① 환영 인사 설정하기 <span class="muted" style="font-weight:400;font-size:.88rem">(190쪽, 읽는 블록)</span></h3>
+    <p style="margin-top:0">사용자가 키오스크를 쓰려고 앱을 실행할 때 음성으로 들려줄 환영 인사를 설정해요.</p>
+<pre class="code"><b>언제</b> Screen1.초기화되었을때
+<b>실행</b>  호출 음성변환1.말하기
+          메시지  <b>합치기</b>  <i>"</i>저희 매장을 방문해주셔서 감사합니다.<i>"</i>
+                        <i>"</i>메뉴 1번은 왼쪽 상단<i>"</i>
+                        <i>"</i>메뉴 2번은 중앙 상단<i>"</i>
+                        <i>"</i>메뉴 3번은 오른쪽 상단을<i>"</i>
+                        <i>"</i>터치해주세요<i>"</i></pre>
+    <p style="margin:6px 0">공통 블록의 텍스트 > 「합치기」 블록은 톱니바퀴를 눌러 문자열을 드래그 앤 드롭으로 추가할 수 있어요. 하나의 텍스트에 모두 작성하는 것도 가능해요.</p>
+    <p style="margin:10px 0 4px"><b>🎮 블록을 조립하는 순서</b> <span class="muted">교과서의 ❶~❹ 설명을 보고 몇 번째인지 골라요.</span></p>
+    <div id="bdGreetSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>📦 ② 변수 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(190쪽)</span></h3>
+    <p style="margin-top:0">주문 메뉴 음성 인식 후 음성 안에 섞여 있는 숫자를 담아낼 <b>숫자 리스트</b> 변수, 선택한 메뉴의 <b>종류</b>, 그리고 각 주문 메뉴의 수량을 저장하기 위한 변수를 만들어요. 모든 블록은 「공통 블록」에서 가져와요.</p>
+    <div class="tscroll"><table class="bd-tbl">
+      <tr><th>변수 이름</th><th>처음 값</th><th>쓰임</th></tr>
+      <tr><td>숫자리스트</td><td>빈 리스트 만들기</td><td>음성 속 숫자를 담아요.</td></tr>
+      <tr><td>종류</td><td>빈 텍스트(" ")</td><td>선택한 메뉴의 종류를 담아요.</td></tr>
+      <tr><td>메뉴1 · 메뉴2 · 메뉴3</td><td>0</td><td>각 주문 메뉴의 수량을 저장해요.</td></tr>
+    </table></div>
+    <p class="bd-note" style="margin-bottom:0">변수는 「전역변수 만들기」를 <b>5번 반복</b>해서 만들고, 이름을 입력한 뒤 각 초깃값(리스트·텍스트·수학의 0)을 뒤에 연결해요. 192쪽에서는 메뉴1 변수에 5000과 수량을 곱한 값이 들어가는 것도 만나게 돼요.</p>
+  </div>
+
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 주문 메뉴 인식 · 숫자 인식 -->
+<section class="page" data-name="주문 인식 · 숫자 함수" data-acc="#c0397a">
+  <div class="head"><div class="num">05</div><div><h2>(2) 기능 개발 ③ 주문 메뉴 인식 · ④ 숫자 인식 함수</h2><p>교과서 191쪽 · 버튼 블록과 숫자가져오기 함수</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>메뉴 버튼을 누르면 <b>수량을 말해 달라고 안내</b>하고 <b>듣기를 시작</b>해요. 그리고 사용자가 말한 문장에서 <b>숫자만 뽑아내는 함수</b>를 만들어요.</span></div>
+
+  <div class="card">
+    <h3>🍔 ③ 주문 메뉴 인식하기 <span class="muted" style="font-weight:400;font-size:.88rem">(191쪽, 읽는 블록)</span></h3>
+    <p style="margin-top:0">주문 메뉴를 눌렀을 때 「주문 수량을 말씀해주세요.」라는 안내 메시지가 나오고 음성 인식이 시작돼요. 주문 메뉴를 저장하기 위해 전역 변수 <b>종류</b>의 값을 지정해요.</p>
+<pre class="code"><b>언제</b> 메뉴1_주문버튼.클릭했을때
+<b>실행</b>  호출 음성변환1.말하기
+          메시지  <i>"</i>메뉴1 주문 수량을 말씀해주세요.<i>"</i>
+      호출 음성인식1.텍스트가져오기
+      지정하기 전역변수 종류  값  <i>"</i>1<i>"</i>
+
+<b>언제</b> 메뉴2_주문버튼.클릭했을때
+<b>실행</b>  <i>(해 보기에서 채워요)</i>
+
+<b>언제</b> 메뉴3_주문버튼.클릭했을때
+<b>실행</b>  <i>(해 보기에서 채워요)</i></pre>
+    <ol class="bd-ul">
+      <li>메뉴1_주문버튼 > 「언제 메뉴1_주문버튼.클릭했을때」 블록을 뷰어로 드래그해요.</li>
+      <li>음성변환1 > 「호출 음성변환1.말하기」 블록을 뷰어로 드래그해 메뉴1_주문버튼 블록 안에 결합해요.</li>
+      <li>공통 블록 > 텍스트 블록을 「음성변환1」 블록의 메시지에 연결하고, 안내 메시지를 입력해요.</li>
+      <li>음성인식1 > 「호출 음성인식1.텍스트가져오기」 블록을 「음성변환1」 블록 아래에 결합해요.</li>
+      <li>공통 블록 > 변수 > 「지정하기」 블록을 「음성인식1」 블록 아래에 결합하고, ▼를 눌러 「전역변수 종류」를 선택해요.</li>
+      <li>공통 블록 > 텍스트 블록을 「지정하기」 블록 값 뒤에 연결하고 숫자 1을 입력해요.</li>
+    </ol>
+    <p class="bd-note"><b>「종류」 변수</b>는 어떤 메뉴를 선택했는지 구분하기 위한 것이므로, 메뉴를 선택했을 때 같은 값을 가지지 않도록 해야 해요.</p>
+    <div class="memo"><label>💭 해 보기 · 소프트웨어 구현하기 <small>(191쪽, 선택) 나머지 2개 메뉴에 대한 기능을 구현하는 블록을 ❸과 같은 방법으로 채워 보세요. 메뉴2·3에서 「종류」 값은 어떻게 달라야 할까요?</small></label><textarea data-memo="bdMenuDiff" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🔢 ④ 숫자 인식 함수 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(191쪽, 읽는 블록)</span></h3>
+    <p style="margin-top:0">주문 메뉴에 대한 음성 인식이 끝난 후 음성에 포함된 <b>숫자만</b> 발췌하는 숫자 인식 함수를 만들어요. 이 함수로 사용자가 말한 문장 속에서 숫자를 인식할 수 있어요.</p>
+<pre class="code"><b>함수 만들기</b> 숫자가져오기  (인식문장)
+<b>실행</b>  지정하기 전역변수 숫자리스트  값  빈 리스트 만들기
+      각각 반복 <b>음절</b>  리스트  빈 칸으로 분할하기  가져오기 인식문장
+      <b>실행</b>  만약  숫자인가요?  가져오기 음절
+            이라면 실행  항목 추가하기  리스트  가져오기 전역변수 숫자리스트
+                                      item  가져오기 음절</pre>
+    <p style="margin:6px 0">제어 블록의 「각각 반복」을 가져오면 이 부분이 「항목」으로 설정되어 있는데, 「<b>음절</b>」로 바꿔서 써요.</p>
+    <p class="callout" style="margin:8px 0"><b>TIP · 인식할 문장 넣기</b> 함수 블록에서 「함수 만들기」를 가져오면 인식할 문장을 입력할 수 있는 공간이 없어요. ① 톱니바퀴를 눌러요 → ② 「입력」을 끌어와요 → ③ 「x」를 「인식문장」으로 바꿔요.</p>
+    <div class="memo"><label>💭 해 보기 · 소프트웨어 구현하기 <small>(191쪽, 선택) ❶~❸ 내용을 바탕으로 ❹ 숫자 인식 함수를 만들기 위한 블록을 직접 결합해 보고, 막힌 곳이 있으면 적어 보세요.</small></label><textarea data-memo="bdFuncStuck" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 숫자 인식 함수를 파이썬으로 흉내 내기</h3>
+    <p style="margin-top:0">블록이 하는 일을 같은 순서로 파이썬으로 옮겼어요. 문장을 <b>빈칸으로 나누고</b>(<code>split</code>), 나뉜 낱말마다 <b>숫자인지</b> 확인해(<code>isdigit</code>) 숫자면 리스트에 <b>추가</b>해요. 코드 안 문장을 바꿔 보고, 숫자가 없는 문장일 때 리스트가 어떻게 되는지 확인해 봐요. (실제 앱에서는 사용자가 말한 문장이 들어와요.)</p>
+    <div id="bdRun1"></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 총 금액 -->
+<section class="page" data-name="총 금액 안내" data-acc="#c0397a">
+  <div class="head"><div class="num">06</div><div><h2>(2) 기능 개발 ⑤ 음성 인식 후 총 금액 안내하기</h2><p>교과서 192쪽 · 숫자 확인, 금액 계산, 음성 안내</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>말한 내용에 <b>숫자가 있으면</b> 메뉴 가격과 곱해 <b>총 금액을 계산해 말해 주고</b>, 숫자가 없으면 <b>다시 말해 달라</b>고 해요.</span></div>
+
+  <div class="card">
+    <h3>💰 ⑤ 음성 인식 후 총 금액 안내하기 <span class="muted" style="font-weight:400;font-size:.88rem">(192쪽, 읽는 블록)</span></h3>
+    <p style="margin-top:0">음성 주문에 포함된 숫자만을 발췌해 인식된 메뉴의 수량과 입력된 금액으로 총 금액을 계산하고, 이를 다시 음성으로 안내해요. 인식이 제대로 되지 않았을 때는 인식하지 못했다는 메시지가 나오도록 설정해요. <span class="muted">(<code>___</code>로 비운 곳은 〈해 보기〉에서 채우는 부분이에요.)</span></p>
+<pre class="code"><b>언제</b> 음성인식1.텍스트가져온후  (결과, partial)
+<b>실행</b>  함수 호출하기 숫자가져오기  인식문장  가져오기 결과          <i># ❶</i>
+      <b>만약</b>  길이 구하기 리스트 (가져오기 전역변수 숫자리스트)  ≠  0   <i># ❷</i>
+      <b>이라면 실행</b>
+          <b>만약</b>  가져오기 전역변수 종류  =  <i>"</i>1<i>"</i>                    <i># ❸</i>
+          <b>이라면 실행</b>
+              지정하기 메뉴1_주문수량.텍스트  값
+                  항목 선택하기  리스트 (가져오기 전역변수 숫자리스트)  위치 1
+              지정하기 메뉴1_주문금액.텍스트  값
+                  5000  ×  메뉴1_주문수량.텍스트
+              지정하기 전역변수 메뉴1  값
+                  5000  ×  메뉴1_주문수량.텍스트
+          <b>아니고 만약</b>  가져오기 전역변수 종류  =  <i>"</i>2<i>"</i>
+          <b>이라면 실행</b>  ___                                      <i># 노란 상자</i>
+          <b>아니고 만약</b>  가져오기 전역변수 종류  =  <i>"</i>3<i>"</i>
+          <b>이라면 실행</b>  ___                                      <i># 노란 상자</i>
+          지정하기 총금액_계산.텍스트  값
+              합치기  ( 가져오기 전역변수 메뉴1  +  ___ )   <i>"</i>원<i>"</i>   <i># 노란 상자</i>
+          호출 음성변환1.말하기
+              메시지  총금액_계산.텍스트                              <i># ❹</i>
+      <b>아니라면</b>
+          호출 음성변환1.말하기
+              메시지  합치기  <i>"</i>무슨 말인지 <i>"</i>
+                              <i>"</i>잘 모르겠습니다.<i>"</i>
+                              <i>"</i>다시 말씀해주세요.<i>"</i>             <i># ❺</i></pre>
+    <div class="bd-steps">
+      <div style="--k:#c0397a"><span class="n">1</span><div><span style="margin-top:0">음성 인식이 끝난 후 인식한 음성 속에서 숫자가 포함되어 있는지 확인하는 <b>함수를 호출</b>한다.</span></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><span style="margin-top:0">숫자 가져오기 함수에서 음성 속에 숫자가 있으면 숫자 가져오기 함수로 리스트에 추가하기 때문에, <b>0과 같지 않으면</b> 숫자를 인식한 것이다.</span></div></div>
+      <div style="--k:#2f9a5a"><span class="n">3</span><div><span style="margin-top:0">메뉴 버튼이 활성화되었을 때 어떤 메뉴를 선택했는지 변수(종류) 값을 지정해 두었다. 변경된 변숫값을 통해 인식한 주문 수량과 미리 입력된 금액으로 <b>총 금액을 계산</b>하여 화면에 표시한다.</span></div></div>
+      <div style="--k:#d0602f"><span class="n">4</span><div><span style="margin-top:0">계산된 총 금액을 스피커를 통해 <b>음성으로 안내</b>한다.</span></div></div>
+      <div style="--k:#7a6ad0"><span class="n">5</span><div><span style="margin-top:0">음성 인식이 제대로 되지 않았을 때에 「무슨 말인지 잘 모르겠습니다. 다시 말씀해주세요.」라고 말하게 한다.</span></div></div>
+    </div>
+    <p class="bd-note" style="margin-bottom:0"><b>TIP</b> 공통 블록에 없는 블록은 공통 블록 바로 아래에 이어진 해당 요소(명령어 다음 첫 번째 칸의 명칭 참조)를 클릭하면 나오는 블록에서 찾을 수 있어요. 「만약 이라면」 블록은 톱니바퀴를 눌러 「아니고 만약」 옵션을 왼쪽과 같이 메뉴의 개수만큼 추가해요. 노란색 부분에는 알맞은 명령어 블록을 직접 결합해 보고, 메뉴 2, 메뉴 3의 값을 가져와 더하면 돼요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 총 금액 계산을 파이썬으로 흉내 내기 (빈칸 채우기)</h3>
+    <p style="margin-top:0">블록의 흐름을 파이썬으로 옮겼어요. 메뉴1 단가 5000은 교과서 192쪽의 값이고, <b>메뉴2·3 단가는 연습용으로 정한 값</b>이에요. 총 금액을 구하는 줄의 <code>___</code>는 <b>메뉴2·메뉴3 값을 더하는 부분</b>이에요. 빈칸을 채우기 전에는 <code>NameError</code>가 나는 게 정상이에요. 채워서 실행해 보고, 말한 문장을 바꿔 숫자가 없을 때도 확인해 봐요.</p>
+    <div id="bdRun2"></div>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 소프트웨어 구현하기 <span class="muted" style="font-weight:400;font-size:.88rem">(192쪽, 선택)</span></h3>
+    <p style="margin:0 0 6px">❶ 나머지 2개 메뉴를 주문했을 때에도 주문 금액을 계산할 수 있도록 노란 상자 부분을 채워 보세요(앱인벤터에서 직접 해 봐요).</p>
+    <div class="memo"><label>❷ 길이 구하기 리스트(전역 변수 숫자 리스트)는 왜 0과 같지 않을 때 실행되는지 그 이유를 적어 보세요.</label><textarea data-memo="bdLenWhy" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 앱 종료 -->
+<section class="page" data-name="앱 종료하기" data-acc="#c0397a">
+  <div class="head"><div class="num">07</div><div><h2>(2) 기능 개발 ⑥ 앱 종료하기</h2><p>교과서 193쪽 · 종료 버튼과 알림 대화상자</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>종료 버튼을 누르면 곧바로 끄지 않고 <b>「정말 종료할까요?」</b> 하고 한 번 더 물어봐요. 「예」를 골랐을 때만 앱이 꺼져요.</span></div>
+
+  <div class="card">
+    <h3>🔚 ⑥ 앱 종료하기 <span class="muted" style="font-weight:400;font-size:.88rem">(193쪽, 읽는 블록)</span></h3>
+    <p style="margin-top:0">모든 기능을 사용해 주문을 완료한 뒤, 종료 버튼을 눌러 앱을 종료해요.</p>
+<pre class="code"><b>언제</b> 종료버튼.클릭했을때
+<b>실행</b>  호출 알림1.선택대화창보이기
+          메시지  <i>"</i>정말 이 앱을 종료하시겠습니까?<i>"</i>
+          제목  <i>"</i>앱 이름(제목)<i>"</i>
+          버튼1텍스트  <i>"</i>예<i>"</i>
+          버튼2텍스트  <i>"</i>아니요<i>"</i>
+          취소가능여부  참
+
+<b>언제</b> 알림1.선택한후에  (선택된항목)
+<b>실행</b>  <b>만약</b>  가져오기 선택된항목  =  <i>"</i>예<i>"</i>
+      <b>이라면 실행</b>  앱 종료</pre>
+    <p class="bd-note" style="margin-bottom:0">「선택된항목」과 「앱 종료」 같은 블록은 공통 블록에서 가져와요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 소프트웨어 설계 및 구현하기 <span class="muted" style="font-weight:400;font-size:.88rem">(193쪽, 선택)</span></h3>
+    <p style="margin-top:0">모둠원들과 의논해 제시된 화면 구성보다 더 사용하기 편한 화면을 구성해 보고, 그 이유를 작성한 뒤 앱인벤터로 구현해 봐요.</p>
+    <div class="memo"><label>변경된 화면 구성</label><textarea data-memo="bdNewLayout" rows="3" placeholder="예) 메뉴 버튼을 세로 방향으로 배치하고 메뉴 주문 확인 창을 오른쪽으로 배치한다."></textarea><div class="saved"></div></div>
+    <div class="memo"><label>이유</label><textarea data-memo="bdNewWhy" rows="3" placeholder="예) 메뉴 개수가 적은 식당이라면 조금 더 직관적으로 보일 수 있기 때문이다."></textarea><div class="saved"></div></div>
+    <p class="bd-note" style="margin-bottom:0">교과서 말풍선 「여기서 의논한 화면 구성은 융합 프로젝트에서 우리 모둠만의 아이디어를 발표할 때 사용할 수도 있어!」 (201쪽 참고)</p>
+  </div>
+  <div class="quiz" data-quiz="7"></div>
+</section>
+
+<!-- 8 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">08</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#c0397a">앱 제작은 <b>화면 개발 → 기능 개발 → 테스트 → 패키징 및 배포</b> 4단계로 한다. 화면은 배치 안에 <b>레이블·버튼</b>을 넣고 속성(높이·너비·글꼴 크기)을 정해 만든다.</div>
+    <div style="--k:#2f6fd0">기능은 <b>블록</b>으로 만든다. 앱이 켜지면 <b>환영 인사</b>를 말하고, 메뉴 버튼을 누르면 <b>수량을 묻고 음성 인식</b>을 시작하며 선택한 메뉴를 <b>변수(종류)</b>에 저장한다.</div>
+    <div style="--k:#d0602f">말한 문장에서 <b>숫자를 골라내</b> 숫자가 있으면 <b>총 금액을 계산해 음성으로 안내</b>하고, 없으면 다시 말해 달라고 한다. 종료 버튼은 <b>한 번 더 물어본 뒤</b> 앱을 끝낸다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">블록과 파이썬 흉내 코드를 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">말로 주문하는 키오스크 앱은 어떤 화면과 블록으로 만들어질까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="8"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>키오스크 앱을 만들 때 <b>화면 개발과 기능 개발</b>이 각각 무엇을 하는 단계인지 내 말로 설명하세요.</li>
+      <li>메뉴 버튼을 눌러 주문한 뒤 <b>총 금액이 안내될 때까지</b> 앱 안에서 일어나는 일을 순서대로 써 보세요.</li>
+      <li>우리 모둠의 앱을 더 쓰기 편하게 바꾼다면 <b>어떤 점을 바꾸고 싶은지</b>와 그 이유를 쓰세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="../forms/sw-u5-build.html" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>
+
+</main>
+
+<div class="foot">
+  <button class="btn ghost" id="prev">← 이전</button>
+  <span class="pg" id="pg"></span>
+  <button class="btn" id="next">다음 →</button>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const fmt=n=>n.toLocaleString('ko-KR');
+
+
+
+const LESSON='u5-build', PEP='';
+
+/* 진도 보내기 ①: 누가 쓰는지 확인 (반·학번마다 퀴즈·메모를 따로 저장) */
+const WHO=(function(){
+  if(!PEP) return {off:true,sfx:''};
+  if(/[?&]preview(=|&|$)/.test(location.search)) return {preview:true,sfx:'@preview'};
+  let w=null; try{w=JSON.parse(sessionStorage.getItem('aiw-who')||'null');}catch(e){}
+  if(w&&w.teacher) return {preview:true,teacher:true,sfx:'@preview'};
+  if(!w||!/^\d{5}$/.test(w.no||'')) return {need:true,sfx:'@none'};
+  return {cls:w.cls,no:w.no,name:w.name,sfx:'@'+w.no};
+})();
+const QUIZ={
+ 1:[{q:'앱인벤터에서 스마트폰 화면 모양으로 요소를 배치하는 칸은?',o:['뷰어','팔레트','미디어'],a:0,w:'뷰어는 스마트폰에 보이는 화면으로, 팔레트에서 필요한 요소를 가져와 배치해요.'},
+    {q:'앱인벤터 프로젝트명에 쓸 수 없는 것은?',o:['숫자','한글','영문 알파벳'],a:1,w:'프로젝트명은 한글과 일부 특수 문자를 사용할 수 없어요.'}],
+ 2:[{q:'기능이 정상적으로 작동하는지 확인하는 단계는?',o:['테스트','화면 개발','패키징 및 배포'],a:0,w:'3단계 테스트에서 기능이 잘 작동하는지, 예상하지 못한 오류가 생기는지 확인해요.'}],
+ 3:[{q:'메뉴 버튼을 가로로 나란히 놓을 때 쓴 배치는?',o:['레이블','수직배치','스크롤가능수평배치'],a:2,w:'제목 아래에 메뉴 버튼이 가로로 나열되도록 스크롤가능수평배치를 가져와요.'},
+    {q:'버튼에 넣을 이미지 파일의 이름은 어떻게 지어야 할까요?',o:['알파벳','한글 이름','한글과 숫자'],a:0,w:'파일 이름이 한글이면 업로드되지 않으니 알파벳으로 만들어요.'}],
+ 4:[{q:'앱이 켜질 때 환영 인사를 말하게 하는 블록 묶음의 시작은?',o:['언제 알림1.선택한후에','언제 종료버튼.클릭했을때','언제 Screen1.초기화되었을때'],a:2,w:'「언제 Screen1.초기화되었을때」 안에 음성변환1.말하기를 넣어요.'},
+    {q:'변수 「숫자리스트」의 처음 값은?',o:['0','빈 리스트','빈 텍스트'],a:1,w:'숫자리스트에는 「빈 리스트 만들기」를 연결하고, 종류는 빈 텍스트, 메뉴1~3은 0을 연결해요.'}],
+ 5:[{q:'「종류」 변수는 무엇을 구분하려고 만들었을까요?',o:['앱 이름','글꼴 크기','선택한 메뉴'],a:2,w:'어떤 메뉴를 선택했는지 구분하기 위한 변수라서 메뉴마다 다른 값을 가져야 해요.'},
+    {q:'숫자 인식 함수에서 「숫자인가요?」 블록이 하는 일은?',o:['숫자인지 확인한다','메뉴 이미지를 바꾼다','화면을 가운데로 맞춘다'],a:0,w:'나눈 낱말이 숫자인지 확인해서, 숫자일 때만 숫자리스트에 항목을 추가해요.'}],
+ 6:[{q:'숫자리스트의 길이가 0과 같지 않을 때 앱이 하는 일은?',o:['앱을 종료한다','금액을 계산해 안내한다','다시 말씀해 달라고 한다'],a:1,w:'숫자가 있다는 뜻이라서 수량과 단가로 총 금액을 계산해 음성으로 안내해요.'},
+    {q:'음성 인식이 제대로 되지 않았을 때 앱이 하는 말은?',o:['주문이 끝났습니다. 종료 버튼을 눌러 주세요.','저희 매장을 방문해 주셔서 감사합니다.','무슨 말인지 잘 모르겠습니다. 다시 말씀해주세요.'],a:2,w:'숫자를 인식하지 못했을 때에는 인식하지 못했다는 메시지를 말하게 해요.'}],
+ 7:[{q:'종료 버튼을 눌렀을 때 앱이 하는 일은?',o:['곧바로 앱을 끈다','확인 창을 띄운다','음성 인식을 다시 시작한다'],a:1,w:'알림1의 선택 대화창으로 종료할지 물어보고, 「예」를 선택했을 때 앱을 종료해요.'}],
+ 8:[{q:'앱인벤터는 어떤 방식으로 앱을 만들까요?',o:['회로 납땜하기','블록 끌어 놓기','명령 문자 입력'],a:1,w:'앱인벤터는 블록 기반의 드래그 앤 드롭 방식 개발 도구예요.'},
+    {q:'말한 문장에서 숫자를 골라내는 함수의 이름은?',o:['음성변환1','숫자가져오기','총금액_계산'],a:1,w:'숫자가져오기 함수가 인식한 문장에서 숫자만 발췌해 리스트에 담아요.'},
+    {q:'4단계 「패키징 및 배포」는 어떤 단계일까요?',o:['화면을 그린다','변수를 만든다','등록하고 배포한다'],a:2,w:'모듈로 생성한 실행 파일들을 묶어 앱스토어나 웹 사이트에 등록 및 배포하는 단계예요.'}]
+};
+
+const QK='ds-u5-build-quiz'+WHO.sfx;
+const MK='ds-u5-build-memo'+WHO.sfx;
+let QS={}; try{QS=JSON.parse(localStorage.getItem(QK)||'{}')||{};}catch(e){QS={};}
+function saveQ(){try{localStorage.setItem(QK,JSON.stringify(QS));}catch(e){}}
+const TOTALQ=Object.values(QUIZ).reduce((a,b)=>a+b.length,0);
+function qperm(n,key){ let h=2166136261; for(const c of key){h^=c.charCodeAt(0);h=Math.imul(h,16777619)>>>0;}
+  const p=[...Array(n).keys()]; for(let i=n-1;i>0;i--){h=Math.imul(h^(h>>>15),2246822507)>>>0; h=(h+0x6D2B79F5)>>>0; const j=h%(i+1); [p[i],p[j]]=[p[j],p[i]];} return p; }
+function renderQuiz(box){
+  const k=box.dataset.quiz; box.innerHTML=`<div class="qh"><b>개념 퀴즈</b><span>${QUIZ[k].length}문제 · 고르면 바로 채점</span></div>`;
+  QUIZ[k].forEach((it,i)=>{
+    const id=k+'-'+i, d=document.createElement('div'); d.className='qi';
+    /* 보기 순서는 학생마다 섞되(새로 고쳐도 같은 순서), 저장·채점은 원래 번호로 */
+    const perm=qperm(it.o.length, QK+'|'+id);
+    d.innerHTML=`<div class="qq">${i+1}. ${it.q}</div><div class="opts">${perm.map(j=>`<button data-j="${j}">${it.o[j]}</button>`).join('')}</div><div class="why"></div>`;
+    const btn=j=>d.querySelector(`button[data-j="${j}"]`);
+    const mark=(j,anim)=>{
+      const bs=d.querySelectorAll('button'); bs.forEach(b=>b.disabled=true);
+      btn(it.a).classList.add('right'); if(j!==it.a){btn(j).classList.add('wrong'); if(anim) d.classList.add('shake');}
+      d.classList.add('answered', j===it.a?'correct':'incorrect');
+      d.querySelector('.why').textContent=(j===it.a?'정답. ':'정답은 「'+it.o[it.a]+'」. ')+it.w;
+    };
+    d.querySelectorAll('button').forEach(b=>b.onclick=()=>{const j=+b.dataset.j;QS[id]=j;saveQ();mark(j,true);updScore();});
+    if(QS[id]!=null && QS[id]<it.o.length) mark(QS[id],false);
+    box.appendChild(d);
+  });
+}
+
+/* 페이지 이동 */
+const pages=[...document.querySelectorAll('.page')];
+const stepBtns=pages.map((p,i)=>{const b=document.createElement('button');b.textContent=i?`${i}. ${p.dataset.name}`:'시작';b.onclick=()=>go(i);$('steps').appendChild(b);return b;});
+function updScore(){
+  let ok=0; for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{if(QS[k+'-'+i]===it.a) ok++;});
+  $('score').textContent=`퀴즈 ${ok} / ${TOTALQ}`;
+  pages.forEach((p,i)=>{const q=p.querySelector('[data-quiz]'); if(!q) return; const k=q.dataset.quiz; stepBtns[i].classList.toggle('done',QUIZ[k].every((_,j)=>QS[k+'-'+j]!=null));});
+  let h='<tr><th class="l">개념</th><th>맞힌 문제</th></tr>';
+  for(const k in QUIZ){const n=QUIZ[k].length, c=QUIZ[k].filter((it,i)=>QS[k+'-'+i]===it.a).length, a=QUIZ[k].filter((_,i)=>QS[k+'-'+i]!=null).length;
+    h+=`<tr><td class="l">${k}. ${pages[k].dataset.name}</td><td>${a?`<b class="${c===n?'ok':''}">${c} / ${n}</b>`:'<span class="muted">아직 안 풂</span>'}</td></tr>`;}
+  h+=`<tr><td class="l"><b>합계</b></td><td><b>${ok} / ${TOTALQ}</b></td></tr>`;
+  $('result').innerHTML=h;
+}
+let cur=-1;
+const onShow={};
+function go(i){
+  i=Math.max(0,Math.min(pages.length-1,i)); if(i===cur) return;
+  const back=i<cur; if(cur>=0) pages[cur].classList.remove('on','back');
+  pages[i].classList.add('on'); pages[i].classList.toggle('back',back);
+  document.documentElement.style.setProperty('--acc',pages[i].dataset.acc);
+  document.documentElement.style.setProperty('--acc-soft',pages[i].dataset.acc+'1a');
+  stepBtns.forEach((b,j)=>b.classList.toggle('on',j===i));
+  const sb=$('steps'), btn=stepBtns[i]; sb.scrollLeft=btn.offsetLeft-sb.clientWidth/2+btn.clientWidth/2;
+  $('prog').style.width=(i/(pages.length-1)*100)+'%';
+  $('pg').textContent=`${i} / ${pages.length-1}`;
+  $('prev').style.visibility=i?'visible':'hidden'; $('next').style.visibility=i<pages.length-1?'visible':'hidden';
+  cur=i; try{history.replaceState(null,'','#p'+i);}catch(e){} window.scrollTo(0,0);
+  if(onShow[i]) onShow[i]();
+}
+$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.defaultPrevented)return; if(e.target.matches&&e.target.matches('input,select,textarea'))return; if(e.key==='ArrowRight')go(cur+1); if(e.key==='ArrowLeft')go(cur-1);});
+document.querySelectorAll('.gcard').forEach(g=>g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.click();}}));
+document.querySelectorAll('[data-quiz]').forEach(renderQuiz);
+$('quizReset').onclick=()=>{QS={};saveQ();document.querySelectorAll('[data-quiz]').forEach(renderQuiz);updScore();};
+
+
+/* 공용 부품: 메모·카드·분류 게임·탭·투표·칩 */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+
+/* 메모: data-memo가 있는 입력칸은 이 기기에 저장 */
+let MEMO=store.get(MK,{});
+function bindMemos(){
+  document.querySelectorAll('[data-memo]').forEach(t=>{
+    const k=t.dataset.memo; if(MEMO[k]!=null) t.value=MEMO[k];
+    let tm; t.addEventListener('input',()=>{MEMO[k]=t.value; clearTimeout(tm); tm=setTimeout(()=>{store.set(MK,MEMO); const s=t.parentElement.querySelector('.saved'); if(s){s.textContent='이 기기에 저장됨'; setTimeout(()=>s.textContent='',1400);} t.dispatchEvent(new Event('memo'));},300);});
+  });
+}
+function memoSummary(box,list){
+  const h=list.map(([k,label])=>{const v=(MEMO[k]||'').trim(); return `<dt>${esc(label)}</dt><dd class="${v?'':'e'}">${v?esc(v):'(아직 안 씀)'}</dd>`;}).join('');
+  $(box).innerHTML=`<h4>오늘 화면에 적어 둔 내 메모</h4><dl>${h}</dl>`;
+}
+
+/* 뒤집는 카드 */
+function flipCards(box,items){
+  $(box).innerHTML=items.map(c=>`<div class="tcard" tabindex="0"><div class="in"><div class="f"><i>${c.ic||''}</i><b>${c.f}</b>${c.s?`<small>${c.s}</small>`:''}</div><div class="b">${c.b}${c.x?`<div class="x">${c.x}</div>`:''}</div></div></div>`).join('');
+  $(box).querySelectorAll('.tcard').forEach(t=>{const f=()=>t.classList.toggle('flip'); t.onclick=f; t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f();}};});
+}
+
+/* 분류 게임: 문장을 보고 알맞은 묶음 고르기 */
+function sorter(box,cfg){
+  const B=$(box);
+  function start(){
+    const order=shuffle(cfg.items.map((_,i)=>i)); let pos=0, ok=0; const placed=cfg.cats.map(()=>[]);
+    B.innerHTML=`<div class="sit"><div class="cnt"></div><div class="ic"></div><div class="sq"></div><div class="row btns">${cfg.cats.map((c,j)=>`<button class="btn sm cat" style="--k:${c.k}" data-j="${j}">${c.n}</button>`).join('')}</div><div class="fb"></div><div class="row nx" style="margin-top:8px"></div></div><div class="board" style="--n:${cfg.cats.length}">${cfg.cats.map(c=>`<div style="--k:${c.k}"><b>${c.n}</b></div>`).join('')}</div>`;
+    const sq=B.querySelector('.sq'), ic=B.querySelector('.ic'), cnt=B.querySelector('.cnt'), fb=B.querySelector('.fb'), nx=B.querySelector('.nx'), btns=[...B.querySelectorAll('.cat')], cols=[...B.querySelectorAll('.board>div')];
+    function show(){
+      if(pos>=order.length){cnt.textContent=''; ic.textContent='🎉'; sq.innerHTML=`${order.length}개 중 <b>${ok}개</b>를 바로 맞혔어요.`; fb.innerHTML=cfg.end||''; btns.forEach(b=>b.style.display='none'); nx.innerHTML='<button class="btn ghost sm">처음부터 다시</button>'; nx.firstChild.onclick=start; return;}
+      const it=cfg.items[order[pos]]; cnt.textContent=`${pos+1} / ${order.length}`; ic.textContent=it.ic||''; sq.innerHTML=it.t; fb.textContent=''; nx.innerHTML=''; btns.forEach(b=>{b.disabled=false;b.style.display='';});
+    }
+    btns.forEach(b=>b.onclick=()=>{
+      const it=cfg.items[order[pos]], j=+b.dataset.j, right=j===it.c; if(right) ok++;
+      btns.forEach(x=>x.disabled=true);
+      fb.innerHTML=(right?'<span class="ok">맞아요!</span> ':`<span class="ng">아쉬워요.</span> 정답은 <b>${cfg.cats[it.c].n}</b>. `)+(it.w||'');
+      const s=document.createElement('span'); s.innerHTML=it.short||it.t; if(!right) s.className='x'; cols[it.c].appendChild(s);
+      nx.innerHTML='<button class="btn sm">다음 →</button>'; nx.firstChild.onclick=()=>{pos++;show();}; nx.firstChild.focus();
+    });
+    show();
+  }
+  start();
+}
+
+/* 탭 보기: 버튼을 누르면 내용 바꾸기 */
+function tabs(btnBox,viewBox,items,render){
+  $(btnBox).innerHTML=items.map((it,i)=>`<button data-i="${i}"><span class="e">${it.ic||''}</span><b>${it.n}</b></button>`).join('');
+  const bs=[...$(btnBox).querySelectorAll('button')];
+  const pick=i=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); $(viewBox).innerHTML=render(items[i],i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i)); pick(0);
+}
+
+/* 투표: 고르면 결과 보이기 (이 기기에만 저장) */
+function vote(box,key,opts,onPick){
+  const B=$(box); B.innerHTML=opts.map((o,i)=>`<button data-i="${i}">${o[0]}${o[1]?`<small>${o[1]}</small>`:''}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')];
+  const pick=(i,save)=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); if(save){MEMO[key]=opts[i][0]; store.set(MK,MEMO);} onPick&&onPick(i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i,true));
+  const prev=opts.findIndex(o=>o[0]===MEMO[key]); if(prev>=0) pick(prev,false);
+}
+function chips(box,key,opts,multi){
+  const B=$(box); B.classList.add('chk'); B.innerHTML=opts.map(o=>`<button>${o}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')]; let sel=(MEMO[key]||'').split(' · ').filter(Boolean);
+  const draw=()=>bs.forEach(b=>b.classList.toggle('on',sel.includes(b.textContent)));
+  bs.forEach(b=>b.onclick=()=>{const t=b.textContent; if(multi) sel=sel.includes(t)?sel.filter(x=>x!==t):[...sel,t]; else sel=sel.includes(t)?[]:[t]; MEMO[key]=sel.join(' · '); store.set(MK,MEMO); draw(); B.dispatchEvent(new Event('memo'));});
+  draw();
+}
+
+/* 파이썬 실행 칸: 학생이 코드를 고쳐 바로 돌려 보는 부품 (Pyodide, CDN에서 불러옴).
+   pyrun('박스id', {code:'...', rows:8, stdin:'3\n5', readonly:false})
+   - code   : 처음에 보여 줄 코드 (여러 줄 문자열)
+   - rows   : 편집칸 높이(줄). 없으면 코드 줄 수로 정함
+   - stdin  : input() 이 위에서부터 한 줄씩 받을 값 (코드에 input 이 있으면 입력칸이 자동으로 생김)
+   - readonly: true 면 편집 없이 실행만 (코드는 그대로 보여 줌)
+   파이썬은 처음 실행할 때 한 번만 불러오고, 그다음부터는 바로 돈다. 인터넷이 없으면 안내만 보인다. */
+const PY_VER = '0.26.4';
+const PY_BASE = `https://cdn.jsdelivr.net/pyodide/v${PY_VER}/full/`;
+let _pyLoad = null;                 /* Pyodide 로딩 Promise(한 번만) */
+let _pyLock = Promise.resolve();    /* 모든 실행 칸이 파이썬 하나를 공유하므로 한 번에 하나씩만 실행 */
+const _pyWaiters = [];              /* 로딩 중일 때 상태 글을 바꿔 줄 콜백들 */
+
+function _loadPy() {
+  if (_pyLoad) return _pyLoad;
+  _pyLoad = new Promise((resolve, reject) => {
+    const tell = m => _pyWaiters.forEach(f => { try { f(m); } catch (e) {} });
+    const s = document.createElement('script');
+    s.src = PY_BASE + 'pyodide.js';
+    s.onload = async () => {
+      try {
+        tell('파이썬 준비 중…');
+        const py = await loadPyodide({ indexURL: PY_BASE });
+        resolve(py);
+      } catch (e) { reject(e); }
+    };
+    s.onerror = () => reject(new Error('스크립트를 불러오지 못함'));
+    document.head.appendChild(s);
+  });
+  return _pyLoad;
+}
+
+function pyrun(box, cfg) {
+  cfg = cfg || {};
+  const B = $(box); if (!B) return;
+  const code0 = String(cfg.code || '').replace(/^\n+/, '').replace(/\s+$/, '');
+  const rows = cfg.rows || Math.min(16, Math.max(3, code0.split('\n').length + 1));
+  const needIn = /\binput\s*\(/.test(code0) || cfg.stdin != null;
+  const ro = !!cfg.readonly;
+  B.classList.add('pyrun');
+  B.innerHTML =
+    `<textarea class="pr-code" spellcheck="false" rows="${rows}" ${ro ? 'readonly' : ''} aria-label="파이썬 코드"></textarea>` +
+    (needIn ? `<div class="pr-in"><label>입력값 <small>input() 이 위에서부터 한 줄씩 받아요</small></label>` +
+      `<textarea class="pr-stdin" spellcheck="false" rows="2" aria-label="입력값" placeholder="한 줄에 하나씩"></textarea></div>` : '') +
+    `<div class="pr-bar"><button class="btn sm pr-go">▶ 실행</button>` +
+    (ro ? '' : `<button class="btn ghost sm pr-reset">처음 코드로</button>`) +
+    `<span class="pr-stat"></span></div>` +
+    `<pre class="pr-out" aria-live="polite" hidden></pre>`;
+  const ed = B.querySelector('.pr-code'), out = B.querySelector('.pr-out'),
+    stat = B.querySelector('.pr-stat'), goBtn = B.querySelector('.pr-go'),
+    reset = B.querySelector('.pr-reset'), sin = B.querySelector('.pr-stdin');
+  ed.value = code0;
+  if (cfg.stdin != null && sin) sin.value = String(cfg.stdin);
+  /* 탭키로 네 칸 들여쓰기 */
+  if (!ro) ed.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const a = ed.selectionStart, b = ed.selectionEnd;
+      ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(b);
+      ed.selectionStart = ed.selectionEnd = a + 4;
+    }
+  });
+  if (reset) reset.onclick = () => {
+    ed.value = code0; if (sin) sin.value = cfg.stdin != null ? String(cfg.stdin) : '';
+    out.hidden = true; out.textContent = ''; out.classList.remove('err');
+  };
+
+  async function run() {
+    const setStat = m => stat.textContent = m;
+    setStat('파이썬 불러오는 중…'); _pyWaiters.push(setStat);
+    let py;
+    try { py = await _loadPy(); }
+    catch (e) {
+      setStat(''); out.hidden = false; out.classList.add('err');
+      out.textContent = '⚠ 파이썬을 불러오지 못했어요. 인터넷 연결을 확인하고 「실행」을 다시 눌러 주세요.';
+      goBtn.disabled = false; return;
+    } finally { const i = _pyWaiters.indexOf(setStat); if (i >= 0) _pyWaiters.splice(i, 1); }
+    setStat('실행 중…');
+    const lines = [];
+    py.setStdout({ batched: s => lines.push(s) });
+    py.setStderr({ batched: s => lines.push(s) });
+    const feed = (sin ? sin.value : '').split('\n');
+    try {
+      py.globals.set('_pyrun_feed', feed);
+      py.globals.set('_pyrun_src', ed.value);
+      await py.runPythonAsync(
+        'import builtins as _b\n' +
+        '_f=[str(x) for x in list(_pyrun_feed)]\n' +
+        '_ix=[0]\n' +
+        'def _inp(prompt=""):\n' +
+        '    if prompt: print(prompt, end="")\n' +
+        '    if _ix[0] < len(_f):\n' +
+        '        v=_f[_ix[0]]; _ix[0]+=1; return v\n' +
+        '    raise EOFError("입력값이 더 없어요. 위 입력값 칸에 값을 더 적어 주세요.")\n' +
+        '_b.input=_inp\n');
+      await py.runPythonAsync("exec(compile(_pyrun_src,'<내 코드>','exec'), {'__name__':'__main__'})");
+      out.classList.remove('err');
+    } catch (err) {
+      /* 파이썬 내부(Pyodide) 프레임은 지우고 학생이 쓴 코드 줄만 남긴다 */
+      const raw = String(err && err.message || err).split('\n'), keep = [];
+      for (let i = 0; i < raw.length; i++) {
+        const m = raw[i].match(/^ *File "([^"]*)"/);
+        if (m && (m[1].indexOf('/lib/') === 0 || m[1].indexOf('_pyodide') >= 0 || m[1] === '<exec>')) {
+          while (i + 1 < raw.length && /^\s+/.test(raw[i + 1]) && !/^\s*File "/.test(raw[i + 1])) i++;
+          continue;
+        }
+        keep.push(raw[i]);
+      }
+      lines.push(keep.join('\n').trim() || '오류가 났어요.');
+      out.classList.add('err');
+    } finally {
+      try { py.globals.delete('_pyrun_feed'); py.globals.delete('_pyrun_src'); } catch (e) {}
+    }
+    setStat('');
+    out.hidden = false;
+    out.textContent = lines.join('').replace(/\n+$/, '') || '(출력이 없어요)';
+    goBtn.disabled = false;
+  }
+  /* 다른 칸이 실행 중이면 끝날 때까지 기다렸다가(직렬화) 실행 — 파이썬 하나를 공유하기 때문 */
+  goBtn.onclick = () => {
+    goBtn.disabled = true;
+    stat.textContent = '실행 준비 중…';
+    _pyLock = _pyLock.then(run, run);
+  };
+}
+
+/* ===== 공용 그림·실습 부품 (framework/charts.js) =====
+   차시는 설정값만 넘긴다. 쓰는 법은 docs/widgets.md
+   orangeFlow · scatter · bars · boxes · miniTable · stat(평균·표준편차·상관·회귀·k-평균) · memoOf */
+
+/* 다른 차시에서 적어 둔 메모 읽기 (check.py 가 차시·키가 있는지 확인) */
+function memoOf(lid,key){ try{ return String((store.get('ds-'+lid+'-memo'+WHO.sfx,{})||{})[key]||'').trim(); }catch(e){ return ''; } }
+
+/* 통계 계산 */
+const stat={
+  mean:a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:NaN,
+  sd(a,sample){const m=stat.mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-(sample?1:0)));},
+  q(a,p){const s=a.slice().sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i);return s[lo]+(s[Math.min(lo+1,s.length-1)]-s[lo])*(i-lo);},
+  r(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0,syy=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;syy+=(y-my)**2;});return sxx&&syy?sxy/Math.sqrt(sxx*syy):null;},
+  /* 최소제곱 직선 y = a + b·x, 결정 계수 r2, 평균 제곱 오차 mse */
+  fit(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;});if(!sxx)return null;const b=sxy/sxx,a=my-b*mx;return {a,b,...stat.err(P,a,b)};},
+  err(P,a,b){let se=0,st=0;const my=stat.mean(P.map(p=>p[1]));P.forEach(([x,y])=>{se+=(y-(a+b*x))**2;st+=(y-my)**2;});return {mse:se/P.length,rmse:Math.sqrt(se/P.length),r2:st?1-se/st:NaN};},
+  /* k-평균 한 단계: 점마다 가까운 중심 → 중심을 그 점들의 평균으로 */
+  assign:(P,C)=>P.map(p=>{let bi=0,bd=Infinity;C.forEach((c,i)=>{const d=(p[0]-c[0])**2+(p[1]-c[1])**2;if(d<bd){bd=d;bi=i;}});return bi;}),
+  center:(P,L,C)=>C.map((c,i)=>{const m=P.filter((_,j)=>L[j]===i);return m.length?[stat.mean(m.map(p=>p[0])),stat.mean(m.map(p=>p[1]))]:c.slice();}),
+  /* 군집 안 거리 제곱합(SSE)과 평균 실루엣 점수 */
+  sse:(P,L,C)=>P.reduce((s,p,j)=>s+(p[0]-C[L[j]][0])**2+(p[1]-C[L[j]][1])**2,0),
+  silhouette(P,L){const k=Math.max(...L)+1;if(k<2)return NaN;const d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);let s=0;P.forEach((p,i)=>{const avg=c=>{const m=P.filter((_,j)=>L[j]===c&&j!==i);return m.length?stat.mean(m.map(q=>d(p,q))):NaN;};const a=avg(L[i]);let b=Infinity;for(let c=0;c<k;c++)if(c!==L[i]){const v=avg(c);if(v<b)b=v;}s+=(isNaN(a)||!isFinite(b))?0:(b-a)/Math.max(a,b);});return s/P.length;},
+  fmt:(v,d=2)=>v==null||isNaN(v)?'—':(v<0?'−':'')+Math.abs(v).toFixed(d)
+};
+const PAL=['#2f6fd0','#d64535','#1f9d74','#f2a516','#9b4fc4','#e0702b','#5b6776'];
+
+/* 오렌지3 위젯 연결 흐름도 + 설정 표 + (선택) 진행 칩
+   orangeFlow({svg:'id', table:'id', nodes:[{s:1,t:'File',sub:'파일.csv',c:'Data',x,y}], edges:[[1,2]], w, h, done:{box,key,items}})
+   c: Data · Transform · Visualize · Model · Evaluate · Unsupervised · Associate · Explore
+   설정 표는 화면에 <table class="tbl of-set" id="…"><tr data-s="1">…</tr></table> 로 두면 위젯을 누를 때 그 줄이 강조된다. */
+const OF_COL={Data:'#f2b84b',Transform:'#f0875a',Visualize:'#fdb3a0',Model:'#f6a3c6',Evaluate:'#c5a1e8',Unsupervised:'#7fb2e0',Associate:'#8fd3c1',Explore:'#a7d36f'};
+function orangeFlow(o){
+  const S=$(o.svg), BW=o.bw||180, BH=48, N={}, id=o.svg;
+  o.nodes.forEach(n=>N[n.s]=n);
+  const W=o.w||Math.max(...o.nodes.map(n=>n.x))+BW+10, H=o.h||Math.max(...o.nodes.map(n=>n.y))+BH+10;
+  let g=`<defs><marker id="${id}A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a94a3"/></marker></defs>`;
+  o.edges.forEach(([a,b,lab])=>{const p=N[a],q=N[b],x1=p.x+BW,y1=p.y+BH/2,x2=q.x-2,y2=q.y+BH/2;
+    g+=`<path d="M${x1} ${y1}C${x1+40} ${y1} ${x2-40} ${y2} ${x2} ${y2}" class="fe" marker-end="url(#${id}A)"/>`;
+    if(lab) g+=`<text x="${(x1+x2)/2}" y="${(y1+y2)/2-6}" class="fl">${esc(lab)}</text>`;});
+  o.nodes.forEach(n=>{const k=OF_COL[n.c]||'#ccc';
+    g+=`<g class="fn" data-s="${n.s}" tabindex="0" role="button" aria-label="${n.s}번 ${esc(n.t)}"><rect x="${n.x}" y="${n.y}" width="${BW}" height="${BH}" rx="10" class="fb" style="stroke:${k}"/><rect x="${n.x}" y="${n.y}" width="28" height="${BH}" rx="10" fill="${k}"/><rect x="${n.x+18}" y="${n.y}" width="10" height="${BH}" fill="${k}"/><text x="${n.x+14}" y="${n.y+29}" class="fnum">${n.s}</text><text x="${n.x+36}" y="${n.y+(n.sub?20:29)}" class="ft">${esc(n.t)}</text>${n.sub?`<text x="${n.x+36}" y="${n.y+37}" class="fs">${esc(n.sub)}</text>`:''}</g>`;});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.innerHTML=g;
+  S.parentElement.classList.add('of-box'); S.style.minWidth=Math.min(W,o.minw||640)+'px';
+  const T=o.table?$(o.table):null;
+  const pick=s=>{S.querySelectorAll('.fn').forEach(x=>x.classList.toggle('on',x.dataset.s==s));
+    if(T){T.querySelectorAll('tr[data-s]').forEach(tr=>tr.classList.toggle('hl',tr.dataset.s==s)); const tr=T.querySelector(`tr[data-s="${s}"]`); if(tr) tr.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+  S.querySelectorAll('.fn').forEach(x=>{x.onclick=()=>pick(x.dataset.s); x.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(x.dataset.s);}};});
+  if(T){T.classList.add('of-set'); T.querySelectorAll('tr[data-s]').forEach(tr=>tr.onclick=()=>pick(tr.dataset.s));}
+  if(o.legend!==false){const used=[...new Set(o.nodes.map(n=>n.c))]; const L=document.createElement('div'); L.className='of-legend';
+    L.innerHTML=used.map(c=>`<span style="--k:${OF_COL[c]}">${c}</span>`).join('')+'<small>색은 오렌지3 왼쪽 위젯 카테고리예요.</small>'; S.parentElement.after(L);}
+  if(o.done) chips(o.done.box,o.done.key,o.done.items,true);
+  return {pick};
+}
+
+/* 산점도 탐색기
+   const sp=scatter({svg:'id', x:[0,10,2], y:[0,100,20], xl:'x 이름', yl:'y 이름', edit:true, max:40, onChange(P){…}})
+   onChange 는 set()과 학생이 점을 옮길 때만 불림(line·centers·resid 는 안 부름 → onChange 안에서 sp.line 해도 됨)
+   sp.set([[x,y,색 또는 군집번호],…]) · sp.line(a,b,'색',점선?) · sp.lines([...]) · sp.centers([[x,y],…]) · sp.resid(true) · sp.points() */
+function scatter(o){
+  const S=$(o.svg), W=o.w||460, H=o.h||340, L=52, R=14, T=12, B=46, pw=W-L-R, ph=H-T-B;
+  const [x0,x1,xs]=o.x, [y0,y1,ys]=o.y;
+  const X=v=>L+(v-x0)/(x1-x0)*pw, Y=v=>T+ph-(v-y0)/(y1-y0)*ph, IX=x=>x0+(x-L)/pw*(x1-x0), IY=y=>y0+(T+ph-y)/ph*(y1-y0);
+  const cl=(v,a,b)=>Math.max(a,Math.min(b,v)), dg=o.dec??1, rd=v=>+v.toFixed(dg), lab=v=>String(+v.toFixed(2)).replace('-','−');
+  let P=[], LN=[], C=[], RES=false, drag=-1;
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg');
+  let g=`<rect x="${L}" y="${T}" width="${pw}" height="${ph}" fill="#fbfaf7"/>`;
+  for(let v=x0;v<=x1+1e-9;v+=xs) g+=`<line x1="${X(v)}" y1="${T}" x2="${X(v)}" y2="${T+ph}" stroke="#eceae4"/><text x="${X(v)}" y="${T+ph+16}" text-anchor="middle" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  for(let v=y0;v<=y1+1e-9;v+=ys) g+=`<line x1="${L}" y1="${Y(v)}" x2="${L+pw}" y2="${Y(v)}" stroke="#eceae4"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  g+=`<path d="M${L} ${T}V${T+ph}H${L+pw}" fill="none" stroke="#16202c" stroke-width="2"/><text x="${L+pw/2}" y="${H-6}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c">${o.xl} →</text><text x="14" y="${T+ph/2}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c" transform="rotate(-90 14 ${T+ph/2})">${o.yl} →</text><defs><clipPath id="${o.svg}C"><rect x="${L}" y="${T}" width="${pw}" height="${ph}"/></clipPath></defs><g class="ln" clip-path="url(#${o.svg}C)"></g><g class="pts"></g><g class="cs"></g>`;
+  S.innerHTML=g;
+  const col=p=>typeof p[2]==='number'?PAL[p[2]%PAL.length]:(p[2]||o.color||'#1f9d74');
+  function draw(fin,quiet){
+    let lg='';
+    if(RES&&LN[0]) P.forEach(p=>{const yh=LN[0].a+LN[0].b*p[0]; lg+=`<line x1="${X(p[0])}" y1="${Y(p[1])}" x2="${X(p[0])}" y2="${Y(yh)}" stroke="#d64535" stroke-width="1.5" stroke-dasharray="3 3"/>`;});
+    LN.forEach(l=>lg+=`<line x1="${X(x0)}" y1="${Y(l.a+l.b*x0)}" x2="${X(x1)}" y2="${Y(l.a+l.b*x1)}" stroke="${l.c||'#16202c'}" stroke-width="2.5"${l.dash?' stroke-dasharray="7 5"':''}/>`);
+    S.querySelector('.ln').innerHTML=lg;
+    S.querySelector('.pts').innerHTML=P.map((p,i)=>`<circle data-i="${i}" cx="${X(p[0])}" cy="${Y(p[1])}" r="${o.edit?7:5.5}" fill="${col(p)}" fill-opacity=".82" stroke="#fff" stroke-width="1.5"${o.edit?' class="sp-pt"':''}/>`).join('');
+    S.querySelector('.cs').innerHTML=C.map((c,i)=>`<g transform="translate(${X(c[0])} ${Y(c[1])})"><path d="M-9 -9L9 9M9 -9L-9 9" stroke="#fff" stroke-width="7"/><path d="M-9 -9L9 9M9 -9L-9 9" stroke="${PAL[i%PAL.length]}" stroke-width="4"/></g>`).join('');
+    if(o.onChange&&!quiet) o.onChange(P,fin);
+  }
+  const pt=e=>{const m=S.getScreenCTM(); if(!m) return [0,0]; const q=new DOMPoint(e.clientX,e.clientY).matrixTransform(m.inverse()); return [q.x,q.y];};
+  if(o.edit){
+    S.style.touchAction='none';
+    S.addEventListener('pointerdown',e=>{const c=e.target.closest('circle[data-i]');
+      if(c){drag=+c.dataset.i; S.setPointerCapture(e.pointerId); return;}
+      const [x,y]=pt(e); if(x<L||x>L+pw||y<T||y>T+ph) return;
+      if(P.length>=(o.max||40)) return;
+      P.push([rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1))]); draw(true);});
+    S.addEventListener('pointermove',e=>{if(drag<0)return; const [x,y]=pt(e); P[drag]=[rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1)),P[drag][2]]; draw(false);});
+    const up=()=>{if(drag>=0){drag=-1; draw(true);}}; S.addEventListener('pointerup',up); S.addEventListener('pointercancel',up);
+    S.addEventListener('dblclick',e=>{const c=e.target.closest('circle[data-i]'); if(c){P.splice(+c.dataset.i,1); draw(true);}});
+  }
+  draw(false);
+  return {set(pts){P=pts.map(p=>p.slice()); draw(false); return this;}, points:()=>P.map(p=>p.slice()),
+    line(a,b,c,dash){LN=a==null?[]:[{a,b,c,dash}]; draw(false,1); return this;}, lines(ls){LN=ls; draw(false,1); return this;},
+    centers(cs){C=cs||[]; draw(false,1); return this;}, resid(on){RES=on; draw(false,1); return this;}, X, Y};
+}
+
+/* 막대그래프  bars('svgId',[['이름',값,'색'?],…],{max, unit, dec, w, h, horiz}) */
+function bars(id,data,o={}){
+  const S=$(id), W=o.w||460, n=data.length, horiz=o.horiz, rowH=30, H=o.h||(horiz?n*rowH+20:260);
+  const mx=o.max||Math.max(...data.map(d=>d[1]))*1.1||1, dec=o.dec??0, u=o.unit||'';
+  let g='';
+  if(horiz){const L=o.left||120, pw=W-L-60;
+    data.forEach(([k,v,c],i)=>{const y=10+i*rowH; g+=`<text x="${L-8}" y="${y+18}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><rect x="${L}" y="${y+4}" width="${Math.max(0,v/mx*pw)}" height="${rowH-10}" rx="5" fill="${c||PAL[0]}"/><text x="${L+v/mx*pw+6}" y="${y+18}" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text>`;});
+  }else{const L=36, B=40, T=18, ph=H-B-T, bw=(W-L-10)/n;
+    g+=`<path d="M${L} ${T}V${T+ph}H${W-6}" fill="none" stroke="#16202c" stroke-width="1.5"/>`;
+    data.forEach(([k,v,c],i)=>{const x=L+i*bw+bw*.15, h=Math.max(0,v/mx*ph); g+=`<rect x="${x}" y="${T+ph-h}" width="${bw*.7}" height="${h}" rx="4" fill="${c||PAL[i%PAL.length]}"/><text x="${x+bw*.35}" y="${T+ph-h-5}" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text><text x="${x+bw*.35}" y="${T+ph+16}" text-anchor="middle" font-size="12" fill="#16202c">${esc(k)}</text>`;});
+  }
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 상자 그림  boxes('svgId',[['이름',[값…],'색'?],…],{min,max,step,unit,w}) — 가로 상자, 1.5×IQR 밖 값은 점 */
+function boxes(id,groups,o={}){
+  const S=$(id), W=o.w||460, rowH=44, L=o.left||90, R=16, H=groups.length*rowH+34, pw=W-L-R;
+  const all=groups.flatMap(g=>g[1]), lo=o.min??Math.min(...all), hi=o.max??Math.max(...all), X=v=>L+(v-lo)/(hi-lo)*pw;
+  let g=''; const st=o.step||(hi-lo)/5;
+  for(let v=lo;v<=hi+1e-9;v+=st) g+=`<line x1="${X(v)}" y1="6" x2="${X(v)}" y2="${H-26}" stroke="#eceae4"/><text x="${X(v)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#5b6776">${+v.toFixed(2)}${o.unit||''}</text>`;
+  groups.forEach(([k,a,c],i)=>{const y=8+i*rowH+rowH/2-4, q1=stat.q(a,.25), q2=stat.q(a,.5), q3=stat.q(a,.75), iq=q3-q1, fl=a.filter(v=>v>=q1-1.5*iq), fh=a.filter(v=>v<=q3+1.5*iq), wl=Math.min(...fl), wh=Math.max(...fh), k2=c||PAL[i%PAL.length];
+    g+=`<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><line x1="${X(wl)}" y1="${y}" x2="${X(wh)}" y2="${y}" stroke="${k2}" stroke-width="2"/><rect x="${X(q1)}" y="${y-12}" width="${Math.max(1,X(q3)-X(q1))}" height="24" rx="4" fill="${k2}" fill-opacity=".25" stroke="${k2}" stroke-width="2"/><line x1="${X(q2)}" y1="${y-12}" x2="${X(q2)}" y2="${y+12}" stroke="${k2}" stroke-width="3"/>`+a.filter(v=>v<wl||v>wh).map(v=>`<circle cx="${X(v)}" cy="${y}" r="4" fill="#fff" stroke="#d64535" stroke-width="2"/>`).join('');});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 작은 표  miniTable('boxId',{cols:['이름',…], rows:[[…],…], edit:[열번호…], pick:true, onChange(rows), onPick(i)}) — 칸을 고치거나 줄을 고를 수 있음 */
+function miniTable(box,o){
+  const B=$(box); B.classList.add('mt-wrap'); let rows=o.rows.map(r=>r.slice()), sel=new Set();
+  function draw(){
+    B.innerHTML=`<table class="tbl mt"><tr>${o.pick?'<th></th>':''}${o.cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map((r,i)=>`<tr data-i="${i}" class="${sel.has(i)?'on':''}">${o.pick?`<td><input type="checkbox" aria-label="${i+1}번째 줄 고르기" ${sel.has(i)?'checked':''}></td>`:''}${r.map((v,j)=>(o.edit||[]).includes(j)?`<td><input class="mt-in" data-j="${j}" value="${esc(v)}" inputmode="decimal" aria-label="${esc(o.cols[j])}"></td>`:`<td>${v}</td>`).join('')}</tr>`).join('')}</table>`;
+    B.querySelectorAll('.mt-in').forEach(inp=>inp.oninput=()=>{const i=+inp.closest('tr').dataset.i, j=+inp.dataset.j, v=inp.value.trim(); rows[i][j]=v===''||isNaN(+v)?v:+v; o.onChange&&o.onChange(rows);});
+    B.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{const i=+cb.closest('tr').dataset.i; cb.checked?sel.add(i):sel.delete(i); cb.closest('tr').classList.toggle('on',cb.checked); o.onPick&&o.onPick([...sel].sort((a,b)=>a-b));});
+  }
+  draw();
+  return {rows:()=>rows.map(r=>r.slice()), set(r){rows=r.map(x=>x.slice()); sel.clear(); draw();}, picked:()=>[...sel]};
+}
+/* 01 디자이너 화면 모형 */
+(()=>{
+  const D=['<b>프로젝트명</b> 프로젝트의 이름이에요. 한글과 일부 특수 문자는 쓸 수 없어요.','<b>팔레트</b> 사용할 기능들이 나열되어 있어요. 뷰어로 드래그 앤 드롭해서 사용해요.','<b>뷰어</b> 스마트폰에 보이는 화면이에요. 팔레트에서 필요한 요소를 가져와 배치할 수 있어요.','<b>컴포넌트</b> 현재 화면에 배치된 요소들이 순서대로 나열돼요.','<b>미디어</b> 현재 화면에서 사용되는 이미지, 소리, 영상을 나타내요.','<b>속성</b> 크기, 글씨체, 이미지 등 각 요소들이 가지는 속성을 설정할 수 있어요.','<b>전환</b> 버튼을 눌러 원하는 화면으로 전환할 수 있어요. [블록]을 누르면 블록 코딩 화면으로 바뀌어요.'];
+  const gs=[...document.querySelectorAll('#bdDesigner .rg')];
+  gs.forEach(g=>g.onclick=()=>{gs.forEach(x=>x.classList.toggle('on',x===g)); $('bdDesSay').innerHTML=D[+g.dataset.r];});
+})();
+
+/* 02 어느 단계? */
+sorter('bdStageSort',{
+  cats:[{n:'1 화면 개발',k:'#2f9a5a'},{n:'2 기능 개발',k:'#2f6fd0'},{n:'3 테스트',k:'#d0602f'},{n:'4 패키징·배포',k:'#7a6ad0'}],
+  items:[
+    {t:'메인 화면을 설정하고 제목을 넣는다',short:'메인 화면 · 제목',c:0,ic:'📱',w:'눈에 보이는 화면을 만드는 일이라 1단계 화면 개발이에요.'},
+    {t:'메뉴 버튼과 총 금액 레이블을 만든다',short:'메뉴 버튼 · 총 금액',c:0,ic:'🔘',w:'버튼과 레이블을 배치하는 것도 화면 개발이에요.'},
+    {t:'앱이 켜질 때 환영 인사를 말하게 한다',short:'환영 인사',c:1,ic:'👋',w:'동작을 코딩하는 일이라 2단계 기능 개발이에요.'},
+    {t:'메뉴 정보를 담을 변수를 만든다',short:'변수 만들기',c:1,ic:'📦',w:'기능 개발에서 변수를 만들어요.'},
+    {t:'말한 문장에서 숫자를 골라내는 함수를 만든다',short:'숫자 인식 함수',c:1,ic:'🔢',w:'함수는 블록으로 코딩하는 기능 개발이에요.'},
+    {t:'스마트폰을 설정하고 앱을 실행해 본다',short:'스마트폰 설정 · 실행',c:2,ic:'📲',w:'오류가 있는지 확인하는 3단계 테스트예요.'},
+    {t:'앱스토어나 웹 사이트에 등록해 내놓는다',short:'등록 및 배포',c:3,ic:'🚀',w:'모듈로 생성한 실행 파일을 묶어 등록·배포하는 4단계예요.'},
+  ],
+  end:'<b>정리</b> 화면 개발 → 기능 개발 → 테스트 → 패키징 및 배포 순서예요.'
+});
+
+/* 03 컴포넌트 트리 ↔ 휴대폰 모형 */
+(()=>{
+  const T={
+    '1':'<b>Screen1 · 제목</b> Screen1은 배경색 주황, 수평 정렬 가운데:3, 스크롤가능여부 체크. 제목은 글꼴 크기 25, 높이 자동, 너비 부모 요소에 맞추기, 텍스트 정렬 가운데예요.',
+    '2':'<b>스크롤가능수평배치_메뉴</b> 높이 35%, 너비 자동. 그 안의 메뉴N_주문버튼은 높이 부모 요소에 맞추기, 너비 30%, 텍스트는 빈칸이에요.',
+    '3':'<b>수직배치_주문</b> 안의 수평배치_메뉴N(배경색 흰색)에 레이블 3개가 가로로 들어가요. 주문안내는 글꼴 14·너비 30%, 주문수량은 글꼴 14·너비 20%·오른쪽, 주문금액은 글꼴 14·너비 30%·오른쪽이에요.',
+    '4':'<b>수평배치_총금액</b> 배경색 흰색. 총금액_주문안내는 글꼴 14·텍스트 「총 금액」·왼쪽, 총금액_계산은 너비 40%·오른쪽이에요.',
+    '5':'<b>종료버튼과 보이지 않는 컴포넌트</b> 종료버튼은 글꼴 14, 너비 자동, 텍스트 「종료」, 가운데예요. 음성변환1·음성인식1·알림1은 화면에는 보이지 않아요.'};
+  const GAP='<b>레이블_간격</b> 요소 사이를 띄우려고 넣은 레이블이에요. 높이는 4%예요.';
+  const els=[...document.querySelectorAll('#bdTree [data-g], #bdPhone [data-g]')];
+  const pick=g=>{els.forEach(e=>e.classList.toggle('on',e.dataset.g===g)); $('bdTreeSay').innerHTML=T[g]||GAP;};
+  els.forEach(e=>e.onclick=()=>pick(e.dataset.g));
+})();
+
+/* 04 환영 인사 블록 조립 순서 */
+sorter('bdGreetSort',{
+  cats:[{n:'❶ 첫 번째',k:'#c0397a'},{n:'❷ 두 번째',k:'#2f6fd0'},{n:'❸ 세 번째',k:'#2f9a5a'},{n:'❹ 네 번째',k:'#d0602f'}],
+  items:[
+    {t:'Screen1 > 「언제 Screen1.초기화되었을때」 블록을 뷰어로 드래그한다',short:'언제 Screen1.초기화되었을때',c:0,ic:'1️⃣',w:'먼저 앱이 켜질 때 실행되는 바깥 블록을 가져와요.'},
+    {t:'음성변환1 > 「호출 음성변환1.말하기」 블록을 Screen1 블록 안으로 결합한다',short:'음성변환1.말하기',c:1,ic:'2️⃣',w:'바깥 블록 안에 말하기 블록을 끼워 넣어요.'},
+    {t:'공통 블록 > 텍스트 > 「합치기」 블록을 음성변환1 블록 「메시지」 뒤에 연결한다',short:'합치기 블록 연결',c:2,ic:'3️⃣',w:'말할 문장을 여러 줄로 이어 붙일 합치기 블록을 메시지에 연결해요.'},
+    {t:'텍스트 블록을 합치기 뒤에 연결하고, 눌러서 인사 메시지를 입력한다',short:'텍스트에 인사 입력',c:3,ic:'4️⃣',w:'마지막으로 텍스트 블록에 실제 인사 문장을 써 넣어요.'},
+  ],
+  end:'<b>정리</b> 바깥 블록 → 말하기 블록 → 합치기 → 텍스트 입력 순서로 끼워 넣어요.'
+});
+
+/* 05 숫자 인식 함수 흉내 */
+pyrun('bdRun1',{code:`# 앱인벤터의 '숫자가져오기' 함수를 파이썬으로 흉내 내요
+문장목록 = ['치즈 버거 2 개 주세요', '3 개요', '하나요', '5 개 하고 1 개']
+for 인식문장 in 문장목록:
+    숫자리스트 = []                 # 빈 리스트 만들기
+    for 음절 in 인식문장.split():     # 빈 칸으로 분할하기, 각각 반복
+        if 음절.isdigit():          # 숫자인가요?
+            숫자리스트.append(음절)    # 항목 추가하기
+    print(인식문장, '->', 숫자리스트)
+    if len(숫자리스트) == 0:        # 길이 구하기 리스트 = 0
+        print('   숫자를 찾지 못했어요')
+`});
+
+/* 06 총 금액 흉내 (빈칸) */
+pyrun('bdRun2',{code:`# 음성 인식 후 총 금액 안내 블록을 파이썬으로 흉내 내요
+# 메뉴1 단가 5000은 교과서 192쪽 값, 메뉴2·3 단가는 연습용으로 정한 값
+메뉴1 = 0
+메뉴2 = 0
+메뉴3 = 0
+주문 = [('1', '두 개 주세요 2'), ('2', '1 개요'), ('3', '글쎄요')]   # (종류, 말한 문장)
+for 종류, 말한문장 in 주문:
+    숫자리스트 = [낱말 for 낱말 in 말한문장.split() if 낱말.isdigit()]
+    if len(숫자리스트) != 0:
+        수량 = int(숫자리스트[0])
+        if 종류 == '1':
+            메뉴1 = 5000 * 수량
+        elif 종류 == '2':
+            메뉴2 = 6000 * 수량
+        elif 종류 == '3':
+            메뉴3 = 7000 * 수량
+        총금액 = 메뉴1 + ___          # 빈칸: 메뉴2와 메뉴3 값을 더해 보세요
+        print('총 금액은', 총금액, '원입니다.')
+    else:
+        print('무슨 말인지 잘 모르겠습니다. 다시 말씀해주세요.')
+`});
+
+/* 08 마무리 */
+const MEMOLIST=[['bdPlan','나의 계획 · 넣고 싶은 메뉴 3가지'],['bdHeight','스크롤가능수평배치 높이'],['bdWidth','각 버튼의 너비'],['bdVert','스크롤가능수직배치를 쓸 상황'],['bdMenuDiff','메뉴2·3에서 달라야 할 점'],['bdFuncStuck','숫자 인식 함수 · 막힌 곳'],['bdLenWhy','0과 같지 않을 때 실행되는 까닭'],['bdNewLayout','변경된 화면 구성'],['bdNewWhy','변경한 이유'],['keyQ','오늘의 질문에 대한 내 답']];
+onShow[8]=()=>memoSummary('msum',MEMOLIST);
+
+/* 진도 보내기 ②: 화면 이동·퀴즈·메모·창 이탈을 선생님 시트로 */
+(function(){
+  if(WHO.off) return;
+  const box=document.createElement('div');
+  if(WHO.preview){
+    box.className='tr-badge';
+    box.innerHTML=WHO.teacher?'교사 모드 · 전송 안 함 <button type="button">끝내기</button>':'미리보기 · 진도 전송 안 함';
+    (document.querySelector('.top')||document.body).appendChild(box);
+    const b=box.querySelector('button'); if(b) b.onclick=()=>{ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); };
+    return;
+  }
+
+  if(WHO.need){
+    let last={}; try{last=JSON.parse(localStorage.getItem('aiw-last')||'{}')||{};}catch(e){}
+    box.className='tr-gate';
+    box.innerHTML=`<form class="tr-card" autocomplete="off">
+      <h2>수업 시작 전에</h2>
+      <p class="tr-sub">학번과 이름을 써 주세요.</p>
+      <label class="tr-f"><span>학번</span><input name="no" inputmode="numeric" maxlength="5" placeholder="예: 20101" value="${esc(last.no||'')}"></label>
+      <label class="tr-f"><span>이름</span><input name="name" maxlength="10" placeholder="이름" value="${esc(last.name||'')}"></label>
+      <div class="tr-cls" hidden>${[].map(c=>`<label><input type="radio" name="cls" value="${c}"><span>${c}</span></label>`).join('')}</div>
+      <div class="tr-err"></div>
+      <button class="btn" type="submit">시작하기 →</button>
+      <p class="tr-note">어느 화면까지 왔는지, 퀴즈와 메모가 선생님께 전달돼요.<br>다른 친구 이름으로 들어가지 마세요.</p>
+    </form>`;
+    document.body.appendChild(box);
+    const f=box.querySelector('form'), err=box.querySelector('.tr-err'), go2=f.querySelector('button[type=submit]'), clsBox=box.querySelector('.tr-cls');
+    f.no.addEventListener('input',()=>{f.no.value=f.no.value.replace(/\D/g,'').slice(0,5);});
+    const TEACH=t=>{let h=2166136261;for(const c of t){h^=c.codePointAt(0);h=Math.imul(h,16777619)>>>0;}return h.toString(36);}, TEACH_H='853zuh';
+    const enter=w=>{ try{sessionStorage.setItem('aiw-who',JSON.stringify(w)); if(!w.teacher) localStorage.setItem('aiw-last',JSON.stringify({no:w.no,name:w.name}));}catch(e){} location.reload(); };
+    const busy=on=>{ go2.disabled=on; go2.textContent=on?'명단에서 확인하는 중…':'시작하기 →'; };
+    f.onsubmit=async e=>{
+      e.preventDefault(); err.textContent='';
+      const no=f.no.value.trim(), name=f.name.value.replace(/\s+/g,'').trim();
+      if(TEACH(no+'|'+name)===TEACH_H) return enter({teacher:true});
+      if(!/^\d{5}$/.test(no)){err.textContent='학번 다섯 자리를 숫자로 써 주세요.';f.no.focus();return;}
+      if(name.length<2){err.textContent='이름을 써 주세요.';f.name.focus();return;}
+      /* 명단에서 확인이 안 될 때만 반을 직접 고른다 */
+      if(!clsBox.hidden){
+        const cls=(f.querySelector('input[name=cls]:checked')||{}).value;
+        if(!cls){err.textContent='반을 골라 주세요.';return;}
+        return enter({cls,no,name});
+      }
+      busy(true);
+      try{
+        const r=await fetch(PEP,{method:'POST',body:JSON.stringify({op:'who',no,name})});
+        const d=await r.json();
+        if(d.ok) return enter({cls:d.cls,no,name});
+        busy(false);
+        if(d.err==='notfound'){ err.textContent='명단에서 찾지 못했어요. 학번과 이름을 다시 확인해 주세요. 계속 안 되면 선생님께 말해 주세요.'; return; }
+        throw new Error(d.err);
+      }catch(x){
+        busy(false);
+        if(clsBox.hidden){ clsBox.hidden=false; err.textContent='명단을 확인하지 못했어요. 내 반을 골라 주세요.'; }
+      }
+    };
+    setTimeout(()=>{ (f.no.value?(f.name.value?go2:f.name):f.no).focus(); },50);
+    return;
+  }
+
+  /* 이름 표시 + 바꾸기 */
+  box.className='tr-who';
+  box.innerHTML=`<span>${esc(WHO.cls)} ${esc(WHO.no)} <b>${esc(WHO.name)}</b></span><button type="button" title="다른 학생으로 바꾸기">바꾸기</button>`;
+  (document.querySelector('.top')||document.body).appendChild(box);
+  box.querySelector('button').onclick=()=>{ if(confirm('다른 학생으로 바꿀까요? (지금까지 한 것은 이 학번으로 저장돼 있어요)')){ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); } };
+
+  const SK=QK+'-seen', AK=QK+'-away';
+  const seen=new Set(store.get(SK,[]));
+  const A=store.get(AK,{n:0,s:0});
+  let awayAt=null, lastAct=Date.now(), sent=0, lastSent=0, tmr=null, dirty=false;
+
+  function snap(){
+    let ok=0, done=0;
+    for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{const v=QS[k+'-'+i]; if(v!=null){done++; if(v===it.a) ok++;}});
+    const ML=(typeof MEMOLIST!=='undefined')?MEMOLIST:[];
+    return {op:'put',lesson:LESSON,title:document.title,cls:WHO.cls,no:WHO.no,name:WHO.name,
+      scr:cur,names:pages.map((p,i)=>i?p.dataset.name:'시작'),seen:[...seen].sort((a,b)=>a-b),
+      qOk:ok,qDone:done,qTot:TOTALQ,
+      memo:ML.map(([k,l])=>[l,String(MEMO[k]==null?'':MEMO[k]).slice(0,1500)]),
+      away:awayAt?1:0,leaves:A.n,awaySec:Math.round(A.s+(awayAt?(Date.now()-awayAt)/1000:0)),idle:Math.round((Date.now()-lastAct)/1000),n:++sent};
+  }
+  function flush(){
+    if(!dirty) return; dirty=false; lastSent=Date.now();
+    const body=JSON.stringify(snap());
+    try{ if(navigator.sendBeacon && navigator.sendBeacon(PEP,new Blob([body],{type:'text/plain'}))) return; }catch(e){}
+    try{ fetch(PEP,{method:'POST',mode:'no-cors',body,keepalive:true}).catch(()=>{}); }catch(e){}
+  }
+  /* 너무 자주 보내지 않기: 보통 15초, 창 이탈·복귀는 3초 간격 */
+  function send(urgent){
+    dirty=true; clearTimeout(tmr);
+    const gap=urgent?3000:15000, wait=Math.max(0,gap-(Date.now()-lastSent));
+    tmr=setTimeout(flush,wait);
+  }
+
+  const _go=go; go=function(i){ _go(i); if(!seen.has(cur)){seen.add(cur); store.set(SK,[...seen]);} send(true); };
+  const _upd=updScore; updScore=function(){ _upd(); send(); };
+  const _set=store.set; store.set=function(k,v){ _set(k,v); if(k===MK) send(); };
+
+  function leave(){ if(awayAt) return; awayAt=Date.now(); A.n++; _set(AK,A); send(true); }
+  function back(){ if(!awayAt) return; A.s+=(Date.now()-awayAt)/1000; awayAt=null; _set(AK,A); send(true); }
+  document.addEventListener('visibilitychange',()=>{ document.hidden?leave():(document.hasFocus()&&back()); });
+  window.addEventListener('blur',()=>setTimeout(()=>{ if(!document.hasFocus()) leave(); },300));
+  window.addEventListener('focus',back);
+  window.addEventListener('pagehide',()=>{ dirty=true; flush(); });
+  ['pointerdown','keydown','input','wheel','touchstart'].forEach(t=>document.addEventListener(t,()=>{lastAct=Date.now();},{capture:true,passive:true}));
+  /* 화면에 머물러 있으면 2분마다 한 번 신호 */
+  setInterval(()=>{ if(!document.hidden) send(); },120000);
+})();
+
+/* 시작 */
+bindMemos();
+updScore();
+const h0=parseInt((location.hash.match(/^#p(\d+)$/)||[])[1],10);
+go(isNaN(h0)?0:h0);
+</script>
+<script>
+/* page-guard: 복사·잘라내기·드래그·오른쪽 클릭 막기 (복사 버튼은 그대로 동작) */
+(function(){
+  var t=null, tm=null, MSG='수업 자료는 복사할 수 없어요. 내 말로 정리해 보세요.';
+  function say(){ if(!t){t=document.createElement('div');t.className='pg-toast';document.body.appendChild(t);} t.textContent=MSG; t.classList.add('on'); clearTimeout(tm); tm=setTimeout(function(){t.classList.remove('on');},1800); }
+  function inField(e){ return e.target && e.target.closest && e.target.closest('input,textarea,select,[contenteditable]'); }
+  ['copy','cut'].forEach(function(type){ document.addEventListener(type,function(e){ e.preventDefault(); say(); },true); });
+  document.addEventListener('contextmenu',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('selectstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('dragstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('keydown',function(e){ var k=(e.key||'').toLowerCase(); if((e.ctrlKey||e.metaKey)&&(k==='c'||k==='x')){ e.preventDefault(); say(); } if((e.ctrlKey||e.metaKey)&&k==='a'&&!inField(e)) e.preventDefault(); },true);
+})();
+</script>
+</body>
+</html>

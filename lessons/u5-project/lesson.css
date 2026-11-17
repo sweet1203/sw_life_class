@@ -1,0 +1,79 @@
+  /* u5-project 전용 (pp-) */
+  .pp-say{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 10px}
+  .pp-say>div{background:#eef6ff;border:2px solid #b9d4f4;border-radius:16px;padding:11px 14px;font-size:.93rem;line-height:1.55}
+  .pp-say>div:nth-child(2n){background:#effaf4;border-color:#b5e0cb}
+  .pp-say>div:nth-child(3n){background:#fff5ea;border-color:#f3cfa3}
+  .pp-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 12px}
+  @media (max-width:720px){.pp-flow{grid-template-columns:1fr}}
+  .pp-flow>div{background:#fff;border-radius:12px;border-top:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .pp-flow .n{display:inline-flex;width:28px;height:28px;border-radius:999px;background:var(--k);color:#fff;font-weight:900;align-items:center;justify-content:center}
+  .pp-flow b{display:block;color:var(--k);margin-top:4px}
+  .pp-tb{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:.92rem}
+  .pp-tb th{background:#f8dbe9;padding:7px 10px;border:1px solid var(--line);text-align:left}
+  .pp-tb td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+  .pp-tb td:first-child{font-weight:800;background:#fdf1f7}
+  .pp-tb input,.pp-tb textarea{width:100%;box-sizing:border-box}
+  .pp-tip{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:9px 13px;font-size:.9rem;margin:8px 0;line-height:1.6}
+  .pp-tip b:first-child{color:#a8730c}
+  .pp-goal{background:#fff;border:2px solid #c0397a;border-radius:14px;padding:11px 16px;font-weight:800;margin:8px 0;text-align:center}
+  .pp-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}
+  @media (max-width:600px){.pp-grid2{grid-template-columns:1fr}}
+  .pp-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0}
+  @media (max-width:720px){.pp-grid3{grid-template-columns:1fr}}
+  .pp-grid2 label,.pp-grid3 label,.pp-fld label{display:block;font-weight:800;font-size:.9rem;margin-bottom:3px}
+  .pp-grid2 textarea,.pp-grid3 textarea,.pp-grid2 input,.pp-fld input,.pp-fld textarea{width:100%;box-sizing:border-box}
+  .pp-fld{margin:8px 0}
+  .pp-feat{border:2px solid var(--line);border-left:6px solid #c0397a;border-radius:12px;padding:8px 14px 10px;margin:10px 0;background:#fff}
+  .pp-feat h4{margin:2px 0 6px}
+  .pp-feat .chk{margin-top:2px}
+  .pp-eg{font-size:.84rem;color:var(--muted);margin:2px 0 0;line-height:1.5}
+  .pp-avg{background:#fbfaf7;border:2px solid var(--line);border-radius:12px;padding:8px 14px;font-size:.93rem;margin:8px 0}
+  .pp-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
+  .pp-steps>div{background:#fff;border-radius:12px;border-top:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;font-size:.9rem;line-height:1.5}
+  .pp-steps b{display:block;color:var(--k);margin-bottom:2px}
+  .pp-steps .n{font-weight:900}
+  /* 투자 체험 */
+  .pp-bud{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:6px 0}
+  .pp-bud label{font-weight:800}
+  .pp-bud input{width:180px;max-width:100%;box-sizing:border-box;text-align:right}
+  .pp-team{border:2px solid var(--line);border-top:6px solid var(--k);border-radius:12px;padding:6px 14px 12px;background:#fff}
+  .pp-teams{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+  @media (max-width:760px){.pp-teams{grid-template-columns:1fr}}
+  .pp-team input[type=text],.pp-team textarea{width:100%;box-sizing:border-box}
+  .pp-team label{display:block;font-weight:800;font-size:.86rem;margin:8px 0 3px}
+  .pp-amt{display:flex;gap:10px;align-items:center}
+  .pp-amt>div{flex:1;min-width:0}
+  .pp-amt input[type=range]{width:100%}
+  .pp-amt b{min-width:6.5em;text-align:right;font-size:.92rem}
+  .pp-sum{background:#fbfaf7;border:2px solid var(--line);border-radius:12px;padding:9px 14px;line-height:1.75;font-size:.95rem}
+  .pp-sum.ok{border-color:#2f9a5a;background:#f0faf3}
+  .pp-sum.over{border-color:#d64535;background:#fff3f1}
+  .pp-note{font-size:.84rem;color:var(--muted)}
+  /* 평가하기 */
+  .pp-st{border:2px solid var(--line);border-left:6px solid var(--k);border-radius:12px;padding:8px 14px 12px;margin:10px 0;background:#fff}
+  .pp-st h4{margin:2px 0 4px;color:var(--k)}
+  .pp-st .chk{margin:4px 0 6px}
+  /* 대단원 */
+  .pp-svg{width:100%;height:auto;display:block;margin:6px auto}
+  .pp-svg text{fill:var(--ink);text-anchor:middle}
+  .pp-ox{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0}
+  .pp-ox p{margin:0;flex:1 1 260px;font-size:.93rem}
+  .pp-match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:560px){.pp-match{grid-template-columns:1fr}}
+  .pp-match button{display:block;width:100%;text-align:left;box-sizing:border-box;margin:0 0 7px;padding:8px 11px;border:2px solid var(--line);background:#fff;border-radius:10px;font:inherit;font-size:.9rem;line-height:1.45;cursor:pointer;color:var(--ink)}
+  .pp-match button.sel{border-color:var(--acc);background:var(--acc-soft)}
+  .pp-match button.ok{border-color:var(--c);background:var(--c);color:#fff;cursor:default}
+  .pp-match button.no{border-color:#d64535}
+  .pp-rate{display:grid;grid-template-columns:1fr;gap:6px;margin:6px 0}
+  .pp-rate>div{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0}
+  .pp-rate p{margin:0;flex:1 1 260px;font-size:.92rem}
+  .pp-pyn{margin-bottom:0}
+  .pp-ref{background:#f1f9fb;border:2px solid #b8dde4;border-radius:12px;padding:10px 14px;font-size:.93rem;line-height:1.65;margin:8px 0}
+  .pp-cap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+  .pp-cap>div{background:#fbfaf7;border-radius:12px;padding:9px 12px;font-size:.92rem;line-height:1.6}
+  .pp-cap b.h{display:block;margin-bottom:2px}
+  .pp-cap .on{font-weight:800}
+  .pp-cap .off{color:#9aa3af}
+  .pp-tb textarea,.pp-tb input{font-weight:400}
+  .pp-tags{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 8px}
+  .pp-tags span{background:#f6efff;border:2px solid #d6c3ee;border-radius:999px;padding:5px 14px;font-weight:800;font-size:.9rem}

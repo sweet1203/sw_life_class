@@ -1,0 +1,52 @@
+  /* u5-build 전용 (bd-) */
+  .bd-note{background:#fbfaf7;border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:10px;padding:10px 14px;font-size:.92rem;margin:8px 0;overflow-wrap:anywhere}
+  .bd-kind{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px}
+  .bd-kind b{display:block;color:var(--k)}
+  .bd-kind span{display:block;font-size:.92rem;margin-top:3px}
+  .bd-steps{display:grid;gap:12px;margin:8px 0 12px}
+  .bd-steps>div{display:flex;gap:12px;align-items:flex-start;background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k,var(--acc));padding:10px 14px;min-width:0}
+  .bd-steps .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--k,var(--acc));color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .bd-steps>div>div{min-width:0;overflow-wrap:anywhere}
+  .bd-steps b{color:var(--k,var(--acc))}
+  .bd-steps span:not(.n){display:block;font-size:.93rem;margin-top:3px}
+  .bd-stage{display:grid;gap:10px;margin:8px 0}
+  .bd-stage>div{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px;min-width:0;overflow-wrap:anywhere}
+  .bd-stage b{color:var(--k)}
+  .bd-stage ol{margin:4px 0 0;padding-left:20px;font-size:.92rem}
+  .bd-ul{margin:6px 0 0;padding-left:20px}
+  .bd-ul li{margin:3px 0}
+  .bd-tbl{width:100%;border-collapse:collapse;font-size:.86rem}
+  .bd-tbl th,.bd-tbl td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+  .bd-tbl th{background:#f6e3ec}
+  .bd-tbl td.c{white-space:nowrap}
+  .bd-svg{display:block;width:100%;max-width:440px;height:auto;margin:8px auto}
+  .bd-svg text{font-family:inherit;fill:#16202c;font-size:10px}
+  .bd-svg .rg rect{fill:#fff;stroke:#9aa5b4;stroke-width:1.5;cursor:pointer}
+  .bd-svg .rg{cursor:pointer}
+  .bd-svg .rg.on rect{fill:#ffe8a3;stroke:#c0397a;stroke-width:2.5}
+  .bd-svg .rg.on rect.pv{fill:#ffe8a3}
+  .bd-say{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:8px 12px;font-size:.93rem;min-height:3.2em;margin:6px 0;overflow-wrap:anywhere}
+  .bd-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  @media (max-width:640px){.bd-two{grid-template-columns:1fr}}
+  .bd-tree{display:grid;gap:6px;grid-template-columns:minmax(0,1fr)}
+  .bd-tree button{display:block;width:100%;min-width:0;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:2px 4px;font:inherit;cursor:pointer;color:var(--ink)}
+  .bd-tree button.on{border-color:var(--acc);background:#fdf0f6}
+  .bd-tree pre{margin:0;padding:6px 8px;font-size:.78rem;line-height:1.5;overflow-x:auto;white-space:pre;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:none}
+  .bd-tree .ep{padding:0}
+  .bd-phone{width:100%;max-width:290px;margin:0 auto;border:6px solid #2b3445;border-radius:26px;padding:10px 8px;background:#f6a21e;display:grid;gap:5px}
+  .bd-phone [data-g]{border:2px solid transparent;border-radius:6px;cursor:pointer;min-width:0}
+  .bd-phone [data-g].on{border-color:#16202c;box-shadow:0 0 0 3px #fff6c9}
+  .bd-phone .ttl{background:#fde7b0;text-align:center;font-weight:800;font-size:.95rem;padding:4px}
+  .bd-phone .mn{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;height:62px}
+  .bd-phone .mn span{background:#fff;border:1px solid #d9a23a;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.72rem;color:#8a6a1c;text-align:center}
+  .bd-phone .gp{background:rgba(255,255,255,.5);font-size:.64rem;text-align:center;color:#7a5a1a;padding:0}
+  .bd-phone .od{background:#fff;display:grid;gap:3px;padding:4px}
+  .bd-phone .od>div,.bd-phone .tt{display:flex;gap:3px;font-size:.66rem}
+  .bd-phone .od>div span{border:1px solid #cfd6df;border-radius:3px;padding:2px 3px;text-align:center;color:#5b6776;min-width:0;overflow-wrap:anywhere}
+  .bd-phone .tt{background:#fff;padding:4px}
+  .bd-phone .tt span{border:1px solid #cfd6df;border-radius:3px;padding:2px 3px;color:#5b6776;min-width:0}
+  .bd-phone .ex{background:#e6e3dc;text-align:center;font-size:.8rem;padding:5px;color:#16202c}
+  .bd-phone .iv{background:rgba(255,255,255,.6);font-size:.66rem;text-align:center;padding:3px;color:#5b6776}
+  .bd-mini{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.86rem;margin:4px 0}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}

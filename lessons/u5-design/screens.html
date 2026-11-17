@@ -1,0 +1,364 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#c0397a">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅴ. 가치를 창출하는 소프트웨어 · 융합 진로</span>
+      <h1>상상을 현실로!<br>키오스크 앱 기획과 설계</h1>
+      <div class="story"><b>디지털 소외 현상과 정보 접근성 (180쪽)</b><br>키오스크는 누구나 쓰라고 만든 기계인데, 어떤 사람에게는 쓰기 어려워요. 오늘은 <b>소프트웨어 개발자</b>가 되어 <b>정보 접근성</b>을 높이는 키오스크 앱의 <b>주제를 고르고, 아이디어를 모으고, 사용 순서와 화면을 설계</b>해 봐요.</div>
+      <p>기획부터 설계까지 다섯 걸음 중 앞의 네 걸음을 따라가요.</p>
+      <ol>
+        <li>주제 탐색 · 요구 분석</li><li>주제 선정</li><li>해결 아이디어 구안</li><li>설계(알고리즘 · 화면)</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 배울 내용 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🔎</i><div><b>탐색 · 선정</b><small>검색어로 사람들의 관심 살피기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>💡</i><div><b>아이디어 구안</b><small>해결할 문제와 방법 정하기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>📐</i><div><b>설계</b><small>사용 순서(순서도)와 화면 그리기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">융합 진로 · 상상을 현실로! 소프트웨어 개발자 (180쪽)</span>
+      <p>스타트업 프로젝트에 맞는 소프트웨어를 <b>함께 설계하고 구현</b>하고, 만든 소프트웨어의 가치를 <b>사회적·기능적·윤리적</b> 관점에서 평가해 보는 단원이에요. 이 차시에서는 앞부분인 <b>설계</b>까지 해요.</p>
+    </div>
+    <div class="card">
+      <h3>🎯 학습 목표와 학습 요소 <span class="muted" style="font-weight:400;font-size:.88rem">(180쪽)</span></h3>
+      <ul class="ds-ul">
+        <li>스타트업 프로젝트에 적합한 소프트웨어를 협력적으로 설계하고 구현할 수 있다.</li>
+        <li>개발한 소프트웨어의 가치를 사회적, 기능적, 윤리적 관점에서 평가할 수 있다.</li>
+      </ul>
+      <p style="margin:10px 0 0"><b>학습 요소</b> 소프트웨어 설계, 소프트웨어 구현, 소프트웨어의 가치 평가</p>
+    </div>
+    <div class="card">
+      <h3>🔍 소프트웨어로 들여다보기 · 디지털 소외 현상과 정보 접근성 <span class="muted" style="font-weight:400;font-size:.88rem">(180쪽)</span></h3>
+      <div class="ds-note" style="margin-top:0"><b>정보 접근성</b> 어떤 환경에서도 모든 사람이 디지털 서비스를 쓸 수 있도록 보장하는 것이에요.</div>
+      <p style="margin:8px 0 4px"><b>키오스크 정보 접근성 현황 조사 결과</b> <span class="muted">(점수, 자료: 한국지능정보사회진흥원 2021)</span></p>
+      <svg id="dsBars" role="img" aria-label="키오스크 정보 접근성 점수. 은행·환전 83.3, 민원·안내 82.4, 공항·철도·터미널 63.2, 백화점·쇼핑몰·마트 61.7, 종합 병원·약국 59.4, 주유소·충전소·주차장 59.2, 음식점·카페·패스트푸드 58.3, 공연장·영화관·체육관 53.7, 기타 57.9"></svg>
+      <p style="margin:6px 0">조사에서 키오스크의 정보 접근성은 평균 <b>66.7점</b>으로 매우 낮았어요. 정부·공공기관에 설치된 「민원·안내」는 82.4점이었지만 「주유소·충전소·주차장」은 59.2점, 「음식점·카페·패스트푸드」는 58.3점이라서 <b>민간 영역</b>이 더 열악했어요.</p>
+      <p style="margin:6px 0 0">대부분의 키오스크에는 시각 장애인용 점자·음성 안내가 없고, 휠체어를 쓰는 장애인이 쓰기에는 화면이 너무 높아요. 비장애인도 내용을 빨리 알아보기 힘들 때가 있는데, 인지 능력에 어려움을 겪는 발달 장애인에게는 더 힘들 거예요.</p>
+    </div>
+    <div class="card">
+      <h3>💭 문제 발견 <span class="muted" style="font-weight:400;font-size:.88rem">(180쪽, 선택)</span></h3>
+      <div class="memo"><label>키오스크의 정보 접근성을 높일 수 있는 방법에는 어떤 것이 있을지 나의 생각을 적어 보세요.</label><textarea data-memo="dsFind1" rows="2" placeholder="예) 화면 높이를 조절할 수 있는 키오스크"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>위에서 쓴 기능이 담긴 키오스크를 개발했을 때 내가 생각한 <b>사회적 가치</b>와 그 이유를 적어 보세요.</label><textarea data-memo="dsFind2" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses"><li><b>오늘의 질문</b> · 정보 접근성이 낮은 사람도 쓸 수 있는 키오스크 앱을 어떤 순서와 화면으로 설계할까?</li></ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>정보 접근성이 무엇인지 설명할 수 있다.</li>
+          <li>검색어 분석으로 주제를 탐색하고 해결 아이디어를 정리할 수 있다.</li>
+          <li>앱 사용 절차를 순서도와 화면 구성으로 설계할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">디지털 소외 · 정보 접근성 · 키오스크 · 요구 분석 · 알고리즘 · 순서도 · 레이블 · 버튼</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>내가 키오스크를 쓰다가 <b>불편했던 적</b>이 있나요? 있다면 어떤 점이었나요? <small>떠오르는 대로 한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="dsPlan" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 소프트웨어 개발자가 되어 볼까? →</button></div>
+  </div>
+</section>
+
+<!-- 1 개발자 -->
+<section class="page" data-name="개발자가 되어 볼까" data-acc="#c0397a">
+  <div class="head"><div class="num">01</div><div><h2>소프트웨어 개발자가 되어 볼까?</h2><p>교과서 181쪽 · 실습 개요와 협업하는 전문가</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>좋은 앱은 <b>혼자</b> 만들지 않아요. 기획자·디자이너·홍보 전문가·개발자가 <b>역할을 나눠 함께</b> 만들어요. 오늘은 그중 <b>개발자</b>가 되어 보는 거예요.</span></div>
+
+  <div class="card">
+    <h3>🛠️ 실습 · 정보 접근성을 높이기 위한 소프트웨어 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(181쪽)</span></h3>
+    <p style="margin-top:0">주말에 친구들과 패스트푸드점에 갔는데, 앞에 계신 분들이 난처해하고 있었어요. 살펴보니 <b>시각 장애인</b>이었어요. 우리는 그분들을 위해 주문을 도와드렸어요. 그런데 이렇게 하는 것이 근본적인 문제 해결 방법은 아니라는 생각이 들었어요. 키오스크로 주문할 때 터치가 아닌 다른 방법은 없을까? 정보 접근성이 낮은 사람들에게는 디지털화된 오늘날의 환경이 더욱 불편하지 않을까?</p>
+    <div class="tscroll"><table class="ds-tbl">
+      <tr><th>문제 상황</th><td>많은 사람이 편하게 사용할 수 있도록 정보 접근성이 높은 소프트웨어가 필요하다.</td></tr>
+      <tr><th>활용 프로그램</th><td>구글 트렌드, 썸트렌드</td></tr>
+      <tr><th>사용 소프트웨어</th><td>앱인벤터(App Inventor)</td></tr>
+    </table></div>
+    <p class="ds-note" style="margin-bottom:0">💬 교과서 말풍선 「어떤 기능을 넣으면 더 편리하게 사용할 수 있을까?」</p>
+  </div>
+
+  <div class="card">
+    <h3>🤝 함께 일하는 전문가들 <span class="muted" style="font-weight:400;font-size:.88rem">(181쪽)</span></h3>
+    <p style="margin-top:0">소프트웨어를 개발하려면 개발자뿐 아니라 여러 분야의 전문가가 협업해야 해요.</p>
+    <div class="ds-three">
+      <div style="--k:#2f6fd0"><b>🧑‍💻 소프트웨어 개발자</b>설계와 제작 단계에서 나온 아이디어를 <b>실제 소프트웨어로 구현</b>해요.</div>
+      <div style="--k:#c0397a"><b>🎨 디자이너</b><b>편리한 사용자 환경</b>을 만들어요.</div>
+      <div style="--k:#d0602f"><b>📣 홍보 전문가</b><b>마케팅</b>을 담당해요.</div>
+      <div style="--k:#2f9a5a"><b>💡 기획자</b><b>창의적인 아이디어</b>를 내요.</div>
+      <div style="--k:#7a6ad0"><b>🧭 프로젝트 매니저(PM)</b>팀원과 <b>프로젝트 전체</b>를 이끌어 가요.</div>
+    </div>
+    <p style="margin-bottom:0">본격적인 개발에 앞서, 모둠별로 178쪽 〈개념 학습 마무리〉에서 나눈 역할을 다시 정리하고 각 분야별로 필요한 역량을 찾아봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 소프트웨어 개발에 필요한 역량 찾기 <span class="muted" style="font-weight:400;font-size:.88rem">(181쪽, 선택)</span></h3>
+    <p style="margin-top:0">각 분야에 필요한 역량을 아래 <b>보기</b>에서 골라 눌러 보고, 이유를 적어 보세요. 정해진 답은 없고, 여러 개를 골라도 돼요.</p>
+    <div class="ds-note"><b>보기</b> 프로그래밍 능력, 협업 능력, 창의적 사고력, 의사소통 능력, 예술적 감수성, 분석적 사고, 색채 감각, 리더십, 통찰력</div>
+    <div class="memo"><label>기획 분야에 필요한 역량</label><div id="dsCapPlan"></div><textarea data-memo="dsCapPlanWhy" rows="2" placeholder="이유를 적어 보세요."></textarea><div class="saved"></div></div>
+    <div class="memo"><label>개발 분야에 필요한 역량</label><div id="dsCapDev"></div><textarea data-memo="dsCapDevWhy" rows="2" placeholder="이유를 적어 보세요."></textarea><div class="saved"></div></div>
+    <div class="memo"><label>디자인 분야에 필요한 역량</label><div id="dsCapDes"></div><textarea data-memo="dsCapDesWhy" rows="2" placeholder="이유를 적어 보세요."></textarea><div class="saved"></div></div>
+    <div class="memo"><label>홍보 분야에 필요한 역량</label><div id="dsCapPr"></div><textarea data-memo="dsCapPrWhy" rows="2" placeholder="이유를 적어 보세요."></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 주제 탐색 -->
+<section class="page" data-name="주제 탐색" data-acc="#c0397a">
+  <div class="head"><div class="num">02</div><div><h2>① 주제 탐색과 사용자 요구 분석</h2><p>교과서 182쪽 · 구글 트렌드로 사람들의 관심 살피기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>사람들은 궁금한 게 생기면 <b>인터넷에서 검색</b>해요. 그래서 <b>검색을 얼마나 많이 하는지</b> 보면 사람들이 무엇을 원하는지 짐작할 수 있어요.</span></div>
+
+  <div class="card">
+    <h3>📈 구글 트렌드 사용하기 <span class="muted" style="font-weight:400;font-size:.88rem">(182쪽)</span></h3>
+    <p style="margin-top:0">정보 접근성이 높은 소프트웨어를 만들기 위해 <b>검색 빈도</b>를 바탕으로 데이터를 분석해 주는 사이트를 사용해 주제를 탐색해요. 검색 결과를 분석해 보면 사용자들의 요구가 무엇인지 확인할 수 있어요.</p>
+    <div class="ds-steps">
+      <div style="--k:#2f6fd0"><span class="n">1</span><div><b>검색어 입력</b><span>구글 트렌드 사이트에서 검색어로 「접근성」과 「키오스크」를 입력하고 분석 결과를 확인해요.</span></div></div>
+      <div style="--k:#d0602f"><span class="n">2</span><div><b>내 관심 분야도 검색</b><span>내가 관심 있는 분야의 단어도 검색해 보고, 그 분야에 대한 사람들의 관심은 어떤지 함께 파악해요.</span></div></div>
+    </div>
+    <p style="margin:10px 0 4px"><b>화면 모양 (모형)</b> <span class="muted">실제 화면이 아니라 설명을 위해 그린 그림이에요.</span></p>
+    <svg class="ds-trend" viewBox="0 0 360 215" role="img" aria-label="구글 트렌드 화면 모형. 위쪽에 검색어 두 개와 검색어 추가 칸, 가운데에 기간과 채널 선택 칸, 아래에 두 검색어의 관심도를 나타낸 선 그래프">
+      <rect x="8" y="8" width="104" height="30" rx="6" fill="#fff" stroke="#2f6fd0" stroke-width="2"/><circle cx="20" cy="23" r="5" fill="#2f6fd0"/><text x="30" y="27">검색어 1</text>
+      <rect x="120" y="8" width="104" height="30" rx="6" fill="#fff" stroke="#d64535" stroke-width="2"/><circle cx="132" cy="23" r="5" fill="#d64535"/><text x="142" y="27">검색어 2</text>
+      <rect x="232" y="8" width="120" height="30" rx="6" fill="#e6efff" stroke="#9fb7e6"/><text x="242" y="27">＋ 비교 추가 ①</text>
+      <rect x="8" y="46" width="344" height="24" rx="6" fill="#f4f4f1" stroke="#d5d3cb"/><text x="16" y="62">지역 · 기간 · 카테고리 · 검색 채널 선택 ②</text>
+      <rect x="8" y="78" width="344" height="104" rx="6" fill="#fff" stroke="#d5d3cb"/>
+      <text x="16" y="94">시간 흐름에 따른 관심도 변화</text>
+      <polyline fill="none" stroke="#2f6fd0" stroke-width="2" points="20,170 50,150 80,160 110,125 140,140 170,118 200,132 230,110 260,128 290,104 320,120 345,100"/>
+      <polyline fill="none" stroke="#d64535" stroke-width="2" points="20,172 50,168 80,164 110,160 140,150 170,148 200,140 230,142 260,132 290,134 320,126 345,122"/>
+      <text x="8" y="202">③ 그래프 위에 마우스를 올리면 검색 빈도를 확인할 수 있어요</text>
+    </svg>
+    <ol class="ds-ul" style="margin-top:8px">
+      <li><b>①</b> 여기를 눌러 검색어를 추가해요.</li>
+      <li><b>②</b> 분석 기간과 분석 채널을 선택해요.</li>
+      <li><b>③</b> 마우스를 연도에 가져가면 각 단어의 검색 빈도수를 확인할 수 있어요.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>🧰 TIP · 데이터 분석 사이트 안내 <span class="muted" style="font-weight:400;font-size:.88rem">(182쪽)</span></h3>
+    <div class="tscroll"><table class="ds-tbl">
+      <tr><th>사이트 쓰임</th><th>주소</th></tr>
+      <tr><td>한국 스타트업 탐색</td><td>thevc.kr/browse/startups</td></tr>
+      <tr><td>검색어 언급량(구글 트렌드)</td><td>trends.google.co.kr/trends/</td></tr>
+      <tr><td>검색어 언급량(네이버 데이터랩)</td><td>datalab.naver.com</td></tr>
+      <tr><td>연관어 분석 · 긍부정 분석(썸트렌드)</td><td>some.co.kr</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 내 관심 분야 검색 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+    <div class="memo"><label>내가 관심 있는 분야의 단어를 검색해 보았나요? 어떤 단어를 검색했고, 사람들의 관심은 어떤 것 같았나요?</label><textarea data-memo="dsSearch" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 주제 선정 -->
+<section class="page" data-name="주제 선정" data-acc="#c0397a">
+  <div class="head"><div class="num">03</div><div><h2>② 주제 선정</h2><p>교과서 182~183쪽 · 관련 검색어와 썸트렌드 분석</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>큰 주제를 찾았으면 이제 <b>더 구체적으로</b> 무엇을 만들지 정해야 해요. 검색어와 <b>함께 찾는 낱말</b>, 그 낱말에 대한 <b>느낌</b>을 보면 힌트를 얻을 수 있어요.</span></div>
+
+  <div class="card">
+    <h3>🔗 관련 검색어 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(182쪽)</span></h3>
+    <p style="margin-top:0">구글 트렌드에서 단어를 검색하면 <b>관련 검색어</b>에 대한 자료를 확인할 수 있어요. 교과서에서 <b style="color:#d64535">빨간 상자</b>로 표시된 낱말을 살펴봐요.</p>
+    <div class="ds-rel">
+      <div><b>「접근성」 관련 검색어</b><ol><li>1 웹 접근성 연구소</li><li class="red">2 장애인</li><li>3 의료 접근성</li><li>4 accessibility</li><li>5 웹 콘텐츠 접근성 지침</li></ol></div>
+      <div><b>「키오스크」 관련 검색어</b><ol><li>1 kiosk</li><li class="red">2 키오스크 디자인</li><li>3 맥도날드</li><li class="red">4 키오스크 사용법</li><li>5 키오스크 가격</li></ol></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>☁️ 썸트렌드로 분석하기 <span class="muted" style="font-weight:400;font-size:.88rem">(183쪽)</span></h3>
+    <p style="margin-top:0">썸트렌드 사이트의 분석 센터에서 「키오스크」를 입력하고 분석 결과를 확인해요.</p>
+    <div class="ds-three">
+      <div style="--k:#2f6fd0"><b>연관어 분석</b>「키오스크」에 대한 연관어 분석에서는 <b>메뉴, 결제, 처음, 느낌, 가격</b> 등의 연관어를 사용한다는 것을 확인할 수 있어요.</div>
+      <div style="--k:#2f9a5a"><b>긍·부정 분석</b>긍정과 부정을 분석한 결과예요. 하단의 탭을 누르면 <b>긍정어와 부정어</b>를 확인할 수 있어요.</div>
+    </div>
+    <p style="margin:8px 0 4px"><b>낱말 구름 (모형)</b> <span class="muted">교과서 그림에 나온 낱말 몇 개를 크기만 달리해 옮긴 거예요.</span></p>
+    <div class="ds-cloud" aria-label="긍부정 분석 낱말 구름 모형"><span style="font-size:1.7rem;color:#2f9a5a">가능하다</span><span style="font-size:1.3rem;color:#2f6fd0">도움</span><span style="font-size:1.1rem;color:#2f9a5a">효과적</span><span style="font-size:1rem;color:#7a6ad0">개선하다</span><span style="font-size:1rem;color:#2f6fd0">혁신적</span><span style="font-size:.95rem;color:#2f9a5a">빠르다</span><span style="font-size:.95rem;color:#7a6ad0">효율적</span><span style="font-size:.9rem;color:#2f6fd0">유용하다</span></div>
+    <p class="ds-note" style="margin-bottom:0">💬 교과서 말풍선 「분석 결과를 바탕으로 소프트웨어의 ‘개발’ 방향을 설정하면 되겠다!」</p>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 아이디어 구안 -->
+<section class="page" data-name="아이디어 구안" data-acc="#c0397a">
+  <div class="head"><div class="num">04</div><div><h2>③ 해결 아이디어 구안</h2><p>교과서 183쪽 · 주제, 해결하고 싶은 문제, 해결 방법</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>고른 주제에서 <b>어떤 문제</b>를 풀고 싶은지, 그 문제를 <b>어떤 기능으로</b> 풀 수 있는지 생각해 정리하는 단계예요.</span></div>
+
+  <div class="card">
+    <h3>💡 교과서의 아이디어 구안 <span class="muted" style="font-weight:400;font-size:.88rem">(183쪽)</span></h3>
+    <p style="margin-top:0">각각의 문제들을 어떤 기능으로 해결할 수 있을지 방법을 구상해 봐요.</p>
+    <div class="ds-note" style="border-left-color:#c0397a"><b>주제</b> 정보 접근성이 낮은 사용자도 편리하게 사용할 수 있는 음성 인식 키오스크 앱</div>
+    <div class="ds-three">
+      <div style="--k:#d0602f"><b>해결하고 싶은 문제</b><ul class="ds-ul"><li>음성 인식을 통한 음식 주문</li><li>메뉴와 수량을 음성으로 주문</li><li>총 가격을 음성으로 안내</li></ul></div>
+      <div style="--k:#2f6fd0"><b>해결 방법</b><ul class="ds-ul"><li>인사말로 주문 시작 알림</li><li>마이크로 음성 인식</li><li>스피커로 안내 메시지 전달</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 소프트웨어 개발 아이디어 정리하기 <span class="muted" style="font-weight:400;font-size:.88rem">(183쪽, 선택)</span></h3>
+    <p style="margin-top:0">해결 아이디어 구안 내용을 바탕으로, 모둠원들과 함께 소프트웨어 개발에 필요한 아이디어를 <b>요구 사항</b>에 맞춰 정리해 봐요.</p>
+    <div class="memo"><label>❶ 어떤 소프트웨어인가?</label><textarea data-memo="dsReq1" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>❷ 왜 필요한가?</label><textarea data-memo="dsReq2" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>❸ 해결하고 싶은 문제는 무엇인가?</label><textarea data-memo="dsReq3" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>❹ 어떻게 해결할 것인가?</label><textarea data-memo="dsReq4" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>❺ 우리 팀만의 아이디어는 무엇인가?</label><textarea data-memo="dsReq5" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 알고리즘 -->
+<section class="page" data-name="알고리즘 설계" data-acc="#c0397a">
+  <div class="head"><div class="num">05</div><div><h2>④ 설계 · 알고리즘</h2><p>교과서 184쪽 · 앱 사용 절차와 순서도</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>만들기 전에 <b>앱이 어떤 순서로 움직일지</b> 먼저 정해요. 이 순서를 그림으로 그린 것이 <b>순서도</b>예요. 순서가 정해지면 코딩이 훨씬 쉬워져요.</span></div>
+
+  <div class="card">
+    <h3>📋 음성 인식 키오스크 앱 사용 절차 <span class="muted" style="font-weight:400;font-size:.88rem">(184쪽)</span></h3>
+    <p style="margin-top:0">앞에서 구상한 앱의 구조를 <b>사용 절차</b>에 따라 설계해 봐요.</p>
+    <div class="ds-steps">
+      <div style="--k:#c0397a"><span class="n">1</span><div><span style="margin-top:0">프로그램이 실행되면 각 메뉴의 버튼 위치를 알려 주고, 좌우로 스크롤하면 메뉴를 누르라는 안내 멘트가 나온다.</span></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><span style="margin-top:0">메뉴는 세 가지가 제공되며, 원하는 메뉴는 메뉴 버튼을 터치해 선택한다.</span></div></div>
+      <div style="--k:#2f9a5a"><span class="n">3</span><div><span style="margin-top:0">메뉴가 선택되면 수량을 물어보는 멘트가 나오고, 수량을 말하면 메뉴 단가와 수량을 곱해 주문 금액을 계산해 음성으로 알려 준다.</span></div></div>
+      <div style="--k:#d0602f"><span class="n">4</span><div><span style="margin-top:0">다른 메뉴도 주문할 수 있도록 안내하며, 주문을 할 때마다 전체 금액을 음성으로 알려 준다.</span></div></div>
+      <div style="--k:#7a6ad0"><span class="n">5</span><div><span style="margin-top:0">주문이 완료되면 종료 버튼을 눌러 앱을 종료한다.</span></div></div>
+    </div>
+    <p style="margin:10px 0 4px"><b>🎮 일이 몇 번째에 일어날까?</b> <span class="muted">장면을 보고 알맞은 번호를 골라요.</span></p>
+    <div id="dsStepSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔀 순서도 한 단계씩 따라가기 <span class="muted" style="font-weight:400;font-size:.88rem">(184쪽 순서도를 다시 그림)</span></h3>
+    <p style="margin-top:0">「한 단계씩」을 누르면 앱이 움직이는 순서대로 칸이 노랗게 바뀌어요. 메뉴 1·2·3은 같은 길을 가기 때문에 한 줄로 합쳐 그렸어요.</p>
+    <svg class="ds-svg ds-fc" id="dsFlow" viewBox="0 0 360 600" role="img" aria-label="음성 인식 키오스크 앱 순서도. 시작, 음성 출력으로 인사와 메뉴 위치 안내, 원하는 메뉴 한 개 누르기, 어떤 메뉴를 선택했는가 판단. 메뉴 1·2·3 버튼 선택이면 수량을 말해 달라는 음성 출력, 음성 인식으로 수량 말하기, 총 금액 음성 출력 뒤 메뉴 누르기로 되돌아감. 종료 버튼 선택이면 종료.">
+      <defs><marker id="dsAr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L7 4L0 8z" fill="#2f6fd0"/></marker></defs>
+      <g class="nd" data-s="0"><ellipse cx="180" cy="21" rx="38" ry="14"/><text x="180" y="25">시작</text></g>
+      <path class="ln" d="M180 35V52" marker-end="url(#dsAr)"/>
+      <g class="nd" data-s="1"><rect x="20" y="52" width="320" height="68" rx="6"/><text x="180" y="72">음성 출력: 저희 매장을 방문해 주셔서</text><text x="180" y="87">감사합니다. 메뉴 1번은 왼쪽 상단,</text><text x="180" y="102">메뉴 2번은 중앙 상단, 메뉴 3번은</text><text x="180" y="116">오른쪽 상단을 눌러 주세요.</text></g>
+      <path class="ln" d="M180 120V140" marker-end="url(#dsAr)"/>
+      <g class="nd pk" data-s="2"><rect x="60" y="140" width="240" height="30" rx="14"/><text x="180" y="160">원하는 메뉴 한 개를 누르기</text></g>
+      <path class="ln" d="M180 170V185" marker-end="url(#dsAr)"/>
+      <g class="nd" data-s="3"><path d="M180 185L300 225L180 265L60 225Z"/><text x="180" y="222">어떤 메뉴를</text><text x="180" y="237">선택했는가?</text></g>
+      <path class="ln" d="M60 225H100V290" marker-end="url(#dsAr)"/>
+      <path class="ln" d="M300 225H290V290" marker-end="url(#dsAr)"/>
+      <g class="nd pk" data-s="4"><rect x="15" y="290" width="170" height="48" rx="14"/><text x="100" y="310">메뉴 1 · 2 · 3 버튼 선택</text><text x="100" y="327">(셋 중 하나)</text></g>
+      <path class="ln" d="M100 338V358" marker-end="url(#dsAr)"/>
+      <g class="nd" data-s="5"><rect x="15" y="358" width="170" height="44" rx="6"/><text x="100" y="376">음성 출력: 메뉴 N의</text><text x="100" y="391">주문 수량을 말씀해 주세요.</text></g>
+      <path class="ln" d="M100 402V422" marker-end="url(#dsAr)"/>
+      <g class="nd" data-s="6"><rect x="15" y="422" width="170" height="32" rx="6"/><text x="100" y="442">음성 인식: “수량 말하기”</text></g>
+      <path class="ln" d="M100 454V480" marker-end="url(#dsAr)"/>
+      <g class="nd" data-s="7"><rect x="15" y="480" width="170" height="58" rx="6"/><text x="100" y="498">음성 출력: 총 금액은</text><text x="100" y="513">(메뉴 1 금액 + 메뉴 2 금액</text><text x="100" y="528">+ 메뉴 3 금액)입니다.</text></g>
+      <path class="ln" d="M100 538V560H8V155H58" marker-end="url(#dsAr)"/>
+      <text class="lab" x="108" y="556">다시 메뉴 누르기로</text>
+      <g class="nd pk" data-s="8"><rect x="240" y="290" width="104" height="48" rx="14"/><text x="292" y="310">종료 버튼</text><text x="292" y="327">선택</text></g>
+      <path class="ln" d="M292 338V362" marker-end="url(#dsAr)"/>
+      <g class="nd" data-s="9"><ellipse cx="292" cy="378" rx="38" ry="14"/><text x="292" y="382">종료</text></g>
+    </svg>
+    <div class="ds-fcbar"><button class="btn sm" id="dsFcNext">한 단계씩 ▶</button><button class="btn ghost sm" id="dsFcReset">처음부터</button></div>
+    <div class="ds-fcsay" id="dsFcSay" aria-live="polite">「한 단계씩」을 눌러 보세요.</div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 순서도를 파이썬으로 따라가기</h3>
+    <p style="margin-top:0">순서도를 따라가는 일을 <b>파이썬</b>으로 흉내 내요. 누른 버튼 목록과 말한 수량 목록을 <code>for</code>로 하나씩 돌고, 앱이 말할 문장을 <code>print</code>로 보여 줘요. <b>종료</b>를 만나면 <code>break</code>로 멈춰요. 단가는 <b>연습용으로 정한 값</b>이에요(메뉴1의 5000은 앱 제작 차시에서 만나는 값). 눌림 목록이나 수량을 바꿔 다시 실행해 봐요.</p>
+    <div id="dsRun1"></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 화면 설계 -->
+<section class="page" data-name="화면 설계" data-acc="#c0397a">
+  <div class="head"><div class="num">06</div><div><h2>화면 설계</h2><p>교과서 185쪽 · 기본 화면 구성과 주제 및 기능 설계</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>앱 화면을 <b>어디에 무엇을 놓을지</b> 미리 그려 보는 일이에요. 화면의 부품은 크게 글자를 보여 주는 <b>레이블</b>과 누르는 <b>버튼</b>으로 나눠요.</span></div>
+
+  <div class="card">
+    <h3>📱 자료 7 · 음성 인식 키오스크 앱 기본 화면 구성 예시 <span class="muted" style="font-weight:400;font-size:.88rem">(185쪽)</span></h3>
+    <p style="margin-top:0">앱의 기본 화면을 구성해 봐요. 아래 화면 모형의 <b>칸을 눌러</b> 어떤 역할인지 확인해 봐요. 색은 <b>레이블(파랑)</b>과 <b>버튼(분홍)</b>으로 나눠요.</p>
+    <div class="ds-phone" id="dsPhone">
+      <div class="r l" data-i="0">제목 · 앱(음식점) 이름</div>
+      <div class="row3"><div class="r b" data-i="1">메뉴 1<br>이미지</div><div class="r b" data-i="1">메뉴 2<br>이미지</div><div class="r b" data-i="1">메뉴 3<br>이미지</div></div>
+      <div class="r g" data-i="2">간격</div>
+      <div class="r l" data-i="3">메뉴 1 주문 내역 [수량 말하기] [금액 알려 주기]</div>
+      <div class="r l" data-i="3">메뉴 2 주문 내역 [수량 말하기] [금액 알려 주기]</div>
+      <div class="r l" data-i="3">메뉴 3 주문 내역 [수량 말하기] [금액 알려 주기]</div>
+      <div class="r g" data-i="2">간격</div>
+      <div class="r l" data-i="4">주문 합계 [총 주문 금액 알려 주기]</div>
+      <div class="r g" data-i="2">간격</div>
+      <div class="r b" data-i="5">종료 버튼</div>
+    </div>
+    <div class="ds-leg"><span><i style="background:#dff0f5;border:1px solid #1d4e63"></i>레이블</span><span><i style="background:#fbd9d4;border:1px solid #8a2a1c"></i>버튼</span><span><i style="background:#f0eee8;border:1px solid #6b7280"></i>간격(여백)</span></div>
+    <div class="ds-fcsay" id="dsPhoneSay" aria-live="polite">화면 모형의 칸을 눌러 보세요.</div>
+    <p class="ds-note" style="margin-bottom:0">제시된 화면보다 정보 접근성을 더 높일 수 있는 방법은 없을까요? 다음 〈해 보기〉에서 아이디어를 구상한 뒤, 우리 모둠만의 화면을 직접 구성해 봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎮 화면 요소는 레이블일까, 버튼일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <div id="dsPartSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 소프트웨어 주제 및 기능 설계하기 <span class="muted" style="font-weight:400;font-size:.88rem">(185쪽, 선택)</span></h3>
+    <p style="margin-top:0">우리 모둠에서 만들고 싶은 키오스크 앱의 이름과 메뉴를 모둠원들과 의논해 적어 봐요.</p>
+    <div class="memo"><label>앱(음식점) 이름</label><textarea data-memo="dsAppName" rows="1"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>메뉴 1</label><textarea data-memo="dsMenu1" rows="1"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>메뉴 2</label><textarea data-memo="dsMenu2" rows="1"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>메뉴 3</label><textarea data-memo="dsMenu3" rows="1"></textarea><div class="saved"></div></div>
+    <p style="margin:14px 0 0">정보 접근성을 높이기 위해 키오스크에 어떤 기능들이 더 있으면 좋을지 의논해 적어 봐요.</p>
+    <div class="memo"><label>기능 ❶</label><textarea data-memo="dsFunc1" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>기능 ❷</label><textarea data-memo="dsFunc2" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>기능 ❸</label><textarea data-memo="dsFunc3" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>기능 ❹</label><textarea data-memo="dsFunc4" rows="2"></textarea><div class="saved"></div></div>
+    <p class="ds-note" style="margin-bottom:0"><b>TIP</b> 교과서 185쪽에는 「정보 접근성 관련 기사」를 볼 수 있는 QR 코드가 있어요. 기능을 떠올릴 때 읽어 보면 도움이 돼요.</p>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">07</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#c0397a"><b>정보 접근성</b>은 어떤 환경에서도 모든 사람이 디지털 서비스를 쓸 수 있도록 보장하는 것이다. 키오스크 정보 접근성은 평균 66.7점으로 낮았다.</div>
+    <div style="--k:#2f6fd0">검색 빈도를 분석하는 <b>구글 트렌드·썸트렌드</b>로 주제를 탐색·선정하고, 해결할 문제와 방법을 <b>아이디어로 구안</b>한다.</div>
+    <div style="--k:#d0602f">앱은 <b>사용 절차와 순서도(알고리즘)</b>, 그리고 <b>레이블·버튼</b>으로 나눈 기본 화면 구성으로 설계한다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">순서도와 화면 모형을 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">정보 접근성이 낮은 사람도 쓸 수 있는 키오스크 앱을 어떤 순서와 화면으로 설계할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="7"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>정보 접근성이 낮은 사람이 키오스크를 쓸 때 <b>어떤 점이 불편한지</b> 쓰고, 이를 줄여 줄 기능을 하나 제안하세요.</li>
+      <li>음성 인식 키오스크 앱의 <b>사용 절차</b>를 내 말로 순서대로 설명해 보세요.</li>
+      <li>화면을 설계할 때 <b>레이블과 버튼</b>을 나누는 까닭은 무엇일지 쓰세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>
