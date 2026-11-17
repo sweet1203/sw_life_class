@@ -1,0 +1,489 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#8a4fc0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅳ. 모의 실험하는 소프트웨어 · 융합 진로</span>
+      <h1>더 나은 세상을!<br>코드로 완성하는<br>감정 전염 모델</h1>
+      <div class="story"><b>화면 구성이 끝났다면 코드를 쓸 차례예요 (150쪽)</b><br>코드 창에서 프로그램을 작성해 시뮬레이션 모델을 구현해요. 사람들이 만났을 때 서로의 감정을 주고받는 모델이에요. 오늘은 <b>사회 현상 분석가</b>가 되어 코드를 읽고, 모델을 실행해 결과를 해석해 봐요.</div>
+      <p>지난 시간에 1~3단계(문제 정의 · 개념적 모델링 · 화면 구성)를 마쳤다면, 오늘은 <b>4단계와 5단계</b>를 해요.</p>
+      <ol>
+        <li>시뮬레이션 모델 구현 · 코드 6덩어리</li><li>소프트웨어 구현하기 · 빈칸 채우기</li><li>모델 실행 및 결과 해석</li>
+        <li>구현 활동 정리하기</li><li>교과 융합 진로 탐색</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 수업 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>⌨️</i><div><b>4단계 · 모델 구현</b><small>to ~ end 코드 6덩어리</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🎛️</i><div><b>코드 바꿔 보기</b><small>크기 · 속도 · 감정 색</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🔬</i><div><b>5단계 · 실행과 해석</b><small>사람 수에 따른 감정 확산</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🧭</i><div><b>정리 · 진로</b><small>사례 적용과 기능 확장</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">오늘 수업 안내 · 융합 진로 (150~155쪽)</span>
+      <p>교과서는 <b>넷로고(NetLogo)</b>라는 프로그램으로 실습해요. 이 화면에서는 넷로고 코드를 <b>읽기용 카드</b>로 보여 주고, 같은 규칙으로 움직이는 <b>흉내 시뮬레이션</b>을 직접 눌러 볼 수 있어요. 교과서 표나 빈칸에 쓰는 활동은 <b>메모 칸</b>에 적어요.</p>
+    </div>
+    <div class="card">
+      <h3>🗺️ 모델 구현 5단계 <span class="muted" style="font-weight:400;font-size:.88rem">(지난 시간과 오늘)</span></h3>
+      <div class="an-flow">
+        <div class="past" style="--k:#8aa0b8"><span class="n">1</span><b>문제 정의</b></div>
+        <div class="past" style="--k:#8aa0b8"><span class="n">2</span><b>개념적 모델링</b></div>
+        <div class="past" style="--k:#8aa0b8"><span class="n">3</span><b>화면 구성</b></div>
+        <div class="now" style="--k:#8a4fc0"><span class="n">4</span><b>모델 구현</b></div>
+        <div class="now" style="--k:#c0602f"><span class="n">5</span><b>실행 및 결과 해석</b></div>
+      </div>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 코드로 감정 전염 모델을 완성해 실행하면, 사람 수에 따라 감정이 퍼지는 모습이 어떻게 달라질까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>코드 덩어리 6개가 각각 어떤 버튼의 일을 하는지 말할 수 있다.</li>
+          <li>코드의 값(크기·속도·색)을 바꾸면 무엇이 달라질지 설명할 수 있다.</li>
+          <li>사람 수와 감정 수용 정도를 바꿔 실행하고 결과를 해석할 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">넷로고 · 터틀(humans, users) · 패치 · 틱(tick) · 알고리즘 · 감정 수용 정도 · 인구 밀도</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>사람이 많은 곳과 적은 곳 중, 감정이 더 빨리 퍼질 곳은 어디일까요? 그렇게 생각한 까닭은? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 시뮬레이션 모델 구현부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 시뮬레이션 모델 구현 -->
+<section class="page" data-name="4 시뮬레이션 모델 구현" data-acc="#8a4fc0">
+  <div class="head"><div class="num">01</div><div><h2>4단계 · 시뮬레이션 모델 구현</h2><p>교과서 150~151쪽 · 작동 순서를 코드로 옮기기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>버튼 하나마다 <b>코드 한 덩어리(to ~ end)</b>가 숨어 있어요. 버튼을 누르는 순간 그 덩어리가 위에서부터 차례로 실행돼요.</span></div>
+
+  <div class="card">
+    <h3>⌨️ 코드 창에서 모델 만들기</h3>
+    <p style="margin-top:0">화면 구성이 끝났다면 코드 창에서 프로그램을 작성해 시뮬레이션 모델을 구현해요. 이번 모델은 사람들이 만났을 때 서로의 감정을 주고받아요. 시뮬레이션의 <b>작동 순서</b>를 생각하며 명령어를 써요.</p>
+    <ul style="margin:6px 0 0;padding-left:20px">
+      <li><b>to ~ end</b>의 들여쓰기는 같은 선에 있어야 해요.</li>
+      <li>여는 대괄호 <b>[</b>가 있으면 닫는 대괄호 <b>]</b>도 있어야 오류가 나지 않아요.</li>
+      <li>작동 <b>알고리즘</b>을 먼저 이해하고 나서 명령어를 써요.</li>
+    </ul>
+    <p class="note">명령문은 Code 창에 입력해요(143쪽에서 배운 Code 창). 이 웹 화면에서는 코드를 실행하지 않고 읽어 봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧮 시뮬레이션 작동의 알고리즘 <span class="muted" style="font-weight:400;font-size:.88rem">(TIP)</span></h3>
+    <div class="an-tip"><b>작동 순서 ①~④</b>
+      <ol>
+        <li>감정을 주고받기 전, 사람들은 회색이다. <span class="muted">(가정: 기본 감정은 없다.)</span></li>
+        <li>감정을 주고받는 사람들은 랜덤으로 움직인다.</li>
+        <li>만약 두 사람이 만나면 감정이 전달되어 사람의 색이 바뀐다. <span class="muted">(가정: 감정 전달은 무조건 이루어진다.)</span></li>
+        <li>위 ②, ③번의 과정을 반복한다.</li>
+      </ol>
+    </div>
+    <p class="note" style="margin-bottom:0">「가정」은 모델을 단순하게 만들려고 정해 둔 약속이에요. 현실에서는 만나도 감정이 전해지지 않을 수 있지만, 이 모델은 일단 전해진다고 해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 코드 6덩어리 살펴보기</h3>
+    <p class="muted" style="margin-top:0">버튼 이름을 눌러 설명 · 의사 코드(우리말로 풀어 쓴 순서) · 넷로고 코드를 비교해 봐요.</p>
+    <div class="row an-tab" id="anTabBtn"></div>
+    <div id="anTabView"></div>
+  </div>
+
+  <div class="card">
+    <h3>🐢 터틀은 움직이는 개체예요 <span class="muted" style="font-weight:400;font-size:.88rem">(TIP)</span></h3>
+    <p style="margin-top:0">터틀은 움직이는 개체로, <b>create-turtles</b>로 터틀들을 만들고 <b>ask-turtles</b>로 터틀들에게 명령해요. 나를 뺀 사람들은 <b>humans</b>로, 나는 <b>users</b>라는 터틀 종류로 나누어 따로 명령을 줄 수 있어요.</p>
+    <svg class="an-svg" viewBox="0 0 360 150" role="img" aria-label="turtles 아래에 humans(내가 아닌 다른 사람들)와 users(나)가 있는 나무 그림">
+      <rect x="130" y="8" width="100" height="34" rx="17" fill="#8a4fc0"/><text x="180" y="30" fill="#fff" style="fill:#fff;font-size:15px">turtles</text>
+      <path d="M160 42 L80 88 M200 42 L280 88" stroke="#8a4fc0" stroke-width="2.5" fill="none"/>
+      <rect x="20" y="88" width="120" height="34" rx="17" fill="#fff" stroke="#8a4fc0" stroke-width="2.5"/><text x="80" y="110" style="font-size:15px">humans</text>
+      <rect x="220" y="88" width="120" height="34" rx="17" fill="#fff" stroke="#8a4fc0" stroke-width="2.5"/><text x="280" y="110" style="font-size:15px">users</text>
+      <text x="80" y="143" style="font-size:12px;fill:#556">내가 아닌 다른 사람들</text><text x="280" y="143" style="font-size:12px;fill:#556">나</text>
+    </svg>
+  </div>
+
+  <div class="card">
+    <h3>🎯 이 버튼을 누르면 어떤 코드가 실행될까?</h3>
+    <p class="muted" style="margin-top:0">설명을 읽고 알맞은 코드 이름을 골라 봐요.</p>
+    <div id="anSortGame"></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 해 보기: 소프트웨어 구현하기 -->
+<section class="page" data-name="해 보기 · 소프트웨어 구현하기" data-acc="#c0602f">
+  <div class="head"><div class="num">02</div><div><h2>해 보기 · 시뮬레이션을 위한 소프트웨어 구현하기</h2><p>교과서 152쪽 · 명령어의 뜻을 해석하고 빈칸 완성하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>코드의 <b>숫자와 색</b>을 바꾸면 모델의 모습이 바뀌어요. 빈칸 두 곳(나의 크기, 사람들의 속도)과 감정의 이름·색을 내 생각대로 정해 봐요.</span></div>
+
+  <div class="card">
+    <h3>📜 모델 구현을 위한 전체 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(152쪽)</span></h3>
+    <p style="margin-top:0">왼쪽은 넷로고 코드, 오른쪽은 그 뜻이에요. 명령어의 의미를 해석해 보고, <span class="an-blank">▢</span> 칸에 들어갈 값을 정해 봐요. 코드 안의 <b>joy · yellow · thanks · red</b>는 내가 정한 감정의 이름과 색으로 바꿀 수 있어요.</p>
+    <div class="an-row">
+<pre class="code">breed [ humans human ]
+breed [ users user ]</pre>
+      <div class="an-pc">사람들을 humans
+나를 users로 정의</div>
+    </div>
+    <div class="an-row">
+<pre class="code">to setup
+  clear-all
+  reset-ticks
+  create-humans number
+  [
+    setxy random-xcor random-ycor
+    set shape "person"
+    set color gray
+  ]
+end</pre>
+      <div class="an-pc">[set up] 버튼을 누르면
+  화면 초기화
+  시간 초기화
+  humans 생성
+  [
+    x, y 좌표 랜덤 정하기
+    humans 모양 정하기
+    humans 색 정하기
+  ]</div>
+    </div>
+    <div class="an-row">
+      <div>
+<pre class="code">to <b>joy</b>
+  ask one-of humans [set color <b>yellow</b>]
+end</pre>
+        <div class="an-bub">💬 내가 받고 싶은 감정의 이름과 색으로 명령어를 수정해 보자. <span class="muted">(<b>joy</b>와 <b>yellow</b> 자리)</span></div>
+      </div>
+      <div class="an-pc">[즐거움] 버튼을 누르면
+  human 1명의 색은 노란색</div>
+    </div>
+    <div class="an-row">
+      <div>
+<pre class="code">to me
+  create-users 1
+  [
+    set shape "person"
+    set size <b>▢</b>
+    set color gray
+  ]
+end</pre>
+        <div class="an-bub">💬 타인의 크기는 1이다. 내가 주고 싶은 영향의 정도에 따라 ‘나’의 크기를 바꿔 보자.</div>
+      </div>
+      <div class="an-pc">[나] 버튼을 누르면
+  users 1명 생성
+  [
+    나의 모양 정하기
+    나의 크기 정하기
+    나의 색 정하기
+  ]</div>
+    </div>
+    <div class="an-row">
+      <div>
+<pre class="code">to <b>thanks</b>
+  ask users
+  [
+    set color <b>red</b>
+  ]
+end</pre>
+        <div class="an-bub">💬 내가 주고 싶은 감정의 이름과 색으로 명령어를 수정해 보자. <span class="muted">(<b>thanks</b>와 <b>red</b> 자리)</span></div>
+      </div>
+      <div class="an-pc">[고마움] 버튼을 누르면
+  users에게 요청
+  [
+    나의 색 빨간색
+  ]</div>
+    </div>
+    <div class="an-row">
+<pre class="code">to move [new-heading]
+  ask users
+  [
+    set heading new-heading
+    fd 2
+  ]
+end</pre>
+      <div class="an-pc">[위][아래][왼쪽][오른쪽]
+버튼을 클릭하면 나(users)
+터틀이 네 방향으로 움직임</div>
+    </div>
+    <div class="an-row">
+      <div>
+<pre class="code">to go
+  ask humans
+  [
+    forward random <b>▢</b>
+  ]
+  ask turtles
+  [
+    if any? other turtles-here with [color = yellow]
+    [set color yellow]
+    if any? other turtles-here with [color = red]
+    [set color red]
+  ]
+  tick
+end</pre>
+        <div class="an-bub">💬 사람들의 움직임을 빠르거나 느리게 수치로 조정해 보자(3, 5, 7 중 선택, 숫자가 클수록 빨라짐).</div>
+      </div>
+      <div class="an-pc">[go] 버튼을 누르면
+  human 랜덤 움직임
+
+  모든 터틀에게 요청
+  [
+    만약 노란색 터틀을 만나면
+      나의 색은 노란색
+    만약 빨간색 터틀을 만나면
+      나의 색은 빨간색
+  ]
+  tick 값 1 증가</div>
+    </div>
+    <p class="note" style="margin-bottom:0">교과서 152쪽의 QR 코드로 명령어 파일을 받을 수 있어요. <b>▢</b>는 교과서에서 학생이 채우는 빈칸이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎛️ 내가 정한 값 <span class="muted" style="font-weight:400;font-size:.88rem">(정답이 있는 문제가 아니라 내 선택이에요)</span></h3>
+    <p style="margin-top:0">여기서 고른 값은 03의 체험 화면에도 그대로 적용돼요. 고르지 않으면 교과서 코드의 값(크기 3, 속도 5)을 써요.</p>
+    <b style="font-size:.93rem">나의 크기 <span class="muted" style="font-weight:400">(<b>set size ▢</b> · 타인은 1)</span></b>
+    <div id="anSizeChips" style="margin:6px 0 12px"></div>
+    <b style="font-size:.93rem">사람들의 속도 <span class="muted" style="font-weight:400">(<b>forward random ▢</b> · 숫자가 클수록 빨라져요)</span></b>
+    <div id="anSpeedChips" style="margin:6px 0 4px"></div>
+    <p class="note" style="margin-top:2px">속도 5는 한 틱에 0~4칸, 7은 0~6칸 중 무작위로 걸어요.</p>
+    <div class="an-two">
+      <div class="memo"><label>내가 받고 싶은 감정의 이름과 색 <small>코드에서 어떻게 바꿀지 적어요. 예) <b>joy</b> → 내가 정한 이름, <b>yellow</b> → 내가 정한 색</small></label><textarea data-memo="anFeelRecv" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>내가 주고 싶은 감정의 이름과 색 <small>코드에서 어떻게 바꿀지 적어요. 예) <b>thanks</b> → 내가 정한 이름, <b>red</b> → 내가 정한 색</small></label><textarea data-memo="anFeelGive" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="memo"><label>나의 크기와 사람들의 속도를 그렇게 정한 까닭은? <small>예) ‘나’의 영향을 크게 하고 싶어서…</small></label><textarea data-memo="anWhyVal" rows="2"></textarea><div class="saved"></div></div>
+    <p class="note" style="margin-bottom:0">색 이름은 넷로고에서 쓰는 영어 색 이름(yellow, red 등)으로 바꿔 쓸 수 있어요. 어떤 색 이름이 있는지는 넷로고 도움말에서 찾아봐요.</p>
+  </div>
+</section>
+
+<!-- 3 5 모델 실행 및 결과 해석 -->
+<section class="page" data-name="5 모델 실행 및 결과 해석" data-acc="#2f6fd0">
+  <div class="head"><div class="num">03</div><div><h2>5단계 · 모델 실행 및 결과 해석</h2><p>교과서 153쪽 · 사람 수와 수용 정도를 바꿔 비교하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>값을 <b>하나만</b> 바꿔서 여러 번 실행하고, 결과가 어떻게 달라지는지 <b>비교</b>하면 모델을 해석할 수 있어요.</span></div>
+
+  <div class="card">
+    <h3>📋 실행 순서 <span class="muted" style="font-weight:400;font-size:.88rem">(153쪽)</span></h3>
+    <p style="margin-top:0">앞 단계를 거쳐 구현한 시뮬레이션 모델을 실행해 봐요. 아래 체험에서 단추를 누를 때마다 순서가 ✓로 바뀌어요.</p>
+    <div class="an-guide" id="anGuide"></div>
+  </div>
+
+  <div class="card">
+    <h3>🧪 감정 전염 시뮬레이션 <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p style="margin-top:0">교과서 넷로고 코드와 같은 규칙으로 움직이는 흉내예요. <b>33×33칸</b> 세상(가장자리는 반대편과 이어져요)에서 사람은 매 틱 <b>자기 방향</b>으로 0~<b id="anSpdShow">4</b>칸 걸어요. 노란(빨간) 사람과 <b>같은 칸</b>에 서면 그 색이 돼요.</p>
+    <div class="an-lab">
+      <div>
+        <svg id="anWorld" class="an-world" viewBox="0 0 330 330" role="img" aria-label="감정 전염 시뮬레이션 세상. 회색, 노란색, 빨간색 사람이 움직여요."></svg>
+        <p class="an-msg" id="anMsg" role="status" aria-live="polite"></p>
+      </div>
+      <div>
+        <div class="an-ctl">
+          <h5>입력 · 슬라이더와 버튼</h5>
+          <label style="font-size:.9rem;font-weight:700">number <b id="anNumV">10</b>명 <small class="muted">(바꾼 뒤 [set up]을 눌러요)</small></label>
+          <input type="range" id="anNum" min="0" max="100" value="10" aria-label="number 슬라이더, 사람 수">
+          <div class="row">
+            <button class="an-b" id="anSetup" type="button">set up</button>
+            <button class="an-b y" id="anJoy" type="button">즐거움</button>
+            <button class="an-b" id="anMe" type="button">나</button>
+            <button class="an-b r" id="anThanks" type="button">고마움</button>
+          </div>
+          <div class="an-dir" aria-label="나 움직이기">
+            <span></span><button class="an-b" id="anUp" type="button">위 <small>W</small></button><span></span>
+            <button class="an-b" id="anLeft" type="button">왼쪽 <small>A</small></button><button class="an-b" id="anDown" type="button">아래 <small>S</small></button><button class="an-b" id="anRight" type="button">오른쪽 <small>D</small></button>
+          </div>
+          <p class="note" style="margin:4px 0 0">W A S D 키로도 ‘나’를 움직일 수 있어요(이 화면이 보일 때만).</p>
+        </div>
+        <div class="an-ctl">
+          <h5>실행 · go</h5>
+          <div class="row">
+            <button class="an-b go" id="anGo1" type="button">go 1틱</button>
+            <button class="an-b go" id="anGo10" type="button">go 10틱</button>
+            <button class="an-b go" id="anAuto" type="button">▶ 자동</button>
+            <button class="an-b" id="anStop" type="button">멈춤</button>
+          </div>
+          <div class="an-seg" id="anSpeedSeg" aria-label="자동 실행 속도"></div>
+          <b style="font-size:.84rem">노란색 수용 정도</b>
+          <div class="an-seg" id="anAccSeg" aria-label="노란색 수용 정도"></div>
+          <p class="note" style="margin:0">자동은 최대 300틱에서 멈춰요. 수용 정도 30%는 아래 「해 보기」의 심화 규칙이에요.</p>
+        </div>
+        <div class="an-mon">
+          <div>틱(ticks) <b id="anMonT">0</b></div>
+          <div class="y">즐거움(노랑) <b id="anMonY">0</b></div>
+          <div class="r">고마움(빨강) <b id="anMonR">0</b></div>
+        </div>
+      </div>
+    </div>
+    <b style="font-size:.9rem">플롯 · 감정 전달된 사람 수</b>
+    <svg id="anPlot" class="an-plot" role="img" aria-label="틱에 따라 노란 사람 수와 빨간 사람 수가 변하는 선그래프"></svg>
+    <div class="row" style="margin:8px 0 2px">
+      <button class="btn ghost sm" id="anRec" type="button">이 실행 기록하기</button>
+      <span class="muted" style="font-size:.84rem">지금 상태를 아래 표에 한 줄 남겨요. 실행을 비교할 때 써요.</span>
+    </div>
+    <table class="an-tb" id="anRecTb"><tr><th>number</th><th>수용 정도</th><th>틱</th><th>노랑</th><th>빨강</th><th>모두 같은 색?</th></tr></table>
+    <p class="note" style="margin-bottom:0">처음 상태로 돌아가려면 [set up]을 눌러요. 사람의 처음 위치와 방향은 무작위라 같은 값으로 실행해도 결과가 달라져요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔍 1. 한 가지 감정 확산 관찰하기 · 2. 두 가지 감정 확산 관찰하기 <span class="muted" style="font-weight:400;font-size:.88rem">(153쪽)</span></h3>
+    <p style="margin-top:0">실행 순서에 따라 모델을 실행해 봐요. number 값을 <b>10</b>으로 했을 때와 <b>100</b>으로 했을 때를 각각 실행하고, 그래프 모양을 그려(적어) 봐요.</p>
+    <div class="an-two">
+      <div class="memo"><label>number 10일 때 그래프 모양 <small>글이나 그림 설명으로</small></label><textarea data-memo="anG10" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>number 100일 때 그래프 모양 <small>글이나 그림 설명으로</small></label><textarea data-memo="anG100" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="memo"><label><b>Q.</b> 모든 사람이 하나의 감정으로 동화되는 데 걸리는 시간이 number 값에 따라 어떻게 다른가?</label><textarea data-memo="anQ1" rows="2"></textarea><div class="saved"></div></div>
+    <p style="margin:12px 0 4px">이번에는 <b>[즐거움]</b>과 <b>[고마움]</b> 두 가지 감정을 함께 관찰해요. ‘나’를 위, 아래, 오른쪽, 왼쪽으로 움직여 나의 감정을 퍼뜨려 보고, number 값도 바꿔 실행해 봐요.</p>
+    <div class="memo"><label><b>Q.</b> 하나의 감정이 우세할 때(특정 감정이 지배할 때) 다른 감정을 전달할 수 있을까? [즐거움] 또는 [고마움] 버튼을 눌러 감정을 확산시켜 보며 생각해 봐요.</label><textarea data-memo="anQ2" rows="3"></textarea><div class="saved"></div></div>
+    <div class="an-tip"><b>TIP · 모델 실행 속도 조절 방법</b>모델이 너무 빠르게 실행되면 감정이 확산되는 정도를 관찰하기 어려워요. 넷로고에서는 [go] 버튼을 누르기 전 [ticks] 위에 있는 파란색 막대를 slower로 옮겨 속도를 느리게 해요. 위 체험의 「자동 실행 속도」 버튼도 같은 역할이에요.</div>
+  </div>
+
+  <div class="card">
+    <h3>👥 인구 밀도에 따른 감정 전달의 변화</h3>
+    <p style="margin-top:0">이 모델은 <b>인구 밀도</b>에 따른 감정 전달의 변화를 관찰할 수 있어요. 상호 작용하는 사람의 수가 많아지면 감정의 확산 속도가 어떻게 달라지는지 알아보고, 개인 간의 상호 작용이 <b>전체 사회</b>에 어떻게 영향을 미치는지 해석해 봐요.</p>
+    <div class="memo"><label>내가 해석한 것 <small>위 표에 기록한 실행과 비교해서 적어요.</small></label><textarea data-memo="anDense" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🐍 같은 규칙을 파이썬으로 흉내 내기 ① 사람 수 비교</h3>
+    <p style="margin-top:0" class="muted">교과서는 넷로고로 하고, 여기서는 같은 규칙(33×33칸, 자기 방향으로 0~4칸, 노란 사람과 같은 칸이면 노란색)을 파이썬 코드로 써 봤어요. 코드 맨 위의 <b>NUMBER</b>를 10에서 100으로 바꿔 실행해 비교해 봐요. 난수를 쓰므로 실행할 때마다 결과가 조금씩 달라요.</p>
+    <div id="anRun1"></div>
+  </div>
+
+  <div class="card">
+    <h3>🐍 파이썬으로 흉내 내기 ② 수용 정도 100%와 30%</h3>
+    <p style="margin-top:0" class="muted">노란 사람을 만났을 때 노란색으로 바뀔 확률을 <b>accept</b>로 정해요. 100%(1.0)와 30%(0.3)를 차례로 실행해 걸리는 틱을 비교해요. 오래 걸리면 「300틱 안에는 …」이라고 알려 줘요.</p>
+    <div id="anRun2"></div>
+  </div>
+
+  <div class="card">
+    <h3>🛠️ 해 보기 · 나만의 시뮬레이션 모델 재구성하기 <span class="muted" style="font-weight:400;font-size:.88rem">(153쪽)</span></h3>
+    <p style="margin-top:0">만든 시뮬레이션 모델에 145쪽 해 보기에서 적은 <b>감정의 이름과 색</b>을 적용해 버튼과 플롯, 모니터를 바꿔 봐요.</p>
+    <div class="memo"><label>내가 바꾸고 싶은 버튼 · 플롯 · 모니터 <small>이름과 색을 어떻게 바꿀지</small></label><textarea data-memo="anRebuild" rows="2"></textarea><div class="saved"></div></div>
+    <div class="an-tip"><b>＋ 심화 · 감정 수용 정도 추가하기</b>부정적인 감정은 더 빨리 확산하는 경향이 있다고 해요. 감정마다 확산 속도(수용 정도)를 다르게 할 수 있을까요? 아래 내용을 참고해 감정 수용 정도를 추가해 시뮬레이션을 재구성해 봐요.</div>
+    <div class="an-row" style="border-top:0">
+      <div>
+        <b style="font-size:.9rem">100%일 경우</b>
+<pre class="code">if any? other turtles-here with [color = yellow]
+[set color yellow]</pre>
+      </div>
+      <div class="an-pc" style="white-space:normal">노란색 타인을 만나면 나도 노란색으로 바뀐다.</div>
+    </div>
+    <div class="an-row">
+      <div>
+        <b style="font-size:.9rem">30%일 경우</b>
+<pre class="code">if any? other turtles-here with [color = yellow] <b>and random-float 1 &lt; 0.3</b>
+[set color yellow]</pre>
+      </div>
+      <div class="an-pc" style="white-space:normal">노란색 타인을 만나면 30%의 확률로 나의 색깔이 노란색으로 바뀐다.</div>
+    </div>
+    <p class="note">위 체험의 「노란색 수용 정도」 버튼이 이 규칙이에요(빨간색은 그대로 100%).</p>
+    <div class="memo"><label>수용 정도를 100%와 30%로 해 실행해 보니 어떻게 달랐나요? 감정마다 수용 정도를 다르게 한다면 어떤 감정에 어떤 값을 줄까요?</label><textarea data-memo="anAccept" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 융합 진로 마무리 -->
+<section class="page" data-name="구현 활동 정리하기" data-acc="#1f9d74">
+  <div class="head"><div class="num">04</div><div><h2>시뮬레이션 모델 구현 활동 정리하기</h2><p>교과서 154쪽 · 모델 분석 · 사례 적용 · 기능 확장</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>모델을 직접 돌려 보며 알게 된 점을 <b>우리 사회의 사례</b>에 대 보고, 모델에 <b>새 기능</b>을 더하면 어떨지 상상해 보는 시간이에요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 모델 분석</h3>
+    <p style="margin-top:0">감정 전염 시뮬레이션 모델 구현을 통해 내가 알게 된 점을 서로 이야기해 봐요.</p>
+    <div class="memo"><label>내가 알게 된 점</label><textarea data-memo="anModel" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 사례 적용</h3>
+    <p style="margin-top:0">서로 이야기 나눈 내용을 정리하고, 모델 실행으로 알게 된 점으로 설명할 수 있는 <b>사회 현상 사례</b>를 찾아 이야기해 봐요.</p>
+    <div class="an-map">
+      <div><b>알게 된 점 예1)</b> 모든 사람이 같은 감정일 때, 단 한 사람만이라도 다른 감정을 가진다면 주변 사람에게 전파될 가능성이 조금이라도 커진다.</div><span>➜</span>
+      <div><b>사회 현상 사례 예1)</b> 학교 폭력을 당하는 학생을 많은 친구들이 모른척할 때, 내가 먼저 다가가 도와주면 감정이 전달되어 도움을 주는 친구들이 늘어날 가능성이 커진다.</div>
+      <div><b>알게 된 점 예2)</b> 상호 작용하는 사람의 수가 많을수록 감정이 빨리 확산된다.</div><span>➜</span>
+      <div><b>사회 현상 사례 예2)</b> 팬이 많은 유명 연예인의 감정(행복, 슬픔)은 팬들 사이에서 더 빨리 확산된다.</div>
+      <div class="memo" style="margin:0;padding:0;border:0;background:none"><label style="margin-top:0">나의 생각 · 알게 된 점</label><textarea data-memo="anCaseK" rows="3"></textarea><div class="saved"></div></div><span>➜</span>
+      <div class="memo" style="margin:0;padding:0;border:0;background:none"><label style="margin-top:0">나의 생각 · 사회 현상 사례</label><textarea data-memo="anCaseS" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 기능 확장</h3>
+    <p style="margin-top:0">만든 모델에 나만의 기능을 더해 다른 시뮬레이션으로 고치거나 넓혀서 친구들과 나누어 봐요.</p>
+    <div class="an-ex"><b>예)</b> 소문, 유언비어 확산 시뮬레이션</div>
+    <div class="memo"><label>내가 더하고 싶은 기능 <small>어떤 현상을 다루고, 무엇을 새로 정해야 할까요?</small></label><textarea data-memo="anExt" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>✅ 성취도 점검하기</h3>
+    <p style="margin-top:0">스스로 할 수 있다고 생각하는 것을 모두 골라 봐요. 고르지 못한 것은 보충하기 쪽을 다시 살펴봐요.</p>
+    <div id="anCheck" class="an-chk"></div>
+    <p class="note" style="margin-bottom:0">지식·이해 141~142쪽 · 과정·기능 144~149쪽 · 가치·태도 153~154쪽에서 보충할 수 있어요.</p>
+  </div>
+</section>
+
+<!-- 5 교과 융합 진로 탐색 -->
+<section class="page" data-name="교과 융합 진로 탐색" data-acc="#d64535">
+  <div class="head"><div class="num">05</div><div><h2>교과 융합 진로 탐색</h2><p>교과서 155쪽 · 소프트웨어 + 시뮬레이션 융합 진로 분야</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션을 만들고 쓰는 일에도 여러 <b>직업</b>이 있어요. 카드를 눌러 어떤 일을 하고 어떤 힘이 필요한지 알아봐요.</span></div>
+
+  <div class="card">
+    <p style="margin-top:0">시뮬레이션은 다양한 현실 세계를 예측할 수 있는 강력한 도구예요. 다양한 분야의 시스템을 모델링해 문제를 예측하고 개선하거나, 도시·교통·경제 같은 사회 현상을 모델링해 정책을 구상하는 데 쓰기도 해요. 소프트웨어와 시뮬레이션이 만나는 융합 분야에는 어떤 직업이 있는지 알아봐요.</p>
+    <div id="anJobFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">카드를 누르면 뒤집혀요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🙋 가장 관심 가는 직업은?</h3>
+    <div id="anJobVote" class="vote"></div>
+    <p class="an-vres" id="anJobRes"></p>
+    <div class="memo"><label>그 직업에 필요한 역량 가운데, 지금의 나에게 가장 필요한 것은 무엇이고 어떻게 키울 수 있을까요?</label><textarea data-memo="anJobWhy" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 6 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">06</div><div><h2>마무리</h2><p>생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#8a4fc0">시뮬레이션 모델 구현은 <b>작동 순서(알고리즘)를 코드로 옮기는 일</b>이에요. 감정 전염 모델은 setup · joy · me · thanks · move · go의 <b>코드 6덩어리</b>로 이루어져요.</div>
+    <div style="--k:#2f6fd0">코드의 <b>값(크기·속도·색)을 바꾸고</b> 실행하면 모델이 달라져요. 한 번에 <b>한 가지만</b> 바꿔 여러 번 비교하면 결과를 해석하기 쉬워요.</div>
+    <div style="--k:#d64535">사람 수가 많을수록 감정이 빨리 퍼져요. 이런 모델로 사회 현상을 분석하는 <b>사회 현상 분석가</b>, 시뮬레이션 게임 기획자 · 개발자 · 디지털 트윈 전문가 같은 진로가 있어요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">03에서 실행하고 기록한 결과를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">코드로 감정 전염 모델을 완성해 실행하면, 사람 수에 따라 감정이 퍼지는 모습이 어떻게 달라질까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="6"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>감정 전염 모델의 <b>코드 덩어리 중 하나를 골라</b> 어떤 버튼의 일을 하는지, 코드가 어떻게 그 일을 하는지 설명하세요. <span class="muted">(화면 01~02 참고)</span></li>
+      <li>사람 수(number)나 수용 정도를 바꿔 실행한 <b>결과를 비교</b>하고, 알게 된 점을 설명하세요. <span class="muted">(화면 03 메모 참고)</span></li>
+      <li>이 모델로 설명할 수 있는 <b>사회 현상 사례</b>와, 모델에 더하고 싶은 기능을 적으세요. <span class="muted">(화면 04 메모 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

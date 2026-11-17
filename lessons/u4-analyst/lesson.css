@@ -1,0 +1,82 @@
+  /* u4-analyst 전용 (an-) */
+  .an-flow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+  .an-flow>div{flex:1 1 120px;min-width:0;background:#fff;border-radius:12px;border-top:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:9px 10px;text-align:center;font-size:.88rem}
+  .an-flow .n{display:inline-flex;width:26px;height:26px;border-radius:999px;background:var(--k);color:#fff;font-weight:900;align-items:center;justify-content:center}
+  .an-flow b{display:block;color:var(--k);margin-top:3px}
+  .an-flow .past{opacity:.55}
+  .an-flow .now{outline:3px solid var(--acc-soft)}
+  .an-tab{gap:8px;margin:4px 0 10px}
+  .an-tab button,.an-seg button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;color:var(--ink)}
+  .an-tab button{display:flex;align-items:center;gap:6px}
+  .an-tab button .e{font-size:1rem}
+  .an-tab button.on,.an-seg button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .an-seg{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 6px}
+  .an-tw{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:12px 14px;min-width:0}
+  .an-tw p{margin:4px 0 8px}
+  .an-tt{display:block;color:var(--k);font-size:1.02rem}
+  .an-tw h5{margin:8px 0 2px;font-size:.88rem;color:var(--muted)}
+  .an-pc{background:#fff6ec;border-left:4px solid #e0a35a;border-radius:8px;padding:9px 12px;margin:2px 0 6px;font-size:.86rem;line-height:1.55;white-space:pre;overflow-x:auto;font-family:inherit}
+  .an-tw pre.code{margin:2px 0 0}
+  .an-ex{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:9px 13px;font-size:.9rem;margin:8px 0;line-height:1.6}
+  .an-ex b:first-child{color:#a8730c}
+  .an-tip{background:#f3eefb;border:2px solid #d6c3ee;border-radius:12px;padding:9px 13px;font-size:.9rem;margin:8px 0;line-height:1.6}
+  .an-tip>b:first-child{display:block;color:#6b3aa3;margin-bottom:2px}
+  .an-tip ol{margin:4px 0 0;padding-left:20px}
+  .an-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:10px;align-items:start;border-top:1px dashed var(--line);padding:8px 0}
+  .an-row:first-of-type{border-top:0}
+  .an-row pre.code{margin:0}
+  .an-row .an-pc{margin:0}
+  @media (max-width:720px){.an-row{grid-template-columns:minmax(0,1fr)}}
+  .an-bub{background:#fff;border:2px dashed #e0a35a;border-radius:12px;padding:6px 10px;font-size:.84rem;margin:4px 0 0;line-height:1.5}
+  .an-blank{background:#ffe9a8;color:#0f2742;border-radius:4px;padding:0 4px;font-weight:700}
+  .an-lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start;margin:6px 0}
+  @media (max-width:760px){.an-lab{grid-template-columns:minmax(0,1fr)}}
+  .an-world{width:100%;height:auto;display:block;border-radius:8px;background:#000;max-width:460px;margin:0 auto}
+  .an-plot{width:100%;height:auto;display:block;background:#fff;border:2px solid var(--line);border-radius:8px}
+  .an-plot text{font-size:9px;fill:var(--muted);font-weight:600}
+  .an-ctl{background:#fbfaf7;border:2px solid var(--line);border-radius:12px;padding:9px 11px;margin:0 0 8px}
+  .an-ctl h5{margin:0 0 6px;font-size:.86rem;color:var(--muted)}
+  .an-ctl .row{margin:0 0 6px}
+  .an-ctl input[type=range]{width:100%;margin:2px 0}
+  .an-b{border:2px solid #7a8aa0;background:#e9eef6;border-radius:6px;padding:5px 11px;font:inherit;font-size:.9rem;font-weight:700;cursor:pointer;color:#16202c}
+  .an-b:hover{background:#dbe5f3}
+  .an-b.y{border-color:#c99a00;background:#fff3b8}
+  .an-b.r{border-color:#c0392b;background:#ffd9d4}
+  .an-b.go{border-color:var(--acc);background:var(--acc);color:#fff}
+  .an-b small{font-weight:400;color:#556}
+  .an-dir{display:grid;grid-template-columns:repeat(3,64px);gap:4px;justify-content:start}
+  .an-dir .an-b{padding:5px 2px;font-size:.84rem}
+  .an-mon{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 8px}
+  .an-mon div{background:#fff;border:2px solid var(--line);border-radius:8px;padding:3px 10px;font-size:.88rem;font-weight:700}
+  .an-mon b{font-size:1.1rem;margin-left:4px}
+  .an-mon .y b{color:#b8860b}
+  .an-mon .r b{color:#c0392b}
+  .an-msg{font-size:.9rem;margin:4px 0;min-height:1.4em;color:var(--ink)}
+  .an-guide{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}
+  @media (max-width:600px){.an-guide{grid-template-columns:1fr}}
+  .an-guide>div{background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-size:.9rem}
+  .an-guide b{display:block;margin-bottom:3px;color:var(--acc)}
+  .an-guide ol{margin:0;padding-left:0;list-style:none}
+  .an-guide li{padding:2px 0}
+  .an-guide li::before{content:"○ ";color:var(--muted)}
+  .an-guide li.ok::before{content:"✓ ";color:#2f9a5a;font-weight:900}
+  .an-guide li.ok{color:var(--muted)}
+  .an-tb{width:100%;border-collapse:collapse;font-size:.88rem;margin:6px 0}
+  .an-tb th{background:#efe6f9;padding:5px 8px;border:1px solid var(--line);text-align:center}
+  .an-tb td{padding:5px 8px;border:1px solid var(--line);text-align:center}
+  .an-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin:6px 0}
+  @media (max-width:600px){.an-two{grid-template-columns:minmax(0,1fr)}}
+  .an-two label{display:block;font-weight:800;font-size:.9rem;margin-bottom:3px}
+  .an-two textarea{width:100%;box-sizing:border-box}
+  .an-map{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:6px 8px;align-items:center;margin:6px 0}
+  .an-map>div{background:#fff;border:2px solid var(--line);border-radius:10px;padding:7px 10px;font-size:.9rem;line-height:1.55}
+  .an-map>span{text-align:center;color:#e0a35a;font-weight:900}
+  .an-map textarea{width:100%;box-sizing:border-box}
+  @media (max-width:560px){.an-map{grid-template-columns:minmax(0,1fr)}.an-map>span{transform:rotate(90deg)}}
+  .an-svg{width:100%;height:auto;display:block;margin:6px auto;max-width:420px}
+  .an-svg text{fill:var(--ink);text-anchor:middle;font-weight:700}
+  #anJobFlip{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  #anJobFlip .tcard{height:280px}
+  #anJobFlip .tcard .b{font-size:.88rem}
+  .an-vres{font-size:.95rem;margin:10px 0}
+  .an-chk .chk button{text-align:left}

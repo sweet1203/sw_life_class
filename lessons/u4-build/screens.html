@@ -1,0 +1,297 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#8a4fc0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅳ. 모의 실험하는 소프트웨어 · 융합 진로</span>
+      <h1>감정 전염 모델<br>설계하기</h1>
+      <div class="story"><b>사회 현상 분석가가 되어 볼까? (144쪽)</b><br>「해맑게 웃는 아이를 보고 덩달아 웃음이 나는 경우도 감정이 전염된 것일까?」 사회 현상 분석가는 현실 세계의 사회 현상을 시뮬레이션 모델로 실행해 분석해요. 오늘은 <b>감정 전염 현상</b>을 분석하는 시뮬레이션 모델을 설계해 봐요.</div>
+      <p>구현 단계 중 <b>1 문제 정의 → 2 개념적 모델링 → 3 화면 구성</b>까지 설계해요.</p>
+      <ol>
+        <li>실습 개요 · 감정 전염</li><li>1 문제 정의</li><li>2 개념적 모델링</li><li>3 화면 구성</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 수업 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🎯</i><div><b>1 문제 정의</b><small>감정을 주고받는 모습</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🧮</i><div><b>2 개념적 모델링</b><small>핵심 요소와 작동 순서</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🖥️</i><div><b>3 화면 구성</b><small>버튼 · 슬라이더 · 플롯 · 모니터</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">실습 · 시뮬레이션 모델로 감정 전염 현상 분석하기 (144쪽)</span>
+      <p><b>감정 전염</b>은 상대방의 얼굴, 표정, 자세 등을 무의식적으로 모방하고 상대방에게 감정적으로 동화되는 경향을 의미해요. 사람들은 어떻게 서로의 감정에 영향을 받으며 물들어 갈까요? 사회 현상 분석가가 되어 다른 사람과 감정을 주고받는 사람들의 모습을 시뮬레이션해 봐요.</p>
+    </div>
+    <div class="card">
+      <h3>📋 실습 개요 <span class="muted" style="font-weight:400;font-size:.88rem">(144쪽)</span></h3>
+      <table class="bd-tb">
+        <tr><td>문제 상황</td><td>다른 사람과 감정을 주고받았던 경험을 시뮬레이션으로 구현하려고 한다.</td></tr>
+        <tr><td>사용 소프트웨어</td><td>넷로고(NetLogo)</td></tr>
+      </table>
+      <div class="bd-steps">
+        <div style="--k:#8a4fc0" class="cur"><b>1단계</b>문제 정의</div>
+        <div style="--k:#2fa0a8" class="cur"><b>2단계</b>개념적 모델링</div>
+        <div style="--k:#c98a0a" class="cur"><b>3단계</b>화면 구성</div>
+        <div style="--k:#d0602f" class="later"><b>4단계</b>시뮬레이션 모델 구현 <small>(다음 시간)</small></div>
+        <div style="--k:#2f9a5a" class="later"><b>5단계</b>모델 실행 및 결과 해석 <small>(다음 시간)</small></div>
+      </div>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 감정 전염 현상을 시뮬레이션 모델로 만들려면 무엇을 핵심 요소로 삼고, 화면을 어떻게 구성해야 할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>현실 세계의 모습을 보고 시뮬레이션으로 풀 문제를 정의할 수 있다.</li>
+          <li>관찰 내용에서 핵심 요소를 골라 현실 세계를 추상화하고 작동 순서를 설명할 수 있다.</li>
+          <li>버튼·슬라이더·플롯·모니터로 시뮬레이션 화면을 구성하는 순서를 설명할 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">감정 전염 · 거울 뉴런 · 추상화 · 핵심 요소 · 작동 순서(행동 규칙) · 버튼 · 슬라이더 · 플롯 · 모니터</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>누군가의 기분이 나에게 옮겨 온 적이 있나요? 그 모습을 시뮬레이션으로 만든다면 무엇이 궁금한가요? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 문제 정의부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 문제 정의 -->
+<section class="page" data-name="1 문제 정의" data-acc="#8a4fc0">
+  <div class="head"><div class="num">01</div><div><h2>1 문제 정의</h2><p>교과서 144쪽 · 현실 세계를 보고 문제를 정의해요</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>먼저 <b>현실에서 본 모습</b>을 떠올리고, 그것을 시뮬레이션으로 알아보려면 <b>무엇을 풀어야 하는지 한 문장</b>으로 정해요. 이것이 문제 정의예요.</span></div>
+
+  <div class="card">
+    <h3>🌍 현실 세계 → 문제 정의 <span class="muted" style="font-weight:400;font-size:.88rem">(144쪽)</span></h3>
+    <p style="margin-top:0">주어진 현실 세계 내용을 살펴보고 문제를 정의해 보자.</p>
+    <div class="bd-world"><b>현실 세계</b>
+      <ul style="margin:4px 0 0;padding-left:1.2em">
+        <li>야구장에서 누군가 큰 소리로 응원하며 손뼉을 치기 시작하자 얼마 지나지 않아 모두가 함께 손뼉 치는 모습을 본 적이 있는가?</li>
+        <li>옆에 있는 사람이 하품을 하면 나도 따라서 하품을 하거나, 긍정적인 사람과 함께 있으면 기분이 덩달아 좋아진 적이 있는가?</li>
+      </ul>
+    </div>
+    <div class="bd-arrow">▼</div>
+    <div class="bd-def"><b>문제 정의</b> · 다른 사람과 감정을 주고받는 모습을 시뮬레이션으로 구현해 보기</div>
+    <p style="margin-bottom:0">다른 사람과 감정을 주고받았던 경험을 생각해 보세요. 기억나는 경험이 있나요? 나의 경험 또는 감정 전염과 관련한 데이터를 수집하여 정의한 문제를 살펴봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔎 해 보기 · 문제 이해를 위한 데이터 수집하기 <span class="muted" style="font-weight:400;font-size:.88rem">(144쪽 · 분석·토의)</span></h3>
+    <div class="bd-task"><b>해 보기</b>거울 뉴런 이론과 감정 전염 이론에 대해 조사해 보자. 조사한 내용을 바탕으로 다른 사람과 감정을 주고받았던 경험을 나누어 보자.</div>
+    <div class="memo"><label>거울 뉴런 <small>조사한 내용을 적어 보세요.</small></label><textarea data-memo="bdRef" rows="3"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>감정 전염 <small>조사한 내용을 적어 보세요.</small></label><textarea data-memo="bdInf" rows="3"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>감정을 주고받았던 경험 나누기 <small>교과서 예) 힘들었던 이야기를 하며 눈물을 흘리는 친구의 모습을 보았을 때 나도 마음이 아프고 답답했다.</small></label><textarea data-memo="bdExp" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 개념적 모델링 -->
+<section class="page" data-name="2 개념적 모델링" data-acc="#2fa0a8">
+  <div class="head"><div class="num">02</div><div><h2>2 개념적 모델링</h2><p>교과서 145쪽 · 핵심 요소 추출과 작동 순서</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>현실의 모습에서 <b>꼭 필요한 것만 골라 단순하게</b> 나타내는 것이 추상화예요. 그다음 <b>누가 어떤 규칙으로 움직이는지</b>(작동 순서)를 정해요.</span></div>
+
+  <div class="card">
+    <h3>🧮 현실 세계 추상화 <span class="muted" style="font-weight:400;font-size:.88rem">(145쪽)</span></h3>
+    <p style="margin-top:0">다른 사람과 감정을 주고받는 모습을 시뮬레이션하기 위해 고려해야 할 중요한 요인은 무엇일까? 시뮬레이션의 목적과 관찰 내용을 살펴본 후, 핵심 요소를 추출하여 현실 세계를 추상화해 보자.</p>
+    <div class="of-tw"><table class="bd-tb">
+      <tr><td>시뮬레이션 목적</td><td>다른 사람과 감정을 주고받는 사람들의 모습을 표현</td></tr>
+      <tr><td>관찰 내용</td><td>감정을 주고받는 사람 수, 나, 다른 사람, 감정, 대면, 비대면</td></tr>
+      <tr><td>핵심 요소</td><td>감정을 주고받는 사람 수, 나, 다른 사람, 주는 감정, 받는 감정</td></tr>
+    </table></div>
+    <div class="easy" style="margin:8px 0"><b class="t">교과서 옆 설명</b><span>사람들이 직접 만났을 때 주고받는 감정의 전이를 시뮬레이션의 목적으로 하여 감정을 주고받는 사람 수, 나, 다른 사람, 주는 감정, 받는 감정을 중요한 요인으로 둡니다.</span></div>
+    <p><b>관찰 내용 가운데 핵심 요소로 남기는 것은?</b> 하나씩 골라 보세요.</p>
+    <div id="bdPick"></div>
+  </div>
+
+  <div class="card">
+    <h3>🎞️ 시뮬레이션 작동 순서(행동 규칙) <span class="muted" style="font-weight:400;font-size:.88rem">(145쪽)</span></h3>
+    <p style="margin-top:0">추상화한 내용을 바탕으로 상호 작용하는 사람들 사이에 감정이 전달되는 기능을 계획해 보자. 다음과 같이 시뮬레이션 작동 순서(행동 규칙)를 설계할 수 있다.</p>
+    <ol style="margin:4px 0 8px;padding-left:1.4em;line-height:1.8;list-style:none">
+      <li>① 감정을 주고받기 전, 사람들은 회색이다(가정: 기본 감정은 없다).</li>
+      <li>② 감정을 주고받는 사람들은 랜덤으로 움직인다.</li>
+      <li>③ 만약 두 사람이 만나면 감정이 전달되어 사람의 색이 바뀐다.</li>
+      <li>④ 위 ②, ③번의 과정을 반복한다.</li>
+    </ol>
+    <h4 style="margin:12px 0 4px">▶ 작동 순서 따라가기 (체험)</h4>
+    <p style="margin-top:0">작은 마당(9×9칸)에 회색 사람 8명이 있어요. 버튼을 차례로 눌러 ①~④를 따라가 보세요. 여기서는 잘 보이도록 <b>같은 칸이거나 바로 옆 칸</b>에 있으면 만난 것으로 쳐요.</p>
+    <svg class="bd-svg" id="bdSvg" viewBox="0 0 270 270" role="img" aria-label="9 곱하기 9 칸 마당에 회색 사람 8명이 있고, 노란 사람과 만나면 색이 노란색으로 바뀐다."></svg>
+    <div class="bd-leg"><span><i style="background:#9a9a9a"></i>회색(감정 없음)</span><span><i style="background:#e0b400"></i>노란색(감정을 받은 사람)</span></div>
+    <div class="bd-mon"><div>②를 한 횟수<b id="bdMv">0 / 30</b></div><div>노란 사람 수<b id="bdYel">0</b></div></div>
+    <div class="bd-ctl">
+      <button type="button" id="bdB0">① 처음(모두 회색)</button>
+      <button type="button" class="pri" id="bdB1">감정 하나 주기</button>
+      <button type="button" id="bdB2">② 한 번 움직이기</button>
+      <button type="button" id="bdB3">③ 만나면 색 전달</button>
+      <button type="button" id="bdB4">④ ②·③ 5번 반복</button>
+    </div>
+    <div class="bd-msg" id="bdMsg" aria-live="polite"></div>
+    <p class="note" style="margin-bottom:0">마당 크기, 사람 수(8명), 한 번에 한 칸씩 움직이는 것, 옆 칸까지 만난 것으로 치는 것, 최대 30번은 체험하기 좋게 정한 값이에요. 난수라 「①」을 누를 때마다 처음 위치가 달라져요. 교과서의 넷로고 모델은 다음 시간에 코드로 살펴봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎨 해 보기 · 시뮬레이션 기능 계획하기 <span class="muted" style="font-weight:400;font-size:.88rem">(145쪽 · 표현)</span></h3>
+    <div class="bd-task"><b>해 보기</b>내가 누군가에게 주고 싶은 감정과 받고 싶은 감정에는 어떤 것이 있을까? 감정의 이름과 어울리는 색을 정해 보자.</div>
+    <div class="bd-two">
+      <div>
+        <b style="font-size:.93rem">내가 주고 싶은 감정(색)</b>
+        <div id="bdGiveC" class="bd-col" style="margin-top:6px"></div>
+        <div class="memo"><label>감정의 이름 <small>교과서 예) 고마움(빨간색)</small></label><input type="text" data-memo="bdGive" aria-label="내가 주고 싶은 감정의 이름"><div class="saved"></div></div>
+      </div>
+      <div>
+        <b style="font-size:.93rem">내가 받고 싶은 감정(색)</b>
+        <div id="bdGetC" class="bd-col" style="margin-top:6px"></div>
+        <div class="memo"><label>감정의 이름 <small>교과서 예) 즐거움(노란색)</small></label><input type="text" data-memo="bdGet" aria-label="내가 받고 싶은 감정의 이름"><div class="saved"></div></div>
+      </div>
+    </div>
+    <p class="note" style="margin-bottom:0"><b>도움 질문</b> ① 다른 사람의 어떤 감정이 궁금한가? ② 어떤 감정을 주고받는 사회가 되면 좋을까? (교과서 TIP: 감정을 표현한 이모티콘을 참고해도 좋아요.)</p>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 화면 구성 -->
+<section class="page" data-name="3 화면 구성" data-acc="#c98a0a">
+  <div class="head"><div class="num">03</div><div><h2>3 화면 구성</h2><p>교과서 146~149쪽 · 버튼 · 슬라이더 · 플롯 · 모니터</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>사용자가 <b>조건을 넣는 부품</b>(버튼·슬라이더)과 <b>결과를 보는 부품</b>(플롯·모니터)으로 시뮬레이션 화면을 꾸며요. 넷로고의 Interface 창에서 해요.</span></div>
+
+  <div class="card">
+    <h3>🪜 화면 구성 순서 <span class="muted" style="font-weight:400;font-size:.88rem">(146쪽)</span></h3>
+    <p style="margin-top:0">넷로고의 인터페이스 창을 클릭하면 시뮬레이션 모델 화면을 구성할 수 있어요. 사용자가 조건을 입력할 수 있는 버튼과 슬라이더, 결과를 출력하는 플롯과 모니터를 만들어 화면을 구성해요. 2·3·4단계 설명은 148~149쪽에 있어요.</p>
+    <div class="bd-steps">
+      <div style="--k:#8a4fc0"><b>1단계 · 버튼 만들기</b>조건 설정 버튼, 실행 버튼, 감정 버튼, 나 버튼, 방향 버튼</div>
+      <div style="--k:#2fa0a8"><b>2단계 · 슬라이더 만들기</b>number(사람 수)</div>
+      <div style="--k:#c98a0a"><b>3단계 · 플롯 만들기</b>감정 전달된 사람 수(그래프)</div>
+      <div style="--k:#d0602f"><b>4단계 · 모니터 만들기</b>내가 받고 싶은 감정 모니터, 내가 주고 싶은 감정 모니터</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🖥️ 넷로고 인터페이스 모형 <span class="muted" style="font-weight:400;font-size:.88rem">(147쪽 화면 구성 예시를 다시 그림)</span></h3>
+    <p style="margin-top:0">부품을 눌러 보세요. 어떻게 설정하는지 아래에 나와요.</p>
+    <div class="bd-ui" id="bdUi">
+      <div class="l">
+        <div class="row2"><button type="button" class="bd-b" data-k="setup">setup</button><button type="button" class="bd-b" data-k="go">go</button></div>
+        <div class="row2"><button type="button" class="bd-b" data-k="joy">즐거움</button></div>
+        <button type="button" class="bd-box sl" data-k="slider">number <b style="float:right">10</b></button>
+        <button type="button" class="bd-box pl" data-k="plot">감정 전달된 사람 수
+          <svg viewBox="0 0 100 46" preserveAspectRatio="none" aria-hidden="true"><polyline points="2,44 25,36 50,24 75,14 98,8" fill="none" stroke="#e0b400" stroke-width="2"/><polyline points="2,44 30,42 60,36 98,30" fill="none" stroke="#d64535" stroke-width="2"/></svg></button>
+        <div class="row2"><button type="button" class="bd-box mn" data-k="monJoy">즐거움<b>0</b></button><button type="button" class="bd-box mn" data-k="monThx">고마움<b>0</b></button></div>
+      </div>
+      <div class="w" aria-hidden="true"><i style="left:12%;top:14%"></i><i style="left:70%;top:22%"></i><i style="left:40%;top:48%"></i><i class="y" style="left:24%;top:66%"></i><i style="left:78%;top:78%"></i><i class="r" style="left:55%;top:30%"></i></div>
+      <div class="r">
+        <div class="row2"><button type="button" class="bd-b" data-k="me">나</button><button type="button" class="bd-b" data-k="thanks">고마움</button></div>
+        <div class="bd-pad">
+          <span class="e"></span><button type="button" class="bd-b" data-k="up">위</button><span class="e"></span>
+          <button type="button" class="bd-b" data-k="left">왼쪽</button><span class="e"></span><button type="button" class="bd-b" data-k="right">오른쪽</button>
+          <span class="e"></span><button type="button" class="bd-b" data-k="down">아래</button><span class="e"></span>
+        </div>
+      </div>
+    </div>
+    <div class="bd-info" id="bdInfo" aria-live="polite"></div>
+    <p class="note" style="margin-bottom:0">교과서에서는 명령어 코드를 넣기 전이라 모든 버튼 이름이 빨간색으로 나타나요. 여기서는 부품의 배치와 설정 내용을 글과 도형으로 옮겼어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔘 방향 버튼 설정 · 1단계 요약 <span class="muted" style="font-weight:400;font-size:.88rem">(147쪽)</span></h3>
+    <p style="margin-top:0">방향값을 설정하기 위해 <code>move</code> 뒤에 방향의 각도를 입력해요. Action key 값을 입력하면 키보드로도 방향을 조작할 수 있어요. 아래 표대로 채우면 방향 버튼을 쉽게 만들 수 있어요.</p>
+    <div id="bdDir"></div>
+    <div class="easy" style="margin:10px 0 0;display:block"><b class="t" style="display:inline-block;margin-bottom:6px">TIP · 1단계 버튼 만들기 요약</b>
+      <ol style="margin:4px 0 0;padding-left:1.3em;line-height:1.7">
+        <li><b>조건 설정 버튼</b> · [setup] 버튼을 누르면 테스트하고자 하는 조건으로 설정돼요. Commands에 setup을 입력해요.</li>
+        <li><b>실행 버튼</b> · [setup] 버튼을 누른 후 [go] 버튼을 누르면 모델이 실행돼요. Commands에 go를 입력하고, go에 해당하는 코드를 무한 반복하기 위해 go 버튼의 forever 체크 박스를 클릭해요.</li>
+        <li><b>[나] 버튼</b> · 이 버튼을 누르면 크기가 큰 사람인 「나」가 나타나요. Commands에 me(나)를 입력해요.</li>
+        <li><b>감정 버튼</b> · 이 버튼을 누르면 감정을 가진 사람이 생겨요. Commands에 joy(즐거움), thanks(고마움)를 입력해요.</li>
+        <li><b>방향 버튼[위, 오른쪽, 아래, 왼쪽]</b> · 각 버튼을 누르면 「나」가 해당 방향으로 움직여요(방향 버튼 설정하기 표 참고).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📈 플롯과 모니터에 넣는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(148~149쪽)</span></h3>
+    <p style="margin-top:0">플롯(Plot)은 시뮬레이션 모델에서 계산한 값을 그래프로 출력하고, 모니터(Monitor)는 실행하는 도중 즐거움과 고마움에 해당하는 수를 실시간으로 보여 줘요. 선 색은 내가 정한 감정의 색으로 골라요.</p>
+    <div class="bd-two">
+      <div><b style="font-size:.9rem">플롯 · Pen update commands</b>
+<pre class="code">plot count turtles with [color = yellow]
+plot count turtles with [color = red]</pre>
+        <p class="note" style="margin-top:0">노란색 선은 즐거운 감정을 전달받은 사람의 수(y축), 빨간색 선은 고마운 감정을 전달받은 사람의 수예요.</p></div>
+      <div><b style="font-size:.9rem">모니터 · Reporter</b>
+<pre class="code">count turtles with [color = yellow]
+count turtles with [color = red]</pre>
+        <p class="note" style="margin-top:0">첫 줄은 즐거움 모니터, 둘째 줄은 고마움 모니터에 넣어요.</p></div>
+    </div>
+    <p class="note" style="margin-bottom:0">슬라이더는 Minimum에 0, Maximum에 100, Value에 사람 수의 기본값으로 10을 입력해요(149쪽).</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 해 보기 · 시뮬레이션 기능 계획하기 <span class="muted" style="font-weight:400;font-size:.88rem">(149쪽 · 분석)</span></h3>
+    <div class="bd-task"><b>해 보기</b>화면의 각 구성 요소는 입출력 중 어디에 해당하는지 적고, 어떤 기능을 가지고 있는지 정리해 보자.</div>
+    <p><b>① 입력일까, 출력일까?</b> 골라 보세요.</p>
+    <div id="bdIoGame"></div>
+    <p style="margin-top:16px"><b>② 구성 요소의 기능 적기</b></p>
+    <div class="of-tw"><table class="bd-tb">
+      <tr><th>구성 요소</th><th>기능 <small style="font-weight:400">내 말로 적어 보세요.</small></th></tr>
+      <tr><td>버튼</td><td><input type="text" data-memo="bdFn1" aria-label="버튼의 기능"><div class="saved"></div></td></tr>
+      <tr><td>슬라이더</td><td><input type="text" data-memo="bdFn2" aria-label="슬라이더의 기능"><div class="saved"></div></td></tr>
+      <tr><td>플롯</td><td><input type="text" data-memo="bdFn3" aria-label="플롯의 기능"><div class="saved"></div></td></tr>
+      <tr><td>모니터</td><td><input type="text" data-memo="bdFn4" aria-label="모니터의 기능"><div class="saved"></div></td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>🐍 setup · joy · 모니터를 파이썬으로 흉내 내기</h3>
+    <p style="margin-top:0">사람 목록으로 [setup]과 [즐거움]·[나]·[고마움] 버튼, 모니터가 하는 일을 흉내 내요. 넷로고의 <code>count turtles with [color = yellow]</code>는 여기서 <code>colors.count('yellow')</code>와 같은 일을 해요. <code>number</code>를 바꿔 다시 실행해 보세요.</p>
+    <div id="bdRun"></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">04</div><div><h2>마무리</h2><p>오늘 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#8a4fc0"><b>1 문제 정의</b> · 현실 세계(야구장 응원, 하품, 기분이 좋아지는 경험)를 보고 「다른 사람과 감정을 주고받는 모습을 시뮬레이션으로 구현해 보기」로 문제를 정했어요.</div>
+    <div style="--k:#2fa0a8"><b>2 개념적 모델링</b> · 관찰 내용에서 핵심 요소(사람 수, 나, 다른 사람, 주는 감정, 받는 감정)를 골라 추상화하고, <b>회색 → 랜덤 이동 → 만나면 색 전달 → 반복</b>의 작동 순서를 설계해요.</div>
+    <div style="--k:#c98a0a"><b>3 화면 구성</b> · <b>버튼 → 슬라이더 → 플롯 → 모니터</b> 순서로 만들어요. 버튼과 슬라이더는 <b>입력</b>, 플롯과 모니터는 <b>출력</b>이에요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">앞에서 적은 메모를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">감정 전염 현상을 시뮬레이션 모델로 만들려면 무엇을 핵심 요소로 삼고, 화면을 어떻게 구성해야 할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="4"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>내가 정한 <b>문제 정의</b>와, 감정을 주고받았던 나의 경험을 설명하세요. <span class="muted">(화면 01 메모 참고)</span></li>
+      <li>감정 전염 모델의 <b>핵심 요소와 작동 순서</b>를 내 말로 설명하세요. <span class="muted">(화면 02 참고)</span></li>
+      <li>내가 정한 <b>감정의 이름과 색</b>, 그리고 화면에 만들 부품 4가지와 기능을 설명하세요. <span class="muted">(화면 02·03 메모 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

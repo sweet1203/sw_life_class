@@ -946,8 +946,8 @@ function pyrun(box, cfg) {
     } finally { const i = _pyWaiters.indexOf(setStat); if (i >= 0) _pyWaiters.splice(i, 1); }
     setStat('실행 중…');
     const lines = [];
-    py.setStdout({ batched: s => lines.push(s) });
-    py.setStderr({ batched: s => lines.push(s) });
+    py.setStdout({ batched: s => lines.push(s + '\n') });  /* 0.26: batched 는 줄바꿈을 뺀 한 줄씩 줌 */
+    py.setStderr({ batched: s => lines.push(s + '\n') });
     const feed = (sin ? sin.value : '').split('\n');
     try {
       py.globals.set('_pyrun_feed', feed);

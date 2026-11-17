@@ -1,0 +1,378 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#8a4fc0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅳ. 모의 실험하는 소프트웨어 · 시뮬레이션 모델의 구성 요소와 실행</span>
+      <h1>시뮬레이션은<br>무엇으로 이루어져 있을까?</h1>
+      <div class="story"><b>시뮬레이션의 구성 요소는 무엇일까? (134쪽)</b><br>시뮬레이션 모델을 체험하거나 만들 수 있는 소프트웨어에는 애니로직, 세이지모델러, 파이게임, 알고두, 넷로고 등이 있어요. 이 중 <b>넷로고</b>로 시뮬레이션 모델을 탐색해 보며 구성 요소를 찾아봐요.</div>
+      <p>모델을 열어 실행해 보고, 근육 발달이 잘 이루어지는 조건을 찾는 과정으로 현실을 예측하는 방법을 배워요.</p>
+      <ol>
+        <li>제작 소프트웨어</li><li>모델 실행과 구성 요소</li><li>현실을 예측하는 5단계</li><li>모델 구상하기</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 할 일 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🧰</i><div><b>제작 소프트웨어</b><small>넷로고 모델 탐색 준비</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🕹️</i><div><b>모델 실행</b><small>입력 · 틱 · 출력 · 그래프</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>💪</i><div><b>근육 발달 조건 찾기</b><small>문제 정의부터 결과 해석까지</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">시작 · 시뮬레이션 모델로 어떻게 현실을 예측할까? (136쪽)</span>
+      <p>일상생활 속에서 운동을 효과적으로 하려면 어떤 조건이 필요할까요? 시뮬레이션 모델 구현 단계에 따라 문제를 정의하고, 근육 발달 시뮬레이션을 실행시켜 <b>문제를 해결하기 위한 조건</b>을 찾아봐요.</p>
+    </div>
+    <div class="card">
+      <h3>🧭 오늘 따라갈 길 <span class="muted" style="font-weight:400;font-size:.88rem">(134~139쪽)</span></h3>
+      <div class="mo-flow">
+        <div style="--k:#8a4fc0"><small>01</small><b>제작 소프트웨어와 넷로고 준비</b></div><div class="ar">→</div>
+        <div style="--k:#2f6fd0"><small>02</small><b>모델 실행과 구성 요소</b></div><div class="ar">→</div>
+        <div style="--k:#1f9d74"><small>03</small><b>근육 발달 조건 찾기</b></div><div class="ar">→</div>
+        <div style="--k:#e0702b"><small>04·05</small><b>모델 구상하기 · 전문가 인터뷰</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>💻 이 차시의 코드와 체험 <span class="muted" style="font-weight:400;font-size:.88rem">(안내)</span></h3>
+      <div class="grid2 even">
+        <div class="mo-kind" style="--k:#1f2f4a"><b>📖 읽는 코드</b><span>넷로고는 웹에서 돌릴 수 없어서, 교과서의 <b>넷로고 코드</b>는 어두운 <b>코드 카드</b>로 읽기만 해요. 인쇄된 그대로 옮겼어요.</span></div>
+        <div class="mo-kind" style="--k:#8a4fc0"><b>🕹️ 돌려 보는 체험</b><span>모델 화면 모형, 숲 화재 흉내, 파이썬 코드, 시나리오 점검기는 이 화면에서 직접 눌러 보고 고쳐 볼 수 있어요.</span></div>
+      </div>
+      <p class="note" style="margin-bottom:0">넷로고로 만든 진짜 시뮬레이션 모델은 교과서의 <b>QR 코드</b>로 열어 보세요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 시뮬레이션의 구성 요소는 무엇이고, 시뮬레이션 모델로 어떻게 현실을 예측할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>시뮬레이션 모델의 구성 요소(입력 데이터·실행 횟수·출력 결과·해석 도구)를 설명할 수 있다.</li>
+          <li>시뮬레이션 모델을 구현하는 5단계를 말할 수 있다.</li>
+          <li>한 가지 값만 바꿔 테스트하는 까닭을 설명할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">넷로고 · 파라미터 · 틱 · 추상화 · 핵심 요소 · 개념적 모델링 · 슬라이더 · 플롯</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>운동을 효과적으로 하려면 <b>어떤 조건</b>이 필요할 것 같나요? <small>떠오르는 대로 한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="moPlan" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 제작 소프트웨어부터 보기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 제작 소프트웨어·넷로고 -->
+<section class="page" data-name="제작 소프트웨어 · 넷로고" data-acc="#8a4fc0">
+  <div class="head"><div class="num">01</div><div><h2>시뮬레이션 모델 살펴보기 준비</h2><p>교과서 134쪽 · 자료 3 제작 소프트웨어, 넷로고로 모델 찾고 살펴보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션 모델을 <b>체험하거나 만들 수 있는 소프트웨어</b>가 여러 가지 있어요. 이 단원에서는 그중 <b>넷로고</b>를 써요. 넷로고에서 모델을 <b>찾고 → 화면을 살피고 → 코드와 설명을 확인</b>하는 순서를 익혀요.</span></div>
+
+  <div class="card">
+    <h3>🧰 자료 3 · 시뮬레이션 제작 소프트웨어의 종류 <span class="muted" style="font-weight:400;font-size:.88rem">(134쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션 모델을 체험하거나 제작할 수 있는 소프트웨어에는 <b>애니로직, 세이지모델러, 파이게임, 알고두, 넷로고</b> 등이 있어요. 이름을 눌러 봐요.</p>
+    <div class="row mo-tab" id="moSwBtn"></div>
+    <div class="mo-view" id="moSwView"></div>
+    <div class="callout" style="margin-bottom:0">💡 <b>TIP · 넷로고</b> 자연, 사회 현상을 시뮬레이션하는 데 유용한 시뮬레이션 소프트웨어로 생태학, 사회학, 교육 분야에서 사용되고 있어요. 오픈 소스로 무료이며 다양한 시뮬레이션을 탐색하고 구현할 수 있어요.</div>
+  </div>
+
+  <div class="card">
+    <h3>🔎 준비 학습 · 시뮬레이션 모델 살펴보기 <span class="muted" style="font-weight:400;font-size:.88rem">(134쪽)</span></h3>
+    <p style="margin-top:0">이 단원의 실습은 넷로고를 사용해 진행해요. 넷로고는 개체와 환경 사이의 상호 작용을 모델링할 수 있으며 시각적으로 확인할 수 있어요. 크롬에서 넷로고 사이트에 접속해요. 마우스를 우클릭하여 한국어로 번역해 사용할 수도 있어요.</p>
+    <div class="mo-steps">
+      <div style="--k:#8a4fc0"><span class="n">1</span><div><b>모델 검색</b><span>웹 브라우저에서 시뮬레이션 모델을 바로 탐색할 수 있는 <b>[NetLogo 웹으로 이동]</b>을 선택해요. 넷로고에는 다양한 시뮬레이션 모델이 내장되어 있어요. 그중 근육 발달 모델을 찾으려면 검색창에 <b>'muscle'</b>을 입력해요.</span></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>화면 구성 및 기능 탐색</b><span>시뮬레이션하고 싶은 조건을 <b>파라미터</b>로 설정하고 <b>[설정]</b> 버튼을 누른 후, <b>[가다]</b> 버튼을 누르면 설정한 조건에서의 근육 발달 정도를 화면과 그래프로 확인할 수 있어요.</span></div></div>
+      <div style="--k:#1f9d74"><span class="n">3</span><div><b>코드 및 모델 정보 확인</b><span>모델이 어떻게 구현되었는지 알고 싶다면 <b>[NetLogo 코드]</b>를 눌러 코드를 확인해요. <b>[모델 정보]</b>를 누르면 그 모델에 대한 설명도 확인할 수 있어요.</span></div></div>
+    </div>
+    <p style="margin:10px 0 4px"><b>TIP과 주의</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="moTipFlip" class="tcards"></div>
+  </div>
+
+  <div class="card">
+    <h3>🧩 어느 단계에서 하는 일일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">한 장면씩 읽고 준비 학습의 세 단계 가운데 어디에 속하는지 골라 봐요.</p>
+    <div id="moStepSort"></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 모델 실행과 구성 요소 -->
+<section class="page" data-name="모델 실행 · 구성 요소" data-acc="#8a4fc0">
+  <div class="head"><div class="num">02</div><div><h2>모델 실행과 구성 요소</h2><p>교과서 135쪽 · 자료 4 모델 실행 결과, 모델 탐색하기(화재)</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>넷로고 시뮬레이션 화면은 <b>입력 데이터(조건) · 실행 횟수(틱) · 출력 결과(화면) · 해석 도구(그래프)</b> 네 부분으로 이루어져 있어요. 조건을 넣고 → 시간이 흐르게 하고 → 결과를 화면과 그래프로 보는 거예요.</span></div>
+
+  <div class="card">
+    <h3>④ 모델 실행 <span class="muted" style="font-weight:400;font-size:.88rem">(135쪽)</span></h3>
+    <p style="margin-top:0">운동 강도, 수면 시간 등 <b>입력 데이터를 한 가지씩 조작</b>하여 시뮬레이션을 실행하고 결과를 확인해요. 넷로고의 시뮬레이션 모델은 어떤 구성 요소로 이루어져 있을까요? 모델을 탐색하며 생각해 봐요.</p>
+    <p style="margin:10px 0 4px"><b>[자료 4] 시뮬레이션 모델 실행 결과</b> <span class="muted">(근육 발달 모델 화면 모형 · 부분을 눌러 봐요)</span></p>
+    <svg id="moMuscle" class="mo-svg" viewBox="0 0 360 396" role="img" aria-label="근육 발달 모델 화면을 본뜬 그림: 입력 데이터, 틱, 출력 화면, 그래프 네 부분"></svg>
+    <p class="note" style="margin:6px 0 8px">교과서 135쪽의 화면을 보고 단순하게 다시 그린 모형이에요. 실제로 실행한 결과가 아니에요.</p>
+    <div class="row mo-tab" id="moZoneBtn"></div>
+    <div class="mo-view" id="moZoneView"></div>
+    <div class="callout" style="margin-bottom:0">🧪 <b>심화 · 한 가지만 바꿔 테스트</b> 입력 데이터를 조작할 때 모든 값을 똑같이 한 뒤 <b>한 가지 입력 데이터만 다른 값</b>으로 설정해 테스트하면, 그 조건이 결과에 미치는 영향을 좀 더 확실하게 알 수 있어요.</div>
+    <div class="memo"><label>시간이 지남에 따라 출력 결과인 <b>화면과 그래프</b>가 어떻게 달라지는지 관찰해 보자. 조건을 다르게 설정해 여러 번 실행해 보고 알게 된 점을 적어 봐요. <small>(선택, 교과서 QR의 근육 발달 모델로 해 봐요)</small></label><textarea data-memo="moObs" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🔥 해 보기 · 숲 화재 흉내 <span class="muted" style="font-weight:400;font-size:.88rem">(135쪽 모델 탐색하기 · 화재)</span></h3>
+    <p style="margin-top:0">교과서는 넷로고에서 <b>화재(Fire Simple Extension 3)</b> 모델을 찾아 실행해 보라고 해요. 여기서는 넷로고 기본 화재 모델의 규칙을 <b>흉내 낸</b> 작은 숲으로 구성 요소를 눈으로 확인해 봐요. <span class="muted">(Extension 3의 추가 기능은 없어요. 진짜 모델은 교과서 QR로 열어요.)</span></p>
+    <div class="mo-fire">
+      <div class="mo-rules"><b>규칙</b> 숲(21×21칸)에 나무를 <b>밀도</b>만큼 심고, 왼쪽 끝 열에 불을 붙여요. 1틱마다 불붙은 칸의 <b>위·아래·왼쪽·오른쪽</b> 나무에 불이 옮겨 붙고, 불이 난 칸은 재가 돼요.</div>
+      <div class="mo-ctl"><label>나무 밀도 <input type="range" id="moDen" min="30" max="100" step="5" value="60" aria-label="나무 밀도"><output id="moDenOut">60%</output></label><small class="muted">밀도는 <b>[설정]</b>을 누를 때 적용돼요.</small></div>
+      <div class="row mo-btns">
+        <button class="btn sm" id="moSet">설정</button>
+        <button class="btn sm" id="moOne">한 틱</button>
+        <button class="btn sm" id="moTen">10틱</button>
+        <button class="btn sm" id="moAuto">▶ 끝까지</button>
+        <button class="btn sm ghost" id="moStop">멈춤</button>
+        <button class="btn sm ghost" id="moAgain">같은 숲 다시</button>
+      </div>
+      <svg id="moFire" class="mo-svg" viewBox="0 0 294 294" role="img" aria-label="21×21 칸 숲 화재 흉내 화면"></svg>
+      <div class="mo-mon"><span>틱 <b id="moTick">0</b> / 200</span><span>탄 나무 비율 <b id="moPct">0</b>%</span></div>
+      <div class="mo-legend"><i style="background:#3c9d4e"></i>나무 <i style="background:#f04e23"></i>불 <i style="background:#7a746a"></i>재 <i style="background:#efe9dc;border:1px solid #d6cdb8"></i>빈 땅</div>
+      <div class="mo-state" id="moState" aria-live="polite"></div>
+      <p class="note" style="margin:8px 0 0">나무 밀도(입력 데이터), 틱(실행 횟수), 숲 화면(출력 결과), 탄 나무 비율(해석할 값)이 각각 구성 요소의 어디에 해당하는지 찾아봐요. 자동 재생은 200틱에서 멈춰요.</p>
+    </div>
+    <div class="memo"><label>밀도를 바꿔 설정하고 실행해 봤나요? 밀도가 달라지면 <b>탄 나무 비율</b>이 어떻게 달라졌는지 적어 봐요. <small>(선택, 같은 밀도로도 여러 번 해 보면 매번 조금씩 달라요)</small></label><textarea data-memo="moFireNote" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 같은 규칙을 파이썬으로 흉내 내기</h3>
+    <p style="margin-top:0">위의 숲 화재 규칙을 <b>파이썬 코드</b>로 옮겼어요(15×15칸, 틱은 최대 100). <b>실행</b>을 눌러 불이 번진 모습과 탄 나무 비율을 봐요. 그리고 <code>DENSITY</code>를 <code>0.5</code>, <code>0.6</code>, <code>0.7</code>로 바꿔 가며 비교해 봐요. <span class="muted">(<code>F</code>는 아직 불이 남은 칸, <code>x</code>는 탄 자리, <code>T</code>는 남은 나무예요.)</span></p>
+    <div id="moRun1"></div>
+    <p class="note" style="margin-bottom:0">난수를 쓰기 때문에 실행할 때마다 결과가 달라요. 그래서 같은 값으로 여러 번 실행해 비교해 봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 시뮬레이션 모델 탐색하기 <span class="muted" style="font-weight:400;font-size:.88rem">(135쪽)</span></h3>
+    <p style="margin-top:0">넷로고에서 화재 시뮬레이션을 찾아 실행해 보고, 시뮬레이션의 <b>화면 구성·목적·구현 기능</b>을 적어 봐요. 화재 모델은 교과서 QR 코드로 열 수 있어요.</p>
+    <div class="grid2 even">
+      <div>
+        <p style="margin:0 0 4px"><b>화재(Fire Simple Extension 3)</b></p>
+        <div class="memo"><label>화면 구성 <small>(선택)</small></label><textarea data-memo="moFScreen" rows="2"></textarea><div class="saved"></div></div>
+        <div class="memo"><label>목적 <small>(선택)</small></label><textarea data-memo="moFGoal" rows="2"></textarea><div class="saved"></div></div>
+        <div class="memo"><label>구현 기능 <small>(선택)</small></label><textarea data-memo="moFFunc" rows="2"></textarea><div class="saved"></div></div>
+      </div>
+      <div>
+        <p style="margin:0 0 4px"><b>＋ 심화 · 나의 관심 분야</b> <span class="muted" style="font-size:.88rem">관심 분야에 해당하는 시뮬레이션을 골라요</span></p>
+        <div class="memo"><label>분야와 모델 이름 <small>(선택)</small></label><textarea data-memo="moMField" rows="1"></textarea><div class="saved"></div></div>
+        <div class="memo"><label>화면 구성 <small>(선택)</small></label><textarea data-memo="moMScreen" rows="2"></textarea><div class="saved"></div></div>
+        <div class="memo"><label>목적 <small>(선택)</small></label><textarea data-memo="moMGoal" rows="2"></textarea><div class="saved"></div></div>
+        <div class="memo"><label>구현 기능 <small>(선택)</small></label><textarea data-memo="moMFunc" rows="2"></textarea><div class="saved"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 실습: 근육 발달이 잘 이루어지는 조건 찾기 -->
+<section class="page" data-name="실습 · 근육 발달 조건" data-acc="#8a4fc0">
+  <div class="head"><div class="num">03</div><div><h2>근육 발달이 잘 이루어지는 조건 찾기</h2><p>교과서 136~137쪽 · 모델 구현 5단계, 시나리오 비교</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션 모델은 <b>문제 정의 → 개념적 모델링 → 화면 구성 → 모델 구현 → 실행·결과 해석</b> 다섯 단계로 만들어요. 근육 발달 모델로 이 단계를 하나씩 따라가 봐요. 현실을 <b>중요한 것만 남겨 단순하게</b> 만드는 일이 핵심이에요.</span></div>
+
+  <div class="card">
+    <h3>💪 실습 개요 <span class="muted" style="font-weight:400;font-size:.88rem">(136쪽)</span></h3>
+    <p style="margin-top:0">근력 운동은 남녀노소 모두에게 중요해요. 요즘 학생들은 운동할 시간이 항상 부족해요. 효율적으로 체력을 키우기 위해 규칙적인 시간을 들여 운동을 하면서 근육도 더 잘 생기도록 하는 방법은 무엇일까요?</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>문제 상황</th><td>체력을 키우기 위해 운동을 해야 한다.</td></tr>
+      <tr><th>사용 소프트웨어</th><td>넷로고(NetLogo)</td></tr>
+    </table></div>
+    <p style="margin:12px 0 4px"><b>시뮬레이션 모델 구현 단계</b></p>
+    <div class="mo-flow">
+      <div style="--k:#8a4fc0"><small>1</small><b>문제 정의</b></div><div class="ar">→</div>
+      <div style="--k:#2f6fd0"><small>2</small><b>개념적 모델링</b></div><div class="ar">→</div>
+      <div style="--k:#1f9d74"><small>3</small><b>화면 구성</b></div><div class="ar">→</div>
+      <div style="--k:#e0702b"><small>4</small><b>시뮬레이션 모델 구현</b></div><div class="ar">→</div>
+      <div style="--k:#d64535"><small>5</small><b>모델 실행 및 결과 해석</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>1️⃣ 문제 정의 <span class="muted" style="font-weight:400;font-size:.88rem">(136쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션의 목적에 맞게 <b>문제를 정의</b>하고, 문제를 이해하기 위해 <b>데이터를 수집</b>해요.</p>
+    <div class="mo-def"><b>문제 정의</b> 근력 운동을 효과적으로 하기 위한 필요 조건 찾기</div>
+    <div class="callout" style="margin-bottom:0">💡 <b>TIP · 데이터 수집 방법</b><br>① 검색 엔진을 활용해 근육 발달에 영향을 미치는 <b>키워드</b>를 수집해요.<br>② 근육 발달 분야에 경험이 많은 <b>전문가와 인터뷰</b>하여 키워드를 수집해요.</div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 개념적 모델링 <span class="muted" style="font-weight:400;font-size:.88rem">(136쪽)</span></h3>
+    <p style="margin-top:0">개념적 모델링은 현상의 <b>중요한 요인만을 추상화</b><sup>*</sup>하는 과정이에요. 근육 발달에 영향을 미치는 요소를 관찰하고, 그중에서 <b>핵심 요소</b>를 뽑아요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th rowspan="3" style="text-align:center">현실 세계<br>추상화</th><th>시뮬레이션 목적</th><td>운동을 통한 근육의 효과적인 발달</td></tr>
+      <tr><th>관찰 내용</th><td>운동 강도, 운동 횟수, 수면 시간, 식사, 수분 섭취, 운동 사이 시간</td></tr>
+      <tr><th>핵심 요소</th><td><b>운동 강도, 수면 시간, 운동 사이 시간</b></td></tr>
+    </table></div>
+    <p class="note" style="margin:6px 0 10px"><sup>*</sup> <b>추상화</b> 목적과 관련해 중요한 요인을 추출하고 관련 없는 요인을 제거해 현실 세계를 간소화하여 표현하는 것이에요. 같은 현실에서도 추상화 과정에 따라 모델의 구조와 변수가 달라질 수 있어요.</p>
+    <p style="margin:0 0 4px">핵심 요소를 뽑은 뒤에는 핵심 요소의 이름을 정해요. 각각의 핵심 요소는 근육 발달과 어떤 관계가 있을까요? 핵심 요소를 사용해 시뮬레이션이 <b>작동하는 전체 흐름</b>을 설계해요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th rowspan="4" style="text-align:center">핵심 요소<br>설정 및<br>시뮬레이션<br>작동 순서</th><td>① 시뮬레이션하고자 하는 [운동 강도]의 값을 조절한다.</td></tr>
+      <tr><td>② 시뮬레이션하고자 하는 [수면 시간]의 값을 조절한다.</td></tr>
+      <tr><td>③ 운동 사이 쉬는 시간인 [운동 사이 시간]의 값을 조절한다.</td></tr>
+      <tr><td>④ 설정을 누르고 시뮬레이션을 실행시킨다.</td></tr>
+    </table></div>
+    <div class="callout" style="margin-bottom:0">💡 <b>TIP · 핵심 요소와 근육 발달의 관계</b> 예를 들어 [수면 시간]이라는 핵심 요소, 즉 조건(입력 데이터)은 근육 발달에 어떤 영향을 줄까요? 각각의 조건과 근육 발달의 관계를 설명하는 <b>수학 방정식 또는 프로그래밍</b> 등이 적용될 수 있어요.</div>
+  </div>
+
+  <div class="card">
+    <h3>🧩 작동 순서 ①~④, 어디에 속할까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">한 줄씩 읽고 시뮬레이션 작동 순서의 몇 번째에 해당하는지 골라 봐요.</p>
+    <div id="moOrderSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 화면 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(137쪽)</span></h3>
+    <p style="margin-top:0">실행을 위한 <b>버튼</b>과 추출한 핵심 요소별로 값을 설정할 수 있는 <b>슬라이더</b>, 근육 발달 결과를 출력하는 <b>플롯(그래프)</b>으로 화면을 구성해요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>화면 부품</th><th>하는 일</th></tr>
+      <tr><td><b>버튼</b></td><td>조건 설정 및 실행</td></tr>
+      <tr><td><b>슬라이더</b></td><td>[운동 강도] 값 조절 · [수면 시간] 값 조절 · [운동 사이 시간] 값 조절</td></tr>
+      <tr><td><b>플롯</b></td><td>근육 발달 결과</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>4️⃣ 시뮬레이션 모델 구현 <span class="muted" style="font-weight:400;font-size:.88rem">(137쪽, 읽는 코드)</span></h3>
+    <p style="margin-top:0">시뮬레이션의 작동을 <b>알고리즘</b>으로 설계하고, 핵심 요소들의 관계를 모델링하여 프로그램을 작성해 시뮬레이션 모델을 만들어요. 아래는 교과서에 실린 넷로고 코드의 일부예요(웹에서는 실행되지 않아서 읽기만 해요).</p>
+<pre class="code"><i> 1</i>  <b>breed</b> [ muscle-fibers muscle-fiber ]
+<i> 2</i>
+<i> 3</i>  <b>muscle-fibers-own</b> [
+<i> 4</i>    fiber-size   <i>;; different from built-in "size" because it uses different units</i>
+<i> 5</i>    max-size
+<i> 6</i>  ]
+<i> 7</i>
+<i> 8</i>  <b>patches-own</b> [
+<i> 9</i>    anabolic-hormone   <i>;; muscle building hormone</i>
+<i>10</i>    catabolic-hormone  <i>;; muscle breaking down hormone</i>
+<i>11</i>  ]</pre>
+    <p style="margin:10px 0 4px"><b>코드 읽는 길잡이</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="moCodeFlip" class="tcards"></div>
+  </div>
+
+  <div class="card">
+    <h3>5️⃣ 모델 실행 및 결과 해석 <span class="muted" style="font-weight:400;font-size:.88rem">(137쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션 모델을 실행해 근육 발달에 미치는 <b>다양한 요인을 테스트</b>해 봐요. 해석한 결과를 토대로 현실 세계에서 핵심 요소가 미치는 영향을 <b>예측</b>할 수 있어요.</p>
+    <p style="margin:8px 0 4px"><b>💡 TIP · 근육 발달에 영향을 미치는 조건 예시</b></p>
+    <div class="mo-conds">
+      <div style="--k:#5b6776"><b>1 신체 활동이 적은 환경</b><span>과도한 수면 시간</span></div>
+      <div style="--k:#e0702b"><b>2 단기간의 집중 훈련</b><span>강한 운동 강도, 짧은 운동 사이 시간</span></div>
+      <div style="--k:#1f9d74"><b>3 적절한 훈련</b><span>보통 운동 강도, 수면 7~8시간</span></div>
+      <div style="--k:#d64535"><b>4 과도한 훈련</b><span>강한 운동 강도, 짧은 수면 시간</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 시뮬레이션 프로그램 활용하기 <span class="muted" style="font-weight:400;font-size:.88rem">(137쪽)</span></h3>
+    <p style="margin-top:0">어떤 조건일 때 근육 발달이 잘 이루어질까요? 내가 가정한 핵심 요소별 값으로 모델을 테스트해 보고, <b>2개의 시나리오</b>의 실행 결과를 그래프로 그려 봐요. 근육 발달 모델은 교과서 QR 코드로 열 수 있어요.</p>
+    <div class="callout" style="margin-top:0">💡 <b>TIP · 조건 설정 방법</b> [수면 시간]이 근육 발달에 미치는 영향을 테스트해 보고 싶다면 <b>다른 핵심 요소 값을 똑같이</b> 한 후, [수면 시간]만 다른 값으로 설정하여 테스트해 봐요.</div>
+    <p style="margin:12px 0 4px"><b>🎛️ 시나리오 점검기</b> <span class="muted">(연습용 · 값을 골라 두 시나리오가 얼마나 다른지 봐요)</span></p>
+    <div class="grid2 even mo-sc">
+      <div class="mo-scn" style="--k:#2f6fd0"><b>시나리오 1</b>
+        <label>운동 강도 <output id="moV1a">50</output><input type="range" id="moS1a" min="0" max="100" step="5" value="50" aria-label="시나리오 1 운동 강도"></label>
+        <label>수면 시간 <output id="moV1b">7</output>시간<input type="range" id="moS1b" min="0" max="12" step="1" value="7" aria-label="시나리오 1 수면 시간"></label>
+        <label>운동 사이 시간 <output id="moV1c">3</output>일<input type="range" id="moS1c" min="1" max="10" step="1" value="3" aria-label="시나리오 1 운동 사이 시간"></label>
+      </div>
+      <div class="mo-scn" style="--k:#d0602f"><b>시나리오 2</b>
+        <label>운동 강도 <output id="moV2a">50</output><input type="range" id="moS2a" min="0" max="100" step="5" value="50" aria-label="시나리오 2 운동 강도"></label>
+        <label>수면 시간 <output id="moV2b">7</output>시간<input type="range" id="moS2b" min="0" max="12" step="1" value="7" aria-label="시나리오 2 수면 시간"></label>
+        <label>운동 사이 시간 <output id="moV2c">3</output>일<input type="range" id="moS2c" min="1" max="10" step="1" value="3" aria-label="시나리오 2 운동 사이 시간"></label>
+      </div>
+    </div>
+    <div class="mo-diff" id="moDiff" aria-live="polite"></div>
+    <p class="note">이 점검기는 <b>값이 얼마나 다른지만</b> 세어 줘요. 실제 근육 발달 결과는 교과서 QR의 모델로 실행해서 그래프로 확인해 봐요. 슬라이더 값의 범위는 연습용이에요.</p>
+    <div class="memo"><label><b>시나리오 1</b>의 조건 설정(운동 강도·수면 시간·운동 사이 시간)과 실행 결과 그래프에서 알게 된 점 <small>(선택)</small></label><textarea data-memo="moSc1" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label><b>시나리오 2</b>의 조건 설정과 실행 결과 그래프에서 알게 된 점 <small>(선택)</small></label><textarea data-memo="moSc2" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>＋ 심화 · 근육 발달이 가장 잘 이루어지는 <b>핵심 요소별 값</b>을 찾아보고, 해석 결과를 토의해 보자. <small>(선택)</small></label><textarea data-memo="moBest" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 개념 학습 마무리 -->
+<section class="page" data-name="개념 학습 마무리" data-acc="#8a4fc0">
+  <div class="head"><div class="num">04</div><div><h2>시뮬레이션 모델 구상하기</h2><p>교과서 138쪽 · 나의 관심 분야를 반영한 모델 구상, 성취도 점검</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>지금까지 배운 것을 <b>내 관심 분야</b>에 적용해 봐요. 어떤 시뮬레이션이 왜 필요한지 정하고, 화면과 기능을 구상하고, 어떤 도움을 줄지, 미래에는 어떤 역할을 할지 <b>내 말로</b> 적어 봐요.</span></div>
+
+  <div class="card">
+    <h3>📝 활동 정리 · 4단계로 구상하기 <span class="muted" style="font-weight:400;font-size:.88rem">(138쪽)</span></h3>
+    <p style="margin-top:0">나의 관심 분야를 반영한 시뮬레이션 모델을 구상한 후, 활용 분야와 역할을 정리해 봐요.</p>
+    <div class="mo-five">
+      <div style="--k:#8a4fc0"><span class="n">1</span><div><b>시뮬레이션의 목적</b><div class="memo"><label>나의 <b>관심 분야</b>를 적어 보자. <small>(선택)</small></label><textarea data-memo="moField" rows="1"></textarea><div class="saved"></div></div><div class="memo"><label>그 분야에 시뮬레이션이 <b>필요한 이유</b>를 적어 보자. <small>(선택)</small></label><textarea data-memo="moWhy" rows="2"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>시뮬레이션의 구상</b><div class="memo"><label>내가 구상한 시뮬레이션의 <b>화면 구성</b>을 글로 적어 보자(그림은 종이에 그려도 좋아요). <small>(선택)</small></label><textarea data-memo="moScreen" rows="3"></textarea><div class="saved"></div></div><div class="memo"><label>구현할 <b>기능</b>을 적어 보자. <small>(선택)</small></label><textarea data-memo="moFunc" rows="3"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#1f9d74"><span class="n">3</span><div><b>시뮬레이션의 활용</b><div class="memo"><label>내가 구상한 시뮬레이션은 관심 분야에 어떤 도움을 줄 수 있을지 적어 보자. <small>(선택)</small></label><textarea data-memo="moHelp" rows="3"></textarea><div class="saved"></div></div></div></div>
+      <div style="--k:#e0702b"><span class="n">4</span><div><b>시뮬레이션의 역할</b><div class="memo"><label>미래 사회에 시뮬레이션의 역할은 무엇일지 토의해 보자. <small>(선택)</small></label><textarea data-memo="moRole" rows="3"></textarea><div class="saved"></div></div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✅ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(138쪽)</span></h3>
+    <p style="margin-top:0">각 문장을 읽고 나는 어떤지 「예」나 「아니요」를 골라 봐요. 「아니요」라면 오른쪽에 적힌 쪽을 다시 읽어 봐요.</p>
+    <div class="mo-ach">
+      <div><span class="tg">지식·이해</span><p>시뮬레이션의 개념과 필요성을 설명할 수 있다.</p><div id="moAch1" class="vote"></div><small>보충하기 · 131쪽</small></div>
+      <div><span class="tg">지식·이해</span><p>시뮬레이션의 활용 분야를 탐색하고 활용 방안을 구상할 수 있다.</p><div id="moAch2" class="vote"></div><small>보충하기 · 132~133쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>시뮬레이션 모델을 탐색하고 구성 요소를 파악할 수 있다.</p><div id="moAch3" class="vote"></div><small>보충하기 · 134~135쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>시뮬레이션 모델의 구현 단계를 이해하고 시뮬레이션 프로그램을 활용할 수 있다.</p><div id="moAch4" class="vote"></div><small>보충하기 · 136~137쪽</small></div>
+      <div><span class="tg">가치·태도</span><p>시뮬레이션의 가치를 인식할 수 있다.</p><div id="moAch5" class="vote"></div><small>보충하기 · 131쪽</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 전문가 인터뷰 -->
+<section class="page" data-name="전문가 인터뷰" data-acc="#8a4fc0">
+  <div class="head"><div class="num">05</div><div><h2>전문가 인터뷰 · 시뮬레이션 전문가</h2><p>교과서 139쪽 · 가상 시뮬레이션으로 현실의 변화를 예측하다</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span><b>시뮬레이션 전문가</b>는 도시 사회의 문제를 풀 정책을 세울 때, 변수들이 서로 어떻게 영향을 주는지 <b>시뮬레이션으로 미리 예측</b>해 볼 수 있게 돕는 사람이에요. 그러면 <b>비용과 시행착오</b>를 줄일 수 있어요.</span></div>
+
+  <div class="card">
+    <h3>🏙️ 가상 시뮬레이션으로 현실의 변화를 예측하다! <span class="muted" style="font-weight:400;font-size:.88rem">(139쪽)</span></h3>
+    <p style="margin-top:0">도시 사회는 교통, 주택, 환경 등 여러 측면에서 서로 영향을 주고받아요. 그래서 정책을 세우거나 개발을 시작하기 전에 변수들 간의 상호 작용을 시뮬레이션으로 모델링하여 어떤 결과가 나타날지 미리 예측해 본다면 비용과 시행착오를 줄일 수 있어요. <b>한국전자통신연구원 시뮬레이션 연구소 김영준 실장</b>에게 실무에서 시뮬레이션이 어떻게 쓰이는지 물어본 내용이에요. 질문을 눌러 확인해요. <span class="muted">(내용을 줄여 옮겼어요.)</span></p>
+    <div class="row mo-tab" id="moIntBtn"></div>
+    <div class="mo-view" id="moIntView"></div>
+    <div class="memo"><label>이 직업에서 흥미로운 점이나 나에게 있는 역량은 무엇인가요? <small>(선택)</small></label><textarea data-memo="moInt" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 6 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">06</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#8a4fc0">넷로고 같은 시뮬레이션 모델은 <b>입력 데이터(값 설정)·실행 횟수(틱)·출력 결과(화면)·해석 도구(그래프)</b>로 이루어져 있고, <b>[설정]</b>을 먼저 누른 뒤 <b>[가다]</b>를 눌러 실행한다.</div>
+    <div style="--k:#2f6fd0">시뮬레이션 모델은 <b>문제 정의 → 개념적 모델링 → 화면 구성 → 모델 구현 → 모델 실행 및 결과 해석</b> 순서로 만든다. 개념적 모델링은 중요한 요인만 <b>추상화</b>해 핵심 요소를 뽑는 과정이다.</div>
+    <div style="--k:#1f9d74">입력 데이터를 조작할 때 다른 값은 똑같이 하고 <b>한 가지 값만 다르게</b> 테스트하면, 그 조건이 결과에 미치는 영향을 더 확실하게 알 수 있다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">숲 화재 흉내와 시나리오 점검기를 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">시뮬레이션의 구성 요소는 무엇이고, 시뮬레이션 모델로 어떻게 현실을 예측할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="6"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>넷로고 모델 화면의 네 가지 구성 요소(입력 데이터·실행 횟수·출력 결과·해석 도구)를 <b>근육 발달 모델이나 화재 모델을 예로</b> 설명해 보세요.</li>
+      <li>근육 발달 실습에서 관찰 내용 가운데 <b>핵심 요소</b>로 운동 강도, 수면 시간, 운동 사이 시간을 고른 까닭을 <b>추상화</b>라는 말을 넣어 써 보세요.</li>
+      <li>시뮬레이션을 실행할 때 <b>한 가지 값만 바꿔 테스트</b>하면 좋은 까닭을 시나리오 예를 들어 써 보세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

@@ -1,0 +1,302 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#8a4fc0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅳ. 모의 실험하는 소프트웨어 · 융합 진로</span>
+      <h1>시뮬레이션 모델과<br>사회 현상 분석</h1>
+      <div class="story"><b>개인이 이웃에 대한 선호도를 기준으로 이사를 한다면 우리 사회는 어떤 모습일까? (140쪽)</b><br>사회 안에서 개인은 다른 사람들과 영향을 주고받으며 살아가요. 어떤 사람이 자신의 이웃이 자신과 비슷한 집단이기를 바란다면 전체 사회는 어떤 모습이 될까요? 오늘은 <b>사회 현상 분석가</b>처럼 시뮬레이션 모델로 이 질문을 직접 살펴봐요.</div>
+      <p>셸링의 분리 모델을 체험하고, 시뮬레이션 모델이 사회 현상 분석에 어떤 도움을 주는지, 어떻게 구현하는지 알아봐요.</p>
+      <ol>
+        <li>셸링 분리 모델 체험</li><li>시뮬레이션 모델과 사회 현상 분석</li>
+        <li>시뮬레이션 모델을 구현하려면?</li><li>준비 학습 · 넷로고 화면과 구성 요소</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 수업 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🏘️</i><div><b>작은 선호</b><small>이웃이 나와 비슷하면 좋겠어</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🚚</i><div><b>이사 반복</b><small>한 사람의 이사가 다른 이사를 불러와요</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🧩</i><div><b>강력한 분리</b><small>예상치 못한 결과가 나타나요</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">학습 목표 (140쪽)</span>
+      <p>시뮬레이션 모델을 활용해 수학적 원리, 과학적 현상, 항공 우주 등 복잡한 문제나 현상의 원리를 설명할 수 있어요. 소프트웨어를 적극 활용하여 <b>시뮬레이션 모델을 구현</b>할 수 있어요.</p>
+      <p style="margin-bottom:0" class="muted">학습 요소 · 시뮬레이션 모델 구성 및 표현, 시뮬레이션 소프트웨어 구현, 시뮬레이션을 통한 현상 이해</p>
+    </div>
+    <div class="card">
+      <h3>🔍 문제 발견 <span class="muted" style="font-weight:400;font-size:.88rem">(140쪽)</span></h3>
+      <div class="memo"><label>누군가와의 상호 작용으로 나의 행동이 바뀐 경험을 적어 보세요.</label><textarea data-memo="scExp" rows="2"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>개인 간의 상호 작용 속에서 새롭게 나타나는 사회 현상에는 어떤 것들이 있는지 적어 보세요. <small>교과서 예) 위키피디아: 사용자들이 누구나 자유롭게 정보를 제공하고 상호 작용하며 새로운 정보를 창출한다.</small></label><textarea data-memo="scPhen" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 시뮬레이션 모델은 사회 현상을 이해하는 데 어떤 도움을 주고, 모델을 구현하려면 어떤 단계를 거칠까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>셸링의 분리 모델에서 작은 선호가 큰 분리로 이어지는 모습을 설명할 수 있다.</li>
+          <li>창발성과 사회 현상 분석가가 하는 일을 설명할 수 있다.</li>
+          <li>시뮬레이션 모델 구현 단계 5가지와 넷로고의 구성 요소를 말할 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">셸링의 분리 모델 · 창발성 · 사회 현상 분석가 · 시뮬레이션 모델 · 구현 단계 · 넷로고 · 터틀 · 패치 · ticks</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>사람들이 모여 사는 모습에서 시뮬레이션으로 알아보고 싶은 것이 있나요? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 셸링 분리 모델 체험부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 셸링 분리 모델 체험 -->
+<section class="page" data-name="셸링 분리 모델 체험" data-acc="#8a4fc0">
+  <div class="head"><div class="num">01</div><div><h2>셸링 분리 모델 체험</h2><p>교과서 140쪽 · 작은 선호가 서로 영향을 주고받으면?</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>「내 이웃이 나와 비슷한 사람이면 좋겠다」는 <b>작은 바람</b>을 가진 사람들이 이사를 반복하면, 아무도 분리를 바라지 않았는데도 <b>같은 색끼리 모여 사는 모습</b>이 나타나요.</span></div>
+
+  <div class="card">
+    <h3>🏘️ 셸링의 분리 모델 요약 <span class="muted" style="font-weight:400;font-size:.88rem">(140쪽)</span></h3>
+    <p style="margin-top:0">경제학자 토마스 셸링(Thomas Schelling)의 분리 모델이에요. 교과서의 그림 1~4를 글로 옮겼어요.</p>
+    <div class="sc-three">
+      <div style="--k:#8a4fc0"><b>그림 1 · 초기 균형 상태</b>서로 다른 특성(두 가지 색 집)이 균형을 이룬 상태예요.</div>
+      <div style="--k:#d0602f"><b>그림 2 · 몇 사람 이사 간 후</b>몇몇 사람이 개인의 선호에 따라 이사를 가요.</div>
+      <div style="--k:#2f9a5a"><b>그림 3 · 몇 사람 이사 온 후</b>몇몇 사람이 개인의 선호에 따라 이사를 와요.</div>
+      <div style="--k:#c0392b"><b>그림 4 · 최종 결과 거주지 분리</b>개인의 작은 선호가 서로 영향을 주고받아 강력한 분리가 발생해요.</div>
+    </div>
+    <p class="note" style="margin-bottom:0">이사를 가고 오는 과정이 반복되며 <b>한 사람의 이사가 다른 사람의 이사를 추가로 불러와요.</b> 교과서의 QR 코드로 열면 이웃과의 상호 작용을 직접 시뮬레이션해 볼 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧪 직접 해 보기 · 이사 시뮬레이션 <span class="muted" style="font-weight:400;font-size:.88rem">(140쪽의 그림을 바탕으로 만든 체험)</span></h3>
+    <p style="margin-top:0">10×10 마을에 주황 집과 초록 집이 섞여 있고, 빈칸이 조금 있어요. 규칙은 이래요.</p>
+    <ul style="margin:4px 0 8px;padding-left:1.3em;line-height:1.7">
+      <li>이웃은 내 집 둘레 8칸이에요(집이 있는 칸만 세어요).</li>
+      <li>이웃 중 <b>나와 같은 색 비율</b>이 「원하는 비율」보다 낮으면 그 집은 <b>불만</b>(빨간 점)이에요.</li>
+      <li>1틱마다 불만인 집은 <b>빈칸 중 한 곳으로 이사</b>해요. 불만이 하나도 없으면 멈춰요.</li>
+    </ul>
+    <div class="sc-sl"><label for="scWant">원하는 비율</label><input type="range" id="scWant" min="30" max="70" step="10" value="30"><b id="scWantV">30%</b></div>
+    <svg class="sc-svg" id="scSvg" viewBox="0 0 300 300" role="img" aria-label="10 곱하기 10 마을. 주황 집과 초록 집이 흩어져 있고, 이사를 반복하면 같은 색끼리 모여요."></svg>
+    <div class="sc-leg"><span><i style="background:#ee8d4f"></i>주황 집</span><span><i style="background:#2fa58c"></i>초록 집</span><span><i style="background:#d64535;border-radius:50%"></i>불만인 집</span><span><i style="background:#fff;border:1px solid #bbb"></i>빈칸</span></div>
+    <div class="sc-mon"><div>틱<b id="scTick">0</b></div><div>불만인 집<b id="scUn">0</b></div><div>같은 색 이웃 비율(평균)<b id="scAvg">0%</b></div></div>
+    <div class="sc-ctl">
+      <button type="button" class="pri" id="scB1">한 번 (1틱)</button>
+      <button type="button" id="scB10">10틱</button>
+      <button type="button" id="scBGo">▶ 끝까지</button>
+      <button type="button" id="scBStop">멈춤</button>
+      <button type="button" id="scBReset">다시</button>
+    </div>
+    <div class="sc-msg" id="scMsg" aria-live="polite"></div>
+    <p class="note" style="margin-bottom:0">집 색의 개수(45채씩), 마을 크기, 원하는 비율 30~70%는 체험하기 좋게 정한 값이에요. 난수로 처음 배치가 정해지므로 「다시」를 누를 때마다 결과가 조금씩 달라요. 원하는 비율을 바꿔 가며 비교해 보세요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🗣️ 체험하고 생각하기</h3>
+    <div class="sc-task"><b>생각해 보기</b>원하는 비율이 30%일 때처럼 「아주 조금만 비슷하면 좋겠다」는 선호인데도 같은 색이 모이는 까닭은 무엇일까요?</div>
+    <div class="memo"><label>내가 본 모습과 생각 <small>평균 비율이 처음과 끝에서 어떻게 달라졌는지도 적어 보세요.</small></label><textarea data-memo="scFeel" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🐍 같은 규칙을 파이썬으로 흉내 내기</h3>
+    <p style="margin-top:0">한 줄짜리 마을(길이 30)에서 같은 규칙을 코드로 돌려요. <code>O</code>와 <code>X</code>는 두 가지 집, <code>.</code>은 빈칸이에요. 이웃은 좌우 2칸씩이고, 코드를 실행할 때마다 결과가 조금씩 달라요. <code>WANT</code>를 0.3이나 0.7로 바꿔 비교해 보세요.</p>
+    <div id="scRun"></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 사회 현상 분석에 어떤 도움 -->
+<section class="page" data-name="사회 현상 분석에 어떤 도움" data-acc="#2fa0a8">
+  <div class="head"><div class="num">02</div><div><h2>시뮬레이션 모델은 사회 현상 분석에 어떤 도움을 줄까?</h2><p>교과서 141쪽 · 창발성 · 사회 현상 분석가</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>작은 규칙으로 움직이는 개별 요소들이 서로 영향을 주고받다 보면, <b>전체에서 예상하지 못한 새로운 특징</b>이 나타나요. 이것이 <b>창발성</b>이에요. 사회 현상 분석가는 이런 현상을 <b>시뮬레이션 모델</b>로 만들어 살펴봐요.</span></div>
+
+  <div class="card">
+    <h3>✨ 창발성(emergence) <span class="muted" style="font-weight:400;font-size:.88rem">(141쪽)</span></h3>
+    <p style="margin-top:0">창발성은 시스템 속의 개별 요소들이 상호 작용함으로써 전체 시스템에 새로운 특성이 나타나는 현상을 말해요. 개별 요소들이 일련의 규칙에 따라 상호 작용한 결과, 전체 시스템에 예상치 못한 결과가 나타나기도 해요. 창발성은 자연 현상과 인간 사회에서도 빈번하게 나타나요. 자연 또는 사회 안에서 다양한 개체들이 서로에게 영향을 미치며 살아가기 때문이에요.</p>
+    <div class="sc-three">
+      <div style="--k:#8a4fc0"><b>개별 요소</b>셸링 체험에서는 집 한 채 한 채가 개별 요소예요.</div>
+      <div style="--k:#d0602f"><b>일련의 규칙</b>「같은 색 이웃이 적으면 이사한다」는 규칙이에요.</div>
+      <div style="--k:#2f9a5a"><b>전체의 새 특성</b>같은 색끼리 모이는 분리가 나타나요.</div>
+    </div>
+    <p class="note" style="margin-bottom:0">위 연결은 앞 화면의 체험에 맞춰 제작자가 덧붙인 설명이에요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧑‍🔬 사회 현상 분석가 <span class="muted" style="font-weight:400;font-size:.88rem">(141쪽)</span></h3>
+    <p style="margin-top:0">사회 현상 분석가는 개인, 집단, 학교, 가정, 사회 등 여러 환경에서 발생하는 사회적 상호 작용을 연구하여 대안을 탐색해요. 이를 <b>시뮬레이션 모델</b><sup>3</sup>로 구현하여 창발성과 같은 현상을 이해하고 해석하는 일을 해요. 또한 데이터 수집, 문제 분석, 사회 현상 분석 및 추론을 통해 새로운 가설을 개발하고 주어진 문제에 대한 해결책을 모색해요.</p>
+    <div class="easy" style="margin:8px 0"><b class="t">주석 3</b><span><b>시뮬레이션 모델</b> · 시뮬레이션에 사용하는 특정 유형의 모델이에요. 현실 세계 또는 현상을 추상화하여 수학 방정식 또는 컴퓨터 프로그램 등으로 표현해요.</span></div>
+    <p><b>[자료 5] 사회 현상 분석가가 하는 일</b> — 카드를 눌러 보세요.</p>
+    <div id="scJobs" class="tcards"></div>
+    <p style="margin-bottom:0">시뮬레이션 모델을 활용하면 대규모 인구의 집단 행동, 질병의 확산 등 <b>직접적으로 연구하기 어려운 복잡한 현상</b>을 다양한 조건에서 쉽게 테스트할 수 있어요. 그래서 사회 현상 분석가는 다양한 사회 현상을 모델링하고 예측하는 데 시뮬레이션 모델을 활용하고, 사회 현상의 원인과 결과를 이해하고 정책을 수립하는 데 필요한 통찰력을 얻어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🗣️ 해 보기 · 현실 세계 관찰하기 <span class="muted" style="font-weight:400;font-size:.88rem">(141쪽 · 토의·발표)</span></h3>
+    <div class="sc-task"><b>해 보기</b>사람들은 다른 사람과 무엇을 주고받으며 살아갈까? 나의 생각을 적어 보고 발표해 보자.</div>
+    <div class="memo"><label>내가 생각한 것 <small>교과서 예) 감정, 정보, 바이러스, 생각, 소문 등</small></label><textarea data-memo="scObs" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 구현하려면 -->
+<section class="page" data-name="모델을 구현하려면" data-acc="#c98a0a">
+  <div class="head"><div class="num">03</div><div><h2>시뮬레이션 모델을 구현하려면?</h2><p>교과서 142쪽 · [자료 6] 시뮬레이션 모델 구현 단계</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>모델을 만드는 일은 <b>현실을 관찰하는 것</b>에서 시작해서 <b>문제 정의 → 개념적 모델링 → 화면 구성 → 모델 구현 → 실행·해석</b>의 5단계를 거치고, 다시 현실을 예측하고 평가해요.</span></div>
+
+  <div class="card">
+    <h3>🧭 [자료 6] 시뮬레이션 모델 구현 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(142쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션 모델을 구현하는 과정은 현실 세계를 관찰하는 것에서부터 시작돼요. 먼저 시뮬레이션하고 싶은 주제를 생각하고, 문제를 정의해요. 그리고 이와 관련된 데이터를 수집하여 문제를 더 깊이 이해하고, 개념적 모델링을 통해 현상의 핵심 요소를 추상화하여 시뮬레이션 기능을 계획해요. 그리고 화면을 구성한 후, 시뮬레이션 모델을 구현해요. 마지막으로 다양한 조건에서 구현한 시뮬레이션 모델을 실행해 보고 결과를 해석하며 현실 세계를 예측하고 모델을 평가해요.</p>
+    <div class="sc-loop">
+      <span class="top">예측, 평가</span>
+      <div class="tdesc">다양한 요인을 테스트해 보며 해석한 결과를 토대로 현실 세계에 필요한 조건을 예측할 수 있어요.</div>
+      <div class="sc-flow">
+        <div style="--k:#5b6776"><b>현실 세계 관찰</b>시뮬레이션 모델 구현은 현실 세계에 대한 관심과 관찰에서 시작해요.</div>
+        <div style="--k:#8a4fc0"><b>1 문제 정의</b>시뮬레이션하고 싶은 주제를 정한 후, 문제를 정의해요.</div>
+        <div style="--k:#2fa0a8"><b>2 개념적 모델링</b>핵심 요소를 추출하여 현실 세계를 추상화(모델링)하고, 시뮬레이션의 기능을 계획해요.</div>
+        <div style="--k:#c98a0a"><b>3 화면 구성</b>조건을 입력하는 버튼과 슬라이더, 결과를 출력하는 플롯과 모니터 등으로 화면을 구성해요.</div>
+        <div style="--k:#d0602f"><b>4 시뮬레이션 모델 구현</b>시뮬레이션 동작을 알고리즘으로 설계하고 프로그램을 작성해요.</div>
+        <div style="--k:#2f9a5a"><b>5 모델 실행 및 결과 해석</b>조건을 다르게 설정하여 시뮬레이션 모델을 여러 번 실행해 보고 결과를 해석해요.</div>
+      </div>
+      <p class="sc-back">↩ 예측·평가를 마치면 다시 현실 세계를 관찰하는 데로 돌아가요(점선 고리).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🧩 해 보기 · 모델 구현 활동 설계하기 <span class="muted" style="font-weight:400;font-size:.88rem">(142쪽 · 조사·분석)</span></h3>
+    <div class="sc-task"><b>해 보기</b>시뮬레이션 모델을 구현하는 과정에서 각 단계별로 해야 할 일을 적고, 고려해야 할 점과 연결해 보자.</div>
+    <p><b>① 짝 맞추기</b> — 문장이 어느 단계에서 고려할 점인지 골라 보세요.</p>
+    <div id="scMatch"></div>
+    <p style="margin-top:16px"><b>② 단계별로 해야 할 일 적기</b></p>
+    <div class="of-tw"><table class="sc-tb">
+      <tr><th>순서</th><th>해야 할 일 <small style="font-weight:400">교과서 예) 1단계: 데이터 수집</small></th></tr>
+      <tr><td>1단계 문제 정의</td><td><input type="text" data-memo="scStep1" aria-label="1단계 해야 할 일"><div class="saved"></div></td></tr>
+      <tr><td>2단계 개념적 모델링</td><td><input type="text" data-memo="scStep2" aria-label="2단계 해야 할 일"><div class="saved"></div></td></tr>
+      <tr><td>3단계 화면 구성</td><td><input type="text" data-memo="scStep3" aria-label="3단계 해야 할 일"><div class="saved"></div></td></tr>
+      <tr><td>4단계 시뮬레이션 모델 구현</td><td><input type="text" data-memo="scStep4" aria-label="4단계 해야 할 일"><div class="saved"></div></td></tr>
+      <tr><td>5단계 모델 실행 및 결과 해석</td><td><input type="text" data-memo="scStep5" aria-label="5단계 해야 할 일"><div class="saved"></div></td></tr>
+    </table></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 준비 학습 -->
+<section class="page" data-name="준비 학습 · 넷로고" data-acc="#d0602f">
+  <div class="head"><div class="num">04</div><div><h2>준비 학습 · 모델 구현을 위한 실습 준비하기</h2><p>교과서 143쪽 · 넷로고 화면과 구성 요소</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션 모델을 만드는 프로그램 <b>넷로고(NetLogo)</b>에는 화면을 꾸미는 <b>Interface</b> 창과 명령어를 쓰는 <b>Code</b> 창이 있어요. 모델은 <b>ticks, 입력, 출력, 터틀, 패치</b>로 이루어져요.</span></div>
+
+  <div class="card">
+    <h3>💻 넷로고 내려받기 <span class="muted" style="font-weight:400;font-size:.88rem">(143쪽)</span></h3>
+    <p style="margin-top:0">크롬에서 넷로고 사이트에 접속한 뒤 <b>[NetLogo 다운로드]</b> 버튼을 눌러 프로그램을 내려받아요. <b>[NetLogo 웹]에서는 시뮬레이션 모델을 직접 구현할 수 없으므로</b>, 모델 구현을 위해 NetLogo를 내려받아 실행해야 해요. 이 화면에서는 넷로고를 직접 돌릴 수 없어서, 아래에서 화면을 그림으로 살펴보고 같은 규칙을 코드로 흉내 내 봐요. 교과서 QR 코드로 프로그램 파일을 받을 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🪟 1 메뉴 창 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(143쪽)</span></h3>
+    <div class="of-tw"><table class="sc-tb">
+      <tr><th></th><th>Interface 창</th><th>Code 창</th></tr>
+      <tr><td>하는 일</td><td>화면을 구성하고 시뮬레이션 결과를 확인할 수 있어요.</td><td>명령어를 입력하고 오류를 점검할 수 있어요.</td></tr>
+      <tr><td>자세히</td><td>화면 구성(버튼, 슬라이더 추가), 시뮬레이션 결과 확인</td><td>명령어를 Code에서 작성, Check를 통해 오류 점검 가능</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>🔍 2 시뮬레이션 모델 구성 요소 살펴보기 <span class="muted" style="font-weight:400;font-size:.88rem">(143쪽)</span></h3>
+    <p style="margin-top:0">넷로고로 구현한 시뮬레이션 모델의 구성 요소는 tick(시간 단위), 입력(버튼, 슬라이더 등), 출력(플롯, 모니터 등), 터틀, 패치예요. 넷로고 화면 모형에서 영역을 눌러 보세요.</p>
+    <svg class="sc-svg" style="max-width:420px" id="scNl" viewBox="0 0 360 250" role="img" aria-label="넷로고 화면 모형. 위쪽 가운데에 ticks, 왼쪽에 슬라이더와 버튼, 그래프, 모니터, 가운데 검은 월드에 사람들, 오른쪽에 나 버튼과 방향 버튼이 있다.">
+      <rect x="1" y="1" width="358" height="248" rx="6" fill="#eef0f3" stroke="#9aa3ae"/>
+      <g class="sc-g" data-k="tick" tabindex="0"><rect class="hit" x="118" y="4" width="124" height="26" rx="6" fill="transparent"/><text x="180" y="22" text-anchor="middle" font-size="12" fill="#16202c">ticks: 0</text></g>
+      <g class="sc-g" data-k="input" tabindex="0">
+        <rect class="hit" x="4" y="34" width="118" height="66" rx="6" fill="transparent"/>
+        <rect x="9" y="38" width="108" height="22" fill="#cfd8e6" stroke="#8aa0bd"/><text x="14" y="53" font-size="10" fill="#16202c">number</text><text x="108" y="53" font-size="10" text-anchor="end" fill="#16202c">10</text>
+        <rect x="9" y="68" width="50" height="26" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="34" y="85" text-anchor="middle" font-size="10" fill="#16202c">set up</text>
+        <rect x="66" y="68" width="50" height="26" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="91" y="85" text-anchor="middle" font-size="10" fill="#16202c">go</text>
+        <rect class="hit" x="290" y="34" width="66" height="116" rx="6" fill="transparent"/>
+        <rect x="294" y="38" width="28" height="22" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="308" y="53" text-anchor="middle" font-size="10" fill="#16202c">나</text>
+        <rect x="324" y="38" width="30" height="22" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="339" y="53" text-anchor="middle" font-size="9" fill="#16202c">고마움</text>
+        <rect x="310" y="72" width="26" height="20" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="323" y="86" text-anchor="middle" font-size="9" fill="#16202c">위</text>
+        <rect x="294" y="98" width="28" height="20" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="308" y="112" text-anchor="middle" font-size="8" fill="#16202c">왼쪽</text>
+        <rect x="326" y="98" width="28" height="20" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="340" y="112" text-anchor="middle" font-size="8" fill="#16202c">오른쪽</text>
+        <rect x="310" y="124" width="26" height="20" rx="3" fill="#b9c8e6" stroke="#6f8ab8"/><text x="323" y="138" text-anchor="middle" font-size="9" fill="#16202c">아래</text>
+      </g>
+      <g class="sc-g" data-k="output" tabindex="0">
+        <rect class="hit" x="4" y="104" width="118" height="140" rx="6" fill="transparent"/>
+        <rect x="9" y="108" width="108" height="86" fill="#fff" stroke="#8aa0bd"/><text x="63" y="120" text-anchor="middle" font-size="8" fill="#16202c">감정 전달된 사람 수</text>
+        <polyline points="14,188 40,176 66,160 92,140 112,130" fill="none" stroke="#e0b400" stroke-width="2"/>
+        <polyline points="14,188 50,184 80,176 112,166" fill="none" stroke="#d64535" stroke-width="2"/>
+        <rect x="9" y="200" width="50" height="40" rx="3" fill="#dbe4d2" stroke="#7d9470"/><text x="34" y="214" text-anchor="middle" font-size="9" fill="#16202c">즐거움</text><text x="34" y="231" text-anchor="middle" font-size="11" fill="#16202c">0</text>
+        <rect x="66" y="200" width="50" height="40" rx="3" fill="#dbe4d2" stroke="#7d9470"/><text x="91" y="214" text-anchor="middle" font-size="9" fill="#16202c">고마움</text><text x="91" y="231" text-anchor="middle" font-size="11" fill="#16202c">0</text>
+      </g>
+      <g class="sc-g" data-k="patch" tabindex="0">
+        <rect x="128" y="34" width="156" height="210" fill="#111"/>
+        <rect class="hit" x="128" y="34" width="156" height="210" fill="transparent"/>
+        <path d="M168 34 V244 M208 34 V244 M248 34 V244 M128 86 H284 M128 139 H284 M128 191 H284" stroke="#3a3a3a" stroke-width="1"/>
+      </g>
+      <g class="sc-g" data-k="turtle" tabindex="0">
+        <circle cx="150" cy="70" r="5" fill="#9a9a9a"/><circle cx="236" cy="62" r="5" fill="#9a9a9a"/><circle cx="262" cy="118" r="5" fill="#9a9a9a"/>
+        <circle cx="146" cy="170" r="5" fill="#9a9a9a"/><circle cx="196" cy="212" r="5" fill="#9a9a9a"/><circle cx="250" cy="200" r="5" fill="#9a9a9a"/>
+        <circle cx="168" cy="118" r="5" fill="#e0b400"/>
+        <circle cx="206" cy="140" r="11" fill="#d64535"/>
+        <rect class="hit" x="132" y="40" width="148" height="198" rx="6" fill="transparent" pointer-events="none"/>
+      </g>
+    </svg>
+    <div class="sc-parts" id="scParts"></div>
+    <div class="sc-info" id="scInfo" aria-live="polite"></div>
+    <p class="note" style="margin-bottom:0">교과서의 넷로고 화면 캡처를 글과 도형으로 다시 그렸어요. 영역 위치와 모양은 실제 화면과 달라요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 구성 요소 찾아보기</h3>
+    <p style="margin-top:0">넷로고 모델에서 볼 수 있는 모습이 어느 구성 요소인지 골라 보세요.</p>
+    <div id="scPartGame"></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">05</div><div><h2>마무리</h2><p>오늘 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#8a4fc0"><b>셸링의 분리 모델</b>에서는 「이웃이 나와 비슷하면 좋겠다」는 <b>작은 선호</b>가 서로 영향을 주고받아 강력한 거주지 분리가 나타나요. 이렇게 전체에 새로운 특성이 나타나는 것이 <b>창발성</b>이에요.</div>
+    <div style="--k:#2fa0a8"><b>사회 현상 분석가</b>는 사회적 상호 작용을 연구하고 <b>시뮬레이션 모델</b>로 구현해 현상을 이해하고 해석해요. 대규모 집단 행동이나 질병 확산처럼 직접 연구하기 어려운 현상도 조건을 바꿔 가며 테스트할 수 있어요.</div>
+    <div style="--k:#c98a0a">모델 구현은 현실 관찰에서 시작해 <b>문제 정의 → 개념적 모델링 → 화면 구성 → 모델 구현 → 실행·해석</b>의 5단계를 거쳐요. 넷로고는 <b>Interface</b> 창에서 화면을 꾸미고 <b>Code</b> 창에서 명령어를 써요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">앞에서 적은 메모를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">시뮬레이션 모델은 사회 현상을 이해하는 데 어떤 도움을 주고, 모델을 구현하려면 어떤 단계를 거칠까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="5"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>셸링의 분리 모델에서 <b>작은 선호가 강력한 분리</b>로 이어지는 과정을 내 말로 설명하세요. <span class="muted">(화면 01 참고)</span></li>
+      <li>시뮬레이션 모델 <b>구현 단계 5가지</b>를 순서대로 쓰고, 한 단계에서 하는 일을 설명하세요. <span class="muted">(화면 03 메모 참고)</span></li>
+      <li>넷로고 모델의 <b>구성 요소 중 하나</b>를 골라, 그것이 어떤 일을 하는지 설명하세요. <span class="muted">(화면 04 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

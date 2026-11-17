@@ -1,0 +1,30 @@
+  /* u4-simulation 전용 (sm-) */
+  .sm-flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+  .sm-flow>div{flex:1;min-width:130px;background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .sm-flow small{display:block;color:var(--muted);font-weight:700}
+  .sm-flow b{font-size:.93rem}
+  .sm-note{background:#fbfaf7;border:1px solid var(--line);border-left:6px solid #8a4fc0;border-radius:10px;padding:10px 14px;font-size:.92rem;margin:8px 0;overflow-wrap:anywhere}
+  .sm-tab{gap:8px;margin:4px 0 10px}
+  .sm-tab button{display:flex;align-items:center;gap:7px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;font-size:.92rem;cursor:pointer;color:var(--ink);text-align:left}
+  .sm-tab button .e{font-size:1.1rem}
+  .sm-tab button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .sm-view{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k,#8a4fc0);padding:12px 16px;overflow-wrap:anywhere}
+  .sm-view h4{margin:0 0 6px;font-size:1.02rem}
+  .sm-view p{margin:6px 0}
+  .sm-view .lb{display:inline-block;background:#8a4fc0;color:#fff;border-radius:999px;padding:0 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+  .sm-view .fx{background:#fff;border:1px dashed #b99ad8;border-radius:10px;padding:8px 12px;margin-top:8px;font-size:.93rem}
+  .sm-svg{display:block;width:100%;max-width:420px;margin:0 auto;height:auto;background:#fbfaf7;border-radius:14px}
+  .sm-svg .bx{cursor:pointer}
+  .sm-svg .bx rect.b{fill:#fff;stroke:#c9bfd8;stroke-width:2;transition:fill .25s,stroke .25s}
+  .sm-svg .bx.on rect.b{fill:#f3eafb;stroke:#8a4fc0;stroke-width:3.5}
+  .sm-svg .bx .tt{font-size:17px;font-weight:800;fill:#2a2438}
+  .sm-svg .bx .ts{font-size:12.5px;fill:#5b6776}
+  .sm-svg .bx circle{fill:#8a4fc0}
+  .sm-svg .bx .nn{fill:#fff;font-size:15px;font-weight:800}
+  .sm-svg .bx .em{font-size:26px}
+  .sm-svg .ar{stroke:#b99ad8;stroke-width:3;fill:none}
+  .sm-svg .ar.on{stroke:#8a4fc0}
+  .sm-cap{background:#f3eafb;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:.95rem;min-height:5.2em;overflow-wrap:anywhere}
+  @media (max-width:860px){.sm-cap{min-height:0}}
+  .key3>div{min-width:0;overflow-wrap:anywhere}
+  .card,.today>*{min-width:0}

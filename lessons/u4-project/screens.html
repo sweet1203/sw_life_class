@@ -1,0 +1,486 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#8a4fc0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅳ. 모의 실험하는 소프트웨어 · 융합 프로젝트</span>
+      <h1>나도 SW 탐험가!<br>시뮬레이션을 활용해<br>생물 다양성 보전을 위한<br>정책 세우기</h1>
+      <div class="story"><b>사라지는 친구들을 어떻게 지킬까? (156쪽)</b><br>‘생물 다양성’과 관련된 문제를 찾아 정의하고, 시뮬레이션 결과와 실제 사례를 비교 분석해 <b>생물 다양성 보전을 위한 정책</b>을 세워 봐요. 마지막에는 Ⅳ단원 전체를 정리해요.</div>
+      <p>모둠이 프로젝트 <b>5단계</b>를 차례로 밟아 가며 정책을 만들어요.</p>
+      <ol>
+        <li>준비하기 · 5단계 알아보기</li><li>문제 탐색 및 정의</li><li>시뮬레이션 실행 및 해석</li>
+        <li>실제 사례 비교 · 정책 구상 · 발표</li><li>SW 융합 완전 정복 · 대단원 마무리</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">프로젝트 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>📰</i><div><b>문제 탐색 및 정의</b><small>관심 기사를 골라 문제 정하기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🌿</i><div><b>시뮬레이션 실행 및 해석</b><small>풀 · 토끼 · 매 연습 모델</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🔍</i><div><b>실제 사례 비교 분석</b><small>결과와 현실 견주기</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>📣</i><div><b>정책 구상 · 발표</b><small>모둠 정책 세우고 나누기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">융합 프로젝트 안내 · Ⅳ. 모의 실험하는 소프트웨어 (156~165쪽)</span>
+      <p>이 프로젝트는 새 개념을 외우는 시간이 아니라, 단원에서 배운 <b>시뮬레이션</b>을 문제 해결에 써 보는 시간이에요. 교과서의 표에 쓰는 활동은 이 화면의 <b>메모 칸</b>에 적어요. 교과서 QR 코드로 열리는 시뮬레이션은 <b>교과서 QR 코드</b>로 열어 보세요.</p>
+    </div>
+    <div class="card">
+      <h3>💬 개요 만화 속 대화 <span class="muted" style="font-weight:400;font-size:.88rem">(156쪽 그림 속 말풍선)</span></h3>
+      <div class="pj-say">
+        <div>「마다가스카르에만 살고 있는 생물들이 많은데 친구들이 자꾸 사라지고 있어. 어쩌지….」</div>
+        <div>「안녕! 우린 마다가스카르에서만 사는 원숭이야. 도와줄래?」</div>
+        <div>「네덜란드 라이덴 연구소에서 시뮬레이션해 봤더니 생물 다양성을 회복하는 데 3백만 년이 필요하다고 나왔대.」</div>
+        <div>「그건 회복이 불가능하다는 의미 아냐?」</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🗺️ 프로젝트 로드맵 <span class="muted" style="font-weight:400;font-size:.88rem">(127쪽)</span></h3>
+      <div class="pj-flow">
+        <div style="--k:#d64535"><span class="n">1</span><b>문제 탐색 및 정의</b><small>관심 기사를 선택하고 문제를 정의한다.</small></div>
+        <div style="--k:#e0702b"><span class="n">2</span><b>시뮬레이션 실행 및 해석</b><small>시뮬레이션을 실행하고 결과를 해석한다.</small></div>
+        <div style="--k:#c98a0a"><span class="n">3</span><b>실제 사례 비교 분석</b><small>실제 사례를 조사하고 시뮬레이션 결과와 비교 분석한다.</small></div>
+        <div style="--k:#1f9d74"><span class="n">4</span><b>정책 구상</b><small>시뮬레이션 해석 및 사례 분석 결과를 바탕으로 정책을 구상한다.</small></div>
+        <div style="--k:#2f6fd0"><span class="n">5</span><b>정책 발표</b><small>토의 결과를 바탕으로 모둠에서 구상한 정책을 발표한다.</small></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📰 세상 속으로 다시 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(129쪽 · 생물 다양성 감소에 대비해야 하는 이유)</span></h3>
+      <p style="margin-top:0">세계경제포럼(WEF)이 발표한 보고서에서 앞으로 10년간 세계가 맞닥뜨릴 10대 위험의 절반이 환경과 연관되어 있고, 그중 <b>생물 다양성 손실과 생태계 붕괴</b>도 높은 순위에 올랐어요. 생물 다양성은 생태계가 얼마나 건강한지를 뜻하고, 풍부할수록 생태계 서비스도 풍성해져요. 세계자연기금(WWF)은 서식지 감소와 황폐화, 자원의 과도한 이용, 외래종 침입, 환경 오염, 기후 변화, 질병 등을 생물 다양성이 줄어드는 요인으로 꼽았어요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 시뮬레이션으로 알게 된 점과 실제 사례를 함께 살피면, 생물 다양성을 지키는 정책을 어떻게 세울 수 있을까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>프로젝트 5단계를 순서대로 말할 수 있다.</li>
+          <li>시뮬레이션 결과를 해석하고 실제 사례와 비교할 수 있다.</li>
+          <li>근거를 들어 정책을 제안하고, Ⅳ단원 내용을 스스로 정리할 수 있다.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <span class="kicker">오늘 만날 낱말</span>
+      <p style="margin:4px 0 0;font-size:.95rem">생물 다양성 · 먹이 사슬 · 시뮬레이션 변수 · 실제 사례 비교 · 정책 구상 · 정책 발표</p>
+      <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>어떤 생물이 사라지면, 우리 생활에도 영향이 있을까요? 그렇게 생각한 까닭은? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 준비하기부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 준비하기 -->
+<section class="page" data-name="준비하기" data-acc="#2fa0a8">
+  <div class="head"><div class="num">01</div><div><h2>준비하기 · 프로젝트 5단계</h2><p>교과서 156쪽 · 진행 순서를 설계하고 고려할 점 정리하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>프로젝트는 <b>다섯 단계</b>로 나눠서 진행해요. 단계마다 조심할 점을 <b>미리 적어 두면</b> 실수를 줄일 수 있어요.</span></div>
+  <div class="card">
+    <h3>🧭 프로젝트 진행 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(156쪽 TIP)</span></h3>
+    <div class="pj-flow">
+      <div style="--k:#d64535"><span class="n">1</span><b>문제 탐색 및 정의</b></div>
+      <div style="--k:#e0702b"><span class="n">2</span><b>시뮬레이션 실행 및 해석</b></div>
+      <div style="--k:#c98a0a"><span class="n">3</span><b>실제 사례 비교 분석</b></div>
+      <div style="--k:#1f9d74"><span class="n">4</span><b>정책 구상</b></div>
+      <div style="--k:#2f6fd0"><span class="n">5</span><b>정책 발표</b></div>
+    </div>
+    <p class="note" style="margin-bottom:0">프로젝트를 진행하기 위한 순서를 설계하고, 각 단계에서 고려해야 할 점을 미리 정리해 봐요.</p>
+  </div>
+  <div class="card">
+    <h3>📝 단계별로 고려해야 할 점 <span class="muted" style="font-weight:400;font-size:.88rem">(156쪽)</span></h3>
+    <p style="margin-top:0">내가 생각하는 고려할 점을 적어 보세요. 화면 02~06을 마친 뒤 다시 돌아와 고쳐도 좋아요.</p>
+    <table class="pj-tb">
+      <tr><th>순서</th><th>고려해야 할 점</th></tr>
+      <tr><td>1단계</td><td><input type="text" data-memo="pjCon1" aria-label="1단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>2단계</td><td><input type="text" data-memo="pjCon2" aria-label="2단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>3단계</td><td><input type="text" data-memo="pjCon3" aria-label="3단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>4단계</td><td><input type="text" data-memo="pjCon4" aria-label="4단계 고려할 점"><div class="saved"></div></td></tr>
+      <tr><td>5단계</td><td><input type="text" data-memo="pjCon5" aria-label="5단계 고려할 점"><div class="saved"></div></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>🎯 단계에 맞는 활동 찾기</h3>
+    <p class="muted" style="margin-top:0">이 프로젝트에서 하는 일을 보고, 5단계 중 어느 단계의 활동인지 골라 봐요.</p>
+    <div id="pjStepGame"></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 문제 탐색 및 정의 -->
+<section class="page" data-name="1 문제 탐색 및 정의" data-acc="#d64535">
+  <div class="head"><div class="num">02</div><div><h2>1단계 · 문제 탐색 및 정의</h2><p>교과서 157쪽 · 기사 읽기 · 모둠 정하기 · 문제 정의</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>먼저 <b>기사</b>를 읽고 관심 가는 것을 골라요. 같은 기사를 고른 친구들과 모둠을 만들어 <b>무엇이 문제인지</b> 함께 정해요.</span></div>
+
+  <div class="card">
+    <h3>📰 생물 다양성 보전 관련 기사 <span class="muted" style="font-weight:400;font-size:.88rem">(157쪽)</span></h3>
+    <p style="margin-top:0">아래 기사를 읽고 요약하여 적어 본 뒤, 가장 관심 있는 기사를 골라 봐요. 기사 이름을 눌러 요약을 읽어요.</p>
+    <div class="row pj-tab" id="pjArtBtn"></div>
+    <div id="pjArtView"></div>
+    <div class="pj-grid3" style="margin-top:12px">
+      <div class="memo"><label>기사 1 · 내가 쓴 요약</label><textarea data-memo="pjSum1" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>기사 2 · 내가 쓴 요약</label><textarea data-memo="pjSum2" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>기사 3 · 내가 쓴 요약</label><textarea data-memo="pjSum3" rows="4"></textarea><div class="saved"></div></div>
+    </div>
+    <b style="font-size:.93rem">내가 선택한 기사</b>
+    <div id="pjArtVote" class="pj-vote" style="margin-top:6px"></div>
+  </div>
+
+  <div class="card">
+    <h3>👥 모둠 만들기와 역할 나누기</h3>
+    <p style="margin-top:0">같은 기사를 선택한 친구들끼리 모둠을 만든 뒤, 나의 장점을 생각해서 역할을 나눠요. 역할은 모둠원 수에 따라 겹칠 수 있어요.</p>
+    <div class="pj-role">
+      <div><b>모둠장</b></div>
+      <div><b>시뮬레이션 전문가</b>모둠원이 시뮬레이션을 실행하고 결과를 해석할 수 있도록 도와줘요.</div>
+      <div><b>사회 현상 분석가</b></div>
+      <div><b>토의 진행자</b>모둠원이 서로의 의견을 경청하고 다양한 의견을 공유할 수 있도록 도와줘요.</div>
+      <div><b>정책 설계자</b>정책에 관한 아이디어가 적을 때 현재 실행되는 정책, 해외 정책 등을 예로 들어 줘요.</div>
+      <div><b>발표자</b></div>
+    </div>
+    <b style="font-size:.93rem">내가 맡고 싶은 역할 <span class="muted" style="font-weight:400">(여러 개 골라도 돼요)</span></b>
+    <div id="pjRoleChips" style="margin:6px 0 10px"></div>
+    <div class="pj-grid2">
+      <div class="memo"><label>나의 장점</label><textarea data-memo="pjStrength" rows="2"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>내가 맡은 역할과 하는 일</label><textarea data-memo="pjRoleDo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="memo"><label>모둠원의 이름 · 장점 · 역할 <small>친구들의 것을 함께 정리해요.</small></label><textarea data-memo="pjTeam" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🎯 우리 모둠에서 정의한 문제</h3>
+    <p style="margin-top:0">기사를 보며 들었던 생각이나 질문 등을 모둠 안에서 토의해 보고, <b>생물 다양성과 관련한 문제</b>를 모둠에서 정의해 봐요.</p>
+    <div class="memo"><label>우리 모둠에서 정의한 문제</label><textarea data-memo="pjProblem" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 3 시뮬레이션 실행 및 해석 -->
+<section class="page" data-name="2 시뮬레이션 실행 및 해석" data-acc="#e0702b">
+  <div class="head"><div class="num">03</div><div><h2>2단계 · 시뮬레이션 실행 및 해석</h2><p>교과서 158쪽 · 변수를 바꿔 실행하고 알게 된 점 해석하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션에서 <b>값 하나</b>를 바꿔 보고, 다른 것들이 어떻게 변하는지 관찰해요. 그리고 <b>왜 그랬을지</b> 해석해요.</span></div>
+
+  <div class="card">
+    <h3>🧪 내가 실행해 볼 시나리오 <span class="muted" style="font-weight:400;font-size:.88rem">(158쪽)</span></h3>
+    <p style="margin-top:0">선택한 기사에 연계된 시뮬레이션을 실행해 본 뒤, 실행 결과로 알게 된 점에 관해 모둠원들의 의견을 적어 봐요. 각 기사에 연계된 시뮬레이션은 <b>교과서 QR 코드</b>로 열어 보세요. 같은 모둠끼리는 같은 시뮬레이션을 실행하고 함께 해석해요.</p>
+    <div class="pj-ex"><b>예)</b> 풀, 토끼, 매가 균형을 이루고 있는 상태에서 풀의 수를 점차적으로 감소시킨 후 토끼, 매의 수의 변화를 관찰한다(풀의 수 변화가 토끼, 매의 수에 미치는 영향을 테스트).</div>
+    <p class="note" style="margin-bottom:0">교과서에는 <b>시뮬레이션 전문가</b>가 모둠원이 시뮬레이션을 실행하고 결과를 해석하도록 돕는다고 나와요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🌿 풀 · 토끼 · 매 연습용 단순 모델 <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <div class="pj-warn"><b>꼭 알아 두세요</b> 이 모델의 규칙은 <b>연습용으로 우리가 정한 것</b>이고, <b>실제 생태 수치가 아니에요.</b> 교과서 QR 시뮬레이션과 다를 수 있고, 위 예시 시나리오를 웹에서 연습해 보려고 만들었어요.</div>
+    <div class="pj-list"><b>이 모델의 규칙</b> (한 틱마다)<br>
+      ① 🌱 풀: <b>풀 성장</b>만큼 자라고, 토끼 한 마리가 0.5씩 먹어요. 풀은 100을 넘지 못해요.<br>
+      ② 🐇 토끼: 풀이 많을수록, 매가 적을수록 늘어요. 토끼 수는 그 목표를 향해 틱마다 조금씩(30%) 다가가요.<br>
+      ③ 🦅 매: 토끼가 많을수록 늘어요. 매 수도 목표를 향해 틱마다 조금씩(30%) 다가가요.</div>
+    <p class="muted" style="margin:6px 0">처음 상태(풀 100 · 토끼 20 · 매 4, 풀 성장 10)는 거의 균형이에요. 풀 성장을 천천히 낮추며 풀 → 토끼 → 매가 어떤 순서로 줄어드는지 관찰해 봐요.</p>
+    <div class="pj-lab">
+      <div>
+        <svg id="pjPlot" class="pj-plot" role="img" aria-label="틱에 따라 풀, 토끼, 매의 수가 처음 값 대비 몇 퍼센트인지 보여 주는 선그래프"></svg>
+        <div class="pj-leg"><span><i style="background:#2f9a5a"></i>풀</span><span><i style="background:#e0702b"></i>토끼</span><span><i style="background:#8a4fc0"></i>매</span><span class="muted">세로축: 처음 값을 100으로 본 비율(%)</span></div>
+        <p class="pj-msg" id="pjMsg" role="status" aria-live="polite"></p>
+      </div>
+      <div>
+        <div class="pj-mon">
+          <div>틱<b id="pjMonT">0</b></div><div>🌱 풀<b id="pjMonG">100</b></div><div>🐇 토끼<b id="pjMonR">20</b></div><div>🦅 매<b id="pjMonH">4</b></div>
+        </div>
+        <div class="pj-ctl">
+          <h5>변수 · 풀 성장 (한 틱에 자라는 풀)</h5>
+          <label style="font-size:.9rem;font-weight:700">풀 성장 <b id="pjGrV">10</b></label>
+          <input type="range" id="pjGr" min="0" max="20" value="10" aria-label="풀 성장 슬라이더">
+          <p class="note" style="margin:0">실행 도중에도 바꿀 수 있어요. 10이 처음 균형 값이에요.</p>
+        </div>
+        <div class="pj-ctl">
+          <h5>실행</h5>
+          <div class="row">
+            <button class="pj-b go" id="pjStep1" type="button">1틱</button>
+            <button class="pj-b go" id="pjStep10" type="button">10틱</button>
+            <button class="pj-b go" id="pjAuto" type="button">▶ 자동</button>
+            <button class="pj-b" id="pjStop" type="button">멈춤</button>
+            <button class="pj-b" id="pjReset" type="button">다시(시작 균형)</button>
+          </div>
+          <p class="note" style="margin:0">자동은 최대 120틱에서 멈춰요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 내가 정리하기</h3>
+    <div class="pj-grid2">
+      <div class="memo"><label>시뮬레이션에서 내가 실행해 본 시나리오</label><textarea data-memo="pjScen" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>시뮬레이션을 실행하며 궁금했던 점 (질문)</label><textarea data-memo="pjQuest" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>내가 선택한 변수</label><textarea data-memo="pjVar" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>실행 결과</label><textarea data-memo="pjResult" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+    <p style="margin:10px 0 4px">시뮬레이션 실행 결과를 모둠원에게 이야기해 보세요. 시뮬레이션을 실행하며 궁금했던 질문을 함께 나누고 이야기한 뒤, 다른 친구들의 생각도 적어 보세요.</p>
+    <div class="pj-grid2">
+      <div class="memo"><label>시뮬레이션 실행 결과로 알게 된 점 · 나</label><textarea data-memo="pjLearn1" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>시뮬레이션 실행 결과로 알게 된 점 · 모둠 친구들의 생각</label><textarea data-memo="pjLearn2" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="memo"><label>시뮬레이션 실행 결과 해석 <small>교과서 예) 한 개의 종이 사라지면 연쇄적으로 다른 종의 개체 수가 영향을 받는다.</small></label><textarea data-memo="pjInterp" rows="3"></textarea><div class="saved"></div></div>
+    <div class="pj-ex" style="border-style:solid"><b>＋ 심화</b> 주어진 시뮬레이션이 문제 해결에 충분한 도움을 주는가? 만일 추가하고 싶은 변수가 있다면 모델의 기능을 재구상해 보자.</div>
+    <div class="memo"><label>내가 추가하고 싶은 변수와 기능</label><textarea data-memo="pjDeep" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🐍 파이썬으로 같은 규칙 돌려 보기</h3>
+    <p style="margin-top:0" class="muted">위 체험과 같은 규칙을 파이썬 코드로 옮겼어요. 처음 20틱은 풀 성장을 <b>GROWTH</b>(10)로 두고, 20틱부터 <b>LOW</b>로 낮춰요. LOW를 10, 5, 0으로 바꿔 5틱마다 풀 · 토끼 · 매 수가 어떻게 달라지는지 비교해 봐요. 이 코드도 연습용이고 실제 생태 수치가 아니에요.</p>
+    <div id="pjRun1"></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 실제 사례 비교 분석 -->
+<section class="page" data-name="3 실제 사례 비교 분석" data-acc="#c98a0a">
+  <div class="head"><div class="num">04</div><div><h2>3단계 · 실제 사례 비교 분석</h2><p>교과서 159쪽 · 시뮬레이션 결과와 현실 사례 견주기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션에서 본 <b>연쇄 반응</b>이 현실에서도 일어났는지 <b>실제 사례</b>를 찾아 비교해 봐요.</span></div>
+
+  <div class="card">
+    <h3>🔍 시뮬레이션 결과와 실제 사례는 어떤 관계일까?</h3>
+    <p style="margin-top:0">시뮬레이션을 해석한 결과와 실제 사례는 어떠한 연관성이 있는지 생각해 봐요. 실제 사례를 조사해 비교해 보고, 모둠원끼리 찾은 사례를 공유해 이야기해 봐요.</p>
+    <p class="pj-hint" style="margin-top:0">💡 시뮬레이션 해석 결과로 알게 된 <b>키워드</b>를 검색 엔진에서 검색해 보세요. 뉴스 기사, 통계 데이터, 논문 등에서 다양한 사례를 살펴봐요.</p>
+    <b style="font-size:.93rem">교과서 예</b>
+    <div class="pj-chain" style="--k:#c98a0a"><div>해마 양 축소</div><span>→</span><div>다시마 영향</div><span>→</span><div>해양 생태계 교란 <small>(통계 데이터)</small></div></div>
+    <div class="pj-chain" style="--k:#1f9d74"><div>참새를 죽인 농부</div><span>→</span><div>해충 증가</div><span>→</span><div>곡식 피해</div><span>→</span><div>수확량 감소</div></div>
+    <p class="note" style="margin-bottom:0">앞의 일이 일어나면 뒤의 일이 이어서 일어나는 <b>연쇄</b>를 화살표로 나타냈어요. 풀 · 토끼 · 매 모델에서 풀이 줄자 토끼, 매가 차례로 줄던 모습과 닮은 점이 있는지 생각해 봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>📝 우리 모둠이 찾은 사례</h3>
+    <div class="pj-grid2">
+      <div class="memo"><label>내가 찾은 실제 사례 <small>사례 이름과 출처(뉴스·통계·논문)</small></label><textarea data-memo="pjCaseMine" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 친구들이 찾은 사례 <small>이름과 함께 적어요.</small></label><textarea data-memo="pjCaseFriend" rows="4"></textarea><div class="saved"></div></div>
+    </div>
+    <div class="memo"><label>시뮬레이션 해석 결과와 이 사례는 어떤 연관성이 있나요?</label><textarea data-memo="pjCaseLink" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 5 정책 구상 -->
+<section class="page" data-name="4 정책 구상" data-acc="#1f9d74">
+  <div class="head"><div class="num">05</div><div><h2>4단계 · 정책 구상</h2><p>교과서 159~160쪽 · 모둠 토의 · 국내외 정책 조사 · 우리 모둠 정책</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션과 실제 사례에서 얻은 <b>근거</b>로 토의하고, 이미 있는 정책도 살펴본 뒤 <b>우리 모둠만의 정책</b>을 정해요.</span></div>
+
+  <div class="card">
+    <h3>🗣️ 모둠 토의</h3>
+    <p style="margin-top:0">생물 다양성의 중요성을 주제로 모둠 토의를 진행해 봐요. 이때 시뮬레이션 해석 결과 또는 실제 사례 분석 결과를 <b>근거</b>로 나의 생각을 발표해 봐요. <b>토의 진행자</b>는 모둠원이 서로의 의견을 경청하고 다양한 의견을 공유하도록 도와요.</p>
+    <div class="pj-list"><b>토의 주제</b> · 생물 다양성은 왜 중요할까?<br>
+      <b>토의 질문</b><br>
+      ▸ 생물의 다양성이 줄어드는 원인(예 멸종 동물)은 무엇일까?<br>
+      ▸ 생물 다양성을 위해 어떤 정책이 필요할까?<br>
+      <span class="muted">예) 생물 다양성이 파괴되면 어떤 문제가 발생할까?</span></div>
+    <div class="pj-grid2">
+      <div class="memo"><label>우리 모둠에서 제시한 질문 ①</label><input type="text" data-memo="pjDQ1"><div class="saved"></div></div>
+      <div class="memo"><label>우리 모둠에서 제시한 질문 ②</label><input type="text" data-memo="pjDQ2"><div class="saved"></div></div>
+    </div>
+    <div class="memo"><label>토의 준비 내용 (나)</label><textarea data-memo="pjDPrep" rows="3"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>토의 내용 정리 (모둠)</label><textarea data-memo="pjDSum" rows="4"></textarea><div class="saved"></div></div>
+    <p class="note">정책과 관련한 아이디어가 잘 떠오르지 않을 때는 아래 국내외 정책 조사를 먼저 해 보세요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🌍 국내외 정책 조사 <span class="muted" style="font-weight:400;font-size:.88rem">(160쪽)</span></h3>
+    <p style="margin-top:0">생물 다양성을 보전하기 위해 세워진 정책에는 어떤 것들이 있을까요? 국내외 정책을 조사해 적어 보고, 조사한 내용을 모둠원과 이야기해 봐요. <b>정책 설계자</b>는 정책 아이디어가 적을 때 현재 실행되는 정책, 해외 정책 등을 예로 들어 주는 역할이에요.</p>
+    <div class="pj-ex"><b>예) 생물 다양성 협약 2025년 목표</b><br>· 멸종 위기종의 멸종률을 10배 감소<br>· 유전자 다양성 보호 및 유지(최소 90%)<br><span class="muted">[출처] 생물 다양성 협약과 국내외 정책 동향 보고서</span></div>
+    <p class="pj-hint">💡 외국의 정책과 관련된 자료는 어디에서 찾을 수 있을까요? 찾을 수 있는 방법을 모둠원들과 이야기해 보세요. 예) 구글에서 영어 키워드로 검색하기</p>
+    <div class="pj-grid2">
+      <div class="memo"><label>내가 조사한 국내외 정책 <small>정책 이름 · 내용 · 출처</small></label><textarea data-memo="pjPolMine" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 친구들이 조사한 정책</label><textarea data-memo="pjPolTeam" rows="4"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🏁 생물 다양성 보전을 위한 우리 모둠의 정책</h3>
+    <p style="margin-top:0">토론 결과와 조사 분석 내용을 종합해, 우리 모둠에서 세운 정책을 적어 봐요.</p>
+    <div class="pj-ex"><b>예)</b> 친환경 인증 마크가 있는 기업의 물품을 사용하며 착한 소비하기<br>탄소 배출 절감을 위해 교실 실내 온도를 26도로 맞추고 생활하기</div>
+    <div class="memo"><label>우리 모둠의 정책</label><textarea data-memo="pjPolOur" rows="4"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 정책 발표 -->
+<section class="page" data-name="5 정책 발표" data-acc="#2f6fd0">
+  <div class="head"><div class="num">06</div><div><h2>5단계 · 정책 발표</h2><p>교과서 161쪽 · 다른 모둠 정책 정리하고 내 의견 쓰기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>우리 모둠 정책을 발표하고, 다른 모둠 발표를 들으며 <b>정책 소개</b>와 <b>나의 의견</b>을 정리해요.</span></div>
+
+  <div class="card">
+    <h3>📣 다른 모둠의 정책 정리하기</h3>
+    <p style="margin-top:0">토의 결과를 바탕으로 모둠에서 구상한 정책을 발표해 봐요. 다른 모둠이 발표한 정책 내용을 정리하고, 나의 의견을 적어 봐요. 발표가 끝난 뒤에는 질의응답을 나누며 자유롭게 토의해요.</p>
+    <div class="pj-ex"><b>예)</b> 급격한 환경 변화 속도를 늦추기 위해 학교 내 생태 발자국 줄이기<br>· 교내 교복 물려주기 캠페인<br>· 매주 수요일 그린데이 운영: 쓰레기 다이어트, 에너지 절약 데이</div>
+    <div class="pj-grid2">
+      <div class="memo"><label>모둠 ① 정책 소개</label><textarea data-memo="pjPi1" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 ① 나의 의견</label><textarea data-memo="pjPo1" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 ② 정책 소개</label><textarea data-memo="pjPi2" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 ② 나의 의견</label><textarea data-memo="pjPo2" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 ③ 정책 소개</label><textarea data-memo="pjPi3" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>모둠 ③ 나의 의견</label><textarea data-memo="pjPo3" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ 정책을 세울 때 주의해야 할 점</h3>
+    <p style="margin-top:0">발표를 듣고, 정책을 세울 때 반드시 지켜야 하거나 주의해야 할 점에 관해 모둠원들과 생각을 나누어 봐요. 좋은 정책이란 어떤 정책일지, 자신의 기준을 정한 다음 모둠원들과 함께 이야기해 봐요.</p>
+    <div class="pj-ex"><b>예)</b> 수립한 정책이 문제 해결에 효과적이라는 근거가 있는가?<br>공동체에 적용할 수 있는 정책인가?<br>정책에 관해 사람들의 공감대가 형성되었는가?</div>
+    <div class="memo"><label>정책 수립 시 주의해야 할 점 · 나의 기준</label><textarea data-memo="pjCareful" rows="4"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 7 SW 융합 완전 정복 -->
+<section class="page" data-name="SW 융합 완전 정복" data-acc="#c0602f">
+  <div class="head"><div class="num">07</div><div><h2>SW 융합 완전 정복</h2><p>교과서 163쪽 · 핵심 개념 · 응용 확장 · 진로 탐색</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>프로젝트에서 한 일을 <b>세 가지 눈</b>으로 돌아봐요. 어떤 분야와 만났는지, 어디에 응용할 수 있는지, 어떤 직업이 필요할지 정리해요.</span></div>
+
+  <div class="card">
+    <h3>🚀 이 프로젝트로 키우는 역량 <span class="muted" style="font-weight:400;font-size:.88rem">(UP!)</span></h3>
+    <div class="pj-cap">
+      <div><b>컴퓨팅 사고력 UP!</b>추상화 능력 · 자동화 능력 · 창의·융합 능력</div>
+      <div><b>디지털 문화 소양 UP!</b>디지털 의사소통·협업 능력 · 디지털 윤리 의식 · 디지털 기술 활용 능력</div>
+      <div><b>인공지능 소양 UP!</b>인공지능 문제 해결력 · 데이터 문해력 · 인공지능 윤리 의식</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔑 핵심 개념</h3>
+    <p style="margin-top:0">프로젝트 활동에서 해석한 시뮬레이션 주제는 어떤 분야와 융합했고, 시뮬레이션이 문제 해결에서 맡은 역할과 시뮬레이션을 실행하려고 나에게 필요한 역량은 무엇인지 정리해 봐요.</p>
+    <div class="memo"><label>시뮬레이션 주제</label><input type="text" data-memo="pjCoreT"><div class="saved"></div></div>
+    <div class="pj-grid3">
+      <div class="memo"><label>융합 분야 <small>교과서 예) 과학</small></label><textarea data-memo="pjCoreF" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>역할 <small>교과서 예) 정의한 문제가 현실 세계에서 일어났을 때 어떠한 결과를 가져올지 시뮬레이션으로 모의 실험해 볼 수 있었다.</small></label><textarea data-memo="pjCoreR" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>필요 역량 <small>교과서 예) 가정을 토대로 시나리오를 테스트하며 시뮬레이션을 실행, 해석하는 역량</small></label><textarea data-memo="pjCoreC" rows="4"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌱 응용 확장</h3>
+    <p style="margin-top:0">프로젝트 활동에서 해석한 시뮬레이션 결과를 적용하거나 응용할 수 있는 사례를 생각해 적어 봐요.</p>
+    <div class="pj-grid3">
+      <div class="memo"><label>응용 사례 ❶ <small>교과서 예) 생산자와 소비자의 경제 구조와 같이 서로 영향을 주고받는 현실에 적용할 수 있다.</small></label><textarea data-memo="pjApp1" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>응용 사례 ❷</label><textarea data-memo="pjApp2" rows="4"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>응용 사례 ❸</label><textarea data-memo="pjApp3" rows="4"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🧭 진로 탐색</h3>
+    <p style="margin-top:0">프로젝트 활동에서 해석한 시뮬레이션 결과를 실제로 문제 해결에 쓰려면, 각 분야에서 어떤 역할이나 업무가 필요할지 정리해 봐요. 프로젝트의 결과를 어떤 업무나 역할에 활용하면 더 많은 사람에게 유익할지 생각해 보세요.</p>
+    <div class="pj-grid3">
+      <div class="memo"><label>인문 · 사회 <small>교과서 예) 정책 설계자</small></label><textarea data-memo="pjJob1" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>과학 · 공학 <small>교과서 예) 시뮬레이션 전문가</small></label><textarea data-memo="pjJob2" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>예체능 외 <small>교과서 예) 캠페인 디자인 제작자</small></label><textarea data-memo="pjJob3" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 대단원 마무리 -->
+<section class="page" data-name="대단원 마무리" data-acc="#8a4fc0">
+  <div class="head"><div class="num">08</div><div><h2>대단원 마무리 · 4. 모의 실험하는 소프트웨어</h2><p>교과서 164~165쪽 · 스스로 정리 · 확인 · 평가</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>단원에서 배운 것을 <b>내 말로 정리</b>해 보고, 내가 얼마나 알고 있는지 <b>스스로 확인</b>하는 시간이에요.</span></div>
+
+  <div class="card">
+    <h3>🧠 스스로 정리하기 ① · 시뮬레이션을 중심으로 배운 내용 구조화하기 <span class="muted" style="font-weight:400;font-size:.88rem">(164쪽)</span></h3>
+    <svg class="pj-svg" style="max-width:440px" viewBox="0 0 360 250" role="img" aria-label="가운데 시뮬레이션에서 개념, 필요성, 장점, 활용 분야 네 가지로 뻗어 나가는 마인드맵">
+      <g stroke="#8a4fc0" stroke-width="2.5" fill="none"><path d="M150 108 L100 72"/><path d="M210 108 L260 72"/><path d="M150 142 L100 178"/><path d="M210 142 L260 178"/></g>
+      <circle cx="180" cy="125" r="42" fill="#8a4fc0"/><text x="180" y="130" style="fill:#fff;font-size:14px">시뮬레이션</text>
+      <circle cx="75" cy="55" r="34" fill="#e7f6f7" stroke="#2fa0a8" stroke-width="2.5"/><text x="75" y="60" style="font-size:14px">개념</text>
+      <circle cx="285" cy="55" r="34" fill="#e8f6ee" stroke="#2f9a5a" stroke-width="2.5"/><text x="285" y="60" style="font-size:14px">필요성</text>
+      <circle cx="75" cy="195" r="34" fill="#fdecea" stroke="#d64535" stroke-width="2.5"/><text x="75" y="200" style="font-size:14px">장점</text>
+      <circle cx="285" cy="195" r="34" fill="#f3f7e4" stroke="#7aa21f" stroke-width="2.5"/><text x="285" y="200" style="font-size:13px">활용 분야</text>
+    </svg>
+    <p style="margin-top:0">가운데 「시뮬레이션」에서 뻗어 나가는 네 가지 가지에 대해, 배운 내용을 생각해 적어 봐요.</p>
+    <div class="pj-grid2">
+      <div class="memo"><label>개념</label><textarea data-memo="pjMapA" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>필요성</label><textarea data-memo="pjMapB" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>장점</label><textarea data-memo="pjMapC" rows="3"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>활용 분야</label><textarea data-memo="pjMapD" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✅ 스스로 확인하기 · O X <span class="muted" style="font-weight:400;font-size:.88rem">(164쪽)</span></h3>
+    <p style="margin-top:0">다음을 읽고 옳은 설명에는 <b>O</b>, 옳지 않은 설명에는 <b>X</b>를 골라 봐요. 정답과 해설은 <b>교과서 209쪽</b>에서 확인해요.</p>
+    <div class="pj-ox"><p>❶ 시뮬레이션은 현상을 컴퓨터로 모델링하는 하드웨어의 한 종류이다.</p><div id="ox1"></div></div>
+    <div class="pj-ox"><p>❷ 시뮬레이션은 교육, 게임, 안전, 운전 등 일상생활 및 여러 분야에서 활용되고 있다.</p><div id="ox2"></div></div>
+    <div class="pj-ox"><p>❸ 시뮬레이션은 다양한 분야를 모델링함으로써 현실 세계를 이해하는 데 도움을 준다.</p><div id="ox3"></div></div>
+    <div class="pj-ox"><p>❹ 시뮬레이션으로 다양한 전략을 테스트하고 개선해 봄으로써 비용과 자원을 절약할 수 있다.</p><div id="ox4"></div></div>
+    <div class="pj-ox"><p>❺ 시뮬레이션 모델은 개인이 구현할 수 없고 전문가만 할 수 있다.</p><div id="ox5"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🧩 스스로 정리하기 ② · 모델 구현 과정 나열하기 <span class="muted" style="font-weight:400;font-size:.88rem">(165쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션 모델을 구현하는 과정을 <b>보기</b>를 참고해 <b>생각의 흐름대로</b> 나열해 봐요. 「현실 세계」에서 시작해 ㉠부터 ㉤까지 차례로 알맞은 보기를 골라요. 정답과 해설은 <b>교과서 209쪽</b>에 있어요.</p>
+    <div class="pj-list"><b>보기</b><br>
+      ⓐ 시뮬레이션 동작을 고려하여 현실 세계를 추상화하고 기능을 계획한다.<br>
+      ⓑ 인터페이스 창에서 버튼, 슬라이더 등 화면을 구성한다.<br>
+      ⓒ 무의식적으로 감정이 동화되는 현상을 모델링해 본다.<br>
+      ⓓ 시뮬레이션을 여러 번 실행 및 해석해 보고 토의한다.<br>
+      ⓔ 시뮬레이션 동작을 알고리즘으로 설계하여 명령어를 작성한다.</div>
+    <div class="pj-seq">
+      <div><b>현실 세계 →</b></div>
+      <div><b>㉠</b><select data-memo="pjSq1" aria-label="㉠ 번째"><option value="">고르기</option><option>ⓐ</option><option>ⓑ</option><option>ⓒ</option><option>ⓓ</option><option>ⓔ</option></select><div class="saved"></div></div>
+      <div><b>㉡</b><select data-memo="pjSq2" aria-label="㉡ 번째"><option value="">고르기</option><option>ⓐ</option><option>ⓑ</option><option>ⓒ</option><option>ⓓ</option><option>ⓔ</option></select><div class="saved"></div></div>
+      <div><b>㉢</b><select data-memo="pjSq3" aria-label="㉢ 번째"><option value="">고르기</option><option>ⓐ</option><option>ⓑ</option><option>ⓒ</option><option>ⓓ</option><option>ⓔ</option></select><div class="saved"></div></div>
+      <div><b>㉣</b><select data-memo="pjSq4" aria-label="㉣ 번째"><option value="">고르기</option><option>ⓐ</option><option>ⓑ</option><option>ⓒ</option><option>ⓓ</option><option>ⓔ</option></select><div class="saved"></div></div>
+      <div><b>㉤</b><select data-memo="pjSq5" aria-label="㉤ 번째"><option value="">고르기</option><option>ⓐ</option><option>ⓑ</option><option>ⓒ</option><option>ⓓ</option><option>ⓔ</option></select><div class="saved"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌟 스스로 평가하기 · 단원 학습으로 자란 정도 <span class="muted" style="font-weight:400;font-size:.88rem">(165쪽)</span></h3>
+    <p style="margin-top:0">단원 학습을 통해 얼마나 성장했는지 점수를 골라 봐요. <b>5점 매우 그렇다 · 4점 조금 그렇다 · 3점 보통이다 · 2점 조금 부족하다 · 1점 매우 부족하다</b>. 고르면 아래 방사형 그래프가 그려져요.</p>
+    <div class="pj-rate">
+      <div><p><b>창의적 사고</b> · 한 가지 관점이 아니라 다양한 관점으로 사회 현상을 바라보게 되었다.</p><div id="rd0"></div></div>
+      <div><p><b>협력적 소통</b> · 다양한 측면의 근거를 기반으로 민주적으로 의사소통할 수 있게 되었다.</p><div id="rd1"></div></div>
+      <div><p><b>자기 관리</b> · 시간적, 공간적, 사회적, 윤리적 관점을 통합하여 사회 현상을 바라보게 되었다.</p><div id="rd2"></div></div>
+      <div><p><b>지식 정보 처리</b> · 소프트웨어와 융합하여 문제를 해결하는 데 필요한 조건이 무엇인지 알게 되었다.</p><div id="rd3"></div></div>
+      <div><p><b>공동체적 역량</b> · 사회 공동체적 문제를 소프트웨어로 해결할 수 있는 방안을 찾게 되었다.</p><div id="rd4"></div></div>
+    </div>
+    <svg id="pjRadar" class="pj-svg" style="max-width:340px" role="img" aria-label="다섯 가지 역량의 자기 평가 방사형 그래프"></svg>
+  </div>
+</section>
+
+<!-- 9 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">09</div><div><h2>마무리</h2><p>Ⅳ단원 전체 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#8a4fc0">시뮬레이션은 현실의 현상을 <b>모델로 만들어 가상으로 실행</b>해 보며 결과를 예측하는 일이에요. 결과는 그대로 믿기보다 <b>실제 사례와 견주어</b> 해석해요.</div>
+    <div style="--k:#e0702b">프로젝트는 <b>문제 탐색 및 정의 → 시뮬레이션 실행 및 해석 → 실제 사례 비교 분석 → 정책 구상 → 정책 발표</b> 순서로 진행해요. 정책은 시뮬레이션과 사례에서 얻은 <b>근거</b>를 들어 제안해요.</div>
+    <div style="--k:#2f6fd0">모델을 구현하는 5단계는 <b>문제 정의 → 개념적 모델링 → 화면 구성 → 모델 구현 → 실행 및 결과 해석</b>이에요. 시뮬레이션은 사회 현상 분석과 정책 설계 같은 여러 진로에도 쓰여요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">우리 모둠의 프로젝트를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">시뮬레이션으로 알게 된 점과 실제 사례를 함께 살피면, 생물 다양성을 지키는 정책을 어떻게 세울 수 있을까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="9"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>우리 모둠이 <b>정의한 문제</b>와, 시뮬레이션을 실행해 <b>알게 된 점</b>을 설명하세요. <span class="muted">(화면 02~03 메모 참고)</span></li>
+      <li>시뮬레이션 결과와 <b>실제 사례를 비교한 내용</b>을 근거로, 우리 모둠의 정책과 그렇게 정한 까닭을 설명하세요. <span class="muted">(화면 04~06 메모 참고)</span></li>
+      <li>Ⅳ단원을 마치며, <b>시뮬레이션이 우리 삶에 주는 도움</b>과 내가 키우고 싶은 역량을 적으세요. <span class="muted">(화면 07~08 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

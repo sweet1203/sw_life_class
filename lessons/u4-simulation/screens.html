@@ -1,0 +1,210 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#8a4fc0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅳ. 모의 실험하는 소프트웨어 · 시뮬레이션의 개념과 활용</span>
+      <h1>시뮬레이션은<br>어떤 도움을 줄까?</h1>
+      <div class="story"><b>생각의 도구, 시뮬레이션! (128~129쪽)</b><br>운동, 인간 사회, 생태계 같은 여러 분야를 <b>모델링</b>하고 연구하면 현실 세계의 현상을 이해하는 데 도움이 돼요. 그래서 시뮬레이션을 <b>생각의 도구</b>라고 불러요.</div>
+      <p>기사 세 개에서 시뮬레이션의 쓰임을 찾아보고, 시뮬레이션이 무엇인지, 어떤 분야에서 쓰이는지 알아봐요.</p>
+      <ol>
+        <li>세상 속 시뮬레이션</li><li>시뮬레이션이란</li><li>활용 분야</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 할 일 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>📰</i><div><b>세상 속으로</b><small>기사 3개에서 활용 효과 찾기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🎲</i><div><b>시뮬레이션이란</b><small>모델링 · 목적 · 가치</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🧭</i><div><b>활용 분야</b><small>교육 · 게임 · 안전 · 의료 · 운전</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">단원 도입 · 이 단원에서 반드시 알아야 할 것 (126쪽)</span>
+      <p>실제와 비슷한 모형을 소프트웨어로 구현한 시뮬레이션은 복잡한 문제나 현상의 원리를 탐구하고, 개념을 이해하는 데 도움을 줘요. 또 소프트웨어 시뮬레이션을 통해 현실 세계에서 실행하기에 어렵거나 불가능한 대상을 <b>모의적으로 실행</b>해 볼 수 있어요.</p>
+    </div>
+
+    <div class="card">
+      <h3>🗺️ 단원 미리보기 <span class="muted" style="font-weight:400;font-size:.88rem">(127쪽)</span></h3>
+      <div class="tscroll"><table class="tbl">
+        <tr><th>핵심 요소</th><td>시뮬레이션의 활용, 시뮬레이션의 가치</td></tr>
+        <tr><th>실생활 적용</th><td>현상 및 원리 탐구, 가상 실험 및 예측</td></tr>
+        <tr><th>교과 융합</th><td>체육, 사회, 과학, 환경</td></tr>
+        <tr><th>활동 도구</th><td>넷로고(NetLogo)</td></tr>
+        <tr><th>활동 형태</th><td>분석, 탐색, 토의, 실습</td></tr>
+      </table></div>
+      <p style="margin:12px 0 4px"><b>융합 프로젝트 · 시뮬레이션을 활용해 생물 다양성 보전을 위한 정책 세우기</b> <span class="muted">(프로젝트 로드맵 5단계)</span></p>
+      <div class="sm-flow">
+        <div style="--k:#8a4fc0"><small>1단계</small><b>문제 탐색 및 정의</b></div>
+        <div style="--k:#2f6fd0"><small>2단계</small><b>시뮬레이션 실행 및 해석</b></div>
+        <div style="--k:#1f9d74"><small>3단계</small><b>실제 사례 비교 분석</b></div>
+        <div style="--k:#e0702b"><small>4단계</small><b>정책 구상</b></div>
+        <div style="--k:#d64535"><small>5단계</small><b>정책 발표</b></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📰 세상 속으로 · 생각의 도구, 시뮬레이션! <span class="muted" style="font-weight:400;font-size:.88rem">(128~129쪽)</span></h3>
+      <div class="callout" style="margin-top:0"><b>생각을 여는 질문</b> 각 기사에서 시뮬레이션이 우리에게 어떤 도움을 주고 있는지, <b>활용 효과</b> 측면에서 나의 생각을 적어 봐요. 기사 이름을 눌러 읽어요. <span class="muted">(기사는 줄여 옮겼어요.)</span></div>
+      <div class="row sm-tab" id="smArtBtn"></div>
+      <div class="sm-view" id="smArtView"></div>
+      <div class="memo"><label>② 감정의 전염 기사에서 시뮬레이션의 <b>활용 효과</b>는? <small>(선택)</small></label><textarea data-memo="smArt2" rows="2"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>③ 생물 다양성 감소 기사에서 시뮬레이션의 <b>활용 효과</b>는? <small>(선택)</small></label><textarea data-memo="smArt3" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>🔍 소프트웨어로 들여다보기 · 인공지능만 사는 가상 마을 <span class="muted" style="font-weight:400;font-size:.88rem">(130쪽)</span></h3>
+      <p style="margin-top:0">인간이 없는 세상에 인공지능(AI)만 모아 놓으면 어떤 일이 벌어질까요? 스탠퍼드 대학교와 구글 연구진은 인간의 행동과 상호 작용을 흉내 내는 <b>인공지능 시뮬레이션</b>을 만들었어요. <b>AI 에이전트</b> 25개에게 이름, 직업, 성격을 정해 주고 역할을 맡긴 뒤, 서로 어떻게 지내는지 지켜봤어요. 그러자 AI 에이전트는 하루 일정을 스스로 계획하고, 정치에 대해 토론하고, 파티를 여는 등 <b>직접 명령하지 않아도</b> 사람처럼 일상을 이어갔어요.</p>
+      <div class="sm-note"><b>AI 에이전트</b> 주변 환경을 인식하고 그 정보를 바탕으로 미리 정해진 목표를 이루기 위해 작동하는 프로그램, 시스템, 로봇 등을 뜻해요. 지능 에이전트라고도 해요. (예: 챗봇)</div>
+      <p>이처럼 인간 사회의 모습을 가상 마을 시뮬레이션으로 만든다면 어떤 모습을 담고 싶은가요?</p>
+      <p style="margin:10px 0 0"><b>문제 발견</b></p>
+      <div class="memo"><label>인공지능 가상 마을과 관련해 <b>궁금한 점</b>을 적어 보자. <small>(선택)</small></label><textarea data-memo="smQ1" rows="2"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>시뮬레이션과 관련해 <b>알고 싶은 점</b>을 적어 보자. <small>(선택)</small></label><textarea data-memo="smQ2" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 시뮬레이션이란 무엇이고, 어떤 분야에서 어떻게 활용될까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>시뮬레이션의 개념과 필요성(목적·가치)을 설명할 수 있다.</li>
+          <li>시뮬레이션이 활용되는 분야를 사례로 말할 수 있다.</li>
+          <li>시뮬레이션의 활용 방안을 구상할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">시뮬레이션 · 모델링 · 추상화 · AI 에이전트 · 활용 효과 · 목적과 가치</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>「시뮬레이션」이라는 말을 들으면 떠오르는 것은 무엇인가요? <small>게임, 훈련, 실험 …… 떠오르는 대로 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="smPlan" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 시뮬레이션은 무엇일까? →</button></div>
+  </div>
+</section>
+
+<!-- 1 시뮬레이션은 무엇일까? -->
+<section class="page" data-name="시뮬레이션이란" data-acc="#8a4fc0">
+  <div class="head"><div class="num">01</div><div><h2>시뮬레이션은 무엇일까?</h2><p>교과서 131쪽 · 정의, 모델링, 목적과 가치, 시뮬레이션 체험</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션은 현실에서 해 보기 어려운 일을 <b>컴퓨터 안에서 흉내 내 보는 것</b>이에요. 현실을 간단한 <b>모델</b>로 만들고, 가상으로 돌려 보고, 결과를 <b>미리 예측</b>해요.</span></div>
+
+  <div class="card">
+    <h3>📖 시뮬레이션이란? <span class="muted" style="font-weight:400;font-size:.88rem">(131쪽)</span></h3>
+    <p style="margin-top:0"><b>시뮬레이션</b>은 현상이나 사건을 컴퓨터로 <b>모델링</b><sup>*</sup>하여 가상으로 수행시켜 봄으로써 <b>실제 상황에서의 결과를 예측</b>하는 것을 말해요. 실제 상황에서는 할 수 없는 가상 실험을 하거나, 현실에서 직접 실험하기 어려운 문제를 모의 실험해 보면 <b>비용과 시간을 아끼고</b> 실제 문제를 푸는 데 도움이 돼요.</p>
+    <p class="note" style="margin:6px 0 0"><sup>*</sup> <b>모델링</b> 복잡한 현실 세계나 시스템, 현상 등을 특정한 목적에 따라 이용하기 쉬운 형식으로 단순화(추상화)하여 가상 공간에 만들어 내는 것을 뜻해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔄 시뮬레이션이 돌아가는 순서 <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">네모를 누르거나 「다음 단계」를 눌러 순서대로 살펴봐요. 예시는 128쪽 기사 ①(육상 선수 체온)이에요.</p>
+    <svg id="smFlow" class="sm-svg" viewBox="0 0 360 450" role="img" aria-label="현실의 현상, 모델링, 가상으로 실행, 결과 예측 순서 그림"></svg>
+    <div class="sm-cap" id="smFlowCap"></div>
+    <div class="row" style="margin-top:8px"><button class="btn sm ghost" id="smFlowPrev">← 이전</button><button class="btn sm" id="smFlowNext">다음 단계 →</button></div>
+  </div>
+
+  <div class="card">
+    <h3>🎯 자료 1 · 시뮬레이션의 목적과 가치 <span class="muted" style="font-weight:400;font-size:.88rem">(131쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션의 <b>목적</b>은 현상 또는 원리 탐구, 가상 실험 및 예측이에요. 그리고 <b>가치</b>는 세 가지예요. 카드를 눌러 확인해요.</p>
+    <div id="smValueFlip" class="tcards"></div>
+    <p class="callout" style="margin-bottom:0">이처럼 시뮬레이션으로 현실 문제를 미리 예측하면 불필요한 자원 사용을 막아 결국 <b>지속 가능한 발전</b>에 기여할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎲 모의 실험 맛보기 <span class="muted" style="font-weight:400;font-size:.88rem">(연습용 · 교과서에 없는 예)</span></h3>
+    <p style="margin-top:0">주사위를 손으로 600번 던지려면 한참 걸려요. 하지만 컴퓨터는 <b>모의로 던져서</b> 금방 세어 줘요. 이것이 「현실에서 직접 하기 어려운 실험을 가상으로 해 보는」 시뮬레이션의 느낌이에요. <b>실행</b>을 눌러 보고, <code>N</code>을 <code>60</code>이나 <code>6000</code>으로 바꿔 다시 실행해 비교해 봐요.</p>
+    <div id="smRun1"></div>
+    <p class="note" style="margin-bottom:0">난수(무작위 수)를 쓰기 때문에 실행할 때마다 결과가 조금씩 달라요. 던지는 횟수가 많을수록 눈마다 나온 비율이 서로 비슷해지는지 눈여겨봐요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 시뮬레이션 프로그램 체험하기 <span class="muted" style="font-weight:400;font-size:.88rem">(131쪽)</span></h3>
+    <p style="margin-top:0">관심 있는 시뮬레이션을 선택해 짝과 함께 실행해 보고, <b>인상 깊은 부분</b>을 적어 봐요.</p>
+    <div class="grid2 even">
+      <div class="sm-note" style="margin:0"><b>가상 천문학 시뮬레이션</b> 태양계의 행성, 위성, 소행성의 위치를 시각적(3D 그래픽)으로 보여 줘요. 사용자의 조작에 따라 움직임과 위치를 실시간으로 시뮬레이션해 볼 수 있어요.</div>
+      <div class="sm-note" style="margin:0"><b>기후 변화 영향 시뮬레이션</b> 지구 기온 상승이 다양한 종의 생존에 어떤 영향을 미치는지 시각적으로 확인할 수 있어요. 온도가 오름에 따라 지구에서 사라지는 것과 남는 것을 시뮬레이션해 봐요.</div>
+    </div>
+    <p class="note">두 시뮬레이션은 교과서 131쪽의 <b>QR 코드</b>로 열어 보세요.</p>
+    <div class="memo"><label>가상 천문학 시뮬레이션에서 <b>인상 깊은 부분</b> <small>(선택)</small></label><textarea data-memo="smAstro" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>기후 변화 영향 시뮬레이션에서 <b>인상 깊은 부분</b> <small>(선택)</small></label><textarea data-memo="smClimate" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 활용 분야 -->
+<section class="page" data-name="활용 분야" data-acc="#8a4fc0">
+  <div class="head"><div class="num">02</div><div><h2>시뮬레이션은 어떤 분야에서 활용할까?</h2><p>교과서 132~133쪽 · 자료 2 시뮬레이션의 역할과 활용, 활용 방안 구상하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>시뮬레이션은 우주·생태 같은 학문 분야뿐 아니라 <b>교육, 게임, 안전, 의료, 운전</b> 같은 우리 생활 곳곳에서 쓰여요. 위험하거나 비용이 큰 일을 <b>미리, 안전하게</b> 해 볼 수 있기 때문이에요.</span></div>
+
+  <div class="card">
+    <h3>🧭 자료 2 · 시뮬레이션의 역할과 활용 <span class="muted" style="font-weight:400;font-size:.88rem">(132~133쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이션은 앞에서 체험해 본 우주, 생태 등 다양한 학문 분야의 현상이나 원리를 탐구하는 데 활용돼요. 이뿐만 아니라 교육, 게임, 안전, 의료, 운전 등 <b>일상생활의 여러 분야</b>에서도 활용해요. 분야 이름을 눌러 <b>역할</b>과 <b>활용</b>을 읽어 봐요.</p>
+    <div class="row sm-tab" id="smFieldBtn"></div>
+    <div class="sm-view" id="smFieldView"></div>
+  </div>
+
+  <div class="card">
+    <h3>🧩 이 사례는 어느 분야일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">자료 2의 설명을 떠올리며, 한 문장씩 읽고 알맞은 분야를 골라 봐요.</p>
+    <div id="smFieldSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>💭 해 보기 · 시뮬레이션의 활용 방안 구상하기 <span class="muted" style="font-weight:400;font-size:.88rem">(132쪽)</span></h3>
+    <p style="margin-top:0">다양한 분야의 시뮬레이션 중 <b>한 개를 선택</b>하여 다음 내용을 짝과 토의해 봐요.</p>
+    <div class="memo"><label>내가 고른 시뮬레이션 <small>(선택)</small></label><textarea data-memo="smUsePick" rows="1"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>누구에게 필요할까? <small>(선택)</small></label><textarea data-memo="smUse1" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>어떤 도움을 줄까? <small>(선택)</small></label><textarea data-memo="smUse2" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>어떻게 활용할 수 있을까? <small>(선택)</small></label><textarea data-memo="smUse3" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">03</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#8a4fc0"><b>시뮬레이션</b>은 현상이나 사건을 컴퓨터로 <b>모델링</b>하여 가상으로 수행시켜 봄으로써 실제 상황에서의 결과를 <b>예측</b>하는 것이다.</div>
+    <div style="--k:#2f6fd0">시뮬레이션의 <b>목적</b>은 현상 또는 원리 탐구, 가상 실험 및 예측이고, <b>가치</b>는 비용과 자원 절약, 위험 및 손실 관리, 지속 가능 발전에 기여하는 것이다.</div>
+    <div style="--k:#1f9d74">시뮬레이션은 <b>교육</b>(모의 비행 장치), <b>게임</b>(심즈), <b>안전</b>(재난 대피 훈련), <b>의료</b>(심장 질환), <b>운전</b>(3D 운전 교실) 등 일상생활의 여러 분야에서 활용된다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">주사위 모의 실험과 분야별 사례를 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">시뮬레이션이란 무엇이고, 어떤 분야에서 어떻게 활용될까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="3"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>시뮬레이션이 무엇인지 <b>모델링</b>이라는 말을 넣어 내 말로 설명해 보세요.</li>
+      <li>시뮬레이션의 <b>가치</b> 세 가지 중 하나를 골라, 알맞은 사례와 함께 설명해 보세요.</li>
+      <li>내가 고른 분야에 시뮬레이션을 활용한다면 <b>누구에게 어떤 도움</b>을 줄 수 있을지 써 보세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

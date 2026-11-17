@@ -179,39 +179,39 @@
      "title": "시뮬레이션의 개념과 활용",
      "pages": "128~133",
      "form": "sw-u4-simulation",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "19",
      "id": "u4-model",
-     "title": "시뮬레이션 모델의 구성 요소",
-     "pages": "134~137",
+     "title": "시뮬레이션 모델의 구성 요소와 실행",
+     "pages": "134~139",
      "form": "sw-u4-model",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "20",
      "id": "u4-social",
-     "title": "시뮬레이션 모델과 사회 현상",
-     "pages": "140~145",
+     "title": "시뮬레이션 모델과 사회 현상 분석",
+     "pages": "140~143",
      "form": "sw-u4-social",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "21",
      "id": "u4-build",
-     "title": "시뮬레이션 모델 구현",
-     "pages": "146~150",
+     "title": "감정 전염 모델 설계하기",
+     "pages": "144~149",
      "form": "sw-u4-build",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "22",
      "id": "u4-analyst",
-     "title": "사회 현상 분석가",
-     "pages": "151~154",
+     "title": "감정 전염 모델 구현과 결과 해석",
+     "pages": "150~155",
      "form": "sw-u4-analyst",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "23",
@@ -219,7 +219,7 @@
      "title": "융합 프로젝트 · 대단원 정리",
      "pages": "156~165",
      "form": "sw-u4-project",
-     "status": "todo"
+     "status": "draft"
     }
    ]
   },
@@ -231,42 +231,42 @@
     {
      "no": "24",
      "id": "u5-startup",
-     "title": "창업과 소프트웨어 스타트업",
+     "title": "스타트업과 소프트웨어 스타트업",
      "pages": "168~173",
      "form": "sw-u5-startup",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "25",
      "id": "u5-steps",
-     "title": "스타트업 프로젝트 수행 단계",
-     "pages": "174~177",
+     "title": "소프트웨어 스타트업 프로젝트 수행 단계",
+     "pages": "174~179",
      "form": "sw-u5-steps",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "26",
      "id": "u5-design",
-     "title": "소프트웨어 설계",
+     "title": "정보 접근성을 높이는 키오스크 앱 기획과 설계",
      "pages": "180~185",
      "form": "sw-u5-design",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "27",
      "id": "u5-build",
-     "title": "소프트웨어 구현",
-     "pages": "186~191",
+     "title": "앱인벤터로 음성 인식 키오스크 앱 만들기",
+     "pages": "186~193",
      "form": "sw-u5-build",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "28",
      "id": "u5-value",
-     "title": "소프트웨어의 가치 평가",
-     "pages": "192~197",
+     "title": "테스트·배포와 소프트웨어의 가치 평가",
+     "pages": "194~199",
      "form": "sw-u5-value",
-     "status": "todo"
+     "status": "draft"
     },
     {
      "no": "29",
@@ -274,7 +274,7 @@
      "title": "융합 프로젝트 · 대단원 정리",
      "pages": "200~207",
      "form": "sw-u5-project",
-     "status": "todo"
+     "status": "draft"
     }
    ]
   }
