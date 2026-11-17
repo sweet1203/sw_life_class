@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>소프트웨어와 생활 · 수업 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#16202c;--muted:#5b6776;--paper:#f3efe7;--card:#fff;--line:#e3ddd2;--navy:#0f2742;--amber:#f2a516}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.6}
+  a{color:inherit}
+  .wrap{max-width:1040px;margin:0 auto}
+  /* header */
+  header{background:var(--navy);color:#fff;padding:34px 16px 30px}
+  .brandrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .kicker{color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.04em;margin:0}
+  header h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:2.4rem;margin:6px 0 10px;line-height:1.15}
+  header .lead{margin:0;color:#c8d6e8;font-size:1rem;max-width:640px}
+  .tlink{color:#c8d6e8;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:7px 13px;text-decoration:none;font-size:.86rem;font-weight:700;white-space:nowrap}
+  .tlink:hover{background:rgba(255,255,255,.16)}
+  .jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+  .jump a{background:var(--amber);color:var(--navy);border-radius:999px;padding:8px 16px;text-decoration:none;font-weight:700;font-size:.92rem}
+  .jump a.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+  main{padding:0 16px 70px}
+  /* how to use */
+  .how{margin:-18px auto 0;position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .how .c{background:var(--card);border-radius:14px;box-shadow:0 6px 20px rgba(15,39,66,.08);padding:16px 16px 18px}
+  .how .c .ic{font-size:1.5rem}
+  .how .c h3{margin:6px 0 4px;font-size:1.02rem}
+  .how .c p{margin:0;color:var(--muted);font-size:.9rem}
+  .note{margin:14px auto 0;background:#fff7e6;border:1px solid #f3dfae;border-radius:12px;padding:12px 16px;color:#7a5600;font-size:.9rem}
+  .note b{color:#5e4300}
+  /* lessons */
+  .sec-h{margin:40px 0 4px;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem}
+  .sec-sub{margin:0 0 6px;color:var(--muted);font-size:.9rem}
+  .unit{margin:26px 0 10px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .unit h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.3rem;margin:0;color:var(--k)}
+  .unit .cnt{color:var(--muted);font-size:.82rem}
+  .les{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;background:var(--card);border-radius:13px;box-shadow:0 4px 14px rgba(15,39,66,.06);padding:12px 14px;margin-bottom:8px;border-left:6px solid var(--k)}
+  .les.soon{opacity:.62;border-left-style:dashed;box-shadow:none;background:#faf7f1}
+  .no{font-family:"Black Han Sans",sans-serif;font-size:1.3rem;color:var(--k);text-align:center}
+  .les h3{margin:0;font-size:1.02rem;font-weight:700}
+  .les small{color:var(--muted);font-size:.8rem}
+  .st{display:inline-block;font-size:.72rem;border-radius:999px;padding:1px 9px;margin-left:7px;vertical-align:2px;background:#eef0f3;color:#5b6776}
+  .act{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+  .act a,.act button{font:inherit;font-size:.86rem;font-weight:700;border-radius:10px;padding:7px 14px;text-decoration:none;cursor:pointer;white-space:nowrap;border:1.5px solid var(--k)}
+  .act a.open{background:var(--k);color:#fff}
+  .act button.copy{background:#fff;color:var(--k)}
+  .act a.open:hover{filter:brightness(1.08)}
+  .act button.copy:hover{background:color-mix(in srgb,var(--k) 12%,white)}
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 16px 50px;color:var(--muted);font-size:.85rem}
+  footer a{color:var(--navy);font-weight:700}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;opacity:0;transition:.2s;pointer-events:none;font-size:.9rem;z-index:9}
+  .toast.on{opacity:1}
+  @media (max-width:720px){
+    header h1{font-size:2rem}
+    .how{grid-template-columns:1fr}
+    .les{grid-template-columns:44px 1fr}
+    .act{grid-column:1/-1;justify-content:flex-start}
+  }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brandrow">
+    <div>
+      <p class="kicker">수업 안내 · 학습 공간</p>
+      <h1>소프트웨어와 생활</h1>
+    </div>
+    <a class="tlink" href="teacher/" title="선생님용 자료 목록">👩‍🏫 교사용</a>
+  </div>
+  <p class="lead">아래 차시 카드를 눌러 바로 수업에 들어갈 수 있어요. 공부한 내용과 진도는 자동으로 저장되니, 중간에 나가도 이어서 할 수 있습니다.</p>
+  <div class="jump">
+    <a href="#lessons">📚 차시 바로가기</a>
+    <a class="ghost" href="#how">이용 방법 보기</a>
+  </div>
+</div></header>
+
+<main><div class="wrap">
+
+  <section id="how" class="how">
+    <div class="c"><div class="ic">📚</div><h3>1. 차시 선택</h3><p>배울 차시 카드의 <b>「열기」</b>를 눌러 수업 화면으로 들어가요.</p></div>
+    <div class="c"><div class="ic">✍️</div><h3>2. 활동·질문</h3><p>화면 속 퀴즈와 체험을 해 보고, 끝에서 질문·배운 점을 남겨요.</p></div>
+    <div class="c"><div class="ic">🔖</div><h3>3. 주소 저장</h3><p><b>📋 주소복사</b>로 차시 주소를 복사해 저장하거나 친구와 나눠요.</p></div>
+  </section>
+
+  <div class="note">💡 <b>진도는 자동 저장돼요.</b> 퀴즈·메모는 이 브라우저에 남으니, 가능하면 늘 같은 기기·브라우저로 접속하세요. 화면이 멈추면 새로고침 후 이어서 하면 됩니다.</div>
+
+  <h2 class="sec-h" id="lessons">차시 안내</h2>
+  <p class="sec-sub">단원별 차시 목록입니다. <b>공개</b>된 차시는 바로 열 수 있고, 준비 중인 차시는 순차적으로 열립니다.</p>
+  <div id="list"></div>
+
+</div></main>
+
+<footer><div class="wrap">
+  이 사이트는 「소프트웨어와 생활」 수업을 위한 학습 공간입니다 · 외부 검색에는 노출되지 않습니다.<br>
+  선생님이신가요? <a href="teacher/">교사용 자료 목록 열기 →</a>
+</div></footer>
+
+<div class="toast" id="toast"></div>
+<script>
+const UNITS=[{"name": "Ⅰ. 세상을 변화시키는 소프트웨어", "color": "#2f6fd0", "lessons": [{"no": "01", "id": "u1-software", "title": "소프트웨어와 사회 변화", "pages": "18~23", "form": "sw-u1-software", "status": "draft"}, {"no": "02", "id": "u1-future", "title": "소프트웨어와 미래 사회", "pages": "24~26", "form": "sw-u1-future", "status": "draft"}, {"no": "03", "id": "u1-fusion", "title": "소프트웨어 융합과 문제 해결", "pages": "27~31", "form": "sw-u1-fusion", "status": "draft"}, {"no": "04", "id": "u1-fusion-job", "title": "소프트웨어 융합 직업과 역량", "pages": "32~34", "form": "sw-u1-fusion-job", "status": "draft"}, {"no": "05", "id": "u1-project", "title": "융합 프로젝트 · 대단원 정리", "pages": "36~43", "form": "sw-u1-project", "status": "draft"}]}, {"name": "Ⅱ. 창작을 지원하는 소프트웨어", "color": "#d0602f", "lessons": [{"no": "06", "id": "u2-media-art", "title": "미디어 아트와 피지컬 컴퓨팅", "pages": "46~52", "form": "sw-u2-media-art", "status": "todo"}, {"no": "07", "id": "u2-sensor", "title": "센서와 액추에이터", "pages": "53~57", "form": "sw-u2-sensor", "status": "todo"}, {"no": "08", "id": "u2-pico", "title": "라즈베리파이 피코 제어하기", "pages": "58~61", "form": "sw-u2-pico", "status": "todo"}, {"no": "09", "id": "u2-wearable", "title": "웨어러블 장치와 융합", "pages": "64~67", "form": "sw-u2-wearable", "status": "todo"}, {"no": "10", "id": "u2-heart", "title": "심장 박동 모니터링 장치 만들기", "pages": "68~71", "form": "sw-u2-heart", "status": "todo"}, {"no": "11", "id": "u2-project", "title": "융합 프로젝트 · 대단원 정리", "pages": "74~81", "form": "sw-u2-project", "status": "todo"}]}, {"name": "Ⅲ. 현상을 분석하는 소프트웨어", "color": "#2f9a5a", "lessons": [{"no": "12", "id": "u3-data", "title": "데이터와 데이터 분석", "pages": "84~90", "form": "sw-u3-data", "status": "todo"}, {"no": "13", "id": "u3-collect", "title": "데이터 수집과 전처리", "pages": "91~97", "form": "sw-u3-collect", "status": "todo"}, {"no": "14", "id": "u3-visual", "title": "데이터 시각화와 분석", "pages": "98~103", "form": "sw-u3-visual", "status": "todo"}, {"no": "15", "id": "u3-value", "title": "데이터 분석의 사회적 가치", "pages": "104~105", "form": "sw-u3-value", "status": "todo"}, {"no": "16", "id": "u3-sports", "title": "스포츠 기록 분석 연구원", "pages": "108~113", "form": "sw-u3-sports", "status": "todo"}, {"no": "17", "id": "u3-project", "title": "융합 프로젝트 · 대단원 정리", "pages": "116~125", "form": "sw-u3-project", "status": "todo"}]}, {"name": "Ⅳ. 모의 실험하는 소프트웨어", "color": "#8a4fc0", "lessons": [{"no": "18", "id": "u4-simulation", "title": "시뮬레이션의 개념과 활용", "pages": "128~133", "form": "sw-u4-simulation", "status": "todo"}, {"no": "19", "id": "u4-model", "title": "시뮬레이션 모델의 구성 요소", "pages": "134~137", "form": "sw-u4-model", "status": "todo"}, {"no": "20", "id": "u4-social", "title": "시뮬레이션 모델과 사회 현상", "pages": "140~145", "form": "sw-u4-social", "status": "todo"}, {"no": "21", "id": "u4-build", "title": "시뮬레이션 모델 구현", "pages": "146~150", "form": "sw-u4-build", "status": "todo"}, {"no": "22", "id": "u4-analyst", "title": "사회 현상 분석가", "pages": "151~154", "form": "sw-u4-analyst", "status": "todo"}, {"no": "23", "id": "u4-project", "title": "융합 프로젝트 · 대단원 정리", "pages": "156~165", "form": "sw-u4-project", "status": "todo"}]}, {"name": "Ⅴ. 가치를 창출하는 소프트웨어", "color": "#c0397a", "lessons": [{"no": "24", "id": "u5-startup", "title": "창업과 소프트웨어 스타트업", "pages": "168~173", "form": "sw-u5-startup", "status": "todo"}, {"no": "25", "id": "u5-steps", "title": "스타트업 프로젝트 수행 단계", "pages": "174~177", "form": "sw-u5-steps", "status": "todo"}, {"no": "26", "id": "u5-design", "title": "소프트웨어 설계", "pages": "180~185", "form": "sw-u5-design", "status": "todo"}, {"no": "27", "id": "u5-build", "title": "소프트웨어 구현", "pages": "186~191", "form": "sw-u5-build", "status": "todo"}, {"no": "28", "id": "u5-value", "title": "소프트웨어의 가치 평가", "pages": "192~197", "form": "sw-u5-value", "status": "todo"}, {"no": "29", "id": "u5-project", "title": "융합 프로젝트 · 대단원 정리", "pages": "200~207", "form": "sw-u5-project", "status": "todo"}]}], SITE='https://swlifeclass.vercel.app/';
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const list=document.getElementById('list');
+list.innerHTML=UNITS.map(u=>{
+  const L=u.lessons.filter(l=>l.status!=='todo');
+  if(!L.length) return '';
+  const openN=u.lessons.filter(l=>l.status==='ready').length;
+  return `<div class="unit" style="--k:${u.color}"><h2>${esc(u.name)}</h2><span class="cnt">${openN} / ${L.length} 공개</span></div>`+
+    L.map(l=>{
+      const ready=l.status==='ready', url=SITE+l.id+'/';
+      return `<div class="les ${ready?'':'soon'}" style="--k:${u.color}">
+        <div class="no">${esc(l.no)}</div>
+        <div><h3>${esc(l.title)}${ready?'':'<span class="st">준비 중</span>'}</h3>${l.pages?`<small>교과서 ${esc(l.pages)}쪽</small>`:''}</div>
+        <div class="act">${ready?`<a class="open" href="${esc(l.id)}/">열기</a><button class="copy" data-u="${esc(url)}">📋 주소복사</button>`:''}</div>
+      </div>`;
+    }).join('');
+}).join('') || '<div class="note">아직 공개된 차시가 없어요. 곧 열립니다 🙂</div>';
+
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('button[data-u]'); if(!b) return;
+  try{await navigator.clipboard.writeText(b.dataset.u); toast('차시 주소를 복사했어요');}
+  catch(x){prompt('주소를 복사하세요',b.dataset.u);}
+});
+function toast(t){const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('on'),1500);}
+</script>
+</body>
+</html>

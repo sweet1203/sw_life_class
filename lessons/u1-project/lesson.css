@@ -1,0 +1,61 @@
+  /* u1-project 전용 (pj-) */
+
+  /* 0 시작 · 대화 말풍선 */
+  .pj-say{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 10px}
+  .pj-say>div{position:relative;background:#eef6ff;border:2px solid #b9d4f4;border-radius:16px;padding:11px 14px;font-size:.93rem;line-height:1.55}
+  .pj-say>div:nth-child(2){background:#effaf4;border-color:#b5e0cb}
+  .pj-say>div:nth-child(3){background:#fff5ea;border-color:#f3cfa3}
+  .pj-say>div:nth-child(4){background:#f6efff;border-color:#d4bcef}
+
+  /* 01 프로젝트 5단계 가로 흐름 */
+  .pj-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 12px}
+  @media (max-width:720px){.pj-flow{grid-template-columns:1fr}}
+  .pj-flow>div{background:#fff;border-radius:12px;border-top:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .pj-flow .n{display:inline-flex;width:28px;height:28px;border-radius:999px;background:var(--k);color:#fff;font-weight:900;align-items:center;justify-content:center}
+  .pj-flow b{display:block;color:var(--k);margin-top:4px}
+  .pj-flow small{display:block;font-size:.82rem;color:var(--muted);margin-top:3px;line-height:1.45}
+
+  /* 단계 안내 표 */
+  .pj-tb{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:.92rem}
+  .pj-tb th{background:#fdeeb8;padding:7px 10px;border:1px solid var(--line)}
+  .pj-tb td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+  .pj-tb td:first-child{white-space:nowrap;font-weight:800;background:#f4f9e8}
+  .pj-tb input{width:100%;box-sizing:border-box}
+
+  /* 단계 표지 */
+  .pj-badge{display:inline-flex;align-items:center;gap:6px;background:var(--k);color:#fff;border-radius:999px;padding:3px 14px 3px 4px;font-weight:800;font-size:.92rem;margin:0 0 6px}
+  .pj-badge i{font-style:normal;background:#fff;color:var(--k);width:24px;height:24px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:900}
+
+  /* 마인드맵 SVG */
+  .pj-mind{width:100%;max-width:560px;height:auto;display:block;margin:6px auto}
+  .pj-mind .nd{fill:#fff;stroke-width:2.4}
+  .pj-mind text{font:700 13px/1 inherit;fill:var(--ink);text-anchor:middle}
+  .pj-mind .ln{fill:none;stroke-width:2.2;stroke-dasharray:4 3}
+
+  /* 3W1H 4칸 */
+  .pj-w{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
+  @media (max-width:600px){.pj-w{grid-template-columns:1fr}}
+  .pj-w>div{background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:10px 12px}
+  .pj-w b{color:var(--k);display:block}
+  .pj-w small{color:var(--muted)}
+  .pj-w textarea{width:100%;box-sizing:border-box;margin-top:6px}
+
+  /* 예시 상자 */
+  .pj-ex{background:#fff9e6;border:2px dashed #f0cf72;border-radius:12px;padding:9px 13px;font-size:.9rem;margin:8px 0}
+  .pj-ex b{color:#a8730c}
+
+  /* 유의 사항 */
+  .pj-tip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:6px 0}
+  .pj-tip>div{background:#f6f9fd;border:1px solid #cfe0f5;border-radius:10px;padding:8px 11px;font-size:.88rem;font-weight:700}
+
+  /* 응용 사례 · 직업 표 */
+  .pj-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0}
+  @media (max-width:720px){.pj-grid3{grid-template-columns:1fr}}
+  .pj-grid3 label{display:block;font-weight:800;font-size:.9rem;margin-bottom:3px}
+  .pj-grid3 textarea,.pj-grid3 input{width:100%;box-sizing:border-box}
+
+  /* 마무리 단원 정리 키워드 */
+  .pj-case{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}
+  @media (max-width:600px){.pj-case{grid-template-columns:1fr}}
+  .pj-case>div{background:#fff;border-radius:12px;border-left:6px solid var(--k);box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 13px;font-size:.92rem;line-height:1.55}
+  .pj-case b{display:block;color:var(--k)}

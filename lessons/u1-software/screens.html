@@ -1,0 +1,210 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#2f6fd0">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅰ. 세상을 변화시키는 소프트웨어 · 1. 소프트웨어와 사회 변화</span>
+      <h1>소프트웨어는<br>우리 사회를 어떻게 바꿨을까?</h1>
+      <div class="story"><b>우리나라 고등학생들이 만든 인공지능 통학 버스 (20쪽)</b><br>뜨거운 여름, 닫힌 차 안은 80도 이상까지 올라가요. 통학 버스에서 잠든 어린이가 사고를 당했다는 기사가 종종 나오지요. 부산의 한 학교 학생들은 이런 일이 다시 없도록 <b>인공지능 기술로 어린아이가 버스에 혼자 남겨지면 보호자에게 알림</b>을 보내는 시스템을 만들었어요. 이 아이디어는 「AI 글로벌 페스티벌」에서 2위에 올랐어요.</div>
+      <p>오늘은 <b>소프트웨어가 무엇인지</b>, 그리고 소프트웨어 때문에 <b>우리 사회가 어떻게 달라졌는지</b> 살펴봐요.</p>
+      <ol>
+        <li>소프트웨어란 무엇일까?</li><li>소프트웨어로 달라진 사회</li><li>마무리 · 질문폼</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">단원 도입부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>🚌</i><div><b>문제 발견</b><small>버스에 혼자 남겨진 아이</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>💻</i><div><b>소프트웨어</b><small>하드웨어를 움직이는 프로그램</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🔄</i><div><b>달라진 사회</b><small>자동화·개인화·연결화·지능화</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🤝</i><div><b>함께 생각할 점</b><small>사생활 · 정보 격차</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">단원 도입 · Ⅰ. 세상을 변화시키는 소프트웨어 (18~19쪽)</span>
+      <p>디지털 기술이 발전하면서 소프트웨어는 <b>우리 삶과 사회 전체</b>를 바꾸고 있어요. 여러 학문 분야에서도 소프트웨어와 <b>융합</b>해 문제를 풀고 있고요. 그 덕분에 개인·사회·나라에 좋은 영향이 생기고 있지요. 이런 발전으로 우리는 앞으로 <b>더 나은 세상</b>을 만들어 갈 수 있어요.</p>
+    </div>
+    <div class="card">
+      <h3>🔎 생각을 여는 질문 <span class="muted" style="font-weight:400;font-size:.88rem">(18~19쪽 기사 세 편)</span></h3>
+      <p style="margin-top:0">기사마다 <b>어떤 문제</b>가 있었고 <b>어떤 방법</b>으로 풀었는지 찾아봐요. 카드를 눌러 기사의 핵심을 확인해요.</p>
+      <div id="newsFlip" class="tcards"></div>
+      <div class="memo"><label>푸드 스캐너·안전한 학교 기사에서 찾은 <b>문제</b>와 <b>해결 방안</b> <small>(선택) 기사를 읽고 내 말로 적어 보세요.</small></label><textarea data-memo="newsFind" rows="3"></textarea><div class="saved"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>🚌 소프트웨어로 들여다보기 · 문제 발견 <span class="muted" style="font-weight:400;font-size:.88rem">(20쪽)</span></h3>
+      <div class="sf-bus">
+        <svg viewBox="0 0 360 170" role="img" aria-label="통학 버스 그림. 비상 호출 버튼, NFC 카드, 실시간 운행 정보 앱이 표시되어 있다.">
+          <rect x="60" y="40" width="240" height="90" rx="14" fill="#f5c542" stroke="#0f2742" stroke-width="3"/>
+          <rect x="76" y="54" width="60" height="34" rx="5" fill="#dff1fb" stroke="#0f2742" stroke-width="2"/>
+          <rect x="150" y="54" width="60" height="34" rx="5" fill="#dff1fb" stroke="#0f2742" stroke-width="2"/>
+          <rect x="224" y="54" width="60" height="34" rx="5" fill="#dff1fb" stroke="#0f2742" stroke-width="2"/>
+          <text x="180" y="112" text-anchor="middle" font-size="13" font-weight="700" fill="#0f2742">AI 통학 버스</text>
+          <circle cx="104" cy="134" r="16" fill="#0f2742"/><circle cx="256" cy="134" r="16" fill="#0f2742"/>
+          <path d="M96 40 L50 14" stroke="#d64535" stroke-width="2"/><rect x="6" y="2" width="92" height="22" rx="11" fill="#fff" stroke="#d64535" stroke-width="2"/><text x="52" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#d64535">비상 호출 버튼</text>
+          <path d="M250 40 L300 14" stroke="#1f9d74" stroke-width="2"/><rect x="256" y="2" width="92" height="22" rx="11" fill="#fff" stroke="#1f9d74" stroke-width="2"/><text x="302" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#1f9d74">NFC 카드</text>
+          <path d="M180 130 L180 152" stroke="#2f6fd0" stroke-width="2"/><rect x="108" y="148" width="144" height="20" rx="10" fill="#fff" stroke="#2f6fd0" stroke-width="2"/><text x="180" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="#2f6fd0">실시간 운행 정보 앱</text>
+        </svg>
+      </div>
+      <p class="note" style="margin-top:6px">그림 속 이름표는 교과서 20쪽 그림에 적힌 낱말이에요.</p>
+      <div class="memo"><label>학생들이 발견한 문제 상황을 해결하려고 사용한 <b>소프트웨어 기능</b>은 무엇일까요?</label><textarea data-memo="findFunc" rows="2" placeholder="예) 아이가 혼자 남겨지면 보호자에게 메시지를 보내는 알림 서비스"></textarea><div class="saved"></div></div>
+      <div class="memo"><label>우리 주변에서 발견할 수 있는 문제를 소프트웨어로 해결한 <b>또 다른 사례</b>는 무엇일까요?</label><textarea data-memo="findOther" rows="2" placeholder="예) 다양한 디지털 도구와 온라인 교육 플랫폼을 이용하여 실시간 비대면으로 수업에 참여하였다."></textarea><div class="saved"></div></div>
+    </div>
+
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 소프트웨어는 우리 사회를 어떻게 변화시켰을까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>소프트웨어가 세상을 변화시킨 사례를 찾아볼 수 있다.</li>
+          <li>소프트웨어가 사회 변화에 미치는 영향을 도입 전과 후로 나누어 분석할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">소프트웨어 · 운영체제 · 인공지능 · 가상 현실 · 사물 인터넷 · 자동화 · 개인화 · 연결화 · 지능화 · 디지털 교과서</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>나는 오늘 소프트웨어에 대해 이런 점이 궁금하다. <small>시간이 있으면 한두 가지 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planLearn" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 소프트웨어란 무엇일까?부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 소프트웨어란 무엇일까? -->
+<section class="page" data-name="소프트웨어란?" data-acc="#2f6fd0">
+  <div class="head"><div class="num">01</div><div><h2>소프트웨어란 무엇일까?</h2><p>교과서 21쪽 · 소프트웨어의 뜻과 여러 모습, 일상 속 소프트웨어 찾기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>컴퓨터·휴대폰·가전제품 같은 <b>하드웨어</b>(눈에 보이는 기계)가 움직이게 해 주는 <b>프로그램과 명령어들의 모음</b>이 <b>소프트웨어</b>예요. 스마트폰 앱처럼 눈에 보이는 것만이 아니라, 자동차나 엘리베이터 속에서 일하는 프로그램도 모두 소프트웨어예요.</span></div>
+  <div class="card">
+    <h3>💡 소프트웨어는 여러 모습으로 있어요 <span class="muted" style="font-weight:400;font-size:.88rem">(21쪽)</span></h3>
+    <div class="sf-forms">
+      <div style="--k:#2f6fd0"><b>🖥️ 스마트폰의 앱</b><span>다양한 애플리케이션</span></div>
+      <div style="--k:#9b4fc4"><b>⚙️ 컴퓨터의 운영체제</b><span>컴퓨터를 움직이는 바탕 프로그램</span></div>
+      <div style="--k:#e0702b"><b>🚗 자동차·엘리베이터</b><span>이것들이 작동하도록 하는 프로그램</span></div>
+      <div style="--k:#1f9d74"><b>🧠 4차 산업혁명 핵심 기술</b><span>빅데이터·사물 인터넷·인공지능도 소프트웨어에 포함돼요</span></div>
+    </div>
+    <p style="margin-bottom:0">이처럼 소프트웨어는 <b>미래 사회를 이루는 핵심 요소</b>로, 여러 분야에 쓰이며 새로운 가치를 만들고 있어요. 개인·기업·나라는 다양한 소프트웨어로 필요한 정보를 얻고, 그 정보를 활용해 목표를 이루고 경쟁력을 갖추려고 노력해요.</p>
+  </div>
+  <div class="card">
+    <h3>🃏 자료 1 · 우리 주변의 다양한 소프트웨어 <span class="muted" style="font-weight:400;font-size:.88rem">(21쪽, 낱말 풀이 포함)</span></h3>
+    <p class="muted" style="margin-top:0">카드를 눌러 낱말의 뜻을 확인해요. 뜻을 먼저 떠올려 본 뒤에 뒤집으면 더 잘 기억나요.</p>
+    <div id="swFlip" class="tcards"></div>
+  </div>
+  <div class="card">
+    <h3>📖 해 보기 · 소프트웨어 관점으로 일상생활 바라보기 <span class="muted" style="font-weight:400;font-size:.88rem">(21쪽)</span></h3>
+    <p style="margin-top:0">다음 일기에서 <b>소프트웨어 기술이 적용된 사례</b>를 찾아봐요.</p>
+    <div class="sf-diary">
+      <b>○월 ○일</b> 오늘은 <mark>스마트폰 알람</mark>이 울리기도 전에 기상했다. 앱으로 날씨를 확인하니 평소보다 포근하다는 예보에 콧노래가 나왔다. 1교시 국어 시간에는 국내 시인을 주제로 모둠별 프로젝트를 진행하였다. 친구들과 공유 협업 프로그램을 활용하여 의견을 주고받은 끝에 우리 모둠은 김소월 시인의 작품을 주제로 선정하였다. 2교시 지리 시간에는 VR 기기를 활용하여 생태 관광 지역의 생태 환경에 관해 배웠다. 멸종 위기종으로 알려진 두루미를 처음 접할 수 있어서 신기했다. 3교시 과학 시간에는 시뮬레이션 프로그램을 활용하여 화학 앙금 반응 실험을 진행하였다. 위험한 물질을 손에 묻힐 걱정 없이 안전하게 실험 결과를 확인할 수 있어 편리했다.
+    </div>
+    <p class="note" style="margin-top:6px">위 글 속 노란 표시 하나는 교과서 21쪽에 인쇄된 예시예요.</p>
+    <p style="margin-bottom:4px"><b>❶ 일기에서 소프트웨어 기술이 쓰인 곳을 모두 골라 보세요.</b></p>
+    <div id="diaryPick"></div>
+    <p style="margin:14px 0 4px"><b>❷ 내 일상과 친구의 일상 속 소프트웨어 활용 사례를 찾아 적어 보세요.</b> <span class="muted">짝과 의견을 나눠 봐요.</span></p>
+    <table class="plan">
+      <tr><td>나</td><td><input type="text" data-memo="myCase" placeholder="내 하루에서 만난 소프트웨어"><div class="saved"></div></td></tr>
+      <tr><td>친구</td><td><input type="text" data-memo="friendCase" placeholder="친구에게 들은 소프트웨어 사례"><div class="saved"></div></td></tr>
+    </table>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 소프트웨어로 달라진 사회 -->
+<section class="page" data-name="달라진 사회" data-acc="#9b4fc4">
+  <div class="head"><div class="num">02</div><div><h2>소프트웨어로 달라진 사회</h2><p>교과서 22~23쪽 · 교육 분야의 변화, 네 가지 관점, 윤리 문제</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>소프트웨어가 발전하면서 사회가 달라진 모습을 <b>자동화·개인화·연결화·지능화</b> 네 가지 눈으로 볼 수 있어요. 어떤 일이 <b>기계가 대신하게 되었는지</b>, <b>나에게 맞춰지게 되었는지</b>, <b>서로 이어지게 되었는지</b>, <b>사람처럼 생각하게 되었는지</b>를 살펴보면 돼요.</span></div>
+  <div class="card">
+    <h3>🏫 먼저 교육 분야의 변화 <span class="muted" style="font-weight:400;font-size:.88rem">(22쪽)</span></h3>
+    <div class="sf-edu">
+      <div style="--k:#2f6fd0"><b>온라인 학습 관리 플랫폼의 등장</b><span>비대면 환경에서도 <b>실시간 쌍방향 수업</b>이 가능해졌어요.</span></div>
+      <div style="--k:#9b4fc4"><b>인공지능 기반 디지털 교과서</b><span>학생의 문제 풀이 시간과 정답률로 <b>성취 수준을 분석</b>하고, 그 결과로 <b>맞춤형 보충 학습</b>과 <b>수준별 모둠 구성</b>을 할 수 있어요.</span></div>
+    </div>
+    <p class="note" style="margin-bottom:0"><b>디지털 교과서</b>는 서책형 교과서 내용에 멀티미디어 자료, 실감형 콘텐츠 같은 학습 자료와 학습 지원·관리 기능이 더해져 온라인으로 쓸 수 있는 교과서예요.</p>
+  </div>
+  <div class="card">
+    <h3>🔄 자료 2 · 소프트웨어 발전에 따른 세상의 변화 <span class="muted" style="font-weight:400;font-size:.88rem">(22~23쪽)</span></h3>
+    <p style="margin-top:0">네 관점을 버튼으로 하나씩 살펴봐요.</p>
+    <div class="row sf-tab" id="viewBtn"></div>
+    <div class="sf-view" id="viewBox"></div>
+  </div>
+  <div class="card">
+    <h3>🧺 사례를 네 관점으로 나누기</h3>
+    <p class="muted" style="margin-top:0">사례 카드를 읽고 어느 관점에 가장 가까운지 골라 봐요. 틀려도 설명이 나오니 괜찮아요.</p>
+    <div id="viewGame"></div>
+  </div>
+  <div class="card">
+    <h3>✍️ 해 보기 · 소프트웨어가 사회에 미친 영향 분석하기 <span class="muted" style="font-weight:400;font-size:.88rem">(23쪽)</span></h3>
+    <p style="margin-top:0">자료 2의 관점 가운데 <b>하나</b>를 골라, 소프트웨어 발전에 따른 변화 사례를 찾고 도입 <b>전과 후</b>의 상황을 적어 봐요.</p>
+    <div id="viewPick" class="vote"></div>
+    <div class="sf-ba">
+      <div class="sf-ba-hd"><span>❶ 변화가 나타난 사례</span></div>
+      <input type="text" data-memo="baCase" placeholder="예) 은행 업무(입출금, 자동 이체, 대출 승인 등)"><div class="saved"></div>
+      <div class="sf-ba-pair">
+        <div style="--k:#8a8f98"><b>❷ 소프트웨어 도입 전</b><textarea data-memo="baBefore" rows="3" placeholder="예) 은행원이 수작업으로 예금, 송금, 대출 등의 업무를 처리한다."></textarea><div class="saved"></div></div>
+        <div class="sf-ba-ar">→</div>
+        <div style="--k:#2f6fd0"><b>❸ 소프트웨어 도입 후</b><textarea data-memo="baAfter" rows="3" placeholder="예) ATM 기기, 온라인 뱅킹, 자동 대출 승인 시스템 등을 활용하여 거래한다."></textarea><div class="saved"></div></div>
+      </div>
+    </div>
+    <p class="note">입력칸 속 회색 글은 교과서 22쪽에 인쇄된 자동화 예시예요. 나는 다른 사례를 적어도 돼요.</p>
+  </div>
+  <div class="card">
+    <h3>📚 정리 · 도입 전과 후, 그리고 함께 생각할 점 <span class="muted" style="font-weight:400;font-size:.88rem">(23쪽)</span></h3>
+    <div class="grid2 even">
+      <div class="sf-sum" style="--k:#8a8f98"><b>도입 전</b><span>물리적인 제약이 많았어요. 정보 공유는 인쇄 매체에 의존했고, 자동화 시스템이 부족해 업무는 수작업으로 진행됐어요.</span></div>
+      <div class="sf-sum" style="--k:#2f6fd0"><b>도입 후</b><span>사람과 정보가 서로 연결되어 신속하고 빠른 소통이 가능해졌어요. 인공지능은 생산성을 크게 높였고, 데이터 분석으로 개인에게 맞는 정보도 줄 수 있게 됐어요.</span></div>
+    </div>
+    <p class="callout" style="margin-bottom:6px">⚖️ <b>함께 생각할 윤리 문제</b> 소프트웨어는 우리 일상을 편리하게 해 주었지만, <b>사생활 침해</b>와 <b>정보 격차에 따른 소외 계층의 발생</b> 같은 윤리적 문제를 가져올 수도 있어요. 그래서 소프트웨어를 쓸 때는 <b>개인 정보를 보호</b>하고, 누구나 동등하게 디지털 기술의 혜택을 누리도록 돕는 방법도 생각해야 해요.</p>
+    <div class="memo"><label>소프트웨어가 가져올 수 있는 문제를 줄이려면 어떻게 하면 좋을까요? <small>(선택) 내 생각을 적어 보세요.</small></label><textarea data-memo="ethics" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">03</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#2f6fd0"><b>소프트웨어</b>는 컴퓨터·휴대폰·가전제품 같은 하드웨어가 작동하도록 하는 프로그램이나 명령어들의 집합이다. 앱·운영체제·자동차나 엘리베이터의 프로그램은 물론 빅데이터·사물 인터넷·인공지능도 소프트웨어에 포함된다.</div>
+    <div style="--k:#9b4fc4">소프트웨어가 발전하면서 사회는 <b>자동화</b>(단순 작업 자동 수행), <b>개인화</b>(맞춤형 서비스), <b>연결화</b>(시간·공간 제약 감소), <b>지능화</b>(사람의 능력을 프로그램으로 실현)의 방향으로 달라졌다.</div>
+    <div style="--k:#d64535">소프트웨어는 <b>사생활 침해</b>와 <b>정보 격차에 따른 소외 계층</b> 같은 윤리 문제를 가져올 수 있다. 개인 정보를 보호하고 누구나 디지털 기술의 혜택을 누릴 방법을 함께 생각해야 한다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">02에서 고른 관점과 사례를 떠올리며, 도입 전과 후를 비교해 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">소프트웨어는 우리 사회를 어떻게 변화시켰을까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="3"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li><b>소프트웨어</b>가 무엇인지 내 말로 설명하고, 우리 주변(일기·나와 친구의 일상)에서 찾은 소프트웨어 사례를 두 가지 이상 들어 보세요.</li>
+      <li>자동화·개인화·연결화·지능화 가운데 <b>한 가지 관점</b>을 골라, 소프트웨어 <b>도입 전과 후</b>의 모습이 어떻게 달라졌는지 사례와 함께 설명하세요.</li>
+      <li>소프트웨어가 가져올 수 있는 <b>윤리적 문제</b>를 하나 들고, 그 문제를 줄이기 위해 개인과 사회가 할 수 있는 일을 쓰세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

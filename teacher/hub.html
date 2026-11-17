@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>__COURSE__ 수업 자료</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#16202c;--muted:#5b6776;--paper:#f3efe7;--line:#e3ddd2;--navy:#0f2742;--amber:#f2a516}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.55}
+  header{background:var(--navy);color:#fff;padding:20px 16px 16px}
+  .wrap{max-width:1100px;margin:0 auto}
+  header h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.9rem;margin:0}
+  header p{margin:6px 0 0;color:#c8d6e8;font-size:.92rem}
+  .top{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .top a{color:var(--navy);background:var(--amber);border-radius:10px;padding:6px 12px;text-decoration:none;font-weight:700;font-size:.92rem}
+  main{padding:16px 16px 60px}
+  .tg{font-size:.88rem;color:var(--muted);display:flex;align-items:center;gap:6px;margin:4px 0 0}
+  .unit{margin:24px 0 8px;display:flex;align-items:center;gap:10px}
+  .unit h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.4rem;margin:0;color:var(--k)}
+  .unit .cnt{color:var(--muted);font-size:.85rem}
+  .les{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(15,39,66,.06);padding:10px 12px;margin-bottom:7px;border-left:6px solid var(--k)}
+  .les.todo{opacity:.5;border-left-style:dashed}
+  .no{font-family:"Black Han Sans",sans-serif;font-size:1.2rem;color:var(--k)}
+  .les h3{margin:0;font-size:1rem}
+  .les small{color:var(--muted);font-size:.8rem}
+  .st{display:inline-block;font-size:.72rem;border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:2px}
+  .st.ready{background:#e3f4ec;color:#17694f}.st.draft{background:#fff4d6;color:#8a5a00}.st.todo{background:#eef0f3;color:#5b6776}
+  .act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .act a,.act button{font:inherit;font-size:.82rem;border:1.5px solid var(--k);background:#fff;color:var(--ink);border-radius:9px;padding:3px 9px;text-decoration:none;cursor:pointer;white-space:nowrap}
+  .act a:hover,.act button:hover{background:color-mix(in srgb,var(--k) 12%,white)}
+  @media (max-width:640px){.les{grid-template-columns:48px 1fr}.act{grid-column:1/-1;justify-content:flex-start}}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:8px 16px;border-radius:999px;opacity:0;transition:.2s;pointer-events:none}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>__COURSE__ 수업 자료</h1>
+  <p>선생님용 목록입니다. 「열기」는 미리보기(전송 안 함)로 열리고, 📋은 학생에게 줄 주소를 복사합니다.</p>
+  <div class="top"><a href="progress/">📈 진도 현황</a><span id="assess"></span></div>
+  <label class="tg"><input type="checkbox" id="showTodo"> 아직 만들지 않은 차시도 보기</label>
+</div></header>
+<main><div class="wrap" id="list"></div></main>
+<div class="toast" id="toast"></div>
+<script>
+const UNITS=__UNITS__, SITE='__SITE__', ASSESS=__ASSESS__;
+document.getElementById('assess').innerHTML=ASSESS.map(a=>`<a href="../${a.path}" target="_blank" rel="noopener" title="${a.note||''}">📋 수행평가 · ${a.title}</a><button data-u="${SITE}${a.path}" style="margin-left:4px">📋 주소</button>`).join(' ');
+const ST={ready:'공개',draft:'만드는 중',todo:'아직 없음'};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function draw(){
+  const all=document.getElementById('showTodo').checked;
+  document.getElementById('list').innerHTML=UNITS.map(u=>{
+    const L=u.lessons.filter(l=>all||l.status!=='todo');
+    if(!L.length) return '';
+    return `<div class="unit" style="--k:${u.color}"><h2>${esc(u.name)}</h2><span class="cnt">${u.lessons.filter(l=>l.status==='ready').length} / ${u.lessons.length} 공개</span></div>`+
+      L.map(l=>{const url=SITE+l.id+'/', has=l.status!=='todo';
+        return `<div class="les ${l.status}" style="--k:${u.color}"><div class="no">${esc(l.no)}</div>
+        <div><h3>${esc(l.title)}<span class="st ${l.status}">${ST[l.status]}</span></h3><small>${esc(l.pages)}쪽 · ${esc(l.id)}</small></div>
+        <div class="act">${has?`<a href="../${l.id}/?preview" target="_blank" rel="noopener">열기</a><button data-u="${esc(url)}">📋 학생 주소</button>`:''}${has&&l.form?`<a href="../forms/${esc(l.form)}.html?preview" target="_blank" rel="noopener">질문폼</a>`:''}</div></div>`;}).join('');
+  }).join('');
+}
+document.getElementById('showTodo').onchange=draw; draw();
+document.addEventListener('click',async e=>{const b=e.target.closest('button[data-u]'); if(!b) return;
+  try{await navigator.clipboard.writeText(b.dataset.u); toast('학생 주소를 복사했어요');}catch(x){prompt('주소를 복사하세요',b.dataset.u);}});
+function toast(t){const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); setTimeout(()=>el.classList.remove('on'),1500);}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+  /* u1-fusion 전용 (fu-) */
+  .fu-box{background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:11px 14px}
+  .fu-box>b{display:block;color:var(--k);font-size:1.02rem}
+  .fu-box span{display:block;font-size:.9rem;margin-top:3px}
+
+  /* 01 개발 기술 단계 SVG */
+  .fu-dev svg{width:100%;height:auto;background:radial-gradient(circle at 55% 40%,#1b3d66,#0f2742 72%);border-radius:12px}
+  .fu-dev svg .bx rect.box{fill:#13263f;stroke:#3b5a86;stroke-width:1.5;transition:fill .25s,stroke .25s}
+  .fu-dev svg .bx .tt{fill:#cfe0f5;font-size:14px;font-weight:700}
+  .fu-dev svg .bx .ts{fill:#9fb6d6;font-size:11px}
+  .fu-dev svg .bx.on rect.box{fill:#1f4b82;stroke:#f2a516;stroke-width:2.6}
+  .fu-dev svg .bx.on .tt{fill:#fff}
+  .fu-dev svg .bx.on .ts{fill:#ffe0a6}
+  .fu-dev svg .arw{stroke:#6b82a6;stroke-width:2.4;fill:none;opacity:.22;transition:opacity .25s,stroke .25s}
+  .fu-dev svg .arw.on{stroke:#f2a516;opacity:1;stroke-width:3}
+  .fu-btn{gap:8px}
+  .fu-cap{font-size:.95rem;min-height:4.5em;margin:10px 0 0;line-height:1.6}
+  .fu-cap b{color:var(--acc)}
+  @media (max-width:860px){.fu-cap{min-height:0}}
+
+  /* 02 분야 허브 */
+  .fu-hub{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:12px 0 2px}
+  .fu-hub span{background:var(--k);color:#fff;font-weight:700;border-radius:999px;padding:6px 16px}
+  .fu-hub i{font-style:normal;font-weight:700;color:var(--navy)}
+
+  /* 02·03 탭 */
+  .fu-tab{gap:8px;margin:4px 0 10px}
+  .fu-tab button{display:flex;align-items:center;gap:7px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 16px;font:inherit;font-weight:700;cursor:pointer;color:var(--ink)}
+  .fu-tab button .e{font-size:1.1rem}
+  .fu-tab button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .fu-tw{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:12px 16px}
+  .fu-tw p{margin:6px 0}
+  .fu-tt{display:block;color:var(--k);font-size:1.02rem}
+  .fu-ex{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:7px 12px;margin:8px 0 2px;font-size:.9rem}
+  .fu-step{background:#fff;border-radius:10px;border-left:5px solid var(--s);padding:8px 12px;margin:10px 0 0}
+  .fu-step em{font-style:normal;font-weight:800;color:var(--s);font-size:.9rem}
+  .fu-step p{margin:3px 0 0;font-size:.93rem}
+
+  /* 03 기대 효과 */
+  .fu-eff{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
+  @media (max-width:760px){.fu-eff{grid-template-columns:1fr}}
+  .fu-eff>div{background:#fff;border-radius:12px;border-top:5px solid var(--k);box-shadow:0 5px 14px rgba(15,39,66,.07);padding:11px 14px}
+  .fu-eff b{display:block;color:var(--k)}
+  .fu-eff span{display:block;font-size:.88rem;margin-top:3px}
