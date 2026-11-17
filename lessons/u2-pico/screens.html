@@ -1,0 +1,601 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#d0602f">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅱ. 창작을 지원하는 소프트웨어 · 라즈베리파이 피코로 만드는 미디어 아트</span>
+      <h1>미디어 아트 작품을<br>만들어 볼까?</h1>
+      <div class="story"><b>온도에 따라 색이 변하는 액자 만들기 (56쪽)</b><br>여러 가지 색을 표현할 수 있는 <b>네오픽셀 LED</b>와 온도와 습도를 함께 재는 <b>온습도 센서</b>를 써서, 온도에 따라 색이 변하는 액자를 만들어 봐요. 물음은 「어떻게 온도에 따라 색이 달라지게 할 수 있을까?」예요.</div>
+      <p>피코에 내장된 LED부터 시작해, 네오픽셀과 온습도 센서를 차례로 다루고 마지막에 <b>온도 → 색</b>을 하나로 묶어 봐요.</p>
+      <ol>
+        <li>준비 학습 · 실습 환경</li><li>실습 1~4</li><li>시뮬레이터 · 마무리 · 인터뷰</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 만들 것 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>💡</i><div><b>실습 1</b><small>피코 내장 LED 제어하기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🌈</i><div><b>실습 2</b><small>네오픽셀 LED 제어하기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🌡️</i><div><b>실습 3</b><small>온습도 센서 제어하기</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🖼️</i><div><b>실습 4</b><small>온도 변화를 색으로 표현하기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">시작 · 미디어 아트 작품을 만들어 볼까? (54쪽)</span>
+      <p>피지컬 컴퓨팅으로 작품을 만들려면 <b>개발 보드(마이크로컨트롤러)</b>가 필요해요. 마이크로컨트롤러에 여러 가지 <b>센서·액추에이터·통신 모듈</b>을 연결하면 다양한 프로젝트를 만들 수 있어요. 이 단원에서는 <b>라즈베리파이 피코</b>를 써요.</p>
+    </div>
+    <div class="card">
+      <h3>🖼️ 실습 · 온도에 따라 색이 변하는 액자 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽 실습 개요)</span></h3>
+      <div class="tscroll"><table class="tbl">
+        <tr><th>문제 상황</th><td>온도에 따라 색이 변하는 미디어 아트 작품을 만들어야 한다.</td></tr>
+        <tr><th>준비물</th><td>피코, 브레드 보드, 네오픽셀 LED, 온습도 센서, 액자</td></tr>
+        <tr><th>사용 소프트웨어</th><td>토니(Thonny), 파이썬</td></tr>
+      </table></div>
+      <p style="margin:12px 0 4px"><b>실습 순서</b></p>
+      <div class="pc-flow">
+        <div style="--k:#d0602f"><small>실습 1</small><b>피코 내장 LED 제어하기</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#d0602f"><small>실습 2</small><b>네오픽셀 LED 제어하기</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#d0602f"><small>실습 3</small><b>온습도 센서 제어하기</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#d0602f"><small>실습 4</small><b>온도 변화를 색으로 표현하기</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🐍 코드는 두 가지로 만나요</h3>
+      <div class="grid2 even">
+        <div class="pc-kind" style="--k:#1f2f4a"><b>📖 읽는 코드</b><span>피코에서만 돌아가는 코드(<code>machine</code>·<code>neopixel</code>·<code>dht</code>, <code>while True</code>)는 어두운 <b>코드 카드</b>로 읽기만 해요.</span></div>
+        <div class="pc-kind" style="--k:#1f9d74"><b>▶ 돌려 보는 코드</b><span>웹에서 돌려 볼 수 있게 <b>흉내 낸 파이썬</b>이에요. 측정값은 리스트로 주고, 몇 번만 돌아요. 고쳐서 <b>실행</b>을 눌러 봐요.</span></div>
+      </div>
+      <p class="note" style="margin-bottom:0">처음 실행하면 파이썬을 불러오느라 몇 초 걸려요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 어떻게 온도에 따라 색이 달라지게 할 수 있을까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>피코 실습 환경을 준비하는 순서를 말할 수 있다.</li>
+          <li>내장 LED·네오픽셀 LED·온습도 센서를 제어하는 코드를 읽고 설명할 수 있다.</li>
+          <li>온도에 따라 LED 색이 바뀌는 조건문을 완성해 볼 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">펌웨어 · 마이크로파이썬 · 토니(Thonny) · 라이브러리 · 핀아웃 · 내장 LED · 네오픽셀 · RGB · DHT11 · 시뮬레이터</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>나는 센서가 읽은 값으로 이런 작품을 만들면 좋겠다. <small>떠오르는 대로 한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planIdea" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 준비 학습부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 준비 학습 -->
+<section class="page" data-name="준비 학습" data-acc="#d0602f">
+  <div class="head"><div class="num">01</div><div><h2>준비 학습 · 실습 환경 설정하기</h2><p>교과서 54~55쪽 · 펌웨어·통합 개발 환경·라이브러리 설치, 핀 연결 안내</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코로 작품을 만들려면 먼저 <b>① 피코 안에 파이썬을 알아듣는 기본 프로그램(펌웨어)을 넣고, ② 코드를 쓰고 올릴 도구(토니)를 설치하고, ③ 필요한 부품 도우미(라이브러리)를 내려받는</b> 세 단계가 필요해요. 한 번만 해 두면 돼요.</span></div>
+
+  <div class="card">
+    <h3>🃏 먼저 낱말 살펴보기 <span class="muted" style="font-weight:400;font-size:.88rem">(54~55쪽 낱말 풀이)</span></h3>
+    <p class="muted" style="margin-top:0">카드를 눌러 뜻을 확인해요. 뜻을 먼저 떠올려 본 뒤에 뒤집어 봐요.</p>
+    <div id="prepFlip" class="tcards"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔧 실습 환경 설정 세 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(54~55쪽)</span></h3>
+    <div class="pc-steps">
+      <div style="--k:#d0602f"><span class="n">1</span><div><b>펌웨어 설치하기</b>
+        <ol>
+          <li>검색창에서 「마이크로파이썬(MicroPython)」을 검색해 홈페이지(micropython.org)의 다운로드 메뉴로 가요. 「pico」를 입력하고 라즈베리파이 피코 그림을 찾아 눌러, 최신 펌웨어 파일(<b>.uf2</b>)을 내려받아요.</li>
+          <li>피코 위쪽의 <b>BOOTSEL</b> 버튼을 누른 상태에서 USB로 컴퓨터와 피코를 연결해요. 컴퓨터가 <b>RPI-RP2</b> 장치로 알아봐요.</li>
+          <li>드라이브가 오른쪽 그림처럼 보이면, 내려받은 uf2 파일을 <b>RPI-RP2 드라이브</b>에 복사해 붙여 넣거나 끌어 놓아요. 장치가 새로 연결되면서 RPI-RP2 장치가 사라지면 설치가 끝난 거예요.</li>
+        </ol></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>통합 개발 환경(IDE) 설치하기</b>
+        <ol>
+          <li>검색창에 영문으로 「Thonny」를 입력해 홈페이지로 가요. 내 운영체제에 맞는 파일을 내려받아 순서대로 설치해요.</li>
+          <li>설치한 뒤 도구(Tools) 메뉴에서 옵션(options)을 열어요. <b>인터프리터(Interpreter)</b> 탭에서 <b>MicroPython (Raspberry Pi Pico)</b>를 고르고, 통신 포트는 <b>직렬 장치 포트 번호</b>로 골라요.</li>
+        </ol>
+        <p class="note" style="margin:4px 0 0">포트 번호 찾는 법(교과서 말풍선): 모니터 화면 왼쪽 아래의 윈도 버튼을 오른쪽 클릭해 나오는 메뉴에서 장치 관리자 → 포트(COM &amp; LPT)를 열어 Serial Port의 번호를 확인해요.</p></div></div>
+      <div style="--k:#1f9d74"><span class="n">3</span><div><b>라이브러리 설치하기</b>
+        <ol>
+          <li>57~58쪽 실습을 위해 <b>neopixel</b>과 <b>dht</b> 라이브러리를 설치해요.</li>
+          <li>Thonny의 <b>Tools → Manage packages</b>를 눌러요. 검색칸에 이름(neopixel, dht)을 쓰고 검색한 뒤, 나온 결과를 눌러 설치해요.</li>
+        </ol></div></div>
+    </div>
+    <p class="callout" style="margin-bottom:0">💡 <b>TIP · 라이브러리를 설정하는 이유</b> 라이브러리는 이미 구현된 기능을 제공하므로, 이를 활용하면 코드를 빠르게 작성할 수 있어요. 파이썬은 풍부한 표준 라이브러리를 제공하지만, 특정 작업이나 기능을 하려면 추가 라이브러리가 필요해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 어느 단계에서 하는 일일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">설치 과정의 한 장면을 읽고, 세 단계 가운데 어디에 속하는지 골라 봐요.</p>
+    <div id="setupSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>📍 장치 살펴보기 · 라즈베리파이 핀아웃 <span class="muted" style="font-weight:400;font-size:.88rem">(54쪽)</span></h3>
+    <p style="margin-top:0">피코의 많은 핀(단자)은 각각 조금씩 다른 기능을 가지도록 설계되어 있어요. 이것을 <b>핀아웃</b>이라고 해요. 예를 들어 36번 핀은 3V3(OUT), 38번 핀은 GND의 기능을 가져요. 회로를 구성할 때는 핀아웃을 보고 알맞은 핀을 골라, 그 핀으로 신호를 주어 여러 장치를 제어해요.</p>
+    <p style="margin:10px 0 4px"><b>핀 연결 안내</b> <span class="muted">(교과서 표를 옮겼어요)</span></p>
+    <div class="tscroll"><table class="tbl pc-pin">
+      <tr><th>역할</th><th>피코</th><th>장치</th><th>연결하는 단자</th></tr>
+      <tr><td rowspan="3">접지</td><td rowspan="3">GND핀</td><td>네오픽셀</td><td>GND</td></tr>
+      <tr><td>온습도 센서 · 피에조 버저</td><td>GND(-)</td></tr>
+      <tr><td>심박 측정 센서</td><td>-</td></tr>
+      <tr><td rowspan="3">전원 공급</td><td rowspan="3">3V3핀</td><td>네오픽셀</td><td>5V</td></tr>
+      <tr><td>온습도 센서 · 피에조 버저</td><td>VCC(+)</td></tr>
+      <tr><td>심박 측정 센서</td><td>+</td></tr>
+      <tr><td rowspan="3">디지털 연결</td><td rowspan="2">GP0핀</td><td>네오픽셀</td><td>DI</td></tr>
+      <tr><td>피에조 버저</td><td>IN(s)</td></tr>
+      <tr><td>GP22핀</td><td>온습도 센서</td><td>S</td></tr>
+      <tr><td>아날로그 연결</td><td>GP28핀</td><td>심박 측정 센서</td><td>S</td></tr>
+    </table></div>
+    <p class="note">이 차시에서는 네오픽셀과 온습도 센서 줄을 써요. 피에조 버저·심박 측정 센서는 다른 실습에서 만나요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💾 더 알아보기 · 프로그램 실행 파일 저장하기 <span class="muted" style="font-weight:400;font-size:.88rem">(55쪽)</span></h3>
+    <p style="margin-top:0">피코로 실습할 때는 코드를 <b>py 확장자</b>로 저장해야 해요. 피코를 케이블로 연결하거나 외부 전원으로 연결했을 때, 저장된 파일이 <b>계속 작동</b>할 수 있기 때문이에요.</p>
+    <ol class="pc-ol">
+      <li>「파일(File)」 메뉴를 다시 눌러 「다른 이름으로 저장(Save As)」을 골라요.</li>
+      <li>저장할 위치와 파일 이름을 정하고, 파일 이름 뒤에 <b>.py</b>를 붙여요. 예) my_code.py</li>
+      <li>「저장(Save)」 버튼을 눌러 파일을 저장해요.</li>
+    </ol>
+    <div class="memo"><label>설치하다가 막힌 곳이나 궁금한 점이 있었나요? <small>(선택)</small></label><textarea data-memo="prepStuck" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 실습 1 내장 LED -->
+<section class="page" data-name="실습 1 · 내장 LED" data-acc="#d0602f">
+  <div class="head"><div class="num">02</div><div><h2>실습 1 · 피코 내장 LED 제어하기</h2><p>교과서 56쪽 · 회로 구성, 프로그래밍, 실행 결과</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코 보드 위에는 <b>작은 LED가 이미 붙어 있어요</b>. 이 LED를 <b>켜고(1), 1초 기다리고, 끄고(0), 1초 기다리는</b> 일을 계속 반복하면 불빛이 1초 간격으로 깜빡여요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽)</span></h3>
+    <p style="margin-top:0">브레드 보드에 피코를 연결하고, 내장된 LED를 쓰기 위해 <b>25번 핀</b>을 찾아봐요. 내장 LED를 제어하는 핀은 보드 상단의 LED(<b>GP25핀</b>)에 연결되어 있어요. 따로 부품을 달지 않아도 돼요.</p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽)</span></h3>
+    <p style="margin-top:0">피코에 내장된 LED를 제어하는 프로그램이에요. 피코에서만 돌아가서 여기서는 <b>읽기만</b> 해요.</p>
+<pre class="code">from machine import Pin           <i># machine 모듈에서 Pin 클래스(핀 제어) 사용</i>
+import time                       <i># 시간 지연 기능을 위한 time 모듈 사용</i>
+led = Pin(25, Pin.OUT)            <i># 25번 핀을 출력 모드로 led 객체 생성</i>
+
+while True:                       <i># 무한 반복 시작</i>
+    led.value(1)                  <i># LED 켜기</i>
+    time.sleep(1)                 <i># 1초 대기</i>
+    led.value(0)                  <i># LED 끄기</i>
+    time.sleep(1)                 <i># 1초 대기</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="led1Flip" class="tcards"></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽)</span></h3>
+    <p style="margin-top:0">Thonny의 Run 버튼을 눌러 프로그램을 실행해요. <b>1초 간격으로</b> 피코에 내장된 LED의 불빛이 <b>깜빡이는 것</b>을 확인할 수 있어요.</p>
+    <div class="pc-blink" aria-label="LED 깜빡임 그림">
+      <svg viewBox="0 0 320 70" role="img" aria-label="LED가 켜짐, 꺼짐을 1초씩 번갈아 하는 그림">
+        <g font-size="12" font-weight="700" text-anchor="middle" fill="#0f2742">
+          <circle cx="40" cy="30" r="16" fill="#ffd54a" stroke="#0f2742" stroke-width="2"/><text x="40" y="62">켜짐</text>
+          <circle cx="110" cy="30" r="16" fill="#e5e8ec" stroke="#0f2742" stroke-width="2"/><text x="110" y="62">꺼짐</text>
+          <circle cx="180" cy="30" r="16" fill="#ffd54a" stroke="#0f2742" stroke-width="2"/><text x="180" y="62">켜짐</text>
+          <circle cx="250" cy="30" r="16" fill="#e5e8ec" stroke="#0f2742" stroke-width="2"/><text x="250" y="62">꺼짐</text>
+          <text x="75" y="14" font-size="10" fill="#6b7585">1초</text><text x="145" y="14" font-size="10" fill="#6b7585">1초</text><text x="215" y="14" font-size="10" fill="#6b7585">1초</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 깜빡임 순서를 파이썬으로 흉내 내 보기</h3>
+    <p style="margin-top:0">피코 코드의 <code>while True</code>는 끝없이 도는 반복이라 웹에서는 돌릴 수 없어요. 그래서 <b>3번만 도는 <code>for</code></b>로 바꾸고, 켜고 끄는 일을 <code>print( )</code>로 보여 줘요. 반복 횟수 <code>3</code>이나 출력 글을 바꿔서 다시 실행해 봐요.</p>
+    <div id="ledRun"></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 실습 2 네오픽셀 -->
+<section class="page" data-name="실습 2 · 네오픽셀" data-acc="#d0602f">
+  <div class="head"><div class="num">03</div><div><h2>실습 2 · 네오픽셀 LED 제어하기</h2><p>교과서 57쪽 · 회로 구성, RGB 값, 해 보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span><b>네오픽셀</b>은 작은 LED가 줄줄이 붙어 있어서 <b>LED마다 따로 색을 정할 수 있는</b> 부품이에요. 색은 <b>빨강(R)·초록(G)·파랑(B)을 각각 0~255로 섞어서</b> 만들어요. <code>(255, 0, 0)</code>은 빨강만 가득 켠 빨간색이에요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+    <p style="margin-top:0">네오픽셀 3핀의 글씨를 잘 보고, 브레드 보드를 이용해 아래 표처럼 연결해요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>네오픽셀</th><th>피코</th></tr>
+      <tr><td>GND</td><td>GND핀(접지)</td></tr>
+      <tr><td>DI</td><td>GP0핀(디지털 연결)</td></tr>
+      <tr><td>5V</td><td>3V3핀(전원 공급 VCC)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+<pre class="code">from machine import Pin
+import time
+from neopixel import NeoPixel      <i># 네오픽셀 사용을 위한 모듈 호출</i>
+
+NUM_LEDS = 4                       <i># 사용할 LED 개수</i>
+PIN_NUM = 0                        <i># DIN 핀으로 사용할 입출력(GPIO) 핀 번호</i>
+
+pixels = NeoPixel(Pin(PIN_NUM), NUM_LEDS, bpp = 3)   <i># RGB 모드(bpp=3)를 사용해 NeoPixel 객체 생성</i>
+
+while True:
+    pixels.fill((255, 0, 0))       <i># 빨간색(R, G, B)으로 LED 켜기</i>
+    pixels.write()                 <i># 변경 사항 적용</i>
+    time.sleep(1)                  <i># 1초 대기</i>
+    pixels.fill((0, 0, 0))         <i># 모든 LED 끄기</i>
+    pixels.write()                 <i># 변경 사항 적용</i>
+    time.sleep(1)                  <i># 1초 대기</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="neoFlip" class="tcards"></div>
+    <p class="callout" style="margin-bottom:0">🎨 <b>코드 가이드 · <code>pixels.fill((255, 0, 0))</code></b> 괄호 안 숫자는 <b>R, G, B 값</b>이에요. 원하는 색의 RGB 값은 「색상 팔레트」를 검색하면 확인할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎚️ 체험 · R, G, B를 섞어 색 만들기</h3>
+    <p style="margin-top:0">막대를 움직여 세 값을 바꿔 봐요. 아래 색 칸과 코드 줄이 같이 바뀌어요. <b>(255, 0, 0)</b>과 <b>(0, 0, 0)</b>은 어떤 색인지도 확인해 봐요.</p>
+    <div class="pc-rgb">
+      <div class="pc-sw" id="pcSwatch" role="img" aria-label="R, G, B 값으로 만든 색 미리보기"><span id="pcSwatchTxt">(255, 0, 0)</span></div>
+      <div class="pc-sl">
+        <label><b style="color:#d64535">R</b> 빨강 <input type="range" id="pcR" min="0" max="255" value="255"><output id="pcRv">255</output></label>
+        <label><b style="color:#1f9d74">G</b> 초록 <input type="range" id="pcG" min="0" max="255" value="0"><output id="pcGv">0</output></label>
+        <label><b style="color:#2f6fd0">B</b> 파랑 <input type="range" id="pcB" min="0" max="255" value="0"><output id="pcBv">0</output></label>
+      </div>
+    </div>
+    <pre class="code" id="pcLine" style="margin-bottom:0">pixels.fill((255, 0, 0))</pre>
+    <p class="note">모니터 화면의 색 미리보기예요. 실제 네오픽셀의 밝기와 색은 조금 다르게 보일 수 있어요.</p>
+    <div class="memo"><label>R·G·B를 움직여 보며 알게 된 점을 적어 보세요. <small>(선택) 예) 세 값이 모두 0이면?</small></label><textarea data-memo="rgbFind" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+    <p style="margin-top:0">Run 버튼을 눌러 실행하면 네오픽셀의 <b>빨간색 불빛이 1초 간격으로 깜빡이는 것</b>을 확인할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 색 이름을 (R, G, B) 튜플로 바꿔 보기</h3>
+    <p style="margin-top:0">색 이름과 RGB 튜플을 <b>딕셔너리</b>에 짝지어 두고, <code>for</code>로 하나씩 꺼내 <code>fill</code> 줄을 만들어 보여 줘요. 색 이름과 값을 바꾸거나 새로 넣어 봐요.</p>
+    <div id="colorRun"></div>
+    <p class="note">노랑·흰색의 값은 교과서에 없는 예예요. 위 슬라이더로 확인해 봐도 좋아요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✍️ 해 보기 · LED 제어 프로그램 구현하기 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+    <p style="margin-top:0"><b>1초 간격으로 네오픽셀 LED의 색이 빨강, 파랑, 초록 순서로 바뀌는 프로그램</b>을 작성해 보세요. 아래 칸의 <code>___</code> 자리에 색(R, G, B 튜플)을 직접 채워서 실행해 봐요.</p>
+    <div id="colorTry"></div>
+    <p class="callout" style="margin-bottom:0">⚠️ <code>___</code>를 채우기 전에는 <b>오류가 나는 게 정상</b>이에요. 슬라이더에서 빨강·파랑·초록이 되는 값을 찾아 보고, 순서대로 채워 봐요. 피코에서는 같은 색 목록을 <code>pixels.fill(색)</code>, <code>pixels.write()</code>, <code>time.sleep(1)</code>과 함께 반복하면 돼요.</p>
+    <div class="memo"><label>내가 채운 값과 실행 결과를 적어 두세요. <small>(선택)</small></label><textarea data-memo="colorTryMemo" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 실습 3 온습도 센서 -->
+<section class="page" data-name="실습 3 · 온습도 센서" data-acc="#d0602f">
+  <div class="head"><div class="num">04</div><div><h2>실습 3 · 온습도 센서 제어하기</h2><p>교과서 58쪽 · 회로 구성, 코드 해설, 장치 살펴보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>온습도 센서는 주변의 <b>온도와 습도를 한 번에 재서 숫자로 알려 주는</b> 부품이에요. 피코가 <b>「재!」 하고 시키면(measure)</b>, 온도와 습도를 <b>읽어 와서(temperature, humidity)</b> 화면에 출력해요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p style="margin-top:0">피코에는 온도 센서가 내장되어 있지만, 이번 실습에서는 피코에 <b>온습도 센서를 따로 연결</b>해 써요. 온습도 센서 모듈에 새겨진 극성과 회로를 확인하고, 피코의 입출력 핀 한 개를 써서 두 장치를 연결해요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>온습도 센서</th><th>피코</th></tr>
+      <tr><td>S</td><td>GP22핀(디지털 연결)</td></tr>
+      <tr><td>VCC(+)</td><td>3V3핀(전원 공급 VCC)</td></tr>
+      <tr><td>GND(-)</td><td>GND핀(접지)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p class="callout" style="margin-top:0"><b>코드 해설</b> dht 라이브러리를 불러와 dht 핀 연결로 <code>sensor.measure()</code> 함수를 호출해 데이터를 측정한 뒤, <code>sensor.temperature()</code> 함수와 <code>sensor.humidity()</code> 함수로 온도와 습도를 읽어요. 이 값을 출력창에 출력하고, <code>time.sleep(1)</code>로 측정 간격을 1초로 정해요.</p>
+<pre class="code">from machine import Pin
+import time
+import dht                         <i># 온습도 센서 모듈 설치</i>
+
+sensor = dht.DHT11(Pin(22))        <i># 22번 핀에 연결된 DHT11 센서 초기화</i>
+
+while True:
+    sensor.measure()               <i># 센서에서 측정 시작</i>
+    temp = sensor.temperature()    <i># 온도 측정</i>
+    hum = sensor.humidity()        <i># 습도 측정</i>
+
+    print('Temperature: ', temp, ' °C')   <i># 온도와 습도 출력</i>
+    print('Humidity: ', hum, ' %')
+    time.sleep(1)                  <i># 1초마다 측정</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="dhtFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">교과서 말풍선: 이 코드를 실행하면 온습도 값을 피코에서 출력할 수 있어요. 이를 활용해 환경 모니터링, 자동 제어 같은 다양한 응용 프로그램을 개발할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p style="margin-top:0">Run 버튼을 눌러 실행하면 Thonny 아래쪽 Shell 창에 <b>현재 온습도 값이 변하는 것</b>을 볼 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>📟 장치 살펴보기 · 온습도 센서 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p style="margin-top:0">온습도 센서에는 다양한 종류가 있어요. 그중 <b>DHT11</b>은 <b>디지털 신호</b>로 데이터를 내보내요. 모듈형이라 여러 마이크로컨트롤러 프로젝트에 쉽게 붙일 수 있어요.</p>
+    <div class="pc-range">
+      <svg viewBox="0 0 330 130" role="img" aria-label="DHT11 측정 범위. 온도 0도에서 50도, 습도 20퍼센트에서 90퍼센트">
+        <g font-size="11" fill="#0f2742" font-weight="700">
+          <text x="4" y="14">온도 (°C) · 눈금 0~50</text>
+          <rect x="10" y="20" width="310" height="20" rx="10" fill="#d0602f"/>
+          <text x="165" y="34" fill="#fff" text-anchor="middle">0 ~ 50 °C (정확도 ±2 °C)</text>
+          <text x="4" y="72">습도 (%RH) · 눈금 0~100</text>
+          <rect x="10" y="78" width="310" height="20" rx="10" fill="#eceff3"/>
+          <rect x="72" y="78" width="217" height="20" rx="10" fill="#2f6fd0"/>
+          <text x="180" y="92" fill="#fff" text-anchor="middle">20 ~ 90 %RH (±5 %RH)</text>
+        </g>
+        <g font-size="10" fill="#6b7585" text-anchor="middle"><text x="10" y="116">0</text><text x="72" y="116">20</text><text x="289" y="116">90</text><text x="320" y="116">100</text></g>
+      </svg>
+    </div>
+    <p class="note" style="margin-bottom:0">막대는 교과서에 적힌 측정 범위를 내가 그림으로 옮긴 거예요. 습도 막대의 눈금은 0~100으로 그렸어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 센서가 읽은 값을 출력하는 모양 흉내 내기</h3>
+    <p style="margin-top:0">진짜 센서 대신 <b>(온도, 습도) 흉내 값</b>을 리스트에 넣고 <code>for</code>로 한 쌍씩 꺼내 같은 모양으로 출력해요. 값을 바꿔 보고, 범위를 벗어난 값(예: 온도 60)을 넣으면 어떻게 되는지도 확인해 봐요.</p>
+    <div id="dhtRun"></div>
+    <p class="note">리스트 안의 숫자는 예로 만든 흉내 값이에요.</p>
+    <div class="memo"><label>온습도 센서로 재고 싶은 장소는 어디인가요? 이유도 한 줄 적어 보세요. <small>(선택)</small></label><textarea data-memo="dhtWhere" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 실습 4 온도를 색으로 -->
+<section class="page" data-name="실습 4 · 온도를 색으로" data-acc="#d0602f">
+  <div class="head"><div class="num">05</div><div><h2>실습 4 · 온도 변화를 색으로 표현하기</h2><p>교과서 59쪽 · 회로 구성, 조건문 완성, 액자 만들기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>실습 3에서 읽은 <b>온도</b>를 보고, 실습 2에서 배운 <b>색 정하기</b>를 이어 붙이는 거예요. 「온도가 어느 범위인가?」에 따라 <b>if · elif · else</b>로 갈라서 네오픽셀의 색을 다르게 정해요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(59쪽)</span></h3>
+    <p style="margin-top:0">액자 덮개에 피코와 네오픽셀 LED, 온습도 센서 회로를 연결해요.</p>
+    <div class="pc-frame">
+      <svg viewBox="0 0 340 150" role="img" aria-label="액자 덮개의 안쪽에는 네오픽셀 LED, 반대편에는 브레드 보드와 피코와 온습도 센서를 두는 그림">
+        <g font-size="11" font-weight="700" text-anchor="middle" fill="#0f2742">
+          <rect x="6" y="20" width="140" height="100" rx="8" fill="#fbfaf7" stroke="#0f2742" stroke-width="2"/>
+          <text x="76" y="14">액자 덮개 안쪽</text>
+          <rect x="40" y="55" width="72" height="14" rx="7" fill="#9fdfc2" stroke="#1f9d74" stroke-width="2"/><text x="76" y="88">네오픽셀 LED</text>
+          <text x="76" y="106" font-size="10" font-weight="400" fill="#6b7585">양면테이프로 고정</text>
+          <rect x="194" y="20" width="140" height="100" rx="8" fill="#fbfaf7" stroke="#0f2742" stroke-width="2"/>
+          <text x="264" y="14">액자 덮개 반대편</text>
+          <rect x="206" y="48" width="64" height="30" rx="4" fill="#fff" stroke="#8a8f98" stroke-width="2"/><text x="238" y="66" font-size="10">브레드 보드</text>
+          <rect x="214" y="53" width="26" height="12" rx="2" fill="#1f9d74" opacity=".5"/><text x="227" y="62" font-size="8">피코</text>
+          <rect x="284" y="52" width="34" height="24" rx="3" fill="#6fb6ea" stroke="#2f6fd0" stroke-width="2"/><text x="301" y="68" font-size="9">센서</text>
+          <text x="264" y="106" font-size="10" font-weight="400" fill="#6b7585">온습도 센서·브레드 보드 고정</text>
+          <path d="M112 62 C150 62 160 62 206 62" stroke="#d0602f" stroke-width="3" fill="none" stroke-dasharray="5 4"/>
+          <text x="160" y="140" font-size="10" font-weight="400" fill="#6b7585">구멍으로 케이블을 반대쪽에 빼요</text>
+        </g>
+      </svg>
+    </div>
+    <ul class="pc-ul">
+      <li>액자 덮개 안쪽에 <b>네오픽셀 LED를 양면테이프로 고정</b>하고, 케이블을 반대쪽으로 빼낼 수 있도록 <b>구멍을 뚫어요</b>.</li>
+      <li>액자 덮개 반대편에 <b>브레드 보드와 온습도 센서를 양면테이프로 고정</b>하고, 피코와 네오픽셀 회로를 연결해요.</li>
+    </ul>
+    <p class="note" style="margin-bottom:0">그림은 교과서 사진 설명을 바탕으로 내가 단순하게 그린 거예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 빈칸 채우기 <span class="muted" style="font-weight:400;font-size:.88rem">(59쪽)</span></h3>
+    <p style="margin-top:0"><b>온도가 22도보다 낮으면 파란색, 22도에서 26도 사이는 초록색, 26도보다 높으면 빨간색 LED가 켜지도록</b> 빈칸을 채워 프로그램을 완성해 보세요!</p>
+    <p class="muted" style="margin:4px 0">피코에서는 <code>pixels.fill((…))</code>와 <code>pixels.write()</code>가 들어가요. 여기서는 센서 대신 <b>온도 리스트</b>를 하나씩 꺼내고, <code>fill</code> 대신 <code>print( )</code>로 결과를 보여 줘요.</p>
+    <div id="frameRun"></div>
+    <p class="callout" style="margin-bottom:0">⚠️ <code>___</code>를 채우기 전에는 <b>오류가 나는 게 정상</b>이에요. <b>온도 기준이 되는 숫자</b>와 <b>각 색의 (R, G, B) 값</b>을 모두 채워야 해요. 다 채운 뒤에는 22도와 26도 같은 <b>경계 값</b>이 어느 색이 되는지 꼭 확인해 봐요. 온도 리스트의 숫자도 바꿔 봐요.</p>
+    <div class="memo"><label>다 채워 실행해 본 뒤, 온도별로 어떤 색이 나왔는지 적어 보세요. <small>(선택)</small></label><textarea data-memo="frameResult" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 · 액자 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(59쪽)</span></h3>
+    <div class="pc-steps small">
+      <div style="--k:#2f6fd0"><span class="n">1</span><div><b>사진 이미지 만들기</b><span>캔바, 미리캔버스 같은 디자인 사이트에서 액자에 넣을 사진 이미지를 만들어요.</span></div></div>
+      <div style="--k:#8077bd"><span class="n">2</span><div><b>구멍 뚫고 고정하기</b><span>사진 뒤에서 불빛이 나올 수 있도록 원하는 부분에 구멍을 뚫고, 가공이 끝나면 사진을 액자 위치에 잘 고정해요. 빛이 새어 나오지 않도록 사진 뒤에 <b>우드락</b>을 붙여요.</span></div></div>
+      <div style="--k:#d0602f"><span class="n">3</span><div><b>프로그램 실행하기</b><span>Run 버튼을 눌러 프로그램을 실행해요. 표시한 구멍을 뚫은 부분에서 온도에 따라 색이 변하는 LED 불빛이 비쳐 나와요.</span></div></div>
+    </div>
+    <div class="memo"><label>내가 만들고 싶은 액자 그림(주제)은? 온도가 낮을 때와 높을 때 어떤 느낌이면 좋을까요? <small>(선택)</small></label><textarea data-memo="frameIdea" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 선택 학습 시뮬레이터 -->
+<section class="page" data-name="선택 · 시뮬레이터" data-acc="#d0602f">
+  <div class="head"><div class="num">06</div><div><h2>선택 학습 · 시뮬레이터로 실습하기</h2><p>교과서 60~61쪽 · WOKWI 사용법, 실습 1~3, 해 보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코를 직접 쓸 수 없을 때는 <b>웹에서 가짜 피코로 실습</b>할 수 있어요. <b>WOKWI</b>라는 시뮬레이터 사이트에서 코드를 쓰고 실행하면, 화면 속 피코와 LED가 움직여요. (선택 학습이라 해 보고 싶은 사람만 해요.)</span></div>
+
+  <div class="card">
+    <h3>🖥️ 시뮬레이터 프로그램 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(60쪽)</span></h3>
+    <ol class="pc-ol">
+      <li>실습 도구 없이 웹에서 간단히 시뮬레이션할 수 있는 <b>WOKWI</b> 사이트에 접속해요.</li>
+      <li>실습에 사용할 개발 보드(피코, Pi Pico)를 골라요.</li>
+      <li>마이크로파이썬을 쓰기 위한 환경을 만들려고 <b>Starter Templates</b>에서 <b>Micropython</b>을 골라요.</li>
+      <li>실습 화면의 <b>왼쪽은 코드를 쓰는 곳</b>, <b>오른쪽은 피코 회로 구성과 시뮬레이션을 확인하는 곳</b>이에요.</li>
+    </ol>
+    <p class="note" style="margin-bottom:0">교과서 말풍선: 마우스 커서를 피코에 가져가 점선이 나오면 마우스를 눌러요. 물음표 표시가 있을 때 키보드의 R을 누르면 피코가 오른쪽으로 90도씩 돌아가요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💡 실습 1 · 피코 내장 LED 제어하기 <span class="muted" style="font-weight:400;font-size:.88rem">(60쪽)</span></h3>
+    <p style="margin-top:0">피코 보드에 연결한 LED를 <b>1초 동안 깜빡거리게</b> 하는 프로그램을 쓰고, 시뮬레이션 창의 실행 버튼을 눌러 결과를 확인해요.</p>
+<pre class="code">from machine import Pin
+import time
+led = Pin(25, Pin.OUT)
+
+while True:
+    led.value(1)
+    time.sleep(1)
+    led.value(0)
+    time.sleep(1)</pre>
+  </div>
+
+  <div class="card">
+    <h3>🌈 실습 2 · 네오픽셀 LED 제어하기 ① <span class="muted" style="font-weight:400;font-size:.88rem">(61쪽)</span></h3>
+    <ol class="pc-ol">
+      <li>시뮬레이션 창의 「+」 버튼을 눌러 목록에서 <b>네오픽셀 LED</b>를 고르고, 원하는 위치에 놓아요.</li>
+      <li>네오픽셀 LED 핀(회색 부분)을 누른 뒤, 나오는 이름에 맞춰 피코와 연결해요.</li>
+    </ol>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>네오픽셀</th><th>피코</th></tr>
+      <tr><td>GND</td><td>GND핀</td></tr>
+      <tr><td>VCC</td><td>3V3핀</td></tr>
+      <tr><td>DIN</td><td>GP0핀</td></tr>
+    </table></div>
+    <p class="callout">💡 <b>TIP · 회로 연결 방법</b> 네오픽셀 LED의 핀을 누르면 각 핀의 이름이 뜨고, 피코에서도 연결할 수 있는 핀의 위치가 표시돼요. 피코에 회로를 가져다 댔을 때 뜨는 핀의 이름을 확인한 뒤, 알맞은 것끼리 서로 연결해요.</p>
+    <ol class="pc-ol" start="3">
+      <li>왼쪽에 코드를 쓰고 오른쪽 실행 버튼을 눌러 시뮬레이션 결과를 확인해요.</li>
+    </ol>
+<pre class="code">from machine import Pin
+import neopixel
+
+<i># 네오픽셀 설정</i>
+NUM_PIXELS = 1       <i># 사용할 픽셀 수</i>
+PIN_NUM = 0          <i># DIN 핀으로 사용할 GPIO 핀 번호</i>
+pixels = neopixel.NeoPixel(Pin(PIN_NUM), NUM_PIXELS)
+
+red = (255, 0, 0)    <i># 빨간색으로 설정</i>
+pixels[0] = red      <i># 첫 번째 픽셀에 빨간색 적용</i>
+pixels.write()       <i># 변경 사항을 실제로 픽셀에 반영</i></pre>
+  </div>
+
+  <div class="card">
+    <h3>🔴 실습 3 · 네오픽셀 LED 제어하기 ② <span class="muted" style="font-weight:400;font-size:.88rem">(61쪽)</span></h3>
+    <p style="margin-top:0">네오픽셀 LED가 <b>한 개씩 16개가 모두 켜졌다가 꺼지는</b> 프로그램을 쓰고, 결과를 확인해 봐요.</p>
+<pre class="code">from machine import Pin
+import neopixel
+import time
+
+NUM_PIXELS = 16
+PIN_NUM = 0
+pixels = neopixel.NeoPixel(Pin(PIN_NUM), NUM_PIXELS)
+
+while True:
+    for i in range(NUM_PIXELS):
+        pixels[i] = (255, 0, 0)   <i># LED를 빨간색으로 변경</i>
+        pixels.write()
+        time.sleep(0.5)
+
+    for i in range(NUM_PIXELS):
+        pixels[i] = (0, 0, 0)     <i># LED를 꺼짐 상태로 변경</i>
+        pixels.write()
+        time.sleep(0.5)</pre>
+    <p style="margin:12px 0 4px"><b>체험 · 한 칸씩 따라가 보기</b> <span class="muted">버튼을 누를 때마다 코드 한 번이 실행되는 모습이에요.</span></p>
+    <div class="pc-ring">
+      <svg viewBox="0 0 200 200" id="pcRing" role="img" aria-label="네오픽셀 16개를 둥글게 늘어놓은 그림"></svg>
+      <div class="pc-ringside">
+        <div id="pcRingTxt" class="pc-ringtxt">버튼을 눌러 시작해요.</div>
+        <div class="row" style="margin-top:8px"><button class="btn sm" id="pcRingNext">다음 한 칸 →</button><button class="btn ghost sm" id="pcRingReset">처음부터</button></div>
+      </div>
+    </div>
+    <p class="note" style="margin-bottom:0">0번부터 15번까지 16개를 차례로 켠 뒤, 같은 순서로 하나씩 꺼요(실제로는 칸마다 0.5초씩 기다려요).</p>
+  </div>
+
+  <div class="card">
+    <h3>🎨 해 보기 · 미디어 아트 작품 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(61쪽)</span></h3>
+    <p style="margin-top:0">네오픽셀 LED를 <b>여러 개 연결</b>하여 나만의 예술 작품을 만들어 봐요.</p>
+    <p class="callout" style="margin-bottom:8px">➕ <b>심화</b> 실습 2와 실습 3에서 쓰지 않은 네오픽셀 LED의 4번째 핀은 <b>DOUT</b>이에요. 네오픽셀 LED를 더 이어 붙일 때 쓰는 핀이고, 추가할 LED의 DIN과 연결하면 돼요.</p>
+    <div class="memo"><label>어떤 모양으로 어떤 색을 어떤 순서로 켜고 싶나요? 계획을 적어 보세요. <small>(선택)</small></label><textarea data-memo="artPlan" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 개념 학습 마무리 -->
+<section class="page" data-name="실습 돌아보기" data-acc="#d0602f">
+  <div class="head"><div class="num">07</div><div><h2>개념 학습 마무리 · 실습 돌아보기</h2><p>교과서 62쪽 · 미디어 아트 실습 활동 평가하기, 성취도 점검하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>「온도에 따라 색이 변하는 액자 만들기」를 <b>네 단계</b>로 나눠 내가 어디까지 해냈는지 되돌아보는 시간이에요. 잘 못한 단계가 있어도 괜찮아요. 어디를 다시 보면 되는지 알면 돼요.</span></div>
+
+  <div class="card">
+    <h3>🧭 실습 단계 돌아보기 <span class="muted" style="font-weight:400;font-size:.88rem">(62쪽)</span></h3>
+    <div class="pc-stage">
+      <div style="--k:#2f9a8a"><span class="n">1</span><b>준비 학습</b><small>펌웨어·Thonny·라이브러리 설치</small></div>
+      <div style="--k:#2f9a8a"><span class="n">2</span><b>회로 구성</b><small>내장 LED·네오픽셀·온습도 센서</small></div>
+      <div style="--k:#2f9a8a"><span class="n">3</span><b>프로그래밍</b><small>색이 켜지는 코드 작성</small></div>
+      <div style="--k:#2f9a8a"><span class="n">4</span><b>실행 결과</b><small>LED와 온도 조건 확인</small></div>
+    </div>
+    <p style="margin:12px 0 4px"><b>잘 해냈다고 느끼는 단계</b>를 모두 골라 보세요.</p>
+    <div id="stageGood"></div>
+    <p style="margin:12px 0 4px"><b>다시 확인하고 싶은 단계</b>를 모두 골라 보세요.</p>
+    <div id="stageAgain"></div>
+    <div class="memo"><label>⑤ 느낀 점을 적어 보세요.</label><textarea data-memo="feel" rows="3" placeholder="예) 어떤 단계가 가장 어려웠는지, 다음에 해 보고 싶은 것"></textarea><div class="saved"></div></div>
+    <p class="note">단계별 세부 평가 문항은 교과서 62쪽을 보고 선생님 안내에 따라 해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✅ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(62쪽)</span></h3>
+    <p class="muted" style="margin-top:0">각 항목에 「예」 또는 「아니요」를 골라요. 「아니요」라면 오른쪽 쪽을 다시 읽어 봐요.</p>
+    <div class="pc-ach">
+      <div><span class="tg">지식·이해</span><p>피지컬 컴퓨팅에서 센서나 액추에이터의 기능과 역할을 설명할 수 있다.</p><div id="ach1" class="vote"></div><small>보충하기 · 50~51쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>피지컬 컴퓨팅 도구로 구현된 작품의 구성과 작동 원리를 설명할 수 있다.</p><div id="ach2" class="vote"></div><small>보충하기 · 50~51쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>목적에 맞는 센서와 액추에이터를 선택하여 피지컬 컴퓨팅 시스템을 구성할 수 있다.</p><div id="ach3" class="vote"></div><small>보충하기 · 53쪽</small></div>
+      <div><span class="tg">가치·태도</span><p>피지컬 컴퓨팅으로 나의 아이디어를 표현할 수 있다.</p><div id="ach4" class="vote"></div><small>보충하기 · 59, 61쪽</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 전문가 인터뷰 -->
+<section class="page" data-name="전문가 인터뷰" data-acc="#d0602f">
+  <div class="head"><div class="num">08</div><div><h2>전문가 인터뷰 · 미술계에 불어오는 융합의 바람, 미디어 아티스트</h2><p>교과서 63쪽 · 최창훈 작가 이야기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>미디어 아트 작가는 <b>그림·조각·영상·전기 회로·설치까지</b> 여러 분야를 함께 배워서 작품을 만들어요. 인터뷰를 읽으며 <b>작가가 어떻게 작품을 만드는지</b> 알아봐요.</span></div>
+  <div class="card">
+    <h3>🎙️ 미디어 아티스트 최창훈 작가</h3>
+    <p style="margin-top:0">미디어 아트는 특정 <b>인터페이스</b>를 활용해 <b>관람자와의 상호 작용</b>을 소통 수단으로 삼는 예술 작품을 뜻해요. 기존의 은유적인 소통 대신 <b>직접적인 상호 작용</b>을 만들어 관람자에게 새로운 경험을 선사해요. 아래 카드를 눌러 작가의 답을 요약으로 확인해요.</p>
+    <div id="intFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">교과서 63쪽 인터뷰를 줄여 옮긴 거예요. 자세한 내용은 교과서에서 읽어 봐요.</p>
+  </div>
+  <div class="card">
+    <h3>💭 생각해 보기</h3>
+    <div class="memo"><label>내가 미디어 아트를 만든다면 어떤 분야의 지식이 더 필요할까요? <small>(선택)</small></label><textarea data-memo="intThink" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>가 보고 싶은 미디어 아트 전시나 찾아보고 싶은 작가가 있나요? <small>(선택)</small></label><textarea data-memo="intWish" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 9 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">09</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#d0602f">피코 실습은 <b>펌웨어 설치 → 통합 개발 환경(토니) 설치 → 라이브러리(neopixel, dht) 설치</b>로 준비하고, 코드는 <b>py 파일</b>로 저장해야 연결하거나 외부 전원을 켰을 때도 계속 작동한다.</div>
+    <div style="--k:#2f6fd0"><b>내장 LED(GP25핀)</b>는 <code>led.value(1)</code>로 켜고 <code>led.value(0)</code>으로 끈다. <b>네오픽셀</b>은 <code>pixels.fill((R, G, B))</code>로 색을 정하고 <code>pixels.write()</code>로 적용하며, <b>온습도 센서(DHT11)</b>는 <code>measure()</code> 뒤에 <code>temperature()</code>·<code>humidity()</code>로 값을 읽는다.</div>
+    <div style="--k:#1f9d74">센서가 읽은 <b>온도</b>를 <b>조건문(if·elif·else)</b>으로 가르고 범위마다 다른 <b>(R, G, B) 색</b>을 정하면, 온도에 따라 색이 변하는 미디어 아트 작품을 만들 수 있다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">실습 3과 실습 4를 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">어떻게 온도에 따라 색이 달라지게 할 수 있을까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="9"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>온도에 따라 색이 변하는 액자를 만들려면 <b>어떤 장치(센서·액추에이터)</b>가 필요한지, 각 장치가 <b>무슨 일</b>을 하는지 설명해 보세요.</li>
+      <li>센서로 읽은 온도를 <b>조건문</b>으로 나누어 색을 정하는 방법을 내 말로 설명하고, 내가 정하고 싶은 <b>온도 기준과 색</b>을 하나 들어 보세요.</li>
+      <li>실습 중 <b>가장 어려웠던 부분</b>과 그 부분을 어떻게 해결했는지(또는 해결하려 했는지) 쓰세요. 다음에 <b>네오픽셀로 만들고 싶은 작품</b>도 한 가지 적어 보세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

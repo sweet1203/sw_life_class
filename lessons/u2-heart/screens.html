@@ -1,0 +1,379 @@
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#d0602f">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅱ. 창작을 지원하는 소프트웨어 · 융합 진로</span>
+      <h1>내 손안의 건강 지킴이!<br>심장 박동 모니터링 장치 만들기</h1>
+      <div class="story"><b>스마트 헬스케어 기기 개발자가 되어 볼까? (67쪽)</b><br>스마트 헬스케어 기기 개발자는 최첨단 기술들을 활용해 의료 기기를 개발해요. 오늘은 개발자가 되어, 심장 박동이 이상 범위에 들어가면 <b>경고음이 울리는 웨어러블 장치</b>를 피지컬 컴퓨팅 도구로 만들어 봐요.</div>
+      <p>센서로 심박수를 재고(실습 1), 버저로 소리를 내고(실습 2), 둘을 합쳐 모니터링 장치를 만들어요(실습 3).</p>
+      <ol>
+        <li>실습 개요 · 심박 측정 센서</li><li>피에조 버저로 경고음</li><li>모니터링 장치 만들기</li>
+        <li>선택 학습 · 시뮬레이터</li><li>마무리 · 진로 탐색</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">실습 안내부터 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>💓</i><div><b>실습 1 · 심박 측정</b><small>센서값으로 심박수 계산</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🔔</i><div><b>실습 2 · 피에조 버저</b><small>주파수와 소리 크기 정하기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🩺</i><div><b>실습 3 · 모니터링</b><small>범위를 벗어나면 경고음</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">실습 개요 · 위급 상황 시 경고음이 울리는 심장 박동 모니터링 장치 만들기 (67쪽)</span>
+      <p>심장 박동이 불규칙하게 나타난다면 심장 질환의 위험이 높아질 수 있어요. 위급한 상황을 막기 위해 심박 수치(심박수)가 <b>이상 범위</b>에 들어갈 때 <b>경고음</b>이 울리는 모니터링 장치를 피지컬 컴퓨팅 도구로 만들어 봐요.</p>
+    </div>
+    <div class="card">
+      <h3>📋 실습 개요 <span class="muted" style="font-weight:400;font-size:.88rem">(67쪽)</span></h3>
+      <table class="hb-tb">
+        <tr><td>문제 상황</td><td>심박수가 이상 범위에 도달했을 때 경고음이 울리는 웨어러블 장치를 개발해야 한다.</td></tr>
+        <tr><td>준비물</td><td>피코, 브레드 보드, 심박 측정 센서, 피에조 버저, 벨크로 테이프</td></tr>
+        <tr><td>사용 소프트웨어</td><td>토니(Thonny), 파이썬</td></tr>
+      </table>
+      <div class="hb-steps">
+        <div style="--k:#d0602f"><b>실습 1</b>심박 측정 센서로 심박수 측정하기</div>
+        <div style="--k:#c98a0a"><b>실습 2</b>피에조 버저로 경고음 울리기</div>
+        <div style="--k:#1f9d74"><b>실습 3</b>심박 측정 센서와 피에조 버저로 모니터링 장치 만들기</div>
+      </div>
+      <p class="note" style="margin-bottom:0">실습 1~3의 순서로 진행해요. 이 화면의 파이썬 코드는 피코에 올려 쓰는 코드라서, 웹에서는 <b>읽기용 카드</b>로 보고 계산 부분만 흉내 내 실행해 봐요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 센서값이 정상 범위를 벗어났을 때 경고음을 울리려면 프로그램은 어떻게 판단해야 할까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">이 수업에서 할 수 있는 것</span>
+        <ul class="can">
+          <li>심박 측정 센서의 값을 심박수(bpm)로 바꾸는 계산을 설명할 수 있다.</li>
+          <li>피에조 버저의 주파수와 소리 크기를 정하는 코드를 읽을 수 있다.</li>
+          <li>조건문으로 정상·비정상을 나눠 경고음을 울리는 흐름을 설명할 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">bpm · ADC · read_u16 · PWM · 주파수(Hz) · 스마트 헬스케어 기기 개발자</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">· (선택)</span></h3>
+      <div class="memo"><label>내 심박수가 높아지는 때는 언제일까? 심박수를 알려 주는 기기가 있다면 어떤 점이 좋을까? <small>한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planMemo" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 심박 측정 센서부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 실습 1 -->
+<section class="page" data-name="실습 1 심박 측정" data-acc="#d0602f">
+  <div class="head"><div class="num">01</div><div><h2>실습 1 · 심박 측정 센서로 심박수 측정하기</h2><p>교과서 67~68쪽 · 회로 구성, 프로그래밍, 실행 결과</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>센서는 심장 박동을 <b>0~65535 사이의 숫자</b>로 알려 줘요. 프로그램은 이 숫자를 <b>전압</b>으로, 다시 <b>1분 동안의 심박수(bpm)</b>로 바꿔서 정상인지 비정상인지 나눠요.</span></div>
+
+  <div class="card">
+    <h3>❤️ 정상 심박수의 범위 <span class="muted" style="font-weight:400;font-size:.88rem">(67쪽)</span></h3>
+    <p style="margin-top:0">심장 박동 측정값(심박 측정값)은 <b>분당 심박수</b>로 표시하며, 단위는 <b>bpm(beats per minute)</b>이에요. 일반적인 성인의 정상 수치 범위는 <b>40~120bpm</b>이에요.</p>
+    <svg class="hb-svg" viewBox="0 0 360 96" role="img" aria-label="심박수 막대. 40 미만은 비정상, 40에서 120 사이는 정상, 120 초과는 비정상으로 표시되어 있다.">
+      <rect x="10" y="30" width="100" height="26" rx="6" fill="#f6d5cb"/>
+      <rect x="110" y="30" width="140" height="26" fill="#cfeedd"/>
+      <rect x="250" y="30" width="100" height="26" rx="6" fill="#f6d5cb"/>
+      <text x="60" y="48" class="t1">비정상</text><text x="180" y="48" class="t1">정상</text><text x="300" y="48" class="t1">비정상</text>
+      <path d="M110 24 V62 M250 24 V62" stroke="#0f2742" stroke-width="2"/>
+      <text x="110" y="78" class="t2">40</text><text x="250" y="78" class="t2">120</text><text x="330" y="92" class="t2">bpm</text>
+    </svg>
+    <p class="note" style="margin-bottom:0">운동을 하거나 활동 수준이 높을 때에는 수치가 높아질 수 있고, 개인의 건강 상태와 연령에 따라 정상 범위가 다를 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔌 1 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(67쪽)</span></h3>
+    <p style="margin-top:0">심박 측정 센서와 피코를 아래 회로 연결 방법에 따라 연결해요.</p>
+    <table class="hb-pin">
+      <tr><th>심박 측정 센서</th><th>피코</th></tr>
+      <tr><td>S</td><td>GP28핀(아날로그 연결)</td></tr>
+      <tr><td>+</td><td>3V3핀(전원 공급 VCC)</td></tr>
+      <tr><td>-</td><td>GND핀(접지)</td></tr>
+    </table>
+    <p class="note" style="margin-bottom:0">피코의 GP26, GP27, GP28핀은 아날로그로 연결해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💻 2 프로그래밍 <span class="muted" style="font-weight:400;font-size:.88rem">(68쪽)</span></h3>
+    <p style="margin-top:0">28번 핀에 연결된 심박 측정 센서의 값(아날로그 값)을 측정하고, 이를 디지털 값으로 변환(ADC)하여 <code>bpm</code> 변수에 저장해요. 코드를 실행하면 현재 심박수를 출력해요. 코드 맨 아래 <code>time.sleep(0.5)</code>가 쉬는 시간을 정해요.</p>
+    <pre class="code">from machine import Pin, ADC          <i># ADC 클래스(아날로그 센서 제어) 사용</i>
+import time
+
+heartbeat_sensor = ADC(Pin(28))        <i># 28번 핀에 연결된 센서에 대한 ADC 객체 생성</i>
+
+while True:
+    heartbeat_value = heartbeat_sensor.read_u16()   <i># 아날로그 값을 읽음(0~65,535).</i>
+    heart_rate = (heartbeat_value / 65535) * 3.3    <i># 0V ~ 3.3V 범위 내에서 값을 변환</i>
+    bpm = (60 / 2) * heart_rate                     <i># 심박 측정값(분당 심박수)을 계산하여 bpm 변수에 저장</i>
+    print('심박동 수치: ', bpm)                     <i># 현재 심박수 출력</i>
+
+    if bpm &lt; 40 or bpm &gt; 120:                       <i># 정상 수치와 비정상 수치를 분류해 출력</i>
+        print('비정상적인 심박동 수치: ', bpm)
+    else:
+        print('정상적인 심박동 수치: ', bpm)
+
+    time.sleep(0.5)                                 <i># 0.5초마다 측정</i></pre>
+    <p class="note">위 코드는 피코에서 실행하는 코드라서 웹에서는 읽기만 해요. 아래에서 계산 부분만 흉내 내 봐요.</p>
+    <div class="easy"><b class="t">TIP · 아날로그-디지털 변환기(ADC)</b><span>심박 측정 센서의 출력값(아날로그 값)을 디지털 값으로 변환하려면 아날로그-디지털 변환기(ADC)를 사용해야 해요. 라즈베리파이 피코는 내장된 ADC를 사용해 아날로그 값을 읽어요.</span></div>
+    <table class="hb-tb">
+      <tr><th>코드 가이드</th><th>뜻</th></tr>
+      <tr><td><code>while True:</code></td><td>주어진 조건이 참(True)인 동안 반복적으로 코드 블록을 실행하는 제어 구조예요. <code>while True</code>의 조건은 계속 참이므로 그 안에 있는 코드는 계속 반복해서 실행돼요.</td></tr>
+      <tr><td><code>if-else</code></td><td>조건에 따라 다른 코드를 실행하도록 하는 조건문이에요. 조건식이 참이면 if의 코드가, 거짓이면 else의 코드가 실행돼요.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🧪 계산 따라 해 보기 · 센서값 → 전압 → bpm</h3>
+    <p style="margin-top:0">피코가 없어도 괜찮아요. 센서가 읽은 값(<code>read_u16()</code>)을 <b>리스트</b>로 미리 적어 두고, <code>for</code>로 하나씩 꺼내 같은 식으로 계산해요. 숫자를 바꿔 실행해 보세요.</p>
+    <svg class="hb-svg" viewBox="0 0 360 250" role="img" aria-label="계산 흐름. 센서값 0에서 65535를 3.3을 곱한 전압으로 바꾸고, 60 나누기 2를 곱해 bpm을 구한 뒤, 40 미만이거나 120 초과이면 비정상, 아니면 정상으로 나눈다.">
+      <rect x="40" y="6" width="280" height="38" rx="10" fill="#fff" stroke="#d0602f" stroke-width="2"/><text x="180" y="30" class="t1">센서값 heartbeat_value (0~65535)</text>
+      <path d="M180 44 V60" stroke="#0f2742" stroke-width="2"/><path d="M174 56 L180 64 L186 56" fill="#0f2742"/>
+      <rect x="40" y="64" width="280" height="38" rx="10" fill="#fff" stroke="#d0602f" stroke-width="2"/><text x="180" y="88" class="t1">전압 = (값 ÷ 65535) × 3.3</text>
+      <path d="M180 102 V118" stroke="#0f2742" stroke-width="2"/><path d="M174 114 L180 122 L186 114" fill="#0f2742"/>
+      <rect x="40" y="122" width="280" height="38" rx="10" fill="#fff" stroke="#d0602f" stroke-width="2"/><text x="180" y="146" class="t1">bpm = (60 ÷ 2) × 전압</text>
+      <path d="M180 160 V176" stroke="#0f2742" stroke-width="2"/><path d="M174 172 L180 180 L186 172" fill="#0f2742"/>
+      <rect x="40" y="180" width="280" height="30" rx="10" fill="#fdeeb8" stroke="#c98a0a" stroke-width="2"/><text x="180" y="200" class="t1">bpm &lt; 40 또는 bpm &gt; 120 ?</text>
+      <rect x="20" y="218" width="150" height="28" rx="8" fill="#f6d5cb"/><text x="95" y="237" class="t1">예 → 비정상</text>
+      <rect x="190" y="218" width="150" height="28" rx="8" fill="#cfeedd"/><text x="265" y="237" class="t1">아니요 → 정상</text>
+    </svg>
+    <div id="hbRun1"></div>
+    <p class="note" style="margin-bottom:0">값을 바꿔 실행해 보세요. 어떤 값부터 「비정상」이 나오나요? 값을 가장 크게 해 보면(65535) bpm은 얼마가 나오나요?</p>
+    <div class="memo"><label>값을 바꿔 보고 알게 된 점 <small>예) 이 값보다 작으면 비정상이 나왔다.</small></label><textarea data-memo="hbCalc" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🩹 3 실행 결과 · 해 보기 <span class="muted" style="font-weight:400;font-size:.88rem">(68쪽)</span></h3>
+    <p style="margin-top:0"><b>측정 장치 만들기</b> · 결과를 확인하려면 먼저 측정 장치를 만들어 몸에 붙여요. 심박 측정 센서 뒤에 벨크로 테이프를 붙이고, LED가 있는 앞면에는 투명 테이프를 한 겹 붙여 준 뒤, 벨크로 테이프로 센서를 측정할 손가락 끝에 묶어 줘요.</p>
+    <p><b>프로그램 실행하기</b> · Run 버튼을 눌러 프로그램을 실행하면, 장치를 부착한 뒤 나의 심박 측정값이 출력돼요.</p>
+    <p class="note">교과서 말풍선 · 실제 심박 측정기를 활용해 출력값을 비교하고, 오차가 있으면 변수에 값을 계산하여 맞춰 주면 좋아요.</p>
+    <div class="easy"><b class="t">해 보기 · 심박수 측정하기</b><span>센서를 착용한 상태로 평상시의 심박수와 운동을 하고 난 후의 심박수를 비교해 보자.</span></div>
+    <div class="memo"><label>평상시와 운동 후 심박수를 비교한 결과 <small>실제로 측정하지 못했다면 예상을 적어도 좋아요.</small></label><textarea data-memo="hbCompare" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>🔎 장치 살펴보기 · 심박 측정 센서 <span class="muted" style="font-weight:400;font-size:.88rem">(68쪽)</span></h3>
+    <p style="margin:0">심박 측정 센서는 피지컬 컴퓨팅 마이크로컨트롤러와 함께 사용되어 사용자의 심장 박동을 측정하고 모니터링할 수 있어요. 센서마다 출력값의 범위가 다를 수 있으므로, 센서의 출력 범위를 알려 주는 해당 센서의 데이터 시트를 확인해야 해요. 일반적으로 심박 측정 센서는 0~5V 또는 0~3.3V 범위 내에서 출력값을 제공해요.</p>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 실습 2 -->
+<section class="page" data-name="실습 2 피에조 버저" data-acc="#c98a0a">
+  <div class="head"><div class="num">02</div><div><h2>실습 2 · 피에조 버저로 경고음 울리기</h2><p>교과서 69쪽 · 회로 구성, 주파수와 소리 크기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피에조 버저는 전기 신호를 받으면 <b>떨려서 소리</b>를 내요. 코드에서는 <b>얼마나 빠르게 떨지(주파수)</b>와 <b>얼마나 크게 울릴지(소리 크기)</b>를 정해 줘요.</span></div>
+  <div class="card">
+    <h3>🔌 1 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(69쪽)</span></h3>
+    <p style="margin-top:0">실습 1에서 만든 기기로 나의 심박수를 확인했다면, 피에조 버저로 경고음을 울리는 장치를 만들어 봐요. 피에조 버저와 피코를 아래 회로 연결 방법에 따라 연결해요.</p>
+    <table class="hb-pin">
+      <tr><th>피에조 버저</th><th>피코</th></tr>
+      <tr><td>IN(S)</td><td>GP0핀</td></tr>
+      <tr><td>VCC(+)</td><td>3V3핀(전원 공급)</td></tr>
+      <tr><td>GND(-)</td><td>GND핀(접지)</td></tr>
+    </table>
+    <p class="note" style="margin-bottom:0">피에조 버저의 모듈에 각인된 극성과 회로를 확인하고, 피코의 입출력 핀 중 한 개를 사용하여 두 장치를 연결해요.</p>
+  </div>
+  <div class="card">
+    <h3>💻 2 프로그래밍 <span class="muted" style="font-weight:400;font-size:.88rem">(69쪽)</span></h3>
+    <p style="margin-top:0">피에조 버저를 제어하는 프로그램을 작성해요.</p>
+    <pre class="code">from machine import Pin, PWM           <i># PWM 클래스(버저 주파수 영역 설정) 사용</i>
+import time
+
+buzzer = PWM(Pin(0))                   <i># 0번 핀에 연결된 버저에 대한 PWM 객체 생성</i>
+
+while True:                            <i># 무한 반복 시작</i>
+    buzzer.freq(523)                   <i># 523Hz 음의 주파수 설정</i>
+    buzzer.duty_u16(1000)              <i># 피에조 버저 켜기(경고음 발생)</i>
+    time.sleep(1)                      <i># 1초 대기</i>
+    buzzer.duty_u16(0)                 <i># 피에조 버저 끄기</i>
+    time.sleep(1)                      <i># 1초 대기</i></pre>
+    <table class="hb-tb">
+      <tr><th>코드 가이드</th><th>뜻</th></tr>
+      <tr><td><code>buzzer.freq( )</code></td><td>버저가 발생시킬 주파수를 설정해요.</td></tr>
+      <tr><td><code>buzzer.duty_u16( )</code></td><td>버저의 음량을 설정해요. 설정한 값이 클수록 소리가 커져요.</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>🔊 3 실행 결과 · 523Hz 소리 들어 보기</h3>
+    <p style="margin-top:0">프로그램에 따라 주파수 영역 수치에 맞는 음이 울리는지 확인해요. 피코가 없다면 아래 버튼으로 <b>523Hz 소리를 1초</b> 들어 볼 수 있어요. (컴퓨터의 소리를 켜 주세요. 소리가 나지 않아도 수업을 이어 갈 수 있어요.)</p>
+    <div class="row" style="gap:10px;flex-wrap:wrap">
+      <button class="btn" id="hbBeepBtn" type="button">🔔 523Hz 소리 1초 듣기</button>
+      <span class="muted" id="hbBeepMsg" aria-live="polite"></span>
+    </div>
+    <div class="memo"><label>소리를 듣고 든 생각 <small>다른 주파수라면 소리가 어떻게 달라질지 예상해 적어 보세요.</small></label><textarea data-memo="hbSound" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="card">
+    <h3>🔎 장치 살펴보기 · 피에조 버저 <span class="muted" style="font-weight:400;font-size:.88rem">(69쪽)</span></h3>
+    <p style="margin:0">피에조 버저는 전기 신호를 주면 진동이 일어나며, 이 진동이 주파수(단위, Hz)에 의해 공간에서 소리가 되어 출력돼요. 주로 경보기, 게임, 디지털 시계, 컴퓨터 부팅 시 발생하는 비프음 등에 사용돼요. 간단히 회로를 연결하는 것만으로도 쉽게 사용할 수 있어 전자 공학 분야에서는 교육용 장비나 실험에도 활용하고 있어요.</p>
+  </div>
+  <div class="card">
+    <h3>🎵 해 보기 · 피에조 버저로 멜로디 연주하기 <span class="muted" style="font-weight:400;font-size:.88rem">(69쪽 · 심화)</span></h3>
+    <p style="margin-top:0">다음 내용을 참고하여 피에조 버저로 멜로디를 연주해 보자. 교과서는 <b>도 레 미 파 솔 라 시 도</b>음계에 해당하는 주파수 리스트를 알려 줘요.</p>
+    <pre class="code">note = [261, 294, 330, 349, 392, 440, 494, 523]   <i># 도 레 미 파 솔 라 시 도 음계에 해당하는 주파수 리스트</i></pre>
+    <div class="memo"><label>멜로디를 연주하려면 코드를 어떻게 바꾸면 좋을까? <small>떠오르는 생각을 말로 적어 보세요.</small></label><textarea data-memo="hbMelody" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 실습 3 -->
+<section class="page" data-name="실습 3 모니터링 장치" data-acc="#1f9d74">
+  <div class="head"><div class="num">03</div><div><h2>실습 3 · 모니터링 장치 만들기</h2><p>교과서 70쪽 · 센서와 버저를 합치기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>실습 1의 <b>심박수 계산</b>과 실습 2의 <b>버저 소리</b>를 하나로 합쳐요. <b>정상 범위를 벗어났을 때만</b> 0.5초 간격으로 「도」음 경고음이 울리게 해요.</span></div>
+  <div class="card">
+    <h3>🔌 1 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(70쪽)</span></h3>
+    <p style="margin-top:0">실습 1과 실습 2를 참고하여 심박수가 일정 범위를 벗어났을 때 0.5초 간격으로 「도」음의 경고음이 울리는 웨어러블 장치를 만들어 봐요. 심박 측정 센서와 버저, 피코를 아래 회로 연결 방법에 따라 연결해요.</p>
+    <div class="hb-two">
+      <table class="hb-pin"><tr><th>심박 측정 센서</th><th>피코</th></tr><tr><td>S</td><td>GP28핀</td></tr><tr><td>+</td><td>3V3핀</td></tr><tr><td>-</td><td>GND핀</td></tr></table>
+      <table class="hb-pin"><tr><th>피에조 버저</th><th>피코</th></tr><tr><td>IN(S)</td><td>GP0핀</td></tr><tr><td>VCC(+)</td><td>3V3핀</td></tr><tr><td>GND(-)</td><td>GND핀</td></tr></table>
+    </div>
+    <div class="easy"><b class="t">TIP · 브레드 보드 전원단 활용</b><span>연결할 센서 및 액추에이터가 2개 이상이면 브레드 보드 전원단을 활용할 것을 권장해요. 피코에서 사용 가능한 3V3핀과 GND핀이 개수가 적기 때문에 전원단을 활용하면 다른 부품에 고정된 전원을 공급하여 사용이 가능해요.</span></div>
+  </div>
+  <div class="card">
+    <h3>💻 2 프로그래밍 <span class="muted" style="font-weight:400;font-size:.88rem">(70쪽)</span></h3>
+    <p style="margin-top:0">설정한 심박수에서만 경고음이 울리는 프로그램을 작성해요.</p>
+    <pre class="code">from machine import Pin, ADC, PWM
+import time
+
+heartbeat_sensor = ADC(Pin(28))        <i># 28번 핀에 연결된 센서에 대한 ADC 객체 생성</i>
+buzzer = PWM(Pin(0))                   <i># 0번 핀에 연결된 버저에 대한 PWM 객체 생성</i>
+
+while True:                            <i># 무한 반복 시작</i>
+    heartbeat_value = heartbeat_sensor.read_u16()   <i># 아날로그 값을 읽음(0~65,535).</i>
+    heart_rate = (heartbeat_value / 65535) * 3.3    <i># 0 ~ 3.3V 범위 내에서 값을 변환</i>
+    bpm = (60 / 2) * heart_rate                     <i># 심박 측정값(분당 심박수)</i>
+
+    if bpm &lt; 40 or bpm &gt; 120:                       <i># 정상 수치보다 낮거나 높을 때</i>
+        print('비정상적인 심박동 수치: ', bpm)      <i># 비정상 수치(심박 측정값) 출력</i>
+        buzzer.freq(523)                            <i># 5 옥타브 '도' 주파수 설정</i>
+        buzzer.duty_u16(1000)                       <i># 피에조 버저 켜기(경고음 발생)</i>
+        time.sleep(0.5)                             <i># 0.5초 대기</i>
+        buzzer.duty_u16(0)                          <i># 피에조 버저 끄기</i>
+        time.sleep(0.5)                             <i># 0.5초 대기</i>
+
+    else:
+        print('정상적인 심박동 수치: ', bpm)</pre>
+    <p class="note">실습 1과 달라진 점은 두 가지예요. 첫째, <code>buzzer</code> 객체를 만들었어요. 둘째, <code>if</code> 안(비정상일 때)에서 버저를 켜고 끄는 줄이 늘었어요. <code>else</code>(정상일 때)에서는 수치만 출력해요.</p>
+  </div>
+  <div class="card">
+    <h3>🧪 비정상이면 경고음 · 흐름 흉내 내기</h3>
+    <p style="margin-top:0">버저는 웹에서 켤 수 없으니, 비정상일 때 <code>print()</code>로 <b>「삐- 경고음」</b>이라고 알려 주는 방식으로 흉내 내요. 센서값 리스트를 바꿔 어떤 값에서 경고음이 나오는지 살펴보세요.</p>
+    <div id="hbRun2"></div>
+    <p class="note" style="margin-bottom:0">실제 장치에서는 경고음 뒤에 0.5초 쉬는 시간이 있고, 이 과정이 <code>while True</code>에 따라 계속 반복돼요. 여기서는 리스트에 있는 값만 한 번씩 돌아요.</p>
+    <div class="memo"><label>경고음이 울리게 하려면 센서값이 어떤 범위여야 할까? <small>직접 실행해 확인한 대로 적어 보세요.</small></label><textarea data-memo="hbAlarm" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="card">
+    <h3>✅ 3 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(70쪽)</span></h3>
+    <p style="margin:0">격한 운동 후에 정상적인 심박수를 벗어났을 때, 피에조 버저 소리가 나는지 확인해 보세요.</p>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 선택 학습 -->
+<section class="page" data-name="선택 학습" data-acc="#9b4fc4">
+  <div class="head"><div class="num">04</div><div><h2>선택 학습 · 시뮬레이터로 실습하기</h2><p>교과서 71쪽 · 피코가 없어도 해 볼 수 있어요</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코나 센서가 없어도 <b>컴퓨터 속 가상 회로</b>에서 같은 코드를 실행해 볼 수 있어요. 교과서 71쪽은 <b>WOKWI</b> 시뮬레이터를 쓰는 선택 학습이에요.</span></div>
+  <div class="card">
+    <h3>1️⃣ 실습 1 · 피에조 버저로 경고음 울리기 <span class="muted" style="font-weight:400;font-size:.88rem">(71쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이터에서 아래와 같이 버저 회로를 연결하고 프로그램을 작성해 봐요. 시뮬레이터 화면의 + 버튼을 눌러 목록에서 「Buzzer」를 선택해요.</p>
+    <pre class="code">from machine import Pin, PWM
+import time
+
+buzzer = PWM(Pin(9))
+
+while True:
+    buzzer.freq(523)
+    buzzer.duty_u16(1000)
+    time.sleep(1)
+    buzzer.duty_u16(0)
+    time.sleep(1)</pre>
+    <p class="note" style="margin-bottom:0">빨간 선은 GP9핀, 검은 선은 GND핀에 연결해요. 69쪽의 실습 2 코드와 비교하면 버저가 연결된 <b>핀 번호</b>가 달라요.</p>
+  </div>
+  <div class="card">
+    <h3>2️⃣ 실습 2 · 네오픽셀 LED가 켜질 때마다 멜로디 소리 내기 <span class="muted" style="font-weight:400;font-size:.88rem">(71쪽)</span></h3>
+    <p style="margin-top:0">시뮬레이터에서 버저와 네오픽셀 LED 회로를 연결하고 프로그램을 작성해 봐요.</p>
+    <div class="hb-task"><b>도전 과제</b>빈칸을 채워서 네오픽셀 LED가 <b>한 개씩 빨간색으로 켜지면서 버저가 울리고</b>, 모든 LED가 빨간색으로 변할 때 <b>전체 LED가 꺼지는</b> 프로그램을 완성해 보세요!</div>
+    <p class="note">교과서에는 네오픽셀 개수(16개), 데이터 핀, 버저 핀을 정해 두고 <code>while True:</code> 아래를 빈칸으로 비워 둔 코드가 있어요. 빈칸 채우기는 시뮬레이터에서 직접 해 봐요. 앞에서 배운 네오픽셀 코드(57쪽)와 버저 코드(69쪽)가 힌트가 돼요.</p>
+    <div class="memo"><label>어떤 순서로 코드를 짜면 좋을지 계획 <small>코드가 아니라 말로 적어도 좋아요.</small></label><textarea data-memo="hbPlan2" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 5 융합 진로 마무리 -->
+<section class="page" data-name="융합 진로 마무리" data-acc="#2fa0a8">
+  <div class="head"><div class="num">05</div><div><h2>융합 진로 마무리 · 활동 돌아보기</h2><p>교과서 72쪽 · 웨어러블 장치 구현 활동 평가하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>「위급 상황 시 경고음이 울리는 심장 박동 모니터링 장치 만들기」를 <b>네 단계</b>로 나눠서 내가 잘 해냈는지 돌아보는 시간이에요.</span></div>
+  <div class="card">
+    <h3>🧭 활동 단계 돌아보기 <span class="muted" style="font-weight:400;font-size:.88rem">(72쪽)</span></h3>
+    <p style="margin-top:0">활동을 하면서 충분히 해냈다고 느끼는 단계를 모두 눌러 보세요.</p>
+    <div id="hbStepCheck"></div>
+    <div class="memo"><label>느낀 점 <small>활동을 하며 느낀 점을 적어 보세요.</small></label><textarea data-memo="hbFeel" rows="4"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="card">
+    <h3>☑️ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(72쪽)</span></h3>
+    <p style="margin-top:0">할 수 있다고 느끼는 것을 모두 눌러 보세요. 부족하면 괄호 속 쪽으로 돌아가요.</p>
+    <div id="hbAch"></div>
+  </div>
+</section>
+
+<!-- 6 교과 융합 진로 탐색 -->
+<section class="page" data-name="융합 진로 탐색" data-acc="#9b4fc4">
+  <div class="head"><div class="num">06</div><div><h2>교과 융합 진로 탐색</h2><p>교과서 73쪽 · 소프트웨어 + 예술·산업 융합 진로 분야</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>작품이나 기기가 사람과 <b>상호 작용</b>하도록 만드는 예술과 기술이 등장하면서, 소프트웨어와 예술·산업을 합친 <b>새로운 직업</b>도 생기고 있어요.</span></div>
+  <div class="card">
+    <h3>🧭 소프트웨어 + 예술·산업 융합 진로 분야 <span class="muted" style="font-weight:400;font-size:.88rem">(73쪽)</span></h3>
+    <p style="margin-top:0">기기 또는 작품이 인간과 상호 작용하도록 하는 예술과 기술이 등장하여 디자인과 엔지니어링의 경계를 넘나들고 있어요. 그리고 예술과 산업 분야에서 소프트웨어 융합을 기반으로 한 새로운 직업도 생기고 있어요. 새로운 시대의 문화와 기술적 혁신을 선도하는 직업을 알아봐요. 카드를 눌러 설명과 필요 역량을 확인해요.</p>
+    <div id="hbJobFlip" class="tcards"></div>
+  </div>
+  <div class="card">
+    <h3>🙋 가장 관심이 가는 직업</h3>
+    <div id="hbJobVote" class="vote"></div>
+    <p class="hb-vres" id="hbJobRes"></p>
+    <div class="memo"><label>그 직업을 고른 이유 <small>내가 가진 강점이나 해 보고 싶은 일과 연결해 보세요.</small></label><textarea data-memo="hbJobWhy" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">07</div><div><h2>마무리</h2><p>오늘 정리 · 생각 정리 · 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#d0602f">심박 측정 센서의 값(0~65535)을 <b>전압 → bpm</b>으로 바꾸고, 일반적인 성인의 정상 범위인 <b>40~120bpm</b>를 벗어나는지 <b>조건문(if-else)</b>으로 나눠요.</div>
+    <div style="--k:#c98a0a">피에조 버저는 <b>주파수(freq)</b>로 소리의 높이를, <b>duty_u16</b> 값으로 소리의 크기를 정해요. 값이 클수록 소리가 커져요.</div>
+    <div style="--k:#1f9d74">센서와 버저를 합치면, 비정상일 때만 경고음이 울리는 <b>웨어러블 모니터링 장치</b>가 돼요. 이런 기기를 개발하는 사람이 <b>스마트 헬스케어 기기 개발자</b>예요.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 답하기</h3>
+    <p class="muted" style="margin-top:0">실습 1~3에서 적은 메모를 떠올리며, 내 말로 적어 보세요.</p>
+    <b style="font-size:.93rem">센서값이 정상 범위를 벗어났을 때 경고음을 울리려면 프로그램은 어떻게 판단해야 할까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈</h3>
+    <div class="quiz" data-quiz="7"></div>
+  </div>
+  <div class="card">
+    <h3>이해 확인 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>심박 측정 센서의 값이 <b>bpm으로 바뀌고 정상·비정상으로 나뉘는 과정</b>을 내 말로 설명하세요. <span class="muted">(화면 01 메모 참고)</span></li>
+      <li>비정상일 때 경고음이 울리게 하려면 <b>어떤 조건을 어떻게 써야 하는지</b> 설명하세요. <span class="muted">(화면 03 메모 참고)</span></li>
+      <li>내가 관심 가는 <b>융합 진로 직업</b>과, 그 직업에 필요한 역량 중 지금부터 키우고 싶은 것을 적으세요. <span class="muted">(화면 06 참고)</span></li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="{{FORM_URL}}" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>

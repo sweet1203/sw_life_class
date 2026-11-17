@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>라즈베리파이 피코로 미디어 아트 만들기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202c; --muted:#5b6776; --paper:#f3efe7; --card:#fff; --line:#e3ddd2;
+    --navy:#0f2742; --amber:#f2a516; --red:#d64535; --mint:#1f9d74;
+    --acc:#2f6fd0; --acc-soft:#e6eefb;
+    --shadow:0 18px 50px rgba(15,39,66,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:17px;line-height:1.65;
+    background-image:radial-gradient(rgba(15,39,66,.07) 1px,transparent 1px);background-size:22px 22px;display:flex;flex-direction:column}
+  .top{position:sticky;top:0;z-index:10;background:rgba(15,39,66,.97);color:#fff;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+  .brand{font-family:"Black Han Sans",sans-serif;font-size:1.15rem;letter-spacing:.01em;white-space:nowrap;color:inherit;text-decoration:none}
+  .steps{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .steps::-webkit-scrollbar{display:none}
+  .steps button{flex:0 0 auto;border:0;background:transparent;color:#9fb3cc;font:inherit;font-size:.82rem;padding:5px 9px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .steps button.on{background:var(--amber);color:var(--navy);font-weight:900}
+  .steps button.done::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#5fd3a5;margin-left:5px;vertical-align:middle}
+  .score{font-size:.85rem;background:rgba(255,255,255,.1);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .progress{height:4px;background:rgba(15,39,66,.12)}
+  .progress i{display:block;height:100%;background:var(--amber);width:0;transition:width .4s}
+  main{flex:1;width:100%;max-width:1120px;margin:0 auto;padding:26px 20px 30px}
+  .page{display:none}
+  .page.on{display:block;animation:enter .45s cubic-bezier(.2,.7,.2,1) both}
+  .page.on.back{animation-name:enterBack}
+  @keyframes enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+  @keyframes enterBack{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+  .head{display:flex;align-items:flex-end;gap:16px;margin-bottom:16px}
+  .num{font-family:"Black Han Sans",sans-serif;font-size:4.2rem;line-height:.85;color:var(--acc);opacity:.9}
+  .head h2{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:2.1rem;margin:0;line-height:1.1;letter-spacing:-.01em}
+  .head p{margin:4px 0 0;color:var(--muted)}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px;border:1px solid rgba(0,0,0,.04)}
+  .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  .grid2.even{grid-template-columns:1fr 1fr}
+  @media (max-width:860px){.grid2,.grid2.even{grid-template-columns:1fr}.num{font-size:3rem}.head h2{font-size:1.6rem}}
+  h3{margin:0 0 8px;font-size:1.1rem}
+  h4{margin:0 0 4px}
+  p{margin:6px 0}
+  a{color:var(--acc)}
+  .muted{color:var(--muted)}
+  .book{display:inline-block;font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 10px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:.93rem;margin:8px 0}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:center}
+  th{color:var(--muted);font-weight:700;font-size:.85rem}
+  td.l,th.l{text-align:left}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+  .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;font:inherit;font-size:.92rem;cursor:pointer;transition:.15s;color:var(--ink)}
+  .chip.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .btn{border:0;border-radius:10px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;transition:transform .1s, box-shadow .2s;box-shadow:0 6px 16px rgba(15,39,66,.18)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--acc);border:2px solid var(--acc);box-shadow:none}
+  .btn.sm{padding:5px 12px;font-size:.88rem}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ctrl{display:grid;grid-template-columns:70px 1fr 48px;align-items:center;gap:4px 10px;margin:4px 0}
+  .ctrl label{font-weight:900;font-size:.95rem}
+  .ctrl output{font-weight:900;text-align:right;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--acc)}
+  input[type=text],input[type=number]{font:inherit;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px;background:#fff;color:var(--ink)}
+  .big{font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums}
+  .ok{color:var(--mint);font-weight:700}.ng{color:var(--red);font-weight:700}
+  .callout{border-radius:12px;padding:12px 16px;background:var(--acc-soft);border-left:5px solid var(--acc);margin:12px 0}
+  svg{display:block;width:100%;height:auto}
+  select{max-width:100%}
+  .mono{overflow-wrap:anywhere;font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#f1f3f6;padding:1px 6px;border-radius:5px}
+  .cx{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 24px;margin-bottom:18px;border-left:6px solid var(--acc)}
+  .cx>h3{margin:0 0 4px;font-size:1.15rem}
+  .cx>.lead2{color:var(--muted);margin:0 0 12px}
+  .qa{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:860px){.qa{grid-template-columns:1fr}}
+  .qa>div{background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .qa b.q{display:block;color:var(--acc);margin-bottom:3px}
+  .vsteps{list-style:none;margin:0;padding:0;counter-reset:v}
+  .vsteps>li{position:relative;padding:9px 0 9px 44px;border-top:1px dashed var(--line)}
+  .vsteps>li:first-child{border-top:0}
+  .vsteps>li::before{counter-increment:v;content:counter(v);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:900;display:grid;place-items:center;font-size:.9rem}
+  .vsteps p{margin:2px 0 0;font-size:.93rem}
+  .case{background:#fff8e6;border:2px solid #f6d58a;border-radius:16px;padding:16px 20px;margin-bottom:18px}
+  .case>h3{margin:0 0 8px;font-size:1.05rem;color:#8a5a00}
+  /* 퀴즈 */
+  .quiz{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:16px;padding:20px 22px;margin-top:6px;box-shadow:var(--shadow)}
+  .quiz .qh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .quiz .qh b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.25rem;color:var(--amber)}
+  .quiz .qh span{font-size:.85rem;color:#a9bbd2}
+  .qi{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .qi .qq{font-weight:700;margin-bottom:8px}
+  .qi .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .qi .opts button{font:inherit;font-size:.93rem;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:10px;padding:6px 14px;cursor:pointer;transition:.15s}
+  .qi .opts button:hover:not(:disabled){border-color:var(--amber)}
+  .qi .opts button.right{background:var(--mint);border-color:var(--mint);font-weight:700}
+  .qi .opts button.wrong{background:var(--red);border-color:var(--red);text-decoration:line-through}
+  .qi .opts button:disabled{cursor:default}
+  .qi .why{margin-top:8px;font-size:.9rem;color:#d7e3f2;display:none}
+  .qi.answered .why{display:block}
+  .qi.answered.correct{box-shadow:inset 4px 0 0 var(--mint)}
+  .qi.answered.incorrect{box-shadow:inset 4px 0 0 var(--red)}
+  .shake{animation:shake .35s}
+  @keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+  .foot{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(243,239,231,.94);backdrop-filter:blur(6px);border-top:1px solid var(--line)}
+  .foot .btn{min-width:110px}
+  .foot .pg{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+  /* 표지 */
+  .cover{position:relative;border-radius:22px;overflow:hidden;background:radial-gradient(ellipse at 20% 0%,#24507f 0%,#0f2742 55%,#0a1a2e 100%);color:#fff;min-height:520px;padding:46px 44px;box-shadow:var(--shadow)}
+  .cover canvas{position:absolute;right:0;top:0;height:100%;width:62%;image-rendering:pixelated;opacity:.95}
+  .cover .fade{position:absolute;inset:0;background:linear-gradient(90deg,#0f2742 34%,rgba(15,39,66,.75) 50%,rgba(15,39,66,0) 70%)}
+  .cover .in{position:relative;max-width:560px}
+  .cover .tag{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:.85rem;padding:4px 12px;border-radius:999px}
+  .cover h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:3.1rem;line-height:1.15;margin:16px 0 10px}
+  .cover p{color:#c8d6e8;font-size:1.05rem}
+  .cover ol{margin:18px 0 26px;padding-left:20px;color:#e1e9f4;columns:2;column-gap:28px;font-size:.95rem}
+  @media (max-width:700px){.cover{padding:30px 22px}.cover h1{font-size:2.2rem}.cover ol{columns:1}.cover canvas{width:100%;opacity:.3}.cover .fade{display:none}}
+  .today{margin-top:26px}
+  .kicker{display:inline-block;font-family:"Black Han Sans",sans-serif;font-size:1.15rem;color:var(--navy);margin-bottom:6px;border-bottom:4px solid var(--amber);line-height:1.2}
+  .today-lead{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:22px 26px;margin-bottom:16px}
+  .today-lead p{font-size:1.12rem;margin:6px 0 0}
+  .why3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+  @media (max-width:900px){.why3{grid-template-columns:1fr}}
+  .why{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:20px 22px}
+  .why ul{margin:6px 0 0;padding-left:18px;font-size:.95rem}
+  .why li{margin:6px 0}
+  .why ul.can{list-style:none;padding:0}
+  .why ul.can li{padding-left:28px;position:relative}
+  .why ul.can li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 7' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+  .why ul.uses{list-style:none;padding:0}
+  .why ul.uses li{border-left:3px solid var(--amber);padding-left:10px}
+  .glossary-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .glossary-head .muted{font-size:.88rem}
+  .glossary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+  @media (max-width:1000px){.glossary{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.glossary{grid-template-columns:1fr}}
+  .gcard{all:unset;box-sizing:border-box;cursor:pointer;display:block;background:#fff;border-radius:14px;padding:16px 16px 12px;box-shadow:var(--shadow);border-top:6px solid var(--g);position:relative;transition:transform .18s, box-shadow .18s}
+  .gcard:hover,.gcard:focus-visible{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,39,66,.16)}
+  .gcard:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+  .gcard i{position:absolute;right:14px;top:8px;font-style:normal;font-family:"Black Han Sans",sans-serif;font-size:1.9rem;color:var(--g);opacity:.25}
+  .gcard h4{margin:0 0 6px;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;color:var(--g)}
+  .gcard dl{margin:0;font-size:.88rem;line-height:1.45}
+  .gcard dt{font-weight:900;margin-top:7px}
+  .gcard dd{margin:1px 0 0;color:#3c4654}
+  .prob{display:grid;grid-template-columns:60px 1fr 46px;gap:6px;align-items:center;font-size:.88rem;min-width:200px}
+  .prob i{display:block;height:12px;border-radius:6px;background:var(--acc)}
+  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:860px){.apps{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:2rem;display:block}
+  .apps button b{display:block}
+  .appd{display:none}
+  .appd.on{display:block;animation:enter .35s both}
+  .ex2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  @media (max-width:640px){.ex2{grid-template-columns:1fr}}
+  .ex2>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;font-size:.93rem;border-left:4px solid var(--acc)}
+  .try{margin-top:12px;background:var(--acc-soft);border-radius:12px;padding:12px 14px;font-size:.92rem}
+  .try ol{margin:4px 0 0;padding-left:20px}
+  /* 3단원 공통 */
+  .easy{display:flex;gap:12px;align-items:flex-start;background:#fffbea;border:2px solid #f6d58a;border-radius:14px;padding:12px 16px;margin:-4px 0 16px;font-size:1rem;line-height:1.6}
+  .easy>span{min-width:0;overflow-wrap:anywhere}
+  .easy b.t{flex:0 0 auto;background:#f2a516;color:#0f2742;border-radius:999px;padding:2px 10px;font-size:.82rem;margin-top:2px}
+  .route{position:absolute;right:30px;top:36px;width:min(430px,44%);display:grid;gap:10px}
+  .route .st{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:14px;padding:10px 14px;color:#fff;opacity:0;transform:translateX(20px);animation:rin .6s forwards}
+  .route .st i{font-style:normal;font-size:1.6rem}
+  .route .st b{display:block;font-size:1.02rem}
+  .route .st small{color:#c8d6e8;font-size:.82rem}
+  .route .ar{color:var(--amber);text-align:center;font-weight:900;opacity:0;animation:rin .5s forwards}
+  @keyframes rin{to{opacity:1;transform:none}}
+  @media (max-width:1080px){.route{position:relative;right:auto;top:auto;width:100%;margin-top:22px}}
+  .story{background:rgba(255,255,255,.08);border-left:4px solid var(--amber);border-radius:10px;padding:10px 14px;margin:14px 0;color:#e1e9f4;font-size:.95rem}
+  .story b{color:#fff}
+  /* 카드 묶음 */
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media (max-width:900px){.cards3,.cards4{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.cards3,.cards2,.cards4{grid-template-columns:1fr}}
+  .kc{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:14px 16px;border-top:6px solid var(--k,var(--acc))}
+  .kc h4{color:var(--k,var(--acc));font-size:1.05rem;margin:0 0 4px}
+  .kc p{font-size:.92rem;margin:4px 0 0}
+  .kc .ic{font-size:1.7rem;line-height:1}
+  .kc small{display:block;color:var(--muted);font-size:.8rem;margin-top:6px}
+  .tagt{display:inline-block;font-size:.76rem;font-weight:900;border-radius:999px;padding:1px 9px;background:color-mix(in srgb,var(--k,var(--acc)) 14%,white);color:var(--k,var(--acc));margin:6px 4px 0 0}
+  /* 연표 */
+  .tl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tl button{flex:1;min-width:92px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 6px;font:inherit;font-weight:900;cursor:pointer;color:var(--ink)}
+  .tl button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .tlv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:640px){.tlv{grid-template-columns:1fr}}
+  .tlv>div{background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:5px solid var(--k)}
+  .tlv h4{color:var(--k)}
+  .tlv .it{margin:6px 0 0;font-size:.93rem}
+  .tlv .it b{display:block}
+  /* 분류 게임 */
+  .sit{background:#fbfaf7;border:2px dashed var(--line);border-radius:14px;padding:14px 16px;text-align:center;min-height:170px}
+  .sit .cnt{font-size:.82rem;color:var(--muted)}
+  .sit .sq{font-size:1.08rem;font-weight:900;margin:6px 0 12px;min-height:52px}
+  .sit .ic{font-size:2rem}
+  .sit .row{justify-content:center}
+  .sit .fb{min-height:24px;margin-top:8px;font-size:.93rem}
+  .sit .cat{border:2px solid var(--k);color:var(--k);background:#fff;font-weight:900}
+  .sit .cat:hover{background:color-mix(in srgb,var(--k) 12%,white)}
+  .board{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:8px;margin-top:12px}
+  @media (max-width:760px){.board{grid-template-columns:1fr 1fr}}
+  .board>div{background:#fff;border-radius:12px;border-top:5px solid var(--k);padding:8px 10px;font-size:.84rem;min-height:70px}
+  .board>div b{display:block;color:var(--k);font-size:.92rem}
+  .board>div span{display:block;border-top:1px dashed var(--line);padding:3px 0}
+  .board>div span.x{color:var(--red)}
+  /* 뒤집는 카드 */
+  .tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .tcard{perspective:900px;height:172px;cursor:pointer}
+  .tcard .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .tcard.flip .in{transform:rotateY(180deg)}
+  .tcard .f,.tcard .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:12px 14px;box-shadow:0 6px 16px rgba(15,39,66,.09);overflow:auto}
+  .tcard .f{background:#fff;border-top:6px solid var(--acc);display:flex;flex-direction:column;justify-content:center;text-align:center}
+  .tcard .f i{font-style:normal;font-size:2rem;line-height:1.1}
+  .tcard .f b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.2rem;line-height:1.25;margin-top:4px}
+  .tcard .f small{color:var(--muted);font-size:.78rem;margin-top:6px}
+  .tcard .b{background:var(--acc);color:#fff;transform:rotateY(180deg);font-size:.9rem;line-height:1.5}
+  .tcard .b .x{margin-top:6px;background:rgba(255,255,255,.16);border-radius:8px;padding:5px 8px;font-size:.84rem}
+  /* 사례 탭 */
+  .apps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .apps.a6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:860px){.apps,.apps.a6{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:480px){.apps,.apps.a6{grid-template-columns:1fr 1fr}}
+  .apps button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border-radius:14px;padding:12px 8px;box-shadow:0 6px 16px rgba(15,39,66,.08);border:3px solid transparent;text-align:center;transition:.2s;font-size:.92rem}
+  .apps button.on{border-color:var(--acc);transform:translateY(-3px)}
+  .apps button .e{font-size:1.8rem;display:block}
+  .apps button b{display:block}
+  .cview{margin-top:14px}
+  .pr{display:grid;grid-template-columns:1fr 1.3fr;gap:12px}
+  @media (max-width:760px){.pr{grid-template-columns:1fr}}
+  .pr>div{border-radius:12px;padding:12px 14px;font-size:.93rem}
+  .pr .p{background:#fdecea;border-left:5px solid var(--red)}
+  .pr .s{background:#e7f6ef;border-left:5px solid var(--mint)}
+  .pr h4{font-size:.95rem}
+  .pr .p h4{color:#9b2c20}.pr .s h4{color:#13684d}
+  .dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.9rem;margin-top:10px;background:#fbfaf7;border-radius:10px;padding:10px 12px}
+  .dl b{color:var(--acc)}
+  /* 메모 */
+  .memo{margin-top:10px}
+  .memo label{display:block;font-weight:700;font-size:.93rem;margin:10px 0 4px}
+  .memo label small{font-weight:400;color:var(--muted)}
+  .memo input[type=text]{width:100%}
+  textarea{font:inherit;width:100%;min-height:64px;padding:8px 10px;border:1px solid #c5ccd5;border-radius:8px;resize:vertical;color:var(--ink);background:#fff}
+  .saved{font-size:.8rem;color:var(--mint);min-height:1em}
+  /* 투표 */
+  .vote{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  @media (max-width:560px){.vote{grid-template-columns:1fr}}
+  .vote button{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;border:3px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center;font-weight:900}
+  .vote button.on{border-color:var(--acc);background:var(--acc-soft)}
+  .vote button small{display:block;font-weight:400;color:var(--muted);font-size:.84rem}
+  .reveal{display:none;margin-top:12px}
+  .reveal.on{display:block;animation:fadein .4s both}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .pct{display:grid;grid-template-columns:120px 1fr 50px;gap:8px;align-items:center;margin:6px 0;font-size:.93rem}
+  .pct i{display:block;height:16px;border-radius:8px;background:var(--acc);width:0;transition:width .8s}
+  /* 질문폼 연결 */
+  .formgo{background:linear-gradient(135deg,#0f2742,#1b3d66);color:#fff;border-radius:18px;padding:22px 24px;box-shadow:var(--shadow);margin-top:18px}
+  .formgo .kicker{color:#fff;border-bottom-color:var(--amber)}
+  .formgo h3{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;margin:4px 0 8px}
+  .formgo ol{margin:6px 0 12px;padding-left:22px;color:#e1e9f4}
+  .formgo ol li{margin:6px 0}
+  .formgo p{color:#c8d6e8;font-size:.92rem}
+  .formgo .go{display:inline-block;background:var(--amber);color:var(--navy);font-weight:900;font-size:1.1rem;text-decoration:none;border-radius:12px;padding:12px 22px;margin-top:6px}
+  .formgo .go:hover{filter:brightness(1.05)}
+  .msum{background:#fff;border-radius:14px;padding:12px 16px;margin-top:12px;color:var(--ink);font-size:.9rem}
+  .msum h4{color:var(--navy)}
+  .msum dl{margin:6px 0 0}
+  .msum dt{font-weight:700;margin-top:8px;color:var(--muted);font-size:.84rem}
+  .msum dd{margin:2px 0 0;white-space:pre-wrap}
+  .msum dd.e{color:#aab2bd}
+  .key3{display:grid;gap:10px;margin-bottom:18px}
+  .key3 div{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;border-left:6px solid var(--k);font-size:1.02rem}
+  .note{font-size:.84rem;color:var(--muted);margin-top:8px}
+  .flow2{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .flow2>div{flex:1;min-width:140px;background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .flow2>div b{display:block}
+  .flow2>div span{font-size:.88rem}
+  .flow2>.ar{flex:0 0 auto;min-width:0;background:none;border:0;align-self:center;font-weight:900;color:var(--muted);padding:0}
+  @media (max-width:640px){.flow2>.ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .chk{display:flex;flex-wrap:wrap;gap:8px}
+  .chk button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink)}
+  .chk button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:700}
+  .tbl td,.tbl th{padding:8px 10px;vertical-align:top}
+  .tbl td{text-align:left;font-size:.92rem}
+  .mx{min-width:560px}
+  .mx th{background:#fbfaf7}
+  .mx td{border:1px solid var(--line);height:74px;width:30%;font-size:.86rem;cursor:pointer;background:#fff;transition:background .2s}
+  .mx td:hover{background:var(--acc-soft)}
+  .mx td.fill{background:#e7f6ef;cursor:default}
+  .mx td.bad{background:#fdecea}
+  .mx th.r{white-space:nowrap}
+  #mxPool button{border-radius:12px;text-align:left;max-width:100%}
+  /* 4단원 */
+  .sdg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+  @media (max-width:760px){.sdg{grid-template-columns:repeat(3,1fr)}}
+  .sdg button{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:8px 6px;color:#fff;background:var(--c);min-height:74px;font-size:.78rem;line-height:1.3;font-weight:700;display:flex;flex-direction:column;gap:2px;transition:transform .15s}
+  .sdg button b{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.3rem;line-height:1}
+  .sdg button:hover,.sdg button.on{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .sdg button.on{outline:3px solid var(--navy)}
+  .sdgv{margin-top:12px;background:#fbfaf7;border-radius:12px;padding:12px 14px;border-left:6px solid var(--c,#0f2742);min-height:60px}
+  .five{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.five{grid-template-columns:1fr}}
+  .five>div{background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(15,39,66,.08);padding:12px 12px;border-top:6px solid var(--k)}
+  .five b.n{font-family:"Black Han Sans",sans-serif;color:var(--k);font-size:1.2rem}
+  .five h4{margin:2px 0 4px;font-size:.98rem}
+  .five p{font-size:.86rem;margin:4px 0}
+  .five .ml{margin-top:8px;background:color-mix(in srgb,var(--k) 10%,white);border-radius:8px;padding:6px 8px;font-size:.82rem}
+  .quad{display:grid;grid-template-columns:28px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:6px;margin-top:8px}
+  .quad .ax{font-size:.78rem;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+  .quad .ax.v{writing-mode:vertical-rl}
+  .quad .cell{background:#fbfaf7;border:2px dashed var(--line);border-radius:12px;min-height:84px;padding:6px 8px;font-size:.84rem;cursor:pointer}
+  .quad .cell.best{border-color:var(--mint);background:#e7f6ef}
+  .quad .cell small{display:block;color:var(--muted);font-size:.74rem}
+  .quad .cell span{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:2px 2px 0 0}
+  .qbuild{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:1.08rem;font-weight:700;background:#fff8e6;border:2px solid #f6d58a;border-radius:12px;padding:12px 14px}
+  .qbuild input{flex:1;min-width:200px;font:inherit;font-weight:400;padding:6px 10px;border:1px solid #c5ccd5;border-radius:8px}
+  .plan{width:100%}
+  .plan td:first-child{width:150px;font-weight:700;font-size:.9rem;background:#fbfaf7}
+  .plan input{width:100%;font:inherit;padding:5px 8px;border:1px solid #c5ccd5;border-radius:6px}
+  /* 시뮬레이터 */
+  .sim{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:760px){.sim{grid-template-columns:1fr}}
+  .sim .cls{background:#fbfaf7;border-radius:12px;padding:10px 12px;border-top:5px solid var(--k)}
+  .sim .cls h4{color:var(--k);display:flex;justify-content:space-between}
+  .sim .cls ul{margin:6px 0 0;padding-left:18px;font-size:.88rem}
+  .sim .cls li.new{color:var(--k);font-weight:700}
+  .cand{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .cand button{border:2px dashed var(--k);background:#fff;border-radius:10px;padding:4px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
+  .cand button.on{border-style:solid;background:color-mix(in srgb,var(--k) 15%,white);font-weight:700}
+  .tt td,.tt th{padding:6px 8px;font-size:.88rem}
+  .tt td.r{color:var(--mint);font-weight:900}.tt td.w{color:var(--red);font-weight:900}
+  .score2{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .score2 div{flex:1;min-width:140px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px 12px;text-align:center}
+  .score2 b{display:block;font-family:"Black Han Sans",sans-serif;font-size:1.8rem;color:var(--acc)}
+  /* 스크래치 블록 */
+  .blocks{font-family:ui-sans-serif,system-ui;font-size:.86rem;display:inline-block}
+  .blk{display:block;border-radius:6px;padding:5px 10px;margin:3px 0;color:#fff;width:max-content;max-width:100%}
+  .blk.ev{background:#ffbf00;color:#333;border-radius:14px 14px 6px 6px}
+  .blk.ctl{background:#ffab19;color:#333}
+  .blk.ml{background:#4c97ff}
+  .blk.lk{background:#9966ff}
+  .blk.in{margin-left:22px}
+  .blk i{font-style:normal;background:rgba(255,255,255,.9);color:#333;border-radius:10px;padding:0 6px;margin:0 2px}
+  .penguin{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  @media (max-width:560px){.penguin{grid-template-columns:1fr}}
+  .penguin div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .dist td,.dist th{padding:6px 8px;font-size:.88rem;text-align:center}
+  .dist tr.near{background:#fff4d6;font-weight:900}
+  .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media (max-width:860px){.roles{grid-template-columns:1fr 1fr}}
+  .roles div{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(15,39,66,.08);padding:10px;text-align:center;font-size:.84rem}
+  .roles div i{font-style:normal;font-size:1.6rem;display:block}
+  .roles div b{display:block;font-size:.92rem}
+  .roles div em{display:block;font-style:normal;margin-top:6px;background:#e6eefb;border-radius:8px;padding:4px 6px;color:#1b3d66}
+  .types div{background:#fbfaf7;border-radius:10px;padding:8px 10px;font-size:.86rem;border-left:4px solid var(--k)}
+  .types div b{display:block}
+  .types div small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+
+  /* 카드 격자 칸이 안의 긴 코드·표 때문에 늘어나지 않게 */
+  .cards2>*,.cards3>*,.cards4>*,.grid2>*{min-width:0}
+
+  /* 공용 그림·실습 부품 (charts.js) */
+  .of-box{overflow-x:auto}
+  .of-box svg{display:block;width:100%;max-width:880px;height:auto}
+  .of-box .fe{fill:none;stroke:#8a94a3;stroke-width:2}
+  .of-box .fl{font-size:11px;fill:#5b6776;text-anchor:middle}
+  .of-box .fn{cursor:pointer}
+  .of-box .fb{fill:#fff;stroke-width:2}
+  .of-box .fn.on .fb{fill:#fff4d6;stroke-width:4}
+  .of-box .fn:focus{outline:none}
+  .of-box .fn:focus .fb{stroke-width:4}
+  .of-box .fnum{font-size:14px;font-weight:900;fill:#fff;text-anchor:middle}
+  .of-box .ft{font-size:13px;font-weight:700;fill:#16202c}
+  .of-box .fs{font-size:11px;fill:#5b6776}
+  .of-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:8px;font-size:.85rem}
+  .of-legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;background:var(--k);margin-right:5px;vertical-align:-2px}
+  .of-legend small{color:var(--muted)}
+  .of-tw{overflow-x:auto}
+  .of-set{min-width:760px;margin:0}
+  .of-set th{text-align:left;background:#fbfaf7;white-space:nowrap}
+  .of-set td{border-top:1px solid #eef0f3;font-size:.92rem;text-align:left}
+  .of-set td:first-child{font-weight:900;color:var(--acc);text-align:center;width:44px}
+  .of-set tr[data-s]{cursor:pointer;transition:background .3s}
+  .of-set tr.hl td{background:#fff4d6}
+  .sp-wrap{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;overflow-x:auto}
+  .sp-svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  .sp-svg .sp-pt{cursor:grab}
+  .sp-read{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  .sp-read>div{background:#fbfaf7;border-radius:10px;padding:6px 12px;font-size:.9rem}
+  .sp-read b{font-size:1.15rem;color:var(--acc)}
+  .mt-wrap{overflow-x:auto}
+  .mt{margin:0}
+  .mt td{padding:4px 6px}
+  .mt .mt-in{width:5.5em;font:inherit;text-align:center;border:1px solid var(--line);border-radius:6px;padding:3px}
+  .mt tr.on td{background:#fff4d6}
+  /* 파이썬 실행 칸 (pyrun) */
+  .pyrun{margin:12px 0}
+  .pr-code,.pr-stdin{display:block;width:100%;font-family:"Menlo","Consolas","Courier New",monospace;
+    font-size:.92rem;line-height:1.5;color:#e1e9f4;background:#0f2742;border:1px solid #1d3a5c;
+    border-radius:10px;padding:12px 14px;resize:vertical;tab-size:4;-webkit-text-size-adjust:100%}
+  .pr-code{white-space:pre;overflow-x:auto}
+  .pr-code:focus,.pr-stdin:focus{outline:2px solid var(--amber);outline-offset:1px}
+  .pr-code[readonly]{opacity:.96}
+  .pr-in{margin-top:8px}
+  .pr-in label{display:block;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:3px}
+  .pr-in label small{font-weight:400}
+  .pr-stdin{font-size:.88rem;min-height:2.4em}
+  .pr-bar{display:flex;gap:8px;align-items:center;margin:8px 0 0;flex-wrap:wrap}
+  .pr-stat{font-size:.82rem;color:var(--muted)}
+  .pr-out{margin:8px 0 0;font-family:"Menlo","Consolas","Courier New",monospace;font-size:.9rem;
+    line-height:1.5;white-space:pre-wrap;word-break:break-word;color:#0c2a1e;background:#e7f6ee;
+    border-left:4px solid var(--mint);border-radius:0 8px 8px 0;padding:10px 12px;overflow-x:auto}
+  .pr-out.err{color:#4a1512;background:#fdecea;border-left-color:var(--red)}
+
+  /* 넓은 표는 가로로 스크롤되게 감싼다(폰 폭 넘침 방지) */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 0}
+  .tscroll>table{margin-top:0}
+
+  /* 읽기용 코드 카드 (실행하지 않고 보여 주기만) */
+  .code{background:#0f2742;color:#e1e9f4;border-radius:10px;padding:12px 14px;margin:10px 0;
+    font-family:"Menlo","Consolas","Courier New",monospace;font-size:.92rem;line-height:1.55;
+    overflow-x:auto;white-space:pre;-webkit-overflow-scrolling:touch}
+  .code b{color:var(--amber);font-weight:700}
+  .code i{color:#8aa6cc;font-style:normal}
+  /* 진도 보내기 */
+  .tr-gate{position:fixed;inset:0;z-index:200;background:rgba(15,39,66,.72);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
+  .tr-card{background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.3);padding:22px 22px 16px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px}
+  .tr-card h2{margin:0;font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:1.5rem;color:var(--navy)}
+  .tr-sub{margin:-4px 0 4px;color:var(--muted);font-size:.92rem}
+  .tr-cls{display:flex;gap:8px}
+  .tr-cls label{flex:1;cursor:pointer}
+  .tr-cls input{position:absolute;opacity:0;pointer-events:none}
+  .tr-cls span{display:block;text-align:center;padding:10px 0;border:2px solid var(--line);border-radius:12px;font-weight:900;font-size:1.05rem}
+  .tr-cls input:checked+span{border-color:var(--navy);background:var(--navy);color:#fff}
+  .tr-cls input:focus-visible+span{outline:3px solid var(--amber)}
+  .tr-f{display:flex;align-items:center;gap:10px}
+  .tr-f span{width:40px;font-weight:700}
+  .tr-f input{flex:1;min-width:0;font:inherit;font-size:1.05rem;padding:9px 12px;border:1px solid #c5ccd5;border-radius:10px}
+  .tr-err{color:var(--red);font-weight:700;font-size:.9rem;min-height:1.2em}
+  .tr-card .btn{padding:12px;font-size:1.05rem;background:var(--navy)}
+  .tr-note{margin:2px 0 0;color:var(--muted);font-size:.8rem;line-height:1.5;text-align:center}
+  .tr-who,.tr-badge{display:flex;align-items:center;gap:6px;font-size:.82rem;background:rgba(255,255,255,.12);border-radius:999px;padding:3px 4px 3px 12px;white-space:nowrap}
+  .tr-badge{padding:3px 12px;background:var(--amber);color:#111;font-weight:700}
+  .tr-who button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(255,255,255,.18);border-radius:999px;padding:2px 9px}
+  .tr-who button:hover{background:rgba(255,255,255,.3)}
+  .tr-cls[hidden]{display:none}
+  .tr-badge button{all:unset;cursor:pointer;font-size:.74rem;background:rgba(0,0,0,.14);border-radius:999px;padding:2px 9px;margin-left:6px}
+  /* page-guard: 글자 선택·복사 막기 (입력 칸은 편집 가능) */
+  body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  input,textarea,select,[contenteditable]{-webkit-user-select:text;user-select:text}
+  .pg-toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#0f2742;color:#fff;padding:9px 16px;border-radius:999px;font-size:.9rem;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:opacity .2s;pointer-events:none}
+  .pg-toast.on{opacity:1}
+  /* u2-pico 전용 (pc-) */
+  .pc-flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+  .pc-flow>div:not(.ar){flex:1;min-width:130px;background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .pc-flow small{display:block;color:var(--muted);font-weight:700}
+  .pc-flow b{font-size:.95rem}
+  .pc-flow .ar{flex:0 0 auto;align-self:center;font-weight:900;color:var(--muted)}
+  @media (max-width:640px){.pc-flow>div:not(.ar){flex-basis:100%}.pc-flow .ar{flex-basis:100%;text-align:center;transform:rotate(90deg)}}
+  .pc-kind{background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px}
+  .pc-kind b{display:block;color:var(--k)}
+  .pc-kind span{display:block;font-size:.92rem;margin-top:3px}
+  .pc-steps{display:grid;gap:12px;margin:8px 0 12px}
+  .pc-steps>div{display:flex;gap:12px;align-items:flex-start;background:#fbfaf7;border-radius:12px;border-left:6px solid var(--k);padding:10px 14px;min-width:0}
+  .pc-steps .n{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--k);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+  .pc-steps>div>div{min-width:0;overflow-wrap:anywhere}
+  .pc-steps b{color:var(--k)}
+  .pc-steps ol{margin:6px 0 0;padding-left:20px;font-size:.93rem}
+  .pc-steps li{margin:3px 0}
+  .pc-steps.small span:not(.n){display:block;font-size:.92rem;margin-top:3px}
+  .pc-ol,.pc-ul{padding-left:22px;margin:8px 0}
+  .pc-ol li,.pc-ul li{margin:4px 0}
+  .pc-pin th,.pc-pin td{border:1px solid var(--line);text-align:center;font-size:.88rem}
+  .pc-pin{min-width:420px}
+  .pc-blink svg,.pc-range svg,.pc-frame svg{width:100%;max-width:420px;height:auto;display:block;margin:6px auto 0}
+  .pc-rgb{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:8px 0}
+  .pc-sw{flex:0 0 130px;height:110px;border-radius:14px;border:3px solid var(--navy);display:flex;align-items:center;justify-content:center;background:rgb(255,0,0)}
+  .pc-sw span{font-family:"Menlo","Consolas",monospace;font-weight:700;font-size:.9rem}
+  .pc-sl{flex:1;min-width:220px;display:grid;gap:6px}
+  .pc-sl label{display:flex;align-items:center;gap:8px;font-size:.92rem}
+  .pc-sl input[type=range]{flex:1;min-width:0}
+  .pc-sl output{width:2.4em;text-align:right;font-family:"Menlo","Consolas",monospace}
+  .pc-ring{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .pc-ring svg{flex:0 0 auto;width:200px;max-width:100%;height:auto;background:#0f2742;border-radius:14px}
+  .pc-ringside{flex:1;min-width:200px}
+  .pc-ringtxt{background:#fbfaf7;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem;min-height:3.4em;overflow-wrap:anywhere}
+  .pc-stage{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:640px){.pc-stage{grid-template-columns:repeat(2,1fr)}}
+  .pc-stage>div{background:#fbfaf7;border-radius:12px;border-top:5px solid var(--k);padding:8px 12px}
+  .pc-stage .n{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:var(--k);color:#fff;font-weight:900;font-size:.8rem;margin-right:6px}
+  .pc-stage small{display:block;color:var(--muted);font-size:.82rem;margin-top:2px}
+  .pc-ach{display:grid;gap:12px}
+  .pc-ach>div{background:#fbfaf7;border-radius:12px;padding:10px 14px;border:1px solid var(--line)}
+  .pc-ach .tg{display:inline-block;background:#f6e3d0;color:#8a4a1f;border-radius:999px;padding:1px 10px;font-size:.8rem;font-weight:700}
+  .pc-ach p{margin:6px 0 0}
+  .pc-ach .vote{grid-template-columns:1fr 1fr;margin-top:6px}
+  .pc-ach .vote button{padding:8px 10px}
+  .pc-ach small{display:block;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="top">
+  <span class="brand">소프트웨어와 생활</span>
+  <nav class="steps" id="steps"></nav>
+  <div class="score" id="score"></div>
+</div>
+<div class="progress"><i id="prog"></i></div>
+
+<main id="main">
+
+<!-- 0 시작 -->
+<section class="page" data-name="시작" data-acc="#d0602f">
+  <div class="cover">
+    <div class="in">
+      <span class="tag">소프트웨어와 생활 · Ⅱ. 창작을 지원하는 소프트웨어 · 라즈베리파이 피코로 만드는 미디어 아트</span>
+      <h1>미디어 아트 작품을<br>만들어 볼까?</h1>
+      <div class="story"><b>온도에 따라 색이 변하는 액자 만들기 (56쪽)</b><br>여러 가지 색을 표현할 수 있는 <b>네오픽셀 LED</b>와 온도와 습도를 함께 재는 <b>온습도 센서</b>를 써서, 온도에 따라 색이 변하는 액자를 만들어 봐요. 물음은 「어떻게 온도에 따라 색이 달라지게 할 수 있을까?」예요.</div>
+      <p>피코에 내장된 LED부터 시작해, 네오픽셀과 온습도 센서를 차례로 다루고 마지막에 <b>온도 → 색</b>을 하나로 묶어 봐요.</p>
+      <ol>
+        <li>준비 학습 · 실습 환경</li><li>실습 1~4</li><li>시뮬레이터 · 마무리 · 인터뷰</li>
+      </ol>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" style="background:var(--amber);color:var(--navy);box-shadow:none" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">오늘 만들 것 보기 ↓</button>
+        <button class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);box-shadow:none" onclick="go(1)">01로 바로 가기 →</button>
+      </div>
+    </div>
+    <div class="route" aria-hidden="true">
+      <div class="st" style="animation-delay:.2s"><i>💡</i><div><b>실습 1</b><small>피코 내장 LED 제어하기</small></div></div>
+      <div class="ar" style="animation-delay:.6s">↓</div>
+      <div class="st" style="animation-delay:.8s"><i>🌈</i><div><b>실습 2</b><small>네오픽셀 LED 제어하기</small></div></div>
+      <div class="ar" style="animation-delay:1.2s">↓</div>
+      <div class="st" style="animation-delay:1.4s"><i>🌡️</i><div><b>실습 3</b><small>온습도 센서 제어하기</small></div></div>
+      <div class="ar" style="animation-delay:1.8s">↓</div>
+      <div class="st" style="animation-delay:2s"><i>🖼️</i><div><b>실습 4</b><small>온도 변화를 색으로 표현하기</small></div></div>
+    </div>
+  </div>
+
+  <div id="intro" class="today">
+    <div class="today-lead">
+      <span class="kicker">시작 · 미디어 아트 작품을 만들어 볼까? (54쪽)</span>
+      <p>피지컬 컴퓨팅으로 작품을 만들려면 <b>개발 보드(마이크로컨트롤러)</b>가 필요해요. 마이크로컨트롤러에 여러 가지 <b>센서·액추에이터·통신 모듈</b>을 연결하면 다양한 프로젝트를 만들 수 있어요. 이 단원에서는 <b>라즈베리파이 피코</b>를 써요.</p>
+    </div>
+    <div class="card">
+      <h3>🖼️ 실습 · 온도에 따라 색이 변하는 액자 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽 실습 개요)</span></h3>
+      <div class="tscroll"><table class="tbl">
+        <tr><th>문제 상황</th><td>온도에 따라 색이 변하는 미디어 아트 작품을 만들어야 한다.</td></tr>
+        <tr><th>준비물</th><td>피코, 브레드 보드, 네오픽셀 LED, 온습도 센서, 액자</td></tr>
+        <tr><th>사용 소프트웨어</th><td>토니(Thonny), 파이썬</td></tr>
+      </table></div>
+      <p style="margin:12px 0 4px"><b>실습 순서</b></p>
+      <div class="pc-flow">
+        <div style="--k:#d0602f"><small>실습 1</small><b>피코 내장 LED 제어하기</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#d0602f"><small>실습 2</small><b>네오픽셀 LED 제어하기</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#d0602f"><small>실습 3</small><b>온습도 센서 제어하기</b></div>
+        <div class="ar">→</div>
+        <div style="--k:#d0602f"><small>실습 4</small><b>온도 변화를 색으로 표현하기</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🐍 코드는 두 가지로 만나요</h3>
+      <div class="grid2 even">
+        <div class="pc-kind" style="--k:#1f2f4a"><b>📖 읽는 코드</b><span>피코에서만 돌아가는 코드(<code>machine</code>·<code>neopixel</code>·<code>dht</code>, <code>while True</code>)는 어두운 <b>코드 카드</b>로 읽기만 해요.</span></div>
+        <div class="pc-kind" style="--k:#1f9d74"><b>▶ 돌려 보는 코드</b><span>웹에서 돌려 볼 수 있게 <b>흉내 낸 파이썬</b>이에요. 측정값은 리스트로 주고, 몇 번만 돌아요. 고쳐서 <b>실행</b>을 눌러 봐요.</span></div>
+      </div>
+      <p class="note" style="margin-bottom:0">처음 실행하면 파이썬을 불러오느라 몇 초 걸려요.</p>
+    </div>
+    <div class="why3">
+      <div class="why">
+        <span class="kicker">핵심 질문</span>
+        <ul class="uses">
+          <li><b>오늘의 질문</b> · 어떻게 온도에 따라 색이 달라지게 할 수 있을까?</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">배우고 나면 할 수 있는 것</span>
+        <ul class="can">
+          <li>피코 실습 환경을 준비하는 순서를 말할 수 있다.</li>
+          <li>내장 LED·네오픽셀 LED·온습도 센서를 제어하는 코드를 읽고 설명할 수 있다.</li>
+          <li>온도에 따라 LED 색이 바뀌는 조건문을 완성해 볼 수 있다.</li>
+        </ul>
+      </div>
+      <div class="why">
+        <span class="kicker">오늘 만날 낱말</span>
+        <p style="margin:4px 0 0;font-size:.95rem">펌웨어 · 마이크로파이썬 · 토니(Thonny) · 라이브러리 · 핀아웃 · 내장 LED · 네오픽셀 · RGB · DHT11 · 시뮬레이터</p>
+        <p style="font-size:.86rem;margin-top:8px" class="muted">처음 보는 낱말이 있어도 괜찮아요. 화면을 넘기며 하나씩 만나요.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>📝 나의 계획 <span class="muted" style="font-weight:400;font-size:.88rem">(선택)</span></h3>
+      <div class="memo"><label>나는 센서가 읽은 값으로 이런 작품을 만들면 좋겠다. <small>떠오르는 대로 한두 줄 적어 보세요. 마지막 화면에서 다시 볼 수 있어요.</small></label><textarea data-memo="planIdea" rows="2"></textarea><div class="saved"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:20px"><button class="btn" style="background:var(--navy)" onclick="go(1)">01 준비 학습부터 시작하기 →</button></div>
+  </div>
+</section>
+
+<!-- 1 준비 학습 -->
+<section class="page" data-name="준비 학습" data-acc="#d0602f">
+  <div class="head"><div class="num">01</div><div><h2>준비 학습 · 실습 환경 설정하기</h2><p>교과서 54~55쪽 · 펌웨어·통합 개발 환경·라이브러리 설치, 핀 연결 안내</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코로 작품을 만들려면 먼저 <b>① 피코 안에 파이썬을 알아듣는 기본 프로그램(펌웨어)을 넣고, ② 코드를 쓰고 올릴 도구(토니)를 설치하고, ③ 필요한 부품 도우미(라이브러리)를 내려받는</b> 세 단계가 필요해요. 한 번만 해 두면 돼요.</span></div>
+
+  <div class="card">
+    <h3>🃏 먼저 낱말 살펴보기 <span class="muted" style="font-weight:400;font-size:.88rem">(54~55쪽 낱말 풀이)</span></h3>
+    <p class="muted" style="margin-top:0">카드를 눌러 뜻을 확인해요. 뜻을 먼저 떠올려 본 뒤에 뒤집어 봐요.</p>
+    <div id="prepFlip" class="tcards"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔧 실습 환경 설정 세 단계 <span class="muted" style="font-weight:400;font-size:.88rem">(54~55쪽)</span></h3>
+    <div class="pc-steps">
+      <div style="--k:#d0602f"><span class="n">1</span><div><b>펌웨어 설치하기</b>
+        <ol>
+          <li>검색창에서 「마이크로파이썬(MicroPython)」을 검색해 홈페이지(micropython.org)의 다운로드 메뉴로 가요. 「pico」를 입력하고 라즈베리파이 피코 그림을 찾아 눌러, 최신 펌웨어 파일(<b>.uf2</b>)을 내려받아요.</li>
+          <li>피코 위쪽의 <b>BOOTSEL</b> 버튼을 누른 상태에서 USB로 컴퓨터와 피코를 연결해요. 컴퓨터가 <b>RPI-RP2</b> 장치로 알아봐요.</li>
+          <li>드라이브가 오른쪽 그림처럼 보이면, 내려받은 uf2 파일을 <b>RPI-RP2 드라이브</b>에 복사해 붙여 넣거나 끌어 놓아요. 장치가 새로 연결되면서 RPI-RP2 장치가 사라지면 설치가 끝난 거예요.</li>
+        </ol></div></div>
+      <div style="--k:#2f6fd0"><span class="n">2</span><div><b>통합 개발 환경(IDE) 설치하기</b>
+        <ol>
+          <li>검색창에 영문으로 「Thonny」를 입력해 홈페이지로 가요. 내 운영체제에 맞는 파일을 내려받아 순서대로 설치해요.</li>
+          <li>설치한 뒤 도구(Tools) 메뉴에서 옵션(options)을 열어요. <b>인터프리터(Interpreter)</b> 탭에서 <b>MicroPython (Raspberry Pi Pico)</b>를 고르고, 통신 포트는 <b>직렬 장치 포트 번호</b>로 골라요.</li>
+        </ol>
+        <p class="note" style="margin:4px 0 0">포트 번호 찾는 법(교과서 말풍선): 모니터 화면 왼쪽 아래의 윈도 버튼을 오른쪽 클릭해 나오는 메뉴에서 장치 관리자 → 포트(COM &amp; LPT)를 열어 Serial Port의 번호를 확인해요.</p></div></div>
+      <div style="--k:#1f9d74"><span class="n">3</span><div><b>라이브러리 설치하기</b>
+        <ol>
+          <li>57~58쪽 실습을 위해 <b>neopixel</b>과 <b>dht</b> 라이브러리를 설치해요.</li>
+          <li>Thonny의 <b>Tools → Manage packages</b>를 눌러요. 검색칸에 이름(neopixel, dht)을 쓰고 검색한 뒤, 나온 결과를 눌러 설치해요.</li>
+        </ol></div></div>
+    </div>
+    <p class="callout" style="margin-bottom:0">💡 <b>TIP · 라이브러리를 설정하는 이유</b> 라이브러리는 이미 구현된 기능을 제공하므로, 이를 활용하면 코드를 빠르게 작성할 수 있어요. 파이썬은 풍부한 표준 라이브러리를 제공하지만, 특정 작업이나 기능을 하려면 추가 라이브러리가 필요해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧩 어느 단계에서 하는 일일까? <span class="muted" style="font-weight:400;font-size:.88rem">(체험)</span></h3>
+    <p class="muted" style="margin-top:0">설치 과정의 한 장면을 읽고, 세 단계 가운데 어디에 속하는지 골라 봐요.</p>
+    <div id="setupSort"></div>
+  </div>
+
+  <div class="card">
+    <h3>📍 장치 살펴보기 · 라즈베리파이 핀아웃 <span class="muted" style="font-weight:400;font-size:.88rem">(54쪽)</span></h3>
+    <p style="margin-top:0">피코의 많은 핀(단자)은 각각 조금씩 다른 기능을 가지도록 설계되어 있어요. 이것을 <b>핀아웃</b>이라고 해요. 예를 들어 36번 핀은 3V3(OUT), 38번 핀은 GND의 기능을 가져요. 회로를 구성할 때는 핀아웃을 보고 알맞은 핀을 골라, 그 핀으로 신호를 주어 여러 장치를 제어해요.</p>
+    <p style="margin:10px 0 4px"><b>핀 연결 안내</b> <span class="muted">(교과서 표를 옮겼어요)</span></p>
+    <div class="tscroll"><table class="tbl pc-pin">
+      <tr><th>역할</th><th>피코</th><th>장치</th><th>연결하는 단자</th></tr>
+      <tr><td rowspan="3">접지</td><td rowspan="3">GND핀</td><td>네오픽셀</td><td>GND</td></tr>
+      <tr><td>온습도 센서 · 피에조 버저</td><td>GND(-)</td></tr>
+      <tr><td>심박 측정 센서</td><td>-</td></tr>
+      <tr><td rowspan="3">전원 공급</td><td rowspan="3">3V3핀</td><td>네오픽셀</td><td>5V</td></tr>
+      <tr><td>온습도 센서 · 피에조 버저</td><td>VCC(+)</td></tr>
+      <tr><td>심박 측정 센서</td><td>+</td></tr>
+      <tr><td rowspan="3">디지털 연결</td><td rowspan="2">GP0핀</td><td>네오픽셀</td><td>DI</td></tr>
+      <tr><td>피에조 버저</td><td>IN(s)</td></tr>
+      <tr><td>GP22핀</td><td>온습도 센서</td><td>S</td></tr>
+      <tr><td>아날로그 연결</td><td>GP28핀</td><td>심박 측정 센서</td><td>S</td></tr>
+    </table></div>
+    <p class="note">이 차시에서는 네오픽셀과 온습도 센서 줄을 써요. 피에조 버저·심박 측정 센서는 다른 실습에서 만나요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💾 더 알아보기 · 프로그램 실행 파일 저장하기 <span class="muted" style="font-weight:400;font-size:.88rem">(55쪽)</span></h3>
+    <p style="margin-top:0">피코로 실습할 때는 코드를 <b>py 확장자</b>로 저장해야 해요. 피코를 케이블로 연결하거나 외부 전원으로 연결했을 때, 저장된 파일이 <b>계속 작동</b>할 수 있기 때문이에요.</p>
+    <ol class="pc-ol">
+      <li>「파일(File)」 메뉴를 다시 눌러 「다른 이름으로 저장(Save As)」을 골라요.</li>
+      <li>저장할 위치와 파일 이름을 정하고, 파일 이름 뒤에 <b>.py</b>를 붙여요. 예) my_code.py</li>
+      <li>「저장(Save)」 버튼을 눌러 파일을 저장해요.</li>
+    </ol>
+    <div class="memo"><label>설치하다가 막힌 곳이나 궁금한 점이 있었나요? <small>(선택)</small></label><textarea data-memo="prepStuck" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="1"></div>
+</section>
+
+<!-- 2 실습 1 내장 LED -->
+<section class="page" data-name="실습 1 · 내장 LED" data-acc="#d0602f">
+  <div class="head"><div class="num">02</div><div><h2>실습 1 · 피코 내장 LED 제어하기</h2><p>교과서 56쪽 · 회로 구성, 프로그래밍, 실행 결과</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코 보드 위에는 <b>작은 LED가 이미 붙어 있어요</b>. 이 LED를 <b>켜고(1), 1초 기다리고, 끄고(0), 1초 기다리는</b> 일을 계속 반복하면 불빛이 1초 간격으로 깜빡여요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽)</span></h3>
+    <p style="margin-top:0">브레드 보드에 피코를 연결하고, 내장된 LED를 쓰기 위해 <b>25번 핀</b>을 찾아봐요. 내장 LED를 제어하는 핀은 보드 상단의 LED(<b>GP25핀</b>)에 연결되어 있어요. 따로 부품을 달지 않아도 돼요.</p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽)</span></h3>
+    <p style="margin-top:0">피코에 내장된 LED를 제어하는 프로그램이에요. 피코에서만 돌아가서 여기서는 <b>읽기만</b> 해요.</p>
+<pre class="code">from machine import Pin           <i># machine 모듈에서 Pin 클래스(핀 제어) 사용</i>
+import time                       <i># 시간 지연 기능을 위한 time 모듈 사용</i>
+led = Pin(25, Pin.OUT)            <i># 25번 핀을 출력 모드로 led 객체 생성</i>
+
+while True:                       <i># 무한 반복 시작</i>
+    led.value(1)                  <i># LED 켜기</i>
+    time.sleep(1)                 <i># 1초 대기</i>
+    led.value(0)                  <i># LED 끄기</i>
+    time.sleep(1)                 <i># 1초 대기</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="led1Flip" class="tcards"></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(56쪽)</span></h3>
+    <p style="margin-top:0">Thonny의 Run 버튼을 눌러 프로그램을 실행해요. <b>1초 간격으로</b> 피코에 내장된 LED의 불빛이 <b>깜빡이는 것</b>을 확인할 수 있어요.</p>
+    <div class="pc-blink" aria-label="LED 깜빡임 그림">
+      <svg viewBox="0 0 320 70" role="img" aria-label="LED가 켜짐, 꺼짐을 1초씩 번갈아 하는 그림">
+        <g font-size="12" font-weight="700" text-anchor="middle" fill="#0f2742">
+          <circle cx="40" cy="30" r="16" fill="#ffd54a" stroke="#0f2742" stroke-width="2"/><text x="40" y="62">켜짐</text>
+          <circle cx="110" cy="30" r="16" fill="#e5e8ec" stroke="#0f2742" stroke-width="2"/><text x="110" y="62">꺼짐</text>
+          <circle cx="180" cy="30" r="16" fill="#ffd54a" stroke="#0f2742" stroke-width="2"/><text x="180" y="62">켜짐</text>
+          <circle cx="250" cy="30" r="16" fill="#e5e8ec" stroke="#0f2742" stroke-width="2"/><text x="250" y="62">꺼짐</text>
+          <text x="75" y="14" font-size="10" fill="#6b7585">1초</text><text x="145" y="14" font-size="10" fill="#6b7585">1초</text><text x="215" y="14" font-size="10" fill="#6b7585">1초</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>▶ 해 보기 · 깜빡임 순서를 파이썬으로 흉내 내 보기</h3>
+    <p style="margin-top:0">피코 코드의 <code>while True</code>는 끝없이 도는 반복이라 웹에서는 돌릴 수 없어요. 그래서 <b>3번만 도는 <code>for</code></b>로 바꾸고, 켜고 끄는 일을 <code>print( )</code>로 보여 줘요. 반복 횟수 <code>3</code>이나 출력 글을 바꿔서 다시 실행해 봐요.</p>
+    <div id="ledRun"></div>
+  </div>
+  <div class="quiz" data-quiz="2"></div>
+</section>
+
+<!-- 3 실습 2 네오픽셀 -->
+<section class="page" data-name="실습 2 · 네오픽셀" data-acc="#d0602f">
+  <div class="head"><div class="num">03</div><div><h2>실습 2 · 네오픽셀 LED 제어하기</h2><p>교과서 57쪽 · 회로 구성, RGB 값, 해 보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span><b>네오픽셀</b>은 작은 LED가 줄줄이 붙어 있어서 <b>LED마다 따로 색을 정할 수 있는</b> 부품이에요. 색은 <b>빨강(R)·초록(G)·파랑(B)을 각각 0~255로 섞어서</b> 만들어요. <code>(255, 0, 0)</code>은 빨강만 가득 켠 빨간색이에요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+    <p style="margin-top:0">네오픽셀 3핀의 글씨를 잘 보고, 브레드 보드를 이용해 아래 표처럼 연결해요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>네오픽셀</th><th>피코</th></tr>
+      <tr><td>GND</td><td>GND핀(접지)</td></tr>
+      <tr><td>DI</td><td>GP0핀(디지털 연결)</td></tr>
+      <tr><td>5V</td><td>3V3핀(전원 공급 VCC)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+<pre class="code">from machine import Pin
+import time
+from neopixel import NeoPixel      <i># 네오픽셀 사용을 위한 모듈 호출</i>
+
+NUM_LEDS = 4                       <i># 사용할 LED 개수</i>
+PIN_NUM = 0                        <i># DIN 핀으로 사용할 입출력(GPIO) 핀 번호</i>
+
+pixels = NeoPixel(Pin(PIN_NUM), NUM_LEDS, bpp = 3)   <i># RGB 모드(bpp=3)를 사용해 NeoPixel 객체 생성</i>
+
+while True:
+    pixels.fill((255, 0, 0))       <i># 빨간색(R, G, B)으로 LED 켜기</i>
+    pixels.write()                 <i># 변경 사항 적용</i>
+    time.sleep(1)                  <i># 1초 대기</i>
+    pixels.fill((0, 0, 0))         <i># 모든 LED 끄기</i>
+    pixels.write()                 <i># 변경 사항 적용</i>
+    time.sleep(1)                  <i># 1초 대기</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="neoFlip" class="tcards"></div>
+    <p class="callout" style="margin-bottom:0">🎨 <b>코드 가이드 · <code>pixels.fill((255, 0, 0))</code></b> 괄호 안 숫자는 <b>R, G, B 값</b>이에요. 원하는 색의 RGB 값은 「색상 팔레트」를 검색하면 확인할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎚️ 체험 · R, G, B를 섞어 색 만들기</h3>
+    <p style="margin-top:0">막대를 움직여 세 값을 바꿔 봐요. 아래 색 칸과 코드 줄이 같이 바뀌어요. <b>(255, 0, 0)</b>과 <b>(0, 0, 0)</b>은 어떤 색인지도 확인해 봐요.</p>
+    <div class="pc-rgb">
+      <div class="pc-sw" id="pcSwatch" role="img" aria-label="R, G, B 값으로 만든 색 미리보기"><span id="pcSwatchTxt">(255, 0, 0)</span></div>
+      <div class="pc-sl">
+        <label><b style="color:#d64535">R</b> 빨강 <input type="range" id="pcR" min="0" max="255" value="255"><output id="pcRv">255</output></label>
+        <label><b style="color:#1f9d74">G</b> 초록 <input type="range" id="pcG" min="0" max="255" value="0"><output id="pcGv">0</output></label>
+        <label><b style="color:#2f6fd0">B</b> 파랑 <input type="range" id="pcB" min="0" max="255" value="0"><output id="pcBv">0</output></label>
+      </div>
+    </div>
+    <pre class="code" id="pcLine" style="margin-bottom:0">pixels.fill((255, 0, 0))</pre>
+    <p class="note">모니터 화면의 색 미리보기예요. 실제 네오픽셀의 밝기와 색은 조금 다르게 보일 수 있어요.</p>
+    <div class="memo"><label>R·G·B를 움직여 보며 알게 된 점을 적어 보세요. <small>(선택) 예) 세 값이 모두 0이면?</small></label><textarea data-memo="rgbFind" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+    <p style="margin-top:0">Run 버튼을 눌러 실행하면 네오픽셀의 <b>빨간색 불빛이 1초 간격으로 깜빡이는 것</b>을 확인할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 색 이름을 (R, G, B) 튜플로 바꿔 보기</h3>
+    <p style="margin-top:0">색 이름과 RGB 튜플을 <b>딕셔너리</b>에 짝지어 두고, <code>for</code>로 하나씩 꺼내 <code>fill</code> 줄을 만들어 보여 줘요. 색 이름과 값을 바꾸거나 새로 넣어 봐요.</p>
+    <div id="colorRun"></div>
+    <p class="note">노랑·흰색의 값은 교과서에 없는 예예요. 위 슬라이더로 확인해 봐도 좋아요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✍️ 해 보기 · LED 제어 프로그램 구현하기 <span class="muted" style="font-weight:400;font-size:.88rem">(57쪽)</span></h3>
+    <p style="margin-top:0"><b>1초 간격으로 네오픽셀 LED의 색이 빨강, 파랑, 초록 순서로 바뀌는 프로그램</b>을 작성해 보세요. 아래 칸의 <code>___</code> 자리에 색(R, G, B 튜플)을 직접 채워서 실행해 봐요.</p>
+    <div id="colorTry"></div>
+    <p class="callout" style="margin-bottom:0">⚠️ <code>___</code>를 채우기 전에는 <b>오류가 나는 게 정상</b>이에요. 슬라이더에서 빨강·파랑·초록이 되는 값을 찾아 보고, 순서대로 채워 봐요. 피코에서는 같은 색 목록을 <code>pixels.fill(색)</code>, <code>pixels.write()</code>, <code>time.sleep(1)</code>과 함께 반복하면 돼요.</p>
+    <div class="memo"><label>내가 채운 값과 실행 결과를 적어 두세요. <small>(선택)</small></label><textarea data-memo="colorTryMemo" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="3"></div>
+</section>
+
+<!-- 4 실습 3 온습도 센서 -->
+<section class="page" data-name="실습 3 · 온습도 센서" data-acc="#d0602f">
+  <div class="head"><div class="num">04</div><div><h2>실습 3 · 온습도 센서 제어하기</h2><p>교과서 58쪽 · 회로 구성, 코드 해설, 장치 살펴보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>온습도 센서는 주변의 <b>온도와 습도를 한 번에 재서 숫자로 알려 주는</b> 부품이에요. 피코가 <b>「재!」 하고 시키면(measure)</b>, 온도와 습도를 <b>읽어 와서(temperature, humidity)</b> 화면에 출력해요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p style="margin-top:0">피코에는 온도 센서가 내장되어 있지만, 이번 실습에서는 피코에 <b>온습도 센서를 따로 연결</b>해 써요. 온습도 센서 모듈에 새겨진 극성과 회로를 확인하고, 피코의 입출력 핀 한 개를 써서 두 장치를 연결해요.</p>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>온습도 센서</th><th>피코</th></tr>
+      <tr><td>S</td><td>GP22핀(디지털 연결)</td></tr>
+      <tr><td>VCC(+)</td><td>3V3핀(전원 공급 VCC)</td></tr>
+      <tr><td>GND(-)</td><td>GND핀(접지)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 읽는 코드 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p class="callout" style="margin-top:0"><b>코드 해설</b> dht 라이브러리를 불러와 dht 핀 연결로 <code>sensor.measure()</code> 함수를 호출해 데이터를 측정한 뒤, <code>sensor.temperature()</code> 함수와 <code>sensor.humidity()</code> 함수로 온도와 습도를 읽어요. 이 값을 출력창에 출력하고, <code>time.sleep(1)</code>로 측정 간격을 1초로 정해요.</p>
+<pre class="code">from machine import Pin
+import time
+import dht                         <i># 온습도 센서 모듈 설치</i>
+
+sensor = dht.DHT11(Pin(22))        <i># 22번 핀에 연결된 DHT11 센서 초기화</i>
+
+while True:
+    sensor.measure()               <i># 센서에서 측정 시작</i>
+    temp = sensor.temperature()    <i># 온도 측정</i>
+    hum = sensor.humidity()        <i># 습도 측정</i>
+
+    print('Temperature: ', temp, ' °C')   <i># 온도와 습도 출력</i>
+    print('Humidity: ', hum, ' %')
+    time.sleep(1)                  <i># 1초마다 측정</i></pre>
+    <p style="margin:10px 0 4px"><b>코드 가이드</b> <span class="muted">카드를 눌러 확인해요.</span></p>
+    <div id="dhtFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">교과서 말풍선: 이 코드를 실행하면 온습도 값을 피코에서 출력할 수 있어요. 이를 활용해 환경 모니터링, 자동 제어 같은 다양한 응용 프로그램을 개발할 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p style="margin-top:0">Run 버튼을 눌러 실행하면 Thonny 아래쪽 Shell 창에 <b>현재 온습도 값이 변하는 것</b>을 볼 수 있어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>📟 장치 살펴보기 · 온습도 센서 <span class="muted" style="font-weight:400;font-size:.88rem">(58쪽)</span></h3>
+    <p style="margin-top:0">온습도 센서에는 다양한 종류가 있어요. 그중 <b>DHT11</b>은 <b>디지털 신호</b>로 데이터를 내보내요. 모듈형이라 여러 마이크로컨트롤러 프로젝트에 쉽게 붙일 수 있어요.</p>
+    <div class="pc-range">
+      <svg viewBox="0 0 330 130" role="img" aria-label="DHT11 측정 범위. 온도 0도에서 50도, 습도 20퍼센트에서 90퍼센트">
+        <g font-size="11" fill="#0f2742" font-weight="700">
+          <text x="4" y="14">온도 (°C) · 눈금 0~50</text>
+          <rect x="10" y="20" width="310" height="20" rx="10" fill="#d0602f"/>
+          <text x="165" y="34" fill="#fff" text-anchor="middle">0 ~ 50 °C (정확도 ±2 °C)</text>
+          <text x="4" y="72">습도 (%RH) · 눈금 0~100</text>
+          <rect x="10" y="78" width="310" height="20" rx="10" fill="#eceff3"/>
+          <rect x="72" y="78" width="217" height="20" rx="10" fill="#2f6fd0"/>
+          <text x="180" y="92" fill="#fff" text-anchor="middle">20 ~ 90 %RH (±5 %RH)</text>
+        </g>
+        <g font-size="10" fill="#6b7585" text-anchor="middle"><text x="10" y="116">0</text><text x="72" y="116">20</text><text x="289" y="116">90</text><text x="320" y="116">100</text></g>
+      </svg>
+    </div>
+    <p class="note" style="margin-bottom:0">막대는 교과서에 적힌 측정 범위를 내가 그림으로 옮긴 거예요. 습도 막대의 눈금은 0~100으로 그렸어요.</p>
+  </div>
+
+  <div class="card">
+    <h3>▶ 센서가 읽은 값을 출력하는 모양 흉내 내기</h3>
+    <p style="margin-top:0">진짜 센서 대신 <b>(온도, 습도) 흉내 값</b>을 리스트에 넣고 <code>for</code>로 한 쌍씩 꺼내 같은 모양으로 출력해요. 값을 바꿔 보고, 범위를 벗어난 값(예: 온도 60)을 넣으면 어떻게 되는지도 확인해 봐요.</p>
+    <div id="dhtRun"></div>
+    <p class="note">리스트 안의 숫자는 예로 만든 흉내 값이에요.</p>
+    <div class="memo"><label>온습도 센서로 재고 싶은 장소는 어디인가요? 이유도 한 줄 적어 보세요. <small>(선택)</small></label><textarea data-memo="dhtWhere" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="4"></div>
+</section>
+
+<!-- 5 실습 4 온도를 색으로 -->
+<section class="page" data-name="실습 4 · 온도를 색으로" data-acc="#d0602f">
+  <div class="head"><div class="num">05</div><div><h2>실습 4 · 온도 변화를 색으로 표현하기</h2><p>교과서 59쪽 · 회로 구성, 조건문 완성, 액자 만들기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>실습 3에서 읽은 <b>온도</b>를 보고, 실습 2에서 배운 <b>색 정하기</b>를 이어 붙이는 거예요. 「온도가 어느 범위인가?」에 따라 <b>if · elif · else</b>로 갈라서 네오픽셀의 색을 다르게 정해요.</span></div>
+
+  <div class="card">
+    <h3>1️⃣ 회로 구성 <span class="muted" style="font-weight:400;font-size:.88rem">(59쪽)</span></h3>
+    <p style="margin-top:0">액자 덮개에 피코와 네오픽셀 LED, 온습도 센서 회로를 연결해요.</p>
+    <div class="pc-frame">
+      <svg viewBox="0 0 340 150" role="img" aria-label="액자 덮개의 안쪽에는 네오픽셀 LED, 반대편에는 브레드 보드와 피코와 온습도 센서를 두는 그림">
+        <g font-size="11" font-weight="700" text-anchor="middle" fill="#0f2742">
+          <rect x="6" y="20" width="140" height="100" rx="8" fill="#fbfaf7" stroke="#0f2742" stroke-width="2"/>
+          <text x="76" y="14">액자 덮개 안쪽</text>
+          <rect x="40" y="55" width="72" height="14" rx="7" fill="#9fdfc2" stroke="#1f9d74" stroke-width="2"/><text x="76" y="88">네오픽셀 LED</text>
+          <text x="76" y="106" font-size="10" font-weight="400" fill="#6b7585">양면테이프로 고정</text>
+          <rect x="194" y="20" width="140" height="100" rx="8" fill="#fbfaf7" stroke="#0f2742" stroke-width="2"/>
+          <text x="264" y="14">액자 덮개 반대편</text>
+          <rect x="206" y="48" width="64" height="30" rx="4" fill="#fff" stroke="#8a8f98" stroke-width="2"/><text x="238" y="66" font-size="10">브레드 보드</text>
+          <rect x="214" y="53" width="26" height="12" rx="2" fill="#1f9d74" opacity=".5"/><text x="227" y="62" font-size="8">피코</text>
+          <rect x="284" y="52" width="34" height="24" rx="3" fill="#6fb6ea" stroke="#2f6fd0" stroke-width="2"/><text x="301" y="68" font-size="9">센서</text>
+          <text x="264" y="106" font-size="10" font-weight="400" fill="#6b7585">온습도 센서·브레드 보드 고정</text>
+          <path d="M112 62 C150 62 160 62 206 62" stroke="#d0602f" stroke-width="3" fill="none" stroke-dasharray="5 4"/>
+          <text x="160" y="140" font-size="10" font-weight="400" fill="#6b7585">구멍으로 케이블을 반대쪽에 빼요</text>
+        </g>
+      </svg>
+    </div>
+    <ul class="pc-ul">
+      <li>액자 덮개 안쪽에 <b>네오픽셀 LED를 양면테이프로 고정</b>하고, 케이블을 반대쪽으로 빼낼 수 있도록 <b>구멍을 뚫어요</b>.</li>
+      <li>액자 덮개 반대편에 <b>브레드 보드와 온습도 센서를 양면테이프로 고정</b>하고, 피코와 네오픽셀 회로를 연결해요.</li>
+    </ul>
+    <p class="note" style="margin-bottom:0">그림은 교과서 사진 설명을 바탕으로 내가 단순하게 그린 거예요.</p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ 프로그래밍 · 빈칸 채우기 <span class="muted" style="font-weight:400;font-size:.88rem">(59쪽)</span></h3>
+    <p style="margin-top:0"><b>온도가 22도보다 낮으면 파란색, 22도에서 26도 사이는 초록색, 26도보다 높으면 빨간색 LED가 켜지도록</b> 빈칸을 채워 프로그램을 완성해 보세요!</p>
+    <p class="muted" style="margin:4px 0">피코에서는 <code>pixels.fill((…))</code>와 <code>pixels.write()</code>가 들어가요. 여기서는 센서 대신 <b>온도 리스트</b>를 하나씩 꺼내고, <code>fill</code> 대신 <code>print( )</code>로 결과를 보여 줘요.</p>
+    <div id="frameRun"></div>
+    <p class="callout" style="margin-bottom:0">⚠️ <code>___</code>를 채우기 전에는 <b>오류가 나는 게 정상</b>이에요. <b>온도 기준이 되는 숫자</b>와 <b>각 색의 (R, G, B) 값</b>을 모두 채워야 해요. 다 채운 뒤에는 22도와 26도 같은 <b>경계 값</b>이 어느 색이 되는지 꼭 확인해 봐요. 온도 리스트의 숫자도 바꿔 봐요.</p>
+    <div class="memo"><label>다 채워 실행해 본 뒤, 온도별로 어떤 색이 나왔는지 적어 보세요. <small>(선택)</small></label><textarea data-memo="frameResult" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ 실행 결과 · 액자 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(59쪽)</span></h3>
+    <div class="pc-steps small">
+      <div style="--k:#2f6fd0"><span class="n">1</span><div><b>사진 이미지 만들기</b><span>캔바, 미리캔버스 같은 디자인 사이트에서 액자에 넣을 사진 이미지를 만들어요.</span></div></div>
+      <div style="--k:#8077bd"><span class="n">2</span><div><b>구멍 뚫고 고정하기</b><span>사진 뒤에서 불빛이 나올 수 있도록 원하는 부분에 구멍을 뚫고, 가공이 끝나면 사진을 액자 위치에 잘 고정해요. 빛이 새어 나오지 않도록 사진 뒤에 <b>우드락</b>을 붙여요.</span></div></div>
+      <div style="--k:#d0602f"><span class="n">3</span><div><b>프로그램 실행하기</b><span>Run 버튼을 눌러 프로그램을 실행해요. 표시한 구멍을 뚫은 부분에서 온도에 따라 색이 변하는 LED 불빛이 비쳐 나와요.</span></div></div>
+    </div>
+    <div class="memo"><label>내가 만들고 싶은 액자 그림(주제)은? 온도가 낮을 때와 높을 때 어떤 느낌이면 좋을까요? <small>(선택)</small></label><textarea data-memo="frameIdea" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="5"></div>
+</section>
+
+<!-- 6 선택 학습 시뮬레이터 -->
+<section class="page" data-name="선택 · 시뮬레이터" data-acc="#d0602f">
+  <div class="head"><div class="num">06</div><div><h2>선택 학습 · 시뮬레이터로 실습하기</h2><p>교과서 60~61쪽 · WOKWI 사용법, 실습 1~3, 해 보기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>피코를 직접 쓸 수 없을 때는 <b>웹에서 가짜 피코로 실습</b>할 수 있어요. <b>WOKWI</b>라는 시뮬레이터 사이트에서 코드를 쓰고 실행하면, 화면 속 피코와 LED가 움직여요. (선택 학습이라 해 보고 싶은 사람만 해요.)</span></div>
+
+  <div class="card">
+    <h3>🖥️ 시뮬레이터 프로그램 확인하기 <span class="muted" style="font-weight:400;font-size:.88rem">(60쪽)</span></h3>
+    <ol class="pc-ol">
+      <li>실습 도구 없이 웹에서 간단히 시뮬레이션할 수 있는 <b>WOKWI</b> 사이트에 접속해요.</li>
+      <li>실습에 사용할 개발 보드(피코, Pi Pico)를 골라요.</li>
+      <li>마이크로파이썬을 쓰기 위한 환경을 만들려고 <b>Starter Templates</b>에서 <b>Micropython</b>을 골라요.</li>
+      <li>실습 화면의 <b>왼쪽은 코드를 쓰는 곳</b>, <b>오른쪽은 피코 회로 구성과 시뮬레이션을 확인하는 곳</b>이에요.</li>
+    </ol>
+    <p class="note" style="margin-bottom:0">교과서 말풍선: 마우스 커서를 피코에 가져가 점선이 나오면 마우스를 눌러요. 물음표 표시가 있을 때 키보드의 R을 누르면 피코가 오른쪽으로 90도씩 돌아가요.</p>
+  </div>
+
+  <div class="card">
+    <h3>💡 실습 1 · 피코 내장 LED 제어하기 <span class="muted" style="font-weight:400;font-size:.88rem">(60쪽)</span></h3>
+    <p style="margin-top:0">피코 보드에 연결한 LED를 <b>1초 동안 깜빡거리게</b> 하는 프로그램을 쓰고, 시뮬레이션 창의 실행 버튼을 눌러 결과를 확인해요.</p>
+<pre class="code">from machine import Pin
+import time
+led = Pin(25, Pin.OUT)
+
+while True:
+    led.value(1)
+    time.sleep(1)
+    led.value(0)
+    time.sleep(1)</pre>
+  </div>
+
+  <div class="card">
+    <h3>🌈 실습 2 · 네오픽셀 LED 제어하기 ① <span class="muted" style="font-weight:400;font-size:.88rem">(61쪽)</span></h3>
+    <ol class="pc-ol">
+      <li>시뮬레이션 창의 「+」 버튼을 눌러 목록에서 <b>네오픽셀 LED</b>를 고르고, 원하는 위치에 놓아요.</li>
+      <li>네오픽셀 LED 핀(회색 부분)을 누른 뒤, 나오는 이름에 맞춰 피코와 연결해요.</li>
+    </ol>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>네오픽셀</th><th>피코</th></tr>
+      <tr><td>GND</td><td>GND핀</td></tr>
+      <tr><td>VCC</td><td>3V3핀</td></tr>
+      <tr><td>DIN</td><td>GP0핀</td></tr>
+    </table></div>
+    <p class="callout">💡 <b>TIP · 회로 연결 방법</b> 네오픽셀 LED의 핀을 누르면 각 핀의 이름이 뜨고, 피코에서도 연결할 수 있는 핀의 위치가 표시돼요. 피코에 회로를 가져다 댔을 때 뜨는 핀의 이름을 확인한 뒤, 알맞은 것끼리 서로 연결해요.</p>
+    <ol class="pc-ol" start="3">
+      <li>왼쪽에 코드를 쓰고 오른쪽 실행 버튼을 눌러 시뮬레이션 결과를 확인해요.</li>
+    </ol>
+<pre class="code">from machine import Pin
+import neopixel
+
+<i># 네오픽셀 설정</i>
+NUM_PIXELS = 1       <i># 사용할 픽셀 수</i>
+PIN_NUM = 0          <i># DIN 핀으로 사용할 GPIO 핀 번호</i>
+pixels = neopixel.NeoPixel(Pin(PIN_NUM), NUM_PIXELS)
+
+red = (255, 0, 0)    <i># 빨간색으로 설정</i>
+pixels[0] = red      <i># 첫 번째 픽셀에 빨간색 적용</i>
+pixels.write()       <i># 변경 사항을 실제로 픽셀에 반영</i></pre>
+  </div>
+
+  <div class="card">
+    <h3>🔴 실습 3 · 네오픽셀 LED 제어하기 ② <span class="muted" style="font-weight:400;font-size:.88rem">(61쪽)</span></h3>
+    <p style="margin-top:0">네오픽셀 LED가 <b>한 개씩 16개가 모두 켜졌다가 꺼지는</b> 프로그램을 쓰고, 결과를 확인해 봐요.</p>
+<pre class="code">from machine import Pin
+import neopixel
+import time
+
+NUM_PIXELS = 16
+PIN_NUM = 0
+pixels = neopixel.NeoPixel(Pin(PIN_NUM), NUM_PIXELS)
+
+while True:
+    for i in range(NUM_PIXELS):
+        pixels[i] = (255, 0, 0)   <i># LED를 빨간색으로 변경</i>
+        pixels.write()
+        time.sleep(0.5)
+
+    for i in range(NUM_PIXELS):
+        pixels[i] = (0, 0, 0)     <i># LED를 꺼짐 상태로 변경</i>
+        pixels.write()
+        time.sleep(0.5)</pre>
+    <p style="margin:12px 0 4px"><b>체험 · 한 칸씩 따라가 보기</b> <span class="muted">버튼을 누를 때마다 코드 한 번이 실행되는 모습이에요.</span></p>
+    <div class="pc-ring">
+      <svg viewBox="0 0 200 200" id="pcRing" role="img" aria-label="네오픽셀 16개를 둥글게 늘어놓은 그림"></svg>
+      <div class="pc-ringside">
+        <div id="pcRingTxt" class="pc-ringtxt">버튼을 눌러 시작해요.</div>
+        <div class="row" style="margin-top:8px"><button class="btn sm" id="pcRingNext">다음 한 칸 →</button><button class="btn ghost sm" id="pcRingReset">처음부터</button></div>
+      </div>
+    </div>
+    <p class="note" style="margin-bottom:0">0번부터 15번까지 16개를 차례로 켠 뒤, 같은 순서로 하나씩 꺼요(실제로는 칸마다 0.5초씩 기다려요).</p>
+  </div>
+
+  <div class="card">
+    <h3>🎨 해 보기 · 미디어 아트 작품 만들기 <span class="muted" style="font-weight:400;font-size:.88rem">(61쪽)</span></h3>
+    <p style="margin-top:0">네오픽셀 LED를 <b>여러 개 연결</b>하여 나만의 예술 작품을 만들어 봐요.</p>
+    <p class="callout" style="margin-bottom:8px">➕ <b>심화</b> 실습 2와 실습 3에서 쓰지 않은 네오픽셀 LED의 4번째 핀은 <b>DOUT</b>이에요. 네오픽셀 LED를 더 이어 붙일 때 쓰는 핀이고, 추가할 LED의 DIN과 연결하면 돼요.</p>
+    <div class="memo"><label>어떤 모양으로 어떤 색을 어떤 순서로 켜고 싶나요? 계획을 적어 보세요. <small>(선택)</small></label><textarea data-memo="artPlan" rows="3"></textarea><div class="saved"></div></div>
+  </div>
+  <div class="quiz" data-quiz="6"></div>
+</section>
+
+<!-- 7 개념 학습 마무리 -->
+<section class="page" data-name="실습 돌아보기" data-acc="#d0602f">
+  <div class="head"><div class="num">07</div><div><h2>개념 학습 마무리 · 실습 돌아보기</h2><p>교과서 62쪽 · 미디어 아트 실습 활동 평가하기, 성취도 점검하기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>「온도에 따라 색이 변하는 액자 만들기」를 <b>네 단계</b>로 나눠 내가 어디까지 해냈는지 되돌아보는 시간이에요. 잘 못한 단계가 있어도 괜찮아요. 어디를 다시 보면 되는지 알면 돼요.</span></div>
+
+  <div class="card">
+    <h3>🧭 실습 단계 돌아보기 <span class="muted" style="font-weight:400;font-size:.88rem">(62쪽)</span></h3>
+    <div class="pc-stage">
+      <div style="--k:#2f9a8a"><span class="n">1</span><b>준비 학습</b><small>펌웨어·Thonny·라이브러리 설치</small></div>
+      <div style="--k:#2f9a8a"><span class="n">2</span><b>회로 구성</b><small>내장 LED·네오픽셀·온습도 센서</small></div>
+      <div style="--k:#2f9a8a"><span class="n">3</span><b>프로그래밍</b><small>색이 켜지는 코드 작성</small></div>
+      <div style="--k:#2f9a8a"><span class="n">4</span><b>실행 결과</b><small>LED와 온도 조건 확인</small></div>
+    </div>
+    <p style="margin:12px 0 4px"><b>잘 해냈다고 느끼는 단계</b>를 모두 골라 보세요.</p>
+    <div id="stageGood"></div>
+    <p style="margin:12px 0 4px"><b>다시 확인하고 싶은 단계</b>를 모두 골라 보세요.</p>
+    <div id="stageAgain"></div>
+    <div class="memo"><label>⑤ 느낀 점을 적어 보세요.</label><textarea data-memo="feel" rows="3" placeholder="예) 어떤 단계가 가장 어려웠는지, 다음에 해 보고 싶은 것"></textarea><div class="saved"></div></div>
+    <p class="note">단계별 세부 평가 문항은 교과서 62쪽을 보고 선생님 안내에 따라 해요.</p>
+  </div>
+
+  <div class="card">
+    <h3>✅ 성취도 점검하기 <span class="muted" style="font-weight:400;font-size:.88rem">(62쪽)</span></h3>
+    <p class="muted" style="margin-top:0">각 항목에 「예」 또는 「아니요」를 골라요. 「아니요」라면 오른쪽 쪽을 다시 읽어 봐요.</p>
+    <div class="pc-ach">
+      <div><span class="tg">지식·이해</span><p>피지컬 컴퓨팅에서 센서나 액추에이터의 기능과 역할을 설명할 수 있다.</p><div id="ach1" class="vote"></div><small>보충하기 · 50~51쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>피지컬 컴퓨팅 도구로 구현된 작품의 구성과 작동 원리를 설명할 수 있다.</p><div id="ach2" class="vote"></div><small>보충하기 · 50~51쪽</small></div>
+      <div><span class="tg">과정·기능</span><p>목적에 맞는 센서와 액추에이터를 선택하여 피지컬 컴퓨팅 시스템을 구성할 수 있다.</p><div id="ach3" class="vote"></div><small>보충하기 · 53쪽</small></div>
+      <div><span class="tg">가치·태도</span><p>피지컬 컴퓨팅으로 나의 아이디어를 표현할 수 있다.</p><div id="ach4" class="vote"></div><small>보충하기 · 59, 61쪽</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 전문가 인터뷰 -->
+<section class="page" data-name="전문가 인터뷰" data-acc="#d0602f">
+  <div class="head"><div class="num">08</div><div><h2>전문가 인터뷰 · 미술계에 불어오는 융합의 바람, 미디어 아티스트</h2><p>교과서 63쪽 · 최창훈 작가 이야기</p></div></div>
+  <div class="easy"><b class="t">쉽게 말하면</b><span>미디어 아트 작가는 <b>그림·조각·영상·전기 회로·설치까지</b> 여러 분야를 함께 배워서 작품을 만들어요. 인터뷰를 읽으며 <b>작가가 어떻게 작품을 만드는지</b> 알아봐요.</span></div>
+  <div class="card">
+    <h3>🎙️ 미디어 아티스트 최창훈 작가</h3>
+    <p style="margin-top:0">미디어 아트는 특정 <b>인터페이스</b>를 활용해 <b>관람자와의 상호 작용</b>을 소통 수단으로 삼는 예술 작품을 뜻해요. 기존의 은유적인 소통 대신 <b>직접적인 상호 작용</b>을 만들어 관람자에게 새로운 경험을 선사해요. 아래 카드를 눌러 작가의 답을 요약으로 확인해요.</p>
+    <div id="intFlip" class="tcards"></div>
+    <p class="note" style="margin-bottom:0">교과서 63쪽 인터뷰를 줄여 옮긴 거예요. 자세한 내용은 교과서에서 읽어 봐요.</p>
+  </div>
+  <div class="card">
+    <h3>💭 생각해 보기</h3>
+    <div class="memo"><label>내가 미디어 아트를 만든다면 어떤 분야의 지식이 더 필요할까요? <small>(선택)</small></label><textarea data-memo="intThink" rows="2"></textarea><div class="saved"></div></div>
+    <div class="memo"><label>가 보고 싶은 미디어 아트 전시나 찾아보고 싶은 작가가 있나요? <small>(선택)</small></label><textarea data-memo="intWish" rows="2"></textarea><div class="saved"></div></div>
+  </div>
+</section>
+
+<!-- 9 마무리 -->
+<section class="page" data-name="마무리 · 질문폼" data-acc="#0f2742">
+  <div class="head"><div class="num">09</div><div><h2>마무리</h2><p>핵심 문장 · 마무리 퀴즈 · 생각 정리 질문폼</p></div></div>
+  <div class="key3">
+    <div style="--k:#d0602f">피코 실습은 <b>펌웨어 설치 → 통합 개발 환경(토니) 설치 → 라이브러리(neopixel, dht) 설치</b>로 준비하고, 코드는 <b>py 파일</b>로 저장해야 연결하거나 외부 전원을 켰을 때도 계속 작동한다.</div>
+    <div style="--k:#2f6fd0"><b>내장 LED(GP25핀)</b>는 <code>led.value(1)</code>로 켜고 <code>led.value(0)</code>으로 끈다. <b>네오픽셀</b>은 <code>pixels.fill((R, G, B))</code>로 색을 정하고 <code>pixels.write()</code>로 적용하며, <b>온습도 센서(DHT11)</b>는 <code>measure()</code> 뒤에 <code>temperature()</code>·<code>humidity()</code>로 값을 읽는다.</div>
+    <div style="--k:#1f9d74">센서가 읽은 <b>온도</b>를 <b>조건문(if·elif·else)</b>으로 가르고 범위마다 다른 <b>(R, G, B) 색</b>을 정하면, 온도에 따라 색이 변하는 미디어 아트 작품을 만들 수 있다.</div>
+  </div>
+  <div class="card">
+    <h3>오늘의 질문에 다시 답하기</h3>
+    <p class="muted" style="margin-top:0">실습 3과 실습 4를 떠올리며 내 말로 답해 보세요.</p>
+    <b style="font-size:.93rem">어떻게 온도에 따라 색이 달라지게 할 수 있을까?</b>
+    <textarea data-memo="keyQ" rows="3"></textarea><div class="saved"></div>
+  </div>
+  <div class="card" style="--acc:#0f2742">
+    <h3>마무리 퀴즈</h3>
+    <div class="quiz" data-quiz="9"></div>
+  </div>
+  <div class="card">
+    <h3>개념 퀴즈 결과</h3>
+    <table id="result"></table>
+    <button class="btn ghost" id="quizReset">퀴즈 다시 풀기</button>
+  </div>
+  <div class="formgo">
+    <span class="kicker">생각 정리 과제</span>
+    <h3>질문폼에 내 생각 쓰기</h3>
+    <ol>
+      <li>온도에 따라 색이 변하는 액자를 만들려면 <b>어떤 장치(센서·액추에이터)</b>가 필요한지, 각 장치가 <b>무슨 일</b>을 하는지 설명해 보세요.</li>
+      <li>센서로 읽은 온도를 <b>조건문</b>으로 나누어 색을 정하는 방법을 내 말로 설명하고, 내가 정하고 싶은 <b>온도 기준과 색</b>을 하나 들어 보세요.</li>
+      <li>실습 중 <b>가장 어려웠던 부분</b>과 그 부분을 어떻게 해결했는지(또는 해결하려 했는지) 쓰세요. 다음에 <b>네오픽셀로 만들고 싶은 작품</b>도 한 가지 적어 보세요.</li>
+    </ol>
+    <p>질문폼에는 붙여넣기가 되지 않아요. 아래 메모를 보면서 직접 다시 써 주세요.</p>
+    <a class="go" href="../forms/sw-u2-pico.html" target="_blank" rel="noopener">질문폼 열기 →</a>
+    <div class="msum" id="msum"></div>
+  </div>
+</section>
+
+</main>
+
+<div class="foot">
+  <button class="btn ghost" id="prev">← 이전</button>
+  <span class="pg" id="pg"></span>
+  <button class="btn" id="next">다음 →</button>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const fmt=n=>n.toLocaleString('ko-KR');
+
+
+
+const LESSON='u2-pico', PEP='';
+
+/* 진도 보내기 ①: 누가 쓰는지 확인 (반·학번마다 퀴즈·메모를 따로 저장) */
+const WHO=(function(){
+  if(!PEP) return {off:true,sfx:''};
+  if(/[?&]preview(=|&|$)/.test(location.search)) return {preview:true,sfx:'@preview'};
+  let w=null; try{w=JSON.parse(sessionStorage.getItem('aiw-who')||'null');}catch(e){}
+  if(w&&w.teacher) return {preview:true,teacher:true,sfx:'@preview'};
+  if(!w||!/^\d{5}$/.test(w.no||'')) return {need:true,sfx:'@none'};
+  return {cls:w.cls,no:w.no,name:w.name,sfx:'@'+w.no};
+})();
+/* 퀴즈 */
+const QUIZ={
+ 1:[{q:'펌웨어를 설치하려고 피코를 컴퓨터에 연결할 때 알맞은 방법은?',o:['전원 없이 핀만 꽂는다','BOOTSEL 버튼을 누른 채 USB로 연결한다','Run 버튼을 연달아 눌러 연결한다'],a:1,w:'BOOTSEL 버튼을 누른 채 USB로 연결하면 컴퓨터가 RPI-RP2 장치로 알아봐요. 그 뒤에 uf2 파일을 복사해요.'},
+    {q:'피코 실습에서 코드를 py 확장자로 저장하는 까닭은?',o:['글자 색을 바꾸려는 것','저장된 파일이 계속 작동할 수 있어서','화면 밝기를 높이려는 것'],a:1,w:'피코를 케이블이나 외부 전원에 연결했을 때 저장된 파일을 계속 작동시킬 수 있기 때문이에요.'},
+    {q:'57~58쪽 실습을 위해 Manage packages에서 설치하는 라이브러리 두 가지는?',o:['neopixel과 dht','machine과 time','Pin과 Thonny'],a:0,w:'네오픽셀을 위한 neopixel, 온습도 센서를 위한 dht를 설치해요.'}],
+ 2:[{q:'피코에 내장된 LED는 어느 핀에 연결되어 있을까?',o:['GP0핀','GP22핀','GP25핀'],a:2,w:'내장 LED는 보드 상단의 LED(GP25핀)에 연결되어 있어서 따로 부품을 달지 않아도 돼요.'},
+    {q:'led.value(1)을 실행하면 LED는 어떻게 될까?',o:['꺼진다','켜진다','1초 쉰다'],a:1,w:'led.value(1)은 LED 켜기, led.value(0)은 LED 끄기예요.'},
+    {q:'time.sleep(1)의 뜻으로 알맞은 것은?',o:['1초 대기','1번 반복','1번 핀 연결'],a:0,w:'time.sleep(1)은 1초 동안 기다리라는 뜻이에요.'}],
+ 3:[{q:'pixels.fill((255, 0, 0))에서 괄호 안 세 숫자가 나타내는 것은?',o:['핀 번호','R, G, B 값','LED 개수와 핀'],a:1,w:'세 숫자는 빨강(R), 초록(G), 파랑(B)의 세기예요. (255, 0, 0)은 빨간색이에요.'},
+    {q:'네오픽셀의 DI는 피코의 어느 핀에 연결할까?',o:['GP0핀','GND핀','3V3핀'],a:0,w:'DI는 디지털 연결이라 GP0핀에, GND는 접지인 GND핀에, 5V는 전원 공급인 3V3핀에 연결해요.'},
+    {q:'pixels.write()를 하는 까닭으로 알맞은 것은?',o:['LED를 끄려고','핀 번호를 정하려고','바뀐 색을 LED에 적용하려고'],a:2,w:'fill로 색을 정한 뒤 write로 변경 사항을 적용해야 실제 LED가 바뀌어요.'}],
+ 4:[{q:'DHT11 센서의 온도 측정 범위는?',o:['0°C~50°C','20°C~90°C','-10°C~100°C'],a:0,w:'DHT11의 온도 측정 범위는 0°C~50°C, 습도 측정 범위는 20%~90%RH예요.'},
+    {q:'온습도 센서의 S는 피코의 어느 핀에 연결할까?',o:['GND핀','3V3핀','GP22핀'],a:2,w:'S는 디지털 신호 단자라 GP22핀에 연결해요. VCC(+)는 3V3핀, GND(-)는 GND핀이에요.'},
+    {q:'sensor.humidity()로 읽는 값은?',o:['온도','습도','시간'],a:1,w:'sensor.temperature()는 온도, sensor.humidity()는 습도를 읽어요. 읽기 전에 sensor.measure()로 측정을 시작해요.'}],
+ 5:[{q:'온도가 22도보다 낮을 때 켜지도록 정한 네오픽셀 색은?',o:['빨간색','파란색','초록색'],a:1,w:'22도보다 낮으면 파란색, 22도에서 26도 사이는 초록색, 26도보다 높으면 빨간색이에요.'},
+    {q:'온도가 24도일 때 실행되는 부분은?',o:['if','else','elif'],a:2,w:'24도는 22도보다 낮지 않으니 if를 지나가고, 22도에서 26도 사이이므로 elif 쪽이 실행돼요.'},
+    {q:'액자를 만들 때 빛이 새어 나오지 않도록 사진 뒤에 붙이는 것은?',o:['우드락','투명 필름','반짝이 종이'],a:0,w:'사진 뒤에 우드락을 붙여서 구멍이 아닌 곳으로 빛이 새어 나오지 않게 해요.'}],
+ 6:[{q:'WOKWI에서 마이크로파이썬을 쓰려면 Starter Templates에서 무엇을 고를까?',o:['Arduino','Micropython','ESP32'],a:1,w:'Starter Templates에서 Micropython을 골라야 마이크로파이썬 환경이 만들어져요.'},
+    {q:'for i in range(NUM_PIXELS) 안에서 pixels[i]의 i는 무엇을 가리킬까?',o:['시간','LED의 순서 번호','피코의 핀 이름'],a:1,w:'i는 0번부터 차례로 바뀌는 숫자라서, 한 개씩 LED를 켜거나 끌 수 있어요.'}],
+ 9:[{q:'온도에 따라 색이 변하는 액자에서 온도를 재는 장치는?',o:['네오픽셀 LED','피코 내장 LED','온습도 센서'],a:2,w:'온도는 온습도 센서가 재고, 네오픽셀 LED는 그 값에 따라 색을 보여 줘요.'},
+    {q:'센서가 읽은 온도에 따라 색을 나눌 때 쓴 문장은?',o:['조건문','import 문','입력 함수'],a:0,w:'온도 범위에 따라 if, elif, else로 가르는 조건문을 썼어요.'},
+    {q:'네오픽셀의 5V 단자는 피코의 어느 핀에 연결할까?',o:['GP0핀','3V3핀','GND핀'],a:1,w:'교과서 회로 연결 방법에서 네오픽셀의 5V는 3V3핀(전원 공급 VCC)에 연결해요.'},
+    {q:'네오픽셀 LED를 끄는 값으로 알맞은 것은?',o:['(0, 0, 0)','(255, 0, 0)','(255, 255, 255)'],a:0,w:'(0, 0, 0)이면 R, G, B가 모두 0이라 LED가 꺼져요. (255, 0, 0)은 빨간색이에요.'}],
+};
+
+const QK='ds-u2-pico-quiz'+WHO.sfx;
+const MK='ds-u2-pico-memo'+WHO.sfx;
+let QS={}; try{QS=JSON.parse(localStorage.getItem(QK)||'{}')||{};}catch(e){QS={};}
+function saveQ(){try{localStorage.setItem(QK,JSON.stringify(QS));}catch(e){}}
+const TOTALQ=Object.values(QUIZ).reduce((a,b)=>a+b.length,0);
+function qperm(n,key){ let h=2166136261; for(const c of key){h^=c.charCodeAt(0);h=Math.imul(h,16777619)>>>0;}
+  const p=[...Array(n).keys()]; for(let i=n-1;i>0;i--){h=Math.imul(h^(h>>>15),2246822507)>>>0; h=(h+0x6D2B79F5)>>>0; const j=h%(i+1); [p[i],p[j]]=[p[j],p[i]];} return p; }
+function renderQuiz(box){
+  const k=box.dataset.quiz; box.innerHTML=`<div class="qh"><b>개념 퀴즈</b><span>${QUIZ[k].length}문제 · 고르면 바로 채점</span></div>`;
+  QUIZ[k].forEach((it,i)=>{
+    const id=k+'-'+i, d=document.createElement('div'); d.className='qi';
+    /* 보기 순서는 학생마다 섞되(새로 고쳐도 같은 순서), 저장·채점은 원래 번호로 */
+    const perm=qperm(it.o.length, QK+'|'+id);
+    d.innerHTML=`<div class="qq">${i+1}. ${it.q}</div><div class="opts">${perm.map(j=>`<button data-j="${j}">${it.o[j]}</button>`).join('')}</div><div class="why"></div>`;
+    const btn=j=>d.querySelector(`button[data-j="${j}"]`);
+    const mark=(j,anim)=>{
+      const bs=d.querySelectorAll('button'); bs.forEach(b=>b.disabled=true);
+      btn(it.a).classList.add('right'); if(j!==it.a){btn(j).classList.add('wrong'); if(anim) d.classList.add('shake');}
+      d.classList.add('answered', j===it.a?'correct':'incorrect');
+      d.querySelector('.why').textContent=(j===it.a?'정답. ':'정답은 「'+it.o[it.a]+'」. ')+it.w;
+    };
+    d.querySelectorAll('button').forEach(b=>b.onclick=()=>{const j=+b.dataset.j;QS[id]=j;saveQ();mark(j,true);updScore();});
+    if(QS[id]!=null && QS[id]<it.o.length) mark(QS[id],false);
+    box.appendChild(d);
+  });
+}
+
+/* 페이지 이동 */
+const pages=[...document.querySelectorAll('.page')];
+const stepBtns=pages.map((p,i)=>{const b=document.createElement('button');b.textContent=i?`${i}. ${p.dataset.name}`:'시작';b.onclick=()=>go(i);$('steps').appendChild(b);return b;});
+function updScore(){
+  let ok=0; for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{if(QS[k+'-'+i]===it.a) ok++;});
+  $('score').textContent=`퀴즈 ${ok} / ${TOTALQ}`;
+  pages.forEach((p,i)=>{const q=p.querySelector('[data-quiz]'); if(!q) return; const k=q.dataset.quiz; stepBtns[i].classList.toggle('done',QUIZ[k].every((_,j)=>QS[k+'-'+j]!=null));});
+  let h='<tr><th class="l">개념</th><th>맞힌 문제</th></tr>';
+  for(const k in QUIZ){const n=QUIZ[k].length, c=QUIZ[k].filter((it,i)=>QS[k+'-'+i]===it.a).length, a=QUIZ[k].filter((_,i)=>QS[k+'-'+i]!=null).length;
+    h+=`<tr><td class="l">${k}. ${pages[k].dataset.name}</td><td>${a?`<b class="${c===n?'ok':''}">${c} / ${n}</b>`:'<span class="muted">아직 안 풂</span>'}</td></tr>`;}
+  h+=`<tr><td class="l"><b>합계</b></td><td><b>${ok} / ${TOTALQ}</b></td></tr>`;
+  $('result').innerHTML=h;
+}
+let cur=-1;
+const onShow={};
+function go(i){
+  i=Math.max(0,Math.min(pages.length-1,i)); if(i===cur) return;
+  const back=i<cur; if(cur>=0) pages[cur].classList.remove('on','back');
+  pages[i].classList.add('on'); pages[i].classList.toggle('back',back);
+  document.documentElement.style.setProperty('--acc',pages[i].dataset.acc);
+  document.documentElement.style.setProperty('--acc-soft',pages[i].dataset.acc+'1a');
+  stepBtns.forEach((b,j)=>b.classList.toggle('on',j===i));
+  const sb=$('steps'), btn=stepBtns[i]; sb.scrollLeft=btn.offsetLeft-sb.clientWidth/2+btn.clientWidth/2;
+  $('prog').style.width=(i/(pages.length-1)*100)+'%';
+  $('pg').textContent=`${i} / ${pages.length-1}`;
+  $('prev').style.visibility=i?'visible':'hidden'; $('next').style.visibility=i<pages.length-1?'visible':'hidden';
+  cur=i; try{history.replaceState(null,'','#p'+i);}catch(e){} window.scrollTo(0,0);
+  if(onShow[i]) onShow[i]();
+}
+$('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(e.defaultPrevented)return; if(e.target.matches&&e.target.matches('input,select,textarea'))return; if(e.key==='ArrowRight')go(cur+1); if(e.key==='ArrowLeft')go(cur-1);});
+document.querySelectorAll('.gcard').forEach(g=>g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.click();}}));
+document.querySelectorAll('[data-quiz]').forEach(renderQuiz);
+$('quizReset').onclick=()=>{QS={};saveQ();document.querySelectorAll('[data-quiz]').forEach(renderQuiz);updScore();};
+
+
+/* 공용 부품: 메모·카드·분류 게임·탭·투표·칩 */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const store={get(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+
+/* 메모: data-memo가 있는 입력칸은 이 기기에 저장 */
+let MEMO=store.get(MK,{});
+function bindMemos(){
+  document.querySelectorAll('[data-memo]').forEach(t=>{
+    const k=t.dataset.memo; if(MEMO[k]!=null) t.value=MEMO[k];
+    let tm; t.addEventListener('input',()=>{MEMO[k]=t.value; clearTimeout(tm); tm=setTimeout(()=>{store.set(MK,MEMO); const s=t.parentElement.querySelector('.saved'); if(s){s.textContent='이 기기에 저장됨'; setTimeout(()=>s.textContent='',1400);} t.dispatchEvent(new Event('memo'));},300);});
+  });
+}
+function memoSummary(box,list){
+  const h=list.map(([k,label])=>{const v=(MEMO[k]||'').trim(); return `<dt>${esc(label)}</dt><dd class="${v?'':'e'}">${v?esc(v):'(아직 안 씀)'}</dd>`;}).join('');
+  $(box).innerHTML=`<h4>오늘 화면에 적어 둔 내 메모</h4><dl>${h}</dl>`;
+}
+
+/* 뒤집는 카드 */
+function flipCards(box,items){
+  $(box).innerHTML=items.map(c=>`<div class="tcard" tabindex="0"><div class="in"><div class="f"><i>${c.ic||''}</i><b>${c.f}</b>${c.s?`<small>${c.s}</small>`:''}</div><div class="b">${c.b}${c.x?`<div class="x">${c.x}</div>`:''}</div></div></div>`).join('');
+  $(box).querySelectorAll('.tcard').forEach(t=>{const f=()=>t.classList.toggle('flip'); t.onclick=f; t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f();}};});
+}
+
+/* 분류 게임: 문장을 보고 알맞은 묶음 고르기 */
+function sorter(box,cfg){
+  const B=$(box);
+  function start(){
+    const order=shuffle(cfg.items.map((_,i)=>i)); let pos=0, ok=0; const placed=cfg.cats.map(()=>[]);
+    B.innerHTML=`<div class="sit"><div class="cnt"></div><div class="ic"></div><div class="sq"></div><div class="row btns">${cfg.cats.map((c,j)=>`<button class="btn sm cat" style="--k:${c.k}" data-j="${j}">${c.n}</button>`).join('')}</div><div class="fb"></div><div class="row nx" style="margin-top:8px"></div></div><div class="board" style="--n:${cfg.cats.length}">${cfg.cats.map(c=>`<div style="--k:${c.k}"><b>${c.n}</b></div>`).join('')}</div>`;
+    const sq=B.querySelector('.sq'), ic=B.querySelector('.ic'), cnt=B.querySelector('.cnt'), fb=B.querySelector('.fb'), nx=B.querySelector('.nx'), btns=[...B.querySelectorAll('.cat')], cols=[...B.querySelectorAll('.board>div')];
+    function show(){
+      if(pos>=order.length){cnt.textContent=''; ic.textContent='🎉'; sq.innerHTML=`${order.length}개 중 <b>${ok}개</b>를 바로 맞혔어요.`; fb.innerHTML=cfg.end||''; btns.forEach(b=>b.style.display='none'); nx.innerHTML='<button class="btn ghost sm">처음부터 다시</button>'; nx.firstChild.onclick=start; return;}
+      const it=cfg.items[order[pos]]; cnt.textContent=`${pos+1} / ${order.length}`; ic.textContent=it.ic||''; sq.innerHTML=it.t; fb.textContent=''; nx.innerHTML=''; btns.forEach(b=>{b.disabled=false;b.style.display='';});
+    }
+    btns.forEach(b=>b.onclick=()=>{
+      const it=cfg.items[order[pos]], j=+b.dataset.j, right=j===it.c; if(right) ok++;
+      btns.forEach(x=>x.disabled=true);
+      fb.innerHTML=(right?'<span class="ok">맞아요!</span> ':`<span class="ng">아쉬워요.</span> 정답은 <b>${cfg.cats[it.c].n}</b>. `)+(it.w||'');
+      const s=document.createElement('span'); s.innerHTML=it.short||it.t; if(!right) s.className='x'; cols[it.c].appendChild(s);
+      nx.innerHTML='<button class="btn sm">다음 →</button>'; nx.firstChild.onclick=()=>{pos++;show();}; nx.firstChild.focus();
+    });
+    show();
+  }
+  start();
+}
+
+/* 탭 보기: 버튼을 누르면 내용 바꾸기 */
+function tabs(btnBox,viewBox,items,render){
+  $(btnBox).innerHTML=items.map((it,i)=>`<button data-i="${i}"><span class="e">${it.ic||''}</span><b>${it.n}</b></button>`).join('');
+  const bs=[...$(btnBox).querySelectorAll('button')];
+  const pick=i=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); $(viewBox).innerHTML=render(items[i],i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i)); pick(0);
+}
+
+/* 투표: 고르면 결과 보이기 (이 기기에만 저장) */
+function vote(box,key,opts,onPick){
+  const B=$(box); B.innerHTML=opts.map((o,i)=>`<button data-i="${i}">${o[0]}${o[1]?`<small>${o[1]}</small>`:''}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')];
+  const pick=(i,save)=>{bs.forEach((b,j)=>b.classList.toggle('on',i===j)); if(save){MEMO[key]=opts[i][0]; store.set(MK,MEMO);} onPick&&onPick(i);};
+  bs.forEach(b=>b.onclick=()=>pick(+b.dataset.i,true));
+  const prev=opts.findIndex(o=>o[0]===MEMO[key]); if(prev>=0) pick(prev,false);
+}
+function chips(box,key,opts,multi){
+  const B=$(box); B.classList.add('chk'); B.innerHTML=opts.map(o=>`<button>${o}</button>`).join('');
+  const bs=[...B.querySelectorAll('button')]; let sel=(MEMO[key]||'').split(' · ').filter(Boolean);
+  const draw=()=>bs.forEach(b=>b.classList.toggle('on',sel.includes(b.textContent)));
+  bs.forEach(b=>b.onclick=()=>{const t=b.textContent; if(multi) sel=sel.includes(t)?sel.filter(x=>x!==t):[...sel,t]; else sel=sel.includes(t)?[]:[t]; MEMO[key]=sel.join(' · '); store.set(MK,MEMO); draw(); B.dispatchEvent(new Event('memo'));});
+  draw();
+}
+
+/* 파이썬 실행 칸: 학생이 코드를 고쳐 바로 돌려 보는 부품 (Pyodide, CDN에서 불러옴).
+   pyrun('박스id', {code:'...', rows:8, stdin:'3\n5', readonly:false})
+   - code   : 처음에 보여 줄 코드 (여러 줄 문자열)
+   - rows   : 편집칸 높이(줄). 없으면 코드 줄 수로 정함
+   - stdin  : input() 이 위에서부터 한 줄씩 받을 값 (코드에 input 이 있으면 입력칸이 자동으로 생김)
+   - readonly: true 면 편집 없이 실행만 (코드는 그대로 보여 줌)
+   파이썬은 처음 실행할 때 한 번만 불러오고, 그다음부터는 바로 돈다. 인터넷이 없으면 안내만 보인다. */
+const PY_VER = '0.26.4';
+const PY_BASE = `https://cdn.jsdelivr.net/pyodide/v${PY_VER}/full/`;
+let _pyLoad = null;                 /* Pyodide 로딩 Promise(한 번만) */
+let _pyLock = Promise.resolve();    /* 모든 실행 칸이 파이썬 하나를 공유하므로 한 번에 하나씩만 실행 */
+const _pyWaiters = [];              /* 로딩 중일 때 상태 글을 바꿔 줄 콜백들 */
+
+function _loadPy() {
+  if (_pyLoad) return _pyLoad;
+  _pyLoad = new Promise((resolve, reject) => {
+    const tell = m => _pyWaiters.forEach(f => { try { f(m); } catch (e) {} });
+    const s = document.createElement('script');
+    s.src = PY_BASE + 'pyodide.js';
+    s.onload = async () => {
+      try {
+        tell('파이썬 준비 중…');
+        const py = await loadPyodide({ indexURL: PY_BASE });
+        resolve(py);
+      } catch (e) { reject(e); }
+    };
+    s.onerror = () => reject(new Error('스크립트를 불러오지 못함'));
+    document.head.appendChild(s);
+  });
+  return _pyLoad;
+}
+
+function pyrun(box, cfg) {
+  cfg = cfg || {};
+  const B = $(box); if (!B) return;
+  const code0 = String(cfg.code || '').replace(/^\n+/, '').replace(/\s+$/, '');
+  const rows = cfg.rows || Math.min(16, Math.max(3, code0.split('\n').length + 1));
+  const needIn = /\binput\s*\(/.test(code0) || cfg.stdin != null;
+  const ro = !!cfg.readonly;
+  B.classList.add('pyrun');
+  B.innerHTML =
+    `<textarea class="pr-code" spellcheck="false" rows="${rows}" ${ro ? 'readonly' : ''} aria-label="파이썬 코드"></textarea>` +
+    (needIn ? `<div class="pr-in"><label>입력값 <small>input() 이 위에서부터 한 줄씩 받아요</small></label>` +
+      `<textarea class="pr-stdin" spellcheck="false" rows="2" aria-label="입력값" placeholder="한 줄에 하나씩"></textarea></div>` : '') +
+    `<div class="pr-bar"><button class="btn sm pr-go">▶ 실행</button>` +
+    (ro ? '' : `<button class="btn ghost sm pr-reset">처음 코드로</button>`) +
+    `<span class="pr-stat"></span></div>` +
+    `<pre class="pr-out" aria-live="polite" hidden></pre>`;
+  const ed = B.querySelector('.pr-code'), out = B.querySelector('.pr-out'),
+    stat = B.querySelector('.pr-stat'), goBtn = B.querySelector('.pr-go'),
+    reset = B.querySelector('.pr-reset'), sin = B.querySelector('.pr-stdin');
+  ed.value = code0;
+  if (cfg.stdin != null && sin) sin.value = String(cfg.stdin);
+  /* 탭키로 네 칸 들여쓰기 */
+  if (!ro) ed.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const a = ed.selectionStart, b = ed.selectionEnd;
+      ed.value = ed.value.slice(0, a) + '    ' + ed.value.slice(b);
+      ed.selectionStart = ed.selectionEnd = a + 4;
+    }
+  });
+  if (reset) reset.onclick = () => {
+    ed.value = code0; if (sin) sin.value = cfg.stdin != null ? String(cfg.stdin) : '';
+    out.hidden = true; out.textContent = ''; out.classList.remove('err');
+  };
+
+  async function run() {
+    const setStat = m => stat.textContent = m;
+    setStat('파이썬 불러오는 중…'); _pyWaiters.push(setStat);
+    let py;
+    try { py = await _loadPy(); }
+    catch (e) {
+      setStat(''); out.hidden = false; out.classList.add('err');
+      out.textContent = '⚠ 파이썬을 불러오지 못했어요. 인터넷 연결을 확인하고 「실행」을 다시 눌러 주세요.';
+      goBtn.disabled = false; return;
+    } finally { const i = _pyWaiters.indexOf(setStat); if (i >= 0) _pyWaiters.splice(i, 1); }
+    setStat('실행 중…');
+    const lines = [];
+    py.setStdout({ batched: s => lines.push(s) });
+    py.setStderr({ batched: s => lines.push(s) });
+    const feed = (sin ? sin.value : '').split('\n');
+    try {
+      py.globals.set('_pyrun_feed', feed);
+      py.globals.set('_pyrun_src', ed.value);
+      await py.runPythonAsync(
+        'import builtins as _b\n' +
+        '_f=[str(x) for x in list(_pyrun_feed)]\n' +
+        '_ix=[0]\n' +
+        'def _inp(prompt=""):\n' +
+        '    if prompt: print(prompt, end="")\n' +
+        '    if _ix[0] < len(_f):\n' +
+        '        v=_f[_ix[0]]; _ix[0]+=1; return v\n' +
+        '    raise EOFError("입력값이 더 없어요. 위 입력값 칸에 값을 더 적어 주세요.")\n' +
+        '_b.input=_inp\n');
+      await py.runPythonAsync("exec(compile(_pyrun_src,'<내 코드>','exec'), {'__name__':'__main__'})");
+      out.classList.remove('err');
+    } catch (err) {
+      /* 파이썬 내부(Pyodide) 프레임은 지우고 학생이 쓴 코드 줄만 남긴다 */
+      const raw = String(err && err.message || err).split('\n'), keep = [];
+      for (let i = 0; i < raw.length; i++) {
+        const m = raw[i].match(/^ *File "([^"]*)"/);
+        if (m && (m[1].indexOf('/lib/') === 0 || m[1].indexOf('_pyodide') >= 0 || m[1] === '<exec>')) {
+          while (i + 1 < raw.length && /^\s+/.test(raw[i + 1]) && !/^\s*File "/.test(raw[i + 1])) i++;
+          continue;
+        }
+        keep.push(raw[i]);
+      }
+      lines.push(keep.join('\n').trim() || '오류가 났어요.');
+      out.classList.add('err');
+    } finally {
+      try { py.globals.delete('_pyrun_feed'); py.globals.delete('_pyrun_src'); } catch (e) {}
+    }
+    setStat('');
+    out.hidden = false;
+    out.textContent = lines.join('').replace(/\n+$/, '') || '(출력이 없어요)';
+    goBtn.disabled = false;
+  }
+  /* 다른 칸이 실행 중이면 끝날 때까지 기다렸다가(직렬화) 실행 — 파이썬 하나를 공유하기 때문 */
+  goBtn.onclick = () => {
+    goBtn.disabled = true;
+    stat.textContent = '실행 준비 중…';
+    _pyLock = _pyLock.then(run, run);
+  };
+}
+
+/* ===== 공용 그림·실습 부품 (framework/charts.js) =====
+   차시는 설정값만 넘긴다. 쓰는 법은 docs/widgets.md
+   orangeFlow · scatter · bars · boxes · miniTable · stat(평균·표준편차·상관·회귀·k-평균) · memoOf */
+
+/* 다른 차시에서 적어 둔 메모 읽기 (check.py 가 차시·키가 있는지 확인) */
+function memoOf(lid,key){ try{ return String((store.get('ds-'+lid+'-memo'+WHO.sfx,{})||{})[key]||'').trim(); }catch(e){ return ''; } }
+
+/* 통계 계산 */
+const stat={
+  mean:a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:NaN,
+  sd(a,sample){const m=stat.mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-(sample?1:0)));},
+  q(a,p){const s=a.slice().sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i);return s[lo]+(s[Math.min(lo+1,s.length-1)]-s[lo])*(i-lo);},
+  r(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0,syy=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;syy+=(y-my)**2;});return sxx&&syy?sxy/Math.sqrt(sxx*syy):null;},
+  /* 최소제곱 직선 y = a + b·x, 결정 계수 r2, 평균 제곱 오차 mse */
+  fit(P){const n=P.length;if(n<2)return null;const mx=stat.mean(P.map(p=>p[0])),my=stat.mean(P.map(p=>p[1]));let sxy=0,sxx=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sxx+=(x-mx)**2;});if(!sxx)return null;const b=sxy/sxx,a=my-b*mx;return {a,b,...stat.err(P,a,b)};},
+  err(P,a,b){let se=0,st=0;const my=stat.mean(P.map(p=>p[1]));P.forEach(([x,y])=>{se+=(y-(a+b*x))**2;st+=(y-my)**2;});return {mse:se/P.length,rmse:Math.sqrt(se/P.length),r2:st?1-se/st:NaN};},
+  /* k-평균 한 단계: 점마다 가까운 중심 → 중심을 그 점들의 평균으로 */
+  assign:(P,C)=>P.map(p=>{let bi=0,bd=Infinity;C.forEach((c,i)=>{const d=(p[0]-c[0])**2+(p[1]-c[1])**2;if(d<bd){bd=d;bi=i;}});return bi;}),
+  center:(P,L,C)=>C.map((c,i)=>{const m=P.filter((_,j)=>L[j]===i);return m.length?[stat.mean(m.map(p=>p[0])),stat.mean(m.map(p=>p[1]))]:c.slice();}),
+  /* 군집 안 거리 제곱합(SSE)과 평균 실루엣 점수 */
+  sse:(P,L,C)=>P.reduce((s,p,j)=>s+(p[0]-C[L[j]][0])**2+(p[1]-C[L[j]][1])**2,0),
+  silhouette(P,L){const k=Math.max(...L)+1;if(k<2)return NaN;const d=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);let s=0;P.forEach((p,i)=>{const avg=c=>{const m=P.filter((_,j)=>L[j]===c&&j!==i);return m.length?stat.mean(m.map(q=>d(p,q))):NaN;};const a=avg(L[i]);let b=Infinity;for(let c=0;c<k;c++)if(c!==L[i]){const v=avg(c);if(v<b)b=v;}s+=(isNaN(a)||!isFinite(b))?0:(b-a)/Math.max(a,b);});return s/P.length;},
+  fmt:(v,d=2)=>v==null||isNaN(v)?'—':(v<0?'−':'')+Math.abs(v).toFixed(d)
+};
+const PAL=['#2f6fd0','#d64535','#1f9d74','#f2a516','#9b4fc4','#e0702b','#5b6776'];
+
+/* 오렌지3 위젯 연결 흐름도 + 설정 표 + (선택) 진행 칩
+   orangeFlow({svg:'id', table:'id', nodes:[{s:1,t:'File',sub:'파일.csv',c:'Data',x,y}], edges:[[1,2]], w, h, done:{box,key,items}})
+   c: Data · Transform · Visualize · Model · Evaluate · Unsupervised · Associate · Explore
+   설정 표는 화면에 <table class="tbl of-set" id="…"><tr data-s="1">…</tr></table> 로 두면 위젯을 누를 때 그 줄이 강조된다. */
+const OF_COL={Data:'#f2b84b',Transform:'#f0875a',Visualize:'#fdb3a0',Model:'#f6a3c6',Evaluate:'#c5a1e8',Unsupervised:'#7fb2e0',Associate:'#8fd3c1',Explore:'#a7d36f'};
+function orangeFlow(o){
+  const S=$(o.svg), BW=o.bw||180, BH=48, N={}, id=o.svg;
+  o.nodes.forEach(n=>N[n.s]=n);
+  const W=o.w||Math.max(...o.nodes.map(n=>n.x))+BW+10, H=o.h||Math.max(...o.nodes.map(n=>n.y))+BH+10;
+  let g=`<defs><marker id="${id}A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a94a3"/></marker></defs>`;
+  o.edges.forEach(([a,b,lab])=>{const p=N[a],q=N[b],x1=p.x+BW,y1=p.y+BH/2,x2=q.x-2,y2=q.y+BH/2;
+    g+=`<path d="M${x1} ${y1}C${x1+40} ${y1} ${x2-40} ${y2} ${x2} ${y2}" class="fe" marker-end="url(#${id}A)"/>`;
+    if(lab) g+=`<text x="${(x1+x2)/2}" y="${(y1+y2)/2-6}" class="fl">${esc(lab)}</text>`;});
+  o.nodes.forEach(n=>{const k=OF_COL[n.c]||'#ccc';
+    g+=`<g class="fn" data-s="${n.s}" tabindex="0" role="button" aria-label="${n.s}번 ${esc(n.t)}"><rect x="${n.x}" y="${n.y}" width="${BW}" height="${BH}" rx="10" class="fb" style="stroke:${k}"/><rect x="${n.x}" y="${n.y}" width="28" height="${BH}" rx="10" fill="${k}"/><rect x="${n.x+18}" y="${n.y}" width="10" height="${BH}" fill="${k}"/><text x="${n.x+14}" y="${n.y+29}" class="fnum">${n.s}</text><text x="${n.x+36}" y="${n.y+(n.sub?20:29)}" class="ft">${esc(n.t)}</text>${n.sub?`<text x="${n.x+36}" y="${n.y+37}" class="fs">${esc(n.sub)}</text>`:''}</g>`;});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.innerHTML=g;
+  S.parentElement.classList.add('of-box'); S.style.minWidth=Math.min(W,o.minw||640)+'px';
+  const T=o.table?$(o.table):null;
+  const pick=s=>{S.querySelectorAll('.fn').forEach(x=>x.classList.toggle('on',x.dataset.s==s));
+    if(T){T.querySelectorAll('tr[data-s]').forEach(tr=>tr.classList.toggle('hl',tr.dataset.s==s)); const tr=T.querySelector(`tr[data-s="${s}"]`); if(tr) tr.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+  S.querySelectorAll('.fn').forEach(x=>{x.onclick=()=>pick(x.dataset.s); x.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(x.dataset.s);}};});
+  if(T){T.classList.add('of-set'); T.querySelectorAll('tr[data-s]').forEach(tr=>tr.onclick=()=>pick(tr.dataset.s));}
+  if(o.legend!==false){const used=[...new Set(o.nodes.map(n=>n.c))]; const L=document.createElement('div'); L.className='of-legend';
+    L.innerHTML=used.map(c=>`<span style="--k:${OF_COL[c]}">${c}</span>`).join('')+'<small>색은 오렌지3 왼쪽 위젯 카테고리예요.</small>'; S.parentElement.after(L);}
+  if(o.done) chips(o.done.box,o.done.key,o.done.items,true);
+  return {pick};
+}
+
+/* 산점도 탐색기
+   const sp=scatter({svg:'id', x:[0,10,2], y:[0,100,20], xl:'x 이름', yl:'y 이름', edit:true, max:40, onChange(P){…}})
+   onChange 는 set()과 학생이 점을 옮길 때만 불림(line·centers·resid 는 안 부름 → onChange 안에서 sp.line 해도 됨)
+   sp.set([[x,y,색 또는 군집번호],…]) · sp.line(a,b,'색',점선?) · sp.lines([...]) · sp.centers([[x,y],…]) · sp.resid(true) · sp.points() */
+function scatter(o){
+  const S=$(o.svg), W=o.w||460, H=o.h||340, L=52, R=14, T=12, B=46, pw=W-L-R, ph=H-T-B;
+  const [x0,x1,xs]=o.x, [y0,y1,ys]=o.y;
+  const X=v=>L+(v-x0)/(x1-x0)*pw, Y=v=>T+ph-(v-y0)/(y1-y0)*ph, IX=x=>x0+(x-L)/pw*(x1-x0), IY=y=>y0+(T+ph-y)/ph*(y1-y0);
+  const cl=(v,a,b)=>Math.max(a,Math.min(b,v)), dg=o.dec??1, rd=v=>+v.toFixed(dg), lab=v=>String(+v.toFixed(2)).replace('-','−');
+  let P=[], LN=[], C=[], RES=false, drag=-1;
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg');
+  let g=`<rect x="${L}" y="${T}" width="${pw}" height="${ph}" fill="#fbfaf7"/>`;
+  for(let v=x0;v<=x1+1e-9;v+=xs) g+=`<line x1="${X(v)}" y1="${T}" x2="${X(v)}" y2="${T+ph}" stroke="#eceae4"/><text x="${X(v)}" y="${T+ph+16}" text-anchor="middle" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  for(let v=y0;v<=y1+1e-9;v+=ys) g+=`<line x1="${L}" y1="${Y(v)}" x2="${L+pw}" y2="${Y(v)}" stroke="#eceae4"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="#5b6776">${lab(v)}</text>`;
+  g+=`<path d="M${L} ${T}V${T+ph}H${L+pw}" fill="none" stroke="#16202c" stroke-width="2"/><text x="${L+pw/2}" y="${H-6}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c">${o.xl} →</text><text x="14" y="${T+ph/2}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202c" transform="rotate(-90 14 ${T+ph/2})">${o.yl} →</text><defs><clipPath id="${o.svg}C"><rect x="${L}" y="${T}" width="${pw}" height="${ph}"/></clipPath></defs><g class="ln" clip-path="url(#${o.svg}C)"></g><g class="pts"></g><g class="cs"></g>`;
+  S.innerHTML=g;
+  const col=p=>typeof p[2]==='number'?PAL[p[2]%PAL.length]:(p[2]||o.color||'#1f9d74');
+  function draw(fin,quiet){
+    let lg='';
+    if(RES&&LN[0]) P.forEach(p=>{const yh=LN[0].a+LN[0].b*p[0]; lg+=`<line x1="${X(p[0])}" y1="${Y(p[1])}" x2="${X(p[0])}" y2="${Y(yh)}" stroke="#d64535" stroke-width="1.5" stroke-dasharray="3 3"/>`;});
+    LN.forEach(l=>lg+=`<line x1="${X(x0)}" y1="${Y(l.a+l.b*x0)}" x2="${X(x1)}" y2="${Y(l.a+l.b*x1)}" stroke="${l.c||'#16202c'}" stroke-width="2.5"${l.dash?' stroke-dasharray="7 5"':''}/>`);
+    S.querySelector('.ln').innerHTML=lg;
+    S.querySelector('.pts').innerHTML=P.map((p,i)=>`<circle data-i="${i}" cx="${X(p[0])}" cy="${Y(p[1])}" r="${o.edit?7:5.5}" fill="${col(p)}" fill-opacity=".82" stroke="#fff" stroke-width="1.5"${o.edit?' class="sp-pt"':''}/>`).join('');
+    S.querySelector('.cs').innerHTML=C.map((c,i)=>`<g transform="translate(${X(c[0])} ${Y(c[1])})"><path d="M-9 -9L9 9M9 -9L-9 9" stroke="#fff" stroke-width="7"/><path d="M-9 -9L9 9M9 -9L-9 9" stroke="${PAL[i%PAL.length]}" stroke-width="4"/></g>`).join('');
+    if(o.onChange&&!quiet) o.onChange(P,fin);
+  }
+  const pt=e=>{const m=S.getScreenCTM(); if(!m) return [0,0]; const q=new DOMPoint(e.clientX,e.clientY).matrixTransform(m.inverse()); return [q.x,q.y];};
+  if(o.edit){
+    S.style.touchAction='none';
+    S.addEventListener('pointerdown',e=>{const c=e.target.closest('circle[data-i]');
+      if(c){drag=+c.dataset.i; S.setPointerCapture(e.pointerId); return;}
+      const [x,y]=pt(e); if(x<L||x>L+pw||y<T||y>T+ph) return;
+      if(P.length>=(o.max||40)) return;
+      P.push([rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1))]); draw(true);});
+    S.addEventListener('pointermove',e=>{if(drag<0)return; const [x,y]=pt(e); P[drag]=[rd(cl(IX(x),x0,x1)),rd(cl(IY(y),y0,y1)),P[drag][2]]; draw(false);});
+    const up=()=>{if(drag>=0){drag=-1; draw(true);}}; S.addEventListener('pointerup',up); S.addEventListener('pointercancel',up);
+    S.addEventListener('dblclick',e=>{const c=e.target.closest('circle[data-i]'); if(c){P.splice(+c.dataset.i,1); draw(true);}});
+  }
+  draw(false);
+  return {set(pts){P=pts.map(p=>p.slice()); draw(false); return this;}, points:()=>P.map(p=>p.slice()),
+    line(a,b,c,dash){LN=a==null?[]:[{a,b,c,dash}]; draw(false,1); return this;}, lines(ls){LN=ls; draw(false,1); return this;},
+    centers(cs){C=cs||[]; draw(false,1); return this;}, resid(on){RES=on; draw(false,1); return this;}, X, Y};
+}
+
+/* 막대그래프  bars('svgId',[['이름',값,'색'?],…],{max, unit, dec, w, h, horiz}) */
+function bars(id,data,o={}){
+  const S=$(id), W=o.w||460, n=data.length, horiz=o.horiz, rowH=30, H=o.h||(horiz?n*rowH+20:260);
+  const mx=o.max||Math.max(...data.map(d=>d[1]))*1.1||1, dec=o.dec??0, u=o.unit||'';
+  let g='';
+  if(horiz){const L=o.left||120, pw=W-L-60;
+    data.forEach(([k,v,c],i)=>{const y=10+i*rowH; g+=`<text x="${L-8}" y="${y+18}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><rect x="${L}" y="${y+4}" width="${Math.max(0,v/mx*pw)}" height="${rowH-10}" rx="5" fill="${c||PAL[0]}"/><text x="${L+v/mx*pw+6}" y="${y+18}" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text>`;});
+  }else{const L=36, B=40, T=18, ph=H-B-T, bw=(W-L-10)/n;
+    g+=`<path d="M${L} ${T}V${T+ph}H${W-6}" fill="none" stroke="#16202c" stroke-width="1.5"/>`;
+    data.forEach(([k,v,c],i)=>{const x=L+i*bw+bw*.15, h=Math.max(0,v/mx*ph); g+=`<rect x="${x}" y="${T+ph-h}" width="${bw*.7}" height="${h}" rx="4" fill="${c||PAL[i%PAL.length]}"/><text x="${x+bw*.35}" y="${T+ph-h-5}" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">${(+v).toFixed(dec)}${u}</text><text x="${x+bw*.35}" y="${T+ph+16}" text-anchor="middle" font-size="12" fill="#16202c">${esc(k)}</text>`;});
+  }
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 상자 그림  boxes('svgId',[['이름',[값…],'색'?],…],{min,max,step,unit,w}) — 가로 상자, 1.5×IQR 밖 값은 점 */
+function boxes(id,groups,o={}){
+  const S=$(id), W=o.w||460, rowH=44, L=o.left||90, R=16, H=groups.length*rowH+34, pw=W-L-R;
+  const all=groups.flatMap(g=>g[1]), lo=o.min??Math.min(...all), hi=o.max??Math.max(...all), X=v=>L+(v-lo)/(hi-lo)*pw;
+  let g=''; const st=o.step||(hi-lo)/5;
+  for(let v=lo;v<=hi+1e-9;v+=st) g+=`<line x1="${X(v)}" y1="6" x2="${X(v)}" y2="${H-26}" stroke="#eceae4"/><text x="${X(v)}" y="${H-10}" text-anchor="middle" font-size="11" fill="#5b6776">${+v.toFixed(2)}${o.unit||''}</text>`;
+  groups.forEach(([k,a,c],i)=>{const y=8+i*rowH+rowH/2-4, q1=stat.q(a,.25), q2=stat.q(a,.5), q3=stat.q(a,.75), iq=q3-q1, fl=a.filter(v=>v>=q1-1.5*iq), fh=a.filter(v=>v<=q3+1.5*iq), wl=Math.min(...fl), wh=Math.max(...fh), k2=c||PAL[i%PAL.length];
+    g+=`<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="12.5" fill="#16202c">${esc(k)}</text><line x1="${X(wl)}" y1="${y}" x2="${X(wh)}" y2="${y}" stroke="${k2}" stroke-width="2"/><rect x="${X(q1)}" y="${y-12}" width="${Math.max(1,X(q3)-X(q1))}" height="24" rx="4" fill="${k2}" fill-opacity=".25" stroke="${k2}" stroke-width="2"/><line x1="${X(q2)}" y1="${y-12}" x2="${X(q2)}" y2="${y+12}" stroke="${k2}" stroke-width="3"/>`+a.filter(v=>v<wl||v>wh).map(v=>`<circle cx="${X(v)}" cy="${y}" r="4" fill="#fff" stroke="#d64535" stroke-width="2"/>`).join('');});
+  S.setAttribute('viewBox',`0 0 ${W} ${H}`); S.classList.add('sp-svg'); S.innerHTML=g;
+}
+
+/* 작은 표  miniTable('boxId',{cols:['이름',…], rows:[[…],…], edit:[열번호…], pick:true, onChange(rows), onPick(i)}) — 칸을 고치거나 줄을 고를 수 있음 */
+function miniTable(box,o){
+  const B=$(box); B.classList.add('mt-wrap'); let rows=o.rows.map(r=>r.slice()), sel=new Set();
+  function draw(){
+    B.innerHTML=`<table class="tbl mt"><tr>${o.pick?'<th></th>':''}${o.cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map((r,i)=>`<tr data-i="${i}" class="${sel.has(i)?'on':''}">${o.pick?`<td><input type="checkbox" aria-label="${i+1}번째 줄 고르기" ${sel.has(i)?'checked':''}></td>`:''}${r.map((v,j)=>(o.edit||[]).includes(j)?`<td><input class="mt-in" data-j="${j}" value="${esc(v)}" inputmode="decimal" aria-label="${esc(o.cols[j])}"></td>`:`<td>${v}</td>`).join('')}</tr>`).join('')}</table>`;
+    B.querySelectorAll('.mt-in').forEach(inp=>inp.oninput=()=>{const i=+inp.closest('tr').dataset.i, j=+inp.dataset.j, v=inp.value.trim(); rows[i][j]=v===''||isNaN(+v)?v:+v; o.onChange&&o.onChange(rows);});
+    B.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{const i=+cb.closest('tr').dataset.i; cb.checked?sel.add(i):sel.delete(i); cb.closest('tr').classList.toggle('on',cb.checked); o.onPick&&o.onPick([...sel].sort((a,b)=>a-b));});
+  }
+  draw();
+  return {rows:()=>rows.map(r=>r.slice()), set(r){rows=r.map(x=>x.slice()); sel.clear(); draw();}, picked:()=>[...sel]};
+}
+/* 01 준비 학습 · 낱말 카드 */
+flipCards('prepFlip',[
+  {ic:'🍓',f:'라즈베리파이 피코',b:'초소형 마이크로컨트롤러로, 파이썬 프로그래밍을 지원해요. 이 단원의 실습은 피코로 해요.'},
+  {ic:'⚙️',f:'펌웨어',b:'하드웨어의 기본적인 제어와 구동을 담당하는 프로그램이에요. 피코에는 마이크로파이썬 펌웨어 파일(.uf2)을 먼저 넣어요.'},
+  {ic:'🐍',f:'파이썬',b:'풍부한 라이브러리를 제공하므로 다른 언어에 비해 프로그램을 더욱 간단하고 빠르게 작성할 수 있는 프로그래밍 언어'},
+  {ic:'🔬',f:'마이크로파이썬',b:'피지컬 컴퓨팅 실습을 위해 마이크로컨트롤러에서 효율적으로 실행되도록 파이썬의 기능을 일부 제한한 간결한 프로그래밍 언어'},
+  {ic:'🧰',f:'토니(Thonny)',b:'파이썬 초보자를 위한 통합 개발 환경(IDE)이에요. 단순하고 꼭 필요한 기능 위주로 구성되어 가벼운 실습에 알맞아요.'},
+  {ic:'📍',f:'핀아웃',b:'피코의 많은 핀(단자)이 각각 조금씩 다른 기능을 가지도록 설계된 것. 예) 36번 핀은 3V3(OUT), 38번 핀은 GND'},
+]);
+
+sorter('setupSort',{
+  cats:[{n:'펌웨어 설치',k:'#d0602f'},{n:'통합 개발 환경(IDE) 설치',k:'#2f6fd0'},{n:'라이브러리 설치',k:'#1f9d74'}],
+  items:[
+    {t:'micropython.org의 다운로드 메뉴에서 pico를 찾아 최신 .uf2 파일을 내려받는다',short:'.uf2 파일 내려받기',c:0,ic:'⬇️',w:'피코에 넣을 마이크로파이썬 펌웨어 파일(.uf2)을 구하는 일이니 펌웨어 설치 단계예요.'},
+    {t:'BOOTSEL 버튼을 누른 채 USB로 컴퓨터와 피코를 연결해 RPI-RP2 장치로 인식시킨다',short:'BOOTSEL + USB 연결',c:0,ic:'🔌',w:'펌웨어 파일을 넣기 위해 피코를 RPI-RP2 드라이브로 보이게 하는 과정이니 펌웨어 설치 단계예요.'},
+    {t:'Thonny 홈페이지에서 내 운영체제에 맞는 파일을 내려받아 설치한다',short:'Thonny 설치',c:1,ic:'🧰',w:'코드를 쓰고 올릴 도구를 설치하는 일이니 통합 개발 환경 설치 단계예요.'},
+    {t:'Interpreter 탭에서 MicroPython (Raspberry Pi Pico)을 고르고 통신 포트를 정한다',short:'인터프리터·포트 선택',c:1,ic:'🔧',w:'Thonny가 피코와 대화하도록 설정하는 일이니 통합 개발 환경 설치 단계에 들어가요.'},
+    {t:'Tools → Manage packages에서 neopixel을 검색해 설치한다',short:'neopixel 설치',c:2,ic:'📦',w:'실습에 필요한 라이브러리를 추가하는 일이니 라이브러리 설치 단계예요.'},
+    {t:'같은 방법으로 dht를 검색해 설치한다',short:'dht 설치',c:2,ic:'🌡️',w:'온습도 센서 실습에 필요한 라이브러리이니 라이브러리 설치 단계예요.'},
+  ],
+  end:'<b>정리</b> 피코 안에 파이썬 환경을 넣는 것은 <b>펌웨어</b>, 컴퓨터에서 코드를 쓰는 도구는 <b>Thonny</b>, 부품 제어를 돕는 도구 모음은 <b>라이브러리</b>예요.'
+});
+
+/* 02 실습 1 */
+flipCards('led1Flip',[
+  {ic:'📥',f:'from machine import Pin',b:'machine 모듈에 있는 여러 클래스 중 입출력 핀의 설정과 제어를 담당하는 Pin 클래스를 가져와요.'},
+  {ic:'⏱️',f:'import time',b:'MicroPython에서 시간과 관련된 작업(시간 지연, 시간 측정 등)을 하는 time 모듈을 가져와요.',x:'예) time.sleep(1) : 1초 대기'},
+  {ic:'💡',f:'led = Pin(25, Pin.OUT)',b:'25번 핀을 출력 모드로 하는 led 객체를 만들어요.'},
+  {ic:'🔁',f:'while True:',b:'무한 반복을 시작해요. 들여쓴 줄들이 계속 되풀이돼요.'},
+  {ic:'🟡',f:'led.value(1) · led.value(0)',b:'1이면 LED 켜기, 0이면 LED 끄기예요. 그 뒤에 time.sleep(1)로 1초씩 기다려요.'},
+]);
+pyrun('ledRun',{code:`# while True 대신 3번만 반복해요
+led = 0
+for i in range(3):
+    led = 1          # led.value(1) : LED 켜기
+    print(i + 1, '번째 : LED 켜기 (값', led, ')')
+    print('        1초 대기')
+    led = 0          # led.value(0) : LED 끄기
+    print(i + 1, '번째 : LED 끄기 (값', led, ')')
+    print('        1초 대기')
+`});
+
+/* 03 실습 2 */
+flipCards('neoFlip',[
+  {ic:'📥',f:'from neopixel import NeoPixel',b:'네오픽셀을 쓰기 위한 모듈을 불러와요.'},
+  {ic:'🔢',f:'NUM_LEDS · PIN_NUM',b:'NUM_LEDS는 사용할 LED 개수, PIN_NUM은 DIN 핀으로 쓸 입출력(GPIO) 핀 번호예요.'},
+  {ic:'🧱',f:'NeoPixel(Pin(PIN_NUM), NUM_LEDS, bpp = 3)',b:'RGB 모드(bpp=3)를 써서 NeoPixel 객체를 만들어요.'},
+  {ic:'🎨',f:'pixels.fill((255, 0, 0))',b:'빨간색(R, G, B)으로 LED를 켜요. 괄호 안 세 숫자가 R, G, B 값이에요.',x:'(0, 0, 0)이면 LED가 꺼져요.'},
+  {ic:'✅',f:'pixels.write()',b:'바꾼 내용을 LED에 적용해요. fill만 하고 write를 하지 않으면 색이 바뀌지 않아요.'},
+]);
+
+/* 03 색 미리보기 · R G B 막대 */
+(function(){
+  const sw=$('pcSwatch'), tx=$('pcSwatchTxt'), ln=$('pcLine');
+  const ids=['pcR','pcG','pcB'];
+  function draw(){
+    const v=ids.map(i=>+$(i).value);
+    $('pcRv').textContent=v[0]; $('pcGv').textContent=v[1]; $('pcBv').textContent=v[2];
+    sw.style.background=`rgb(${v[0]},${v[1]},${v[2]})`;
+    const lum=0.299*v[0]+0.587*v[1]+0.114*v[2];
+    tx.style.color=lum>150?'#0f2742':'#fff';
+    tx.textContent=`(${v.join(', ')})`;
+    ln.textContent=`pixels.fill((${v.join(', ')}))`;
+  }
+  ids.forEach(i=>$(i).addEventListener('input',draw));
+  draw();
+})();
+
+pyrun('colorRun',{code:`# 색 이름 : (R, G, B) 튜플
+colors = {'빨강': (255, 0, 0), '꺼짐': (0, 0, 0), '노랑': (255, 255, 0), '흰색': (255, 255, 255)}
+
+for name in colors:
+    r, g, b = colors[name]
+    print(name, '→ pixels.fill(', colors[name], ')   R =', r, ' G =', g, ' B =', b)
+`});
+
+pyrun('colorTry',{code:`# 해 보기 : 빨강 → 파랑 → 초록 순서로 바뀌게 해 보세요
+# ___ 자리에 (R, G, B) 튜플을 넣어요
+colors = [___, ___, ___]
+
+for c in colors:
+    print('pixels.fill(', c, ')')
+    print('pixels.write()')
+    print('1초 대기')
+`});
+
+/* 04 실습 3 */
+flipCards('dhtFlip',[
+  {ic:'📥',f:'import dht',b:'온습도 센서를 쓰기 위한 dht 모듈을 불러와요.'},
+  {ic:'🔌',f:'sensor = dht.DHT11(Pin(22))',b:'22번 핀에 연결된 DHT11 센서를 초기화해요.'},
+  {ic:'📏',f:'sensor.measure()',b:'센서에서 측정을 시작해요.'},
+  {ic:'🌡️',f:'temp = sensor.temperature()',b:'온도를 읽어 temp에 넣어요.'},
+  {ic:'💧',f:'hum = sensor.humidity()',b:'습도를 읽어 hum에 넣어요.'},
+  {ic:'🖨️',f:'print(…) · time.sleep(1)',b:'온도와 습도를 출력하고, 1초마다 다시 측정해요.'},
+]);
+pyrun('dhtRun',{code:`# (온도, 습도) 흉내 값 - 진짜 센서 값이 아니에요
+measures = [(25, 40), (26, 42), (26, 41)]
+
+for temp, hum in measures:
+    print('Temperature: ', temp, ' °C')
+    print('Humidity: ', hum, ' %')
+    if temp < 0 or temp > 50:
+        print('  (DHT11의 온도 측정 범위 0~50 °C를 벗어났어요)')
+`});
+
+/* 05 실습 4 · 빈칸 활동 (정답 없음) */
+pyrun('frameRun',{rows:16,code:`# 센서 대신 온도 리스트를 하나씩 꺼내요 (흉내 값)
+temps = [18, 22, 24, 26, 30]
+
+for temperature in temps:
+    if temperature < ___:
+        color = (___, ___, ___)
+        print(temperature, '도 → 파란색', color)
+    elif ___ <= temperature <= ___:
+        color = (___, ___, ___)
+        print(temperature, '도 → 초록색', color)
+    else:
+        color = (___, ___, ___)
+        print(temperature, '도 → 빨간색', color)
+`});
+
+/* 06 시뮬레이터 · 16칸 따라가 보기 */
+(function(){
+  const svg=$('pcRing'), NS='http://www.w3.org/2000/svg', N=16, cs=[];
+  for(let i=0;i<N;i++){
+    const a=-Math.PI/2+i*2*Math.PI/N, c=document.createElementNS(NS,'circle');
+    c.setAttribute('cx',(100+72*Math.cos(a)).toFixed(1)); c.setAttribute('cy',(100+72*Math.sin(a)).toFixed(1)); c.setAttribute('r','12');
+    c.setAttribute('stroke','#0f2742'); c.setAttribute('stroke-width','2'); c.setAttribute('fill','#2a2f3a');
+    svg.appendChild(c);
+    const t=document.createElementNS(NS,'text'); t.setAttribute('x',(100+50*Math.cos(a)).toFixed(1)); t.setAttribute('y',(104+50*Math.sin(a)).toFixed(1));
+    t.setAttribute('font-size','10'); t.setAttribute('text-anchor','middle'); t.setAttribute('fill','#6b7585'); t.textContent=i; svg.appendChild(t);
+    cs.push(c);
+  }
+  let step=0;
+  const msg=$('pcRingTxt'), nx=$('pcRingNext');
+  function draw(){
+    cs.forEach((c,i)=>{ const on=step<=N?i<step:i>=step-N; c.setAttribute('fill',on?'#ff3b30':'#2a2f3a'); });
+    if(step===0) msg.innerHTML='버튼을 눌러 시작해요.';
+    else if(step<=N) msg.innerHTML=`<b>켜기</b> i = ${step-1}<br><code>pixels[${step-1}] = (255, 0, 0)</code>`;
+    else msg.innerHTML=`<b>끄기</b> i = ${step-N-1}<br><code>pixels[${step-N-1}] = (0, 0, 0)</code>`;
+    if(step===2*N) msg.innerHTML+='<br>모두 꺼졌어요. 피코에서는 <code>while True</code>라서 처음부터 다시 반복해요.';
+    nx.disabled=step>=2*N;
+  }
+  nx.onclick=()=>{ if(step<2*N){step++;draw();} };
+  $('pcRingReset').onclick=()=>{step=0;draw();};
+  draw();
+})();
+
+/* 07 돌아보기 */
+const PC_STAGES=['① 준비 학습','② 회로 구성','③ 프로그래밍','④ 실행 결과'];
+chips('stageGood','stageGoodSel',PC_STAGES,true);
+chips('stageAgain','stageAgainSel',PC_STAGES,true);
+vote('ach1','ach1Sel',[['예'],['아니요']]);
+vote('ach2','ach2Sel',[['예'],['아니요']]);
+vote('ach3','ach3Sel',[['예'],['아니요']]);
+vote('ach4','ach4Sel',[['예'],['아니요']]);
+
+/* 08 인터뷰 */
+flipCards('intFlip',[
+  {ic:'🎨',f:'미디어 아트를 만들게 된 계기는?',b:'호기심이 많아 회화를 전공하면서도 조각·설치·동양화·도예 같은 여러 분야를 함께 공부했어요. 미디어 아트에도 관심이 많아 자연스럽게 작품으로 만들게 되었어요.'},
+  {ic:'📚',f:'미술 말고 필요한 지식은?',b:'영상 촬영과 편집, 영상 모니터를 입체 구조물에 설치하기 위한 전기 회로, 전시장 설치를 위한 타공·용접·목공 같은 설비 분야 지식이 필요했어요. 어렵지만 배우는 과정을 즐겼다고 해요.'},
+  {ic:'🛠️',f:'작업은 어떤 순서로?',b:'그림·조각·미디어·설치를 합친 작품이에요. 먼저 주제를 정하고 아이디어 스케치로 모습을 계획해요. 그다음 영상 촬영·편집, 입체 구조물 제작, 모니터 선택, 설치와 페인팅을 차례로 해서 완성해요.'},
+  {ic:'🖼️',f:'작품을 더 쉽게 즐기려면?',b:'관람 전에 작품 정보를 미리 알아보고 감상하면 즐거움이 커져요. 백남준 같은 유명 작가부터 처음 들어 보는 작가까지 찾아보고, 미디어 아트 전용 전시관을 직접 방문해 보는 것도 좋아요.'},
+]);
+
+/* 09 마무리 */
+const MEMOLIST=[['planIdea','나의 계획 · 만들고 싶은 작품'],['prepStuck','준비 학습에서 막힌 점'],['rgbFind','R·G·B 움직여 보며 알게 된 점'],['colorTryMemo','해 보기 · 채운 값과 실행 결과'],['dhtWhere','온습도를 재고 싶은 장소'],['frameResult','실습 4 · 온도별 색 결과'],['frameIdea','내가 만들고 싶은 액자'],['artPlan','네오픽셀 작품 계획'],['stageGoodSel','잘 해냈다고 느낀 단계'],['stageAgainSel','다시 확인하고 싶은 단계'],['feel','느낀 점'],['ach1Sel','성취도 점검 1'],['ach2Sel','성취도 점검 2'],['ach3Sel','성취도 점검 3'],['ach4Sel','성취도 점검 4'],['intThink','인터뷰 · 더 필요한 지식'],['intWish','인터뷰 · 보고 싶은 전시·작가'],['keyQ','오늘의 질문에 대한 내 답']];
+onShow[9]=()=>memoSummary('msum',MEMOLIST);
+
+/* 진도 보내기 ②: 화면 이동·퀴즈·메모·창 이탈을 선생님 시트로 */
+(function(){
+  if(WHO.off) return;
+  const box=document.createElement('div');
+  if(WHO.preview){
+    box.className='tr-badge';
+    box.innerHTML=WHO.teacher?'교사 모드 · 전송 안 함 <button type="button">끝내기</button>':'미리보기 · 진도 전송 안 함';
+    (document.querySelector('.top')||document.body).appendChild(box);
+    const b=box.querySelector('button'); if(b) b.onclick=()=>{ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); };
+    return;
+  }
+
+  if(WHO.need){
+    let last={}; try{last=JSON.parse(localStorage.getItem('aiw-last')||'{}')||{};}catch(e){}
+    box.className='tr-gate';
+    box.innerHTML=`<form class="tr-card" autocomplete="off">
+      <h2>수업 시작 전에</h2>
+      <p class="tr-sub">학번과 이름을 써 주세요.</p>
+      <label class="tr-f"><span>학번</span><input name="no" inputmode="numeric" maxlength="5" placeholder="예: 20101" value="${esc(last.no||'')}"></label>
+      <label class="tr-f"><span>이름</span><input name="name" maxlength="10" placeholder="이름" value="${esc(last.name||'')}"></label>
+      <div class="tr-cls" hidden>${[].map(c=>`<label><input type="radio" name="cls" value="${c}"><span>${c}</span></label>`).join('')}</div>
+      <div class="tr-err"></div>
+      <button class="btn" type="submit">시작하기 →</button>
+      <p class="tr-note">어느 화면까지 왔는지, 퀴즈와 메모가 선생님께 전달돼요.<br>다른 친구 이름으로 들어가지 마세요.</p>
+    </form>`;
+    document.body.appendChild(box);
+    const f=box.querySelector('form'), err=box.querySelector('.tr-err'), go2=f.querySelector('button[type=submit]'), clsBox=box.querySelector('.tr-cls');
+    f.no.addEventListener('input',()=>{f.no.value=f.no.value.replace(/\D/g,'').slice(0,5);});
+    const TEACH=t=>{let h=2166136261;for(const c of t){h^=c.codePointAt(0);h=Math.imul(h,16777619)>>>0;}return h.toString(36);}, TEACH_H='853zuh';
+    const enter=w=>{ try{sessionStorage.setItem('aiw-who',JSON.stringify(w)); if(!w.teacher) localStorage.setItem('aiw-last',JSON.stringify({no:w.no,name:w.name}));}catch(e){} location.reload(); };
+    const busy=on=>{ go2.disabled=on; go2.textContent=on?'명단에서 확인하는 중…':'시작하기 →'; };
+    f.onsubmit=async e=>{
+      e.preventDefault(); err.textContent='';
+      const no=f.no.value.trim(), name=f.name.value.replace(/\s+/g,'').trim();
+      if(TEACH(no+'|'+name)===TEACH_H) return enter({teacher:true});
+      if(!/^\d{5}$/.test(no)){err.textContent='학번 다섯 자리를 숫자로 써 주세요.';f.no.focus();return;}
+      if(name.length<2){err.textContent='이름을 써 주세요.';f.name.focus();return;}
+      /* 명단에서 확인이 안 될 때만 반을 직접 고른다 */
+      if(!clsBox.hidden){
+        const cls=(f.querySelector('input[name=cls]:checked')||{}).value;
+        if(!cls){err.textContent='반을 골라 주세요.';return;}
+        return enter({cls,no,name});
+      }
+      busy(true);
+      try{
+        const r=await fetch(PEP,{method:'POST',body:JSON.stringify({op:'who',no,name})});
+        const d=await r.json();
+        if(d.ok) return enter({cls:d.cls,no,name});
+        busy(false);
+        if(d.err==='notfound'){ err.textContent='명단에서 찾지 못했어요. 학번과 이름을 다시 확인해 주세요. 계속 안 되면 선생님께 말해 주세요.'; return; }
+        throw new Error(d.err);
+      }catch(x){
+        busy(false);
+        if(clsBox.hidden){ clsBox.hidden=false; err.textContent='명단을 확인하지 못했어요. 내 반을 골라 주세요.'; }
+      }
+    };
+    setTimeout(()=>{ (f.no.value?(f.name.value?go2:f.name):f.no).focus(); },50);
+    return;
+  }
+
+  /* 이름 표시 + 바꾸기 */
+  box.className='tr-who';
+  box.innerHTML=`<span>${esc(WHO.cls)} ${esc(WHO.no)} <b>${esc(WHO.name)}</b></span><button type="button" title="다른 학생으로 바꾸기">바꾸기</button>`;
+  (document.querySelector('.top')||document.body).appendChild(box);
+  box.querySelector('button').onclick=()=>{ if(confirm('다른 학생으로 바꿀까요? (지금까지 한 것은 이 학번으로 저장돼 있어요)')){ try{sessionStorage.removeItem('aiw-who');}catch(e){} location.reload(); } };
+
+  const SK=QK+'-seen', AK=QK+'-away';
+  const seen=new Set(store.get(SK,[]));
+  const A=store.get(AK,{n:0,s:0});
+  let awayAt=null, lastAct=Date.now(), sent=0, lastSent=0, tmr=null, dirty=false;
+
+  function snap(){
+    let ok=0, done=0;
+    for(const k in QUIZ) QUIZ[k].forEach((it,i)=>{const v=QS[k+'-'+i]; if(v!=null){done++; if(v===it.a) ok++;}});
+    const ML=(typeof MEMOLIST!=='undefined')?MEMOLIST:[];
+    return {op:'put',lesson:LESSON,title:document.title,cls:WHO.cls,no:WHO.no,name:WHO.name,
+      scr:cur,names:pages.map((p,i)=>i?p.dataset.name:'시작'),seen:[...seen].sort((a,b)=>a-b),
+      qOk:ok,qDone:done,qTot:TOTALQ,
+      memo:ML.map(([k,l])=>[l,String(MEMO[k]==null?'':MEMO[k]).slice(0,1500)]),
+      away:awayAt?1:0,leaves:A.n,awaySec:Math.round(A.s+(awayAt?(Date.now()-awayAt)/1000:0)),idle:Math.round((Date.now()-lastAct)/1000),n:++sent};
+  }
+  function flush(){
+    if(!dirty) return; dirty=false; lastSent=Date.now();
+    const body=JSON.stringify(snap());
+    try{ if(navigator.sendBeacon && navigator.sendBeacon(PEP,new Blob([body],{type:'text/plain'}))) return; }catch(e){}
+    try{ fetch(PEP,{method:'POST',mode:'no-cors',body,keepalive:true}).catch(()=>{}); }catch(e){}
+  }
+  /* 너무 자주 보내지 않기: 보통 15초, 창 이탈·복귀는 3초 간격 */
+  function send(urgent){
+    dirty=true; clearTimeout(tmr);
+    const gap=urgent?3000:15000, wait=Math.max(0,gap-(Date.now()-lastSent));
+    tmr=setTimeout(flush,wait);
+  }
+
+  const _go=go; go=function(i){ _go(i); if(!seen.has(cur)){seen.add(cur); store.set(SK,[...seen]);} send(true); };
+  const _upd=updScore; updScore=function(){ _upd(); send(); };
+  const _set=store.set; store.set=function(k,v){ _set(k,v); if(k===MK) send(); };
+
+  function leave(){ if(awayAt) return; awayAt=Date.now(); A.n++; _set(AK,A); send(true); }
+  function back(){ if(!awayAt) return; A.s+=(Date.now()-awayAt)/1000; awayAt=null; _set(AK,A); send(true); }
+  document.addEventListener('visibilitychange',()=>{ document.hidden?leave():(document.hasFocus()&&back()); });
+  window.addEventListener('blur',()=>setTimeout(()=>{ if(!document.hasFocus()) leave(); },300));
+  window.addEventListener('focus',back);
+  window.addEventListener('pagehide',()=>{ dirty=true; flush(); });
+  ['pointerdown','keydown','input','wheel','touchstart'].forEach(t=>document.addEventListener(t,()=>{lastAct=Date.now();},{capture:true,passive:true}));
+  /* 화면에 머물러 있으면 2분마다 한 번 신호 */
+  setInterval(()=>{ if(!document.hidden) send(); },120000);
+})();
+
+/* 시작 */
+bindMemos();
+updScore();
+const h0=parseInt((location.hash.match(/^#p(\d+)$/)||[])[1],10);
+go(isNaN(h0)?0:h0);
+</script>
+<script>
+/* page-guard: 복사·잘라내기·드래그·오른쪽 클릭 막기 (복사 버튼은 그대로 동작) */
+(function(){
+  var t=null, tm=null, MSG='수업 자료는 복사할 수 없어요. 내 말로 정리해 보세요.';
+  function say(){ if(!t){t=document.createElement('div');t.className='pg-toast';document.body.appendChild(t);} t.textContent=MSG; t.classList.add('on'); clearTimeout(tm); tm=setTimeout(function(){t.classList.remove('on');},1800); }
+  function inField(e){ return e.target && e.target.closest && e.target.closest('input,textarea,select,[contenteditable]'); }
+  ['copy','cut'].forEach(function(type){ document.addEventListener(type,function(e){ e.preventDefault(); say(); },true); });
+  document.addEventListener('contextmenu',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('selectstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('dragstart',function(e){ if(!inField(e)) e.preventDefault(); },true);
+  document.addEventListener('keydown',function(e){ var k=(e.key||'').toLowerCase(); if((e.ctrlKey||e.metaKey)&&(k==='c'||k==='x')){ e.preventDefault(); say(); } if((e.ctrlKey||e.metaKey)&&k==='a'&&!inField(e)) e.preventDefault(); },true);
+})();
+</script>
+</body>
+</html>
