@@ -1035,6 +1035,11 @@ function _loadPy() {
   return _pyLoad;
 }
 
+/* 줄바꿈 없이 끝난 마지막 줄(print(..., end=' ') 등)은 버퍼에 남으므로 실행 뒤 내보낸다 */
+function _pyFlush(py) {
+  try { py.runPython('import sys\nsys.stdout.flush()\nsys.stderr.flush()'); } catch (e) {}
+}
+
 function pyrun(box, cfg) {
   cfg = cfg || {};
   const B = $(box); if (!B) return;
@@ -1082,8 +1087,10 @@ function pyrun(box, cfg) {
     } finally { const i = _pyWaiters.indexOf(setStat); if (i >= 0) _pyWaiters.splice(i, 1); }
     setStat('실행 중…');
     const lines = [];
-    py.setStdout({ batched: s => lines.push(s + '\n') });  /* 0.26: batched 는 줄바꿈을 뺀 한 줄씩 줌 */
-    py.setStderr({ batched: s => lines.push(s + '\n') });
+    /* batched 는 줄바꿈을 빼고 주며 줄바꿈 없이 끝난 마지막 줄은 버린다 → write(바이트 그대로)로 받는다 */
+    const sink = () => { const dec = new TextDecoder(); return { write: buf => { lines.push(dec.decode(buf, { stream: true })); return buf.length; } }; };
+    py.setStdout(sink());
+    py.setStderr(sink());
     const feed = (sin ? sin.value : '').split('\n');
     try {
       py.globals.set('_pyrun_feed', feed);
@@ -1099,8 +1106,10 @@ function pyrun(box, cfg) {
         '    raise EOFError("입력값이 더 없어요. 위 입력값 칸에 값을 더 적어 주세요.")\n' +
         '_b.input=_inp\n');
       await py.runPythonAsync("exec(compile(_pyrun_src,'<내 코드>','exec'), {'__name__':'__main__'})");
+      _pyFlush(py);
       out.classList.remove('err');
     } catch (err) {
+      _pyFlush(py);
       /* 파이썬 내부(Pyodide) 프레임은 지우고 학생이 쓴 코드 줄만 남긴다 */
       const raw = String(err && err.message || err).split('\n'), keep = [];
       for (let i = 0; i < raw.length; i++) {
@@ -1111,6 +1120,7 @@ function pyrun(box, cfg) {
         }
         keep.push(raw[i]);
       }
+      if (lines.length && !/\n$/.test(lines[lines.length - 1])) lines.push('\n');
       lines.push(keep.join('\n').trim() || '오류가 났어요.');
       out.classList.add('err');
     } finally {
