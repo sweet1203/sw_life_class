@@ -1,7 +1,7 @@
 {
  "_설명": "질문폼 원본. 차시 폴더(lessons/)의 마무리 화면이 forms/<id>.html 로 연결한다. classes는 학기마다 바꾼다. 질문은 questions에 그대로 적는다.",
  "course": "소프트웨어와 생활",
- "endpoint": "",
+ "endpoint": "https://script.google.com/macros/s/AKfycbwm3QSHpjrKpNEUbwdT6r4Xge6K4SQyOl0SWz_lyJqsVSCnex4bQRj5gZHJL7guu-yx/exec",
  "_endpoint": "질문폼 수집기 웹 앱 주소. 인공지능기초와 같은 수집기를 쓸지 정한 뒤 넣는다",
  "classes": [],
  "forms": [

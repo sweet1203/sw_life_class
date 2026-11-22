@@ -4,7 +4,7 @@
  "site": "https://swlifeclass.vercel.app/",
  "classes": [],
  "_classes": "명단 확인이 안 될 때 학생이 직접 고르는 반 이름(진도 수집 시트 명단의 반 이름과 같게)",
- "progressEndpoint": "",
+ "progressEndpoint": "https://script.google.com/macros/s/AKfycbwm3QSHpjrKpNEUbwdT6r4Xge6K4SQyOl0SWz_lyJqsVSCnex4bQRj5gZHJL7guu-yx/exec",
  "_progressEndpoint": "진도 수집 시트의 Apps Script 웹 앱 주소(…/exec). 비어 있으면 진도를 보내지 않는다",
  "teacherHash": "853zuh",
  "_teacherHash": "교사 모드(학번·이름) 확인값. 바꾸려면 tools/teacher_hash.py 로 새 값을 만든다",
