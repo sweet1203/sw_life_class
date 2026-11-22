@@ -48,11 +48,7 @@
         <input type="hidden" name="pasteBlockCount" id="pasteBlockCount" value="0">
         <input type="hidden" name="clientSubmittedAt" id="clientSubmittedAt" value="">
         <input type="hidden" name="userAgent" id="userAgent" value="">
-        <label for="className">반</label>
-        <select id="className" name="className" required>
-          <option value="" selected disabled>반 선택</option>
-          {{classOptions}}
-        </select>
+        {{classField}}
         <div class="row">
           <div><label for="studentNo">학번</label><input id="studentNo" name="studentNo" inputmode="numeric" autocomplete="off" pattern="[0-9]{5}" minlength="5" maxlength="5" placeholder="예: 20101" required></div>
           <div><label for="name">이름</label><input id="name" name="name" autocomplete="name" required></div>

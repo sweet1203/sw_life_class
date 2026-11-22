@@ -90,6 +90,10 @@ def build_forms():
     data = json.loads(rd(ROOT / 'forms' / 'forms.json'))
     tpl = rd(ROOT / 'forms' / 'template.html')
     opts = '\n'.join(f'<option value="{tok(c)}">{tok(c)}</option>' for c in data['classes'])
+    # 반 이름이 정해져 있으면 고르게 하고, 비어 있으면 숨긴다(수집기가 「명단」에서 학번·이름으로 반을 찾음)
+    cls_field = ('<label for="className">반</label>\n        <select id="className" name="className" required>\n'
+                 '          <option value="" selected disabled>반 선택</option>\n' + opts + '\n        </select>'
+                 if data['classes'] else '<input type="hidden" name="className" value="">')
     (SITE / 'forms').mkdir(parents=True, exist_ok=True)
     made = []
     for f in data['forms']:
@@ -101,10 +105,10 @@ def build_forms():
             <textarea id="answer{i}" name="answer{i}" data-no-paste="true" required placeholder="수업 내용과 자신의 생각이 드러나게 직접 작성하세요."></textarea>
           </section>''' for i, q in enumerate(f['questions'], 1))
         rep = {**f, 'course': data['course'], 'endpoint': data['endpoint'], 'warningDisplay': 'none',
-               'classOptions': opts, 'questions': blocks}
+               'classField': cls_field, 'questions': blocks}
         s = tpl
         for k, v in rep.items():
-            s = s.replace('{{' + k + '}}', str(v) if k in ('classOptions', 'questions') else tok(v))
+            s = s.replace('{{' + k + '}}', str(v) if k in ('classField', 'questions') else tok(v))
         assert '{{' not in s, re.findall(r'{{\w+}}', s)
         (SITE / 'forms' / f"{f['id']}.html").write_text(s, encoding='utf-8')
         made.append(f['id'])
